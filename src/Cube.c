@@ -147,6 +147,12 @@ static void rotateCameraAnticlockwise(Cube * this);
 static void turnTopSliceLeft(Cube * this);
 
 
+static void turnTopSliceRight(Cube * this);
+
+
+static void turnMiddleSliceLeft(Cube * this);
+
+
 
 
 static void paintSlice(Face * const this, int sliceIndex, Color color)
@@ -266,6 +272,24 @@ static Color * getTopSlice(Face const * this)
 		slice,
 		this->cells[TOP_SLICE],
 		CUBE_SIZE * sizeof(this->cells[TOP_SLICE][0]));
+
+	return slice;
+}
+
+
+static Color * getMiddleSlice(Face const * this)
+{
+	Color * slice = calloc(CUBE_SIZE, sizeof(slice[0]));
+	if (slice == NULL)
+	{
+		fputs("Slice allocation failed", stderr);
+		exit(EXIT_FAILURE);
+	}
+
+	memcpy(
+		slice,
+		this->cells[MIDDLE_SLICE],
+		CUBE_SIZE * sizeof(this->cells[MIDDLE_SLICE][0]));
 
 	return slice;
 }
@@ -433,6 +457,66 @@ static void turnTopSliceLeft(Cube * this)
 }
 
 
+static void turnTopSliceRight(Cube * this)
+{
+	size_t sliceSizeInBytes =
+		CUBE_SIZE * sizeof(this->faces[FRONT_FACE]->cells[TOP_SLICE][0]);
+
+	Color * sliceBackup = calloc(CUBE_SIZE, sliceSizeInBytes);
+	memcpy(
+		sliceBackup,
+		this->faces[FRONT_FACE]->cells[TOP_SLICE],
+		sliceSizeInBytes);
+
+	memcpy(
+		this->faces[FRONT_FACE]->cells[TOP_SLICE],
+		this->faces[LEFT_FACE]->cells[TOP_SLICE],
+		sliceSizeInBytes);
+	memcpy(
+		this->faces[LEFT_FACE]->cells[TOP_SLICE],
+		this->faces[BACK_FACE]->cells[TOP_SLICE],
+		sliceSizeInBytes);
+	memcpy(
+		this->faces[BACK_FACE]->cells[TOP_SLICE],
+		this->faces[RIGHT_FACE]->cells[TOP_SLICE],
+		sliceSizeInBytes);
+	memcpy(
+		this->faces[RIGHT_FACE]->cells[TOP_SLICE],
+		sliceBackup,
+		sliceSizeInBytes);
+}
+
+
+static void turnMiddleSliceLeft(Cube * this)
+{
+	size_t sliceSizeInBytes =
+		CUBE_SIZE * sizeof(this->faces[FRONT_FACE]->cells[TOP_SLICE][0]);
+
+	Color * sliceBackup = calloc(CUBE_SIZE, sliceSizeInBytes);
+	memcpy(
+		sliceBackup,
+		this->faces[FRONT_FACE]->cells[TOP_SLICE],
+		sliceSizeInBytes);
+
+	memcpy(
+		this->faces[FRONT_FACE]->cells[MIDDLE_SLICE],
+		this->faces[RIGHT_FACE]->cells[MIDDLE_SLICE],
+		sliceSizeInBytes);
+	memcpy(
+		this->faces[RIGHT_FACE]->cells[MIDDLE_SLICE],
+		this->faces[BACK_FACE]->cells[MIDDLE_SLICE],
+		sliceSizeInBytes);
+	memcpy(
+		this->faces[BACK_FACE]->cells[MIDDLE_SLICE],
+		this->faces[LEFT_FACE]->cells[MIDDLE_SLICE],
+		sliceSizeInBytes);
+	memcpy(
+		this->faces[LEFT_FACE]->cells[MIDDLE_SLICE],
+		sliceBackup,
+		sliceSizeInBytes);
+}
+
+
 
 
 static FaceMethods faceMethods =
@@ -452,7 +536,8 @@ static FaceMethods faceMethods =
 	getBottomCenterCell,
 	getBottomRightCell,
 
-	getTopSlice
+	getTopSlice,
+	getMiddleSlice
 };
 FaceMethods const * const _Face = & faceMethods;
 
@@ -476,6 +561,8 @@ static CubeMethods cubeMethods =
 	rotateCameraClockwise,
 	rotateCameraAnticlockwise,
 
-	turnTopSliceLeft
+	turnTopSliceLeft,
+	turnTopSliceRight,
+	turnMiddleSliceLeft
 };
 CubeMethods const * const _Cube = & cubeMethods;

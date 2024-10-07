@@ -28,6 +28,7 @@ typedef struct
 	Color (* bottomRightCell)(Face const * this);
 
 	Color * (* topSlice)(Face const * this);
+	Color * (* middleSlice)(Face const * this);
 
 } FaceMethods;
 
