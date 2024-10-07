@@ -43,6 +43,12 @@ struct Cube
 
 
 
+static void paintSlice(Face * const this, int sliceIndex, Color color);
+
+
+static void paintSlices(Face * const this, Color color);
+
+
 static Face * createFace(Color color);
 
 
