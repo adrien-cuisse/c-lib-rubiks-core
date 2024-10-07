@@ -1,0 +1,26 @@
+
+Date: 07/10/2024
+
+Title: ADR-0001
+
+Subject:
+	To be able to turn slices, we have to change cells' color, which are
+	private in the Face class
+
+Possible workarounds:
+	1) We could use setters
+		Pros:
+			- most common way to update states
+		Cons:
+			- breaks encapsulation
+			- boilerplate code
+			- poor OOP design (makes Face plain data, instead of behavior)
+	2) We could make Face an inner-class of Cube, so the Cube can access
+		individual cells
+		Pros:
+			- encapsulation
+		Cons:
+			- the Cube.c file would get bigger
+
+Chosen solution:
+	We chose to make Face an inner-class of Cube
