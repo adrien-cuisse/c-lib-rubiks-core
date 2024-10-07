@@ -7,13 +7,13 @@
 #include "Face.h"
 
 
-/** The 3 horizontal slices composing the face (Y axis) */
+/** The horizontal slices composing the face (Y axis), based on CUBE_SIZE */
 #define TOP_SLICE 0
 #define MIDDLE_SLICE 1
 #define BOTTOM_SLICE 2
 
 
-/** The position of a cell in a slice (X axis) */
+/** The position of a cell in a slice (X axis), based on CUBE_SIZE */
 #define LEFT_CELL 0
 #define CENTER_CELL 1
 #define RIGHT_CELL 2
@@ -32,7 +32,7 @@
 
 struct Face
 {
-	Color cells[3][3];
+	Color cells[CUBE_SIZE][CUBE_SIZE];
 };
 
 
@@ -255,14 +255,17 @@ static Color getBottomRightCell(Face const * const this)
 
 static Color * getTopSlice(Face const * this)
 {
-	Color * slice = calloc(3, sizeof(slice[0]));
+	Color * slice = calloc(CUBE_SIZE, sizeof(slice[0]));
 	if (slice == NULL)
 	{
 		fputs("Slice allocation failed", stderr);
 		exit(EXIT_FAILURE);
 	}
 
-	memcpy(slice, this->cells[TOP_SLICE], 3 * sizeof(this->cells[TOP_SLICE][0]));
+	memcpy(
+		slice,
+		this->cells[TOP_SLICE],
+		CUBE_SIZE * sizeof(this->cells[TOP_SLICE][0]));
 
 	return slice;
 }
@@ -405,7 +408,7 @@ static void turnTopSliceLeft(Cube * this)
 	memcpy(
 		this->faces[LEFT_FACE]->cells[TOP_SLICE],
 		this->faces[FRONT_FACE]->cells[TOP_SLICE],
-		3 * sizeof(this->faces[FRONT_FACE]->cells[TOP_SLICE][0]));
+		CUBE_SIZE * sizeof(this->faces[FRONT_FACE]->cells[TOP_SLICE][0]));
 }
 
 

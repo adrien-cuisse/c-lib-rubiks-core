@@ -425,7 +425,7 @@ Test(Cube, turnTopSliceLeft_frontSliceComesToTheLeft)
 	cr_assert_arr_eq(
 		newLeftFaceTopSlice,
 		oldFrontFaceTopSlice,
-		3,
+		CUBE_SIZE,
 		"top slice wasn't moved to the left");
 }
 
@@ -444,6 +444,6 @@ Test(Cube, turnTopSliceLeft_leftSliceComesToTheBack)
 	cr_assert_arr_eq(
 		newBackFaceTopSlice,
 		oldLeftFaceTopSlice,
-		3,
+		CUBE_SIZE,
 		"WIP: top slice wasn't moved to the left");
 }
