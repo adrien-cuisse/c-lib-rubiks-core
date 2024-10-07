@@ -713,3 +713,9 @@ Test(Cube, turnMiddleSliceRight_leftSliceComesToTheFront)
 		CUBE_SIZE,
 		"left face middle slice wasn't moved to the front face");
 }
+
+
+Test(Cube, turnBottomSliceLeft_frontSliceComesToTheleft)
+{
+	cr_assert_fail("WIP");
+}
