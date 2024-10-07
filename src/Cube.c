@@ -405,10 +405,31 @@ static void rotateCameraAnticlockwise(Cube * const this)
 
 static void turnTopSliceLeft(Cube * this)
 {
+	size_t sliceSizeInBytes =
+		CUBE_SIZE * sizeof(this->faces[FRONT_FACE]->cells[TOP_SLICE][0]);
+
+	Color * sliceBackup = calloc(CUBE_SIZE, sliceSizeInBytes);
+	memcpy(
+		sliceBackup,
+		this->faces[FRONT_FACE]->cells[TOP_SLICE],
+		sliceSizeInBytes);
+
+	memcpy(
+		this->faces[FRONT_FACE]->cells[TOP_SLICE],
+		this->faces[RIGHT_FACE]->cells[TOP_SLICE],
+		sliceSizeInBytes);
+	memcpy(
+		this->faces[RIGHT_FACE]->cells[TOP_SLICE],
+		this->faces[BACK_FACE]->cells[TOP_SLICE],
+		sliceSizeInBytes);
+	memcpy(
+		this->faces[BACK_FACE]->cells[TOP_SLICE],
+		this->faces[LEFT_FACE]->cells[TOP_SLICE],
+		sliceSizeInBytes);
 	memcpy(
 		this->faces[LEFT_FACE]->cells[TOP_SLICE],
-		this->faces[FRONT_FACE]->cells[TOP_SLICE],
-		CUBE_SIZE * sizeof(this->faces[FRONT_FACE]->cells[TOP_SLICE][0]));
+		sliceBackup,
+		sliceSizeInBytes);
 }
 
 

@@ -426,7 +426,7 @@ Test(Cube, turnTopSliceLeft_frontSliceComesToTheLeft)
 		newLeftFaceTopSlice,
 		oldFrontFaceTopSlice,
 		CUBE_SIZE,
-		"top slice wasn't moved to the left");
+		"front face top slice wasn't moved to the left face");
 }
 
 
@@ -445,5 +445,49 @@ Test(Cube, turnTopSliceLeft_leftSliceComesToTheBack)
 		newBackFaceTopSlice,
 		oldLeftFaceTopSlice,
 		CUBE_SIZE,
-		"WIP: top slice wasn't moved to the left");
+		"left face top slice wasn't moved to the back face");
+}
+
+
+Test(Cube, turnTopSliceLeft_backSliceComesToTheRight)
+{
+	// given
+	Cube * cube = _Cube->create();
+	Face * backFace = _Cube->backFace(cube);
+	Color * oldBackFaceTopSlice = _Face->topSlice(backFace);
+	// when
+	_Cube->turnTopSliceLeft(cube);
+	// then
+	Face * rightFace = _Cube->rightFace(cube);
+	Color * newRightFaceTopSlice = _Face->topSlice(rightFace);
+	cr_assert_arr_eq(
+		newRightFaceTopSlice,
+		oldBackFaceTopSlice,
+		CUBE_SIZE,
+		"back face top slice wasn't moved to the right face");
+}
+
+
+Test(Cube, turnTopSliceLeft_rightSliceComesToTheFront)
+{
+	// given
+	Cube * cube = _Cube->create();
+	Face * rightFace = _Cube->rightFace(cube);
+	Color * oldRightFaceTopSlice = _Face->topSlice(rightFace);
+	// when
+	_Cube->turnTopSliceLeft(cube);
+	// then
+	Face * frontFace = _Cube->frontFace(cube);
+	Color * newFrontFaceTopSlice = _Face->topSlice(frontFace);
+	cr_assert_arr_eq(
+		newFrontFaceTopSlice,
+		oldRightFaceTopSlice,
+		CUBE_SIZE,
+		"right face top slice wasn't moved to the front face");
+}
+
+
+Test(Cube, turnMiddleSliceLeft_rightSliceComesToTheFront)
+{
+	cr_assert_fail("WIP");
 }
