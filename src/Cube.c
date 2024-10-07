@@ -52,6 +52,16 @@ static Face * getBottomFace(Cube const * this);
 static Face * getBackFace(Cube const * this);
 
 
+/**
+ * @param this - the cube to rotate
+ * @param faceIndexesCycle - the cycle of index of faces to move in the
+ * 		unfolded pattern, the face at position cycle[i] will take the place of
+ * 		the face at position cycle[i+1]
+ * 		eg: {TOP, RIGHT, BOTTOM, LEFT} will put TOP face where RIGHT face is
+ */
+static void rotateCamera(Cube * this, int faceIndexesCycle[4]);
+
+
 static void rotateCameraLeft(Cube * this);
 
 
@@ -151,69 +161,56 @@ static Face * getBackFace(Cube const * const this)
 }
 
 
+static void rotateCamera(Cube * const this, int faceIndexesCycle[4])
+{
+	Face * backupFace = this->faces[faceIndexesCycle[0]];
+
+	this->faces[faceIndexesCycle[0]] = this->faces[faceIndexesCycle[1]];
+	this->faces[faceIndexesCycle[1]] = this->faces[faceIndexesCycle[2]];
+	this->faces[faceIndexesCycle[2]] = this->faces[faceIndexesCycle[3]];
+	this->faces[faceIndexesCycle[3]] = backupFace;
+}
+
+
 static void rotateCameraLeft(Cube * const this)
 {
-	Face * oldFrontFace = this->faces[FRONT];
-
-	this->faces[FRONT] = this->faces[RIGHT];
-	this->faces[RIGHT] = this->faces[BACK];
-	this->faces[BACK] = this->faces[LEFT];
-	this->faces[LEFT] = oldFrontFace;
+	int cycle[4] = { FRONT, RIGHT, BACK, LEFT };
+	rotateCamera(this, cycle);
 }
 
 
 static void rotateCameraRight(Cube * const this)
 {
-	Face * oldFrontFace = this->faces[FRONT];
-
-	this->faces[FRONT] = this->faces[LEFT];
-	this->faces[LEFT] = this->faces[BACK];
-	this->faces[BACK] = this->faces[RIGHT];
-	this->faces[RIGHT] = oldFrontFace;
+	int cycle[4] = { FRONT, LEFT, BACK, RIGHT };
+	rotateCamera(this, cycle);
 }
 
 
 static void rotateCameraUp(Cube * const this)
 {
-	Face * oldFrontFace = this->faces[FRONT];
-
-	this->faces[FRONT] = this->faces[BOTTOM];
-	this->faces[BOTTOM] = this->faces[BACK];
-	this->faces[BACK] = this->faces[TOP];
-	this->faces[TOP] = oldFrontFace;
+	int cycle[4] = { FRONT, BOTTOM, BACK, TOP };
+	rotateCamera(this, cycle);
 }
 
 
 static void rotateCameraDown(Cube * const this)
 {
-	Face * oldFrontFace = this->faces[FRONT];
-
-	this->faces[FRONT] = this->faces[TOP];
-	this->faces[TOP] = this->faces[BACK];
-	this->faces[BACK] = this->faces[BOTTOM];
-	this->faces[BOTTOM] = oldFrontFace;
+	int cycle[4] = { FRONT, TOP, BACK, BOTTOM };
+	rotateCamera(this, cycle);
 }
 
 
 static void rotateCameraClockwise(Cube * const this)
 {
-	Face * oldTopFace = this->faces[TOP];
-
-	this->faces[TOP] = this->faces[LEFT];
-	this->faces[LEFT] = this->faces[BOTTOM];
-	this->faces[BOTTOM] = this->faces[RIGHT];
-	this->faces[RIGHT] = oldTopFace;
+	int cycle[4] = { TOP, LEFT, BOTTOM, RIGHT };
+	rotateCamera(this, cycle);
 }
 
 
 static void rotateCameraAnticlockwise(Cube * const this)
 {
-	Face * oldTopFace = this->faces[TOP];
-
-	this->faces[TOP] = this->faces[RIGHT];
-	this->faces[RIGHT] = this->faces[BOTTOM];
-	this->faces[BOTTOM] = this->faces[LEFT];
-	this->faces[LEFT] = oldTopFace;
+	int cycle[4] = { TOP, RIGHT, BOTTOM, LEFT };
+	rotateCamera(this, cycle);
 }
 
 
