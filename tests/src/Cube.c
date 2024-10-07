@@ -409,3 +409,41 @@ Test(Cube, rotateAnticlockwise_rightFaceComesOnTheTop)
 	Face * newTopFace = _Cube->topFace(cube);
 	cr_assert_eq(newTopFace, oldRightFace, "right face wasn't moved to the top");
 }
+
+
+Test(Cube, turnTopSliceLeft_frontSliceComesToTheLeft)
+{
+	// given
+	Cube * cube = _Cube->create();
+	Face * frontFace = _Cube->frontFace(cube);
+	Color * oldFrontFaceTopSlice = _Face->topSlice(frontFace);
+	// when
+	_Cube->turnTopSliceLeft(cube);
+	// then
+	Face * leftFace = _Cube->leftFace(cube);
+	Color * newLeftFaceTopSlice = _Face->topSlice(leftFace);
+	cr_assert_arr_eq(
+		newLeftFaceTopSlice,
+		oldFrontFaceTopSlice,
+		3,
+		"top slice wasn't moved to the left");
+}
+
+
+Test(Cube, turnTopSliceLeft_leftSliceComesToTheBack)
+{
+	// given
+	Cube * cube = _Cube->create();
+	Face * leftFace = _Cube->leftFace(cube);
+	Color * oldLeftFaceTopSlice = _Face->topSlice(leftFace);
+	// when
+	_Cube->turnTopSliceLeft(cube);
+	// then
+	Face * backFace = _Cube->backFace(cube);
+	Color * newBackFaceTopSlice = _Face->topSlice(backFace);
+	cr_assert_arr_eq(
+		newBackFaceTopSlice,
+		oldLeftFaceTopSlice,
+		3,
+		"WIP: top slice wasn't moved to the left");
+}

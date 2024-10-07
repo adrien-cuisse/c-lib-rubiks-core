@@ -1,6 +1,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "Cube.h"
 #include "Face.h"
@@ -85,6 +86,9 @@ static Color getBottomCenterCell(Face const * this);
 static Color getBottomRightCell(Face const * this);
 
 
+static Color * getTopSlice(Face const * this);
+
+
 static void createAndPositionFaces(Cube * this);
 
 
@@ -138,6 +142,9 @@ static void rotateCameraClockwise(Cube * this);
 
 
 static void rotateCameraAnticlockwise(Cube * this);
+
+
+static void turnTopSliceLeft(Cube * this);
 
 
 
@@ -243,6 +250,21 @@ static Color getBottomCenterCell(Face const * const this)
 static Color getBottomRightCell(Face const * const this)
 {
 	return this->cells[BOTTOM_SLICE][RIGHT];
+}
+
+
+static Color * getTopSlice(Face const * this)
+{
+	Color * slice = calloc(3, sizeof(slice[0]));
+	if (slice == NULL)
+	{
+		fputs("Slice allocation failed", stderr);
+		exit(EXIT_FAILURE);
+	}
+
+	memcpy(slice, this->cells[TOP_SLICE], 3 * sizeof(this->cells[TOP_SLICE][0]));
+
+	return slice;
 }
 
 
@@ -378,13 +400,24 @@ static void rotateCameraAnticlockwise(Cube * const this)
 }
 
 
+static void turnTopSliceLeft(Cube * this)
+{
+	memcpy(
+		this->faces[LEFT]->cells[TOP_SLICE],
+		this->faces[FRONT]->cells[TOP_SLICE],
+		3 * sizeof(this->faces[FRONT]->cells[TOP_SLICE][0]));
+}
+
+
 
 
 static FaceMethods faceMethods =
 {
 	createFace,
 	deleteFace,
+
 	getColor,
+
 	getTopLeftCell,
 	getTopCenterCell,
 	getTopRightCell,
@@ -393,7 +426,9 @@ static FaceMethods faceMethods =
 	getMiddleRightCell,
 	getBottomLeftCell,
 	getBottomCenterCell,
-	getBottomRightCell
+	getBottomRightCell,
+
+	getTopSlice
 };
 FaceMethods const * const _Face = & faceMethods;
 
@@ -415,6 +450,8 @@ static CubeMethods cubeMethods =
 	rotateCameraUp,
 	rotateCameraDown,
 	rotateCameraClockwise,
-	rotateCameraAnticlockwise
+	rotateCameraAnticlockwise,
+
+	turnTopSliceLeft
 };
 CubeMethods const * const _Cube = & cubeMethods;
