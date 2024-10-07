@@ -14,18 +14,18 @@
 
 
 /** The position of a cell in a slice (X axis) */
-#define LEFT 0
-#define CENTER 1
-#define RIGHT 2
+#define LEFT_CELL 0
+#define CENTER_CELL 1
+#define RIGHT_CELL 2
 
 
 /** The position of each face in the T-shaped pattern of the unfolded cube */
-#define LEFT 0
-#define FRONT 1
-#define RIGHT 2
-#define BOTTOM 3
-#define BACK 4
-#define TOP 5
+#define LEFT_FACE 0
+#define FRONT_FACE 1
+#define RIGHT_FACE 2
+#define BOTTOM_FACE 3
+#define BACK_FACE 4
+#define TOP_FACE 5
 
 
 
@@ -121,7 +121,7 @@ static Face * getBackFace(Cube const * this);
  * @param faceIndexesCycle - the cycle of index of faces to move in the
  * 		unfolded pattern, the face at position cycle[i] will take the place of
  * 		the face at position cycle[i+1]
- * 		eg: {TOP, RIGHT, BOTTOM, LEFT} will put TOP face where RIGHT face is
+ * 		eg: {TOP_FACE, RIGHT_FACE, BOTTOM_FACE, LEFT_FACE} will put TOP_FACE face where RIGHT_FACE face is
  */
 static void rotateCamera(Cube * this, int faceIndexesCycle[4]);
 
@@ -153,7 +153,7 @@ static void paintSlice(Face * const this, int sliceIndex, Color color)
 {
 	int cellIndex;
 
-	for (cellIndex = LEFT; cellIndex <= RIGHT; cellIndex++)
+	for (cellIndex = LEFT_CELL; cellIndex <= RIGHT_CELL; cellIndex++)
 			this->cells[sliceIndex][cellIndex] = color;
 }
 
@@ -201,55 +201,55 @@ static Color getColor(Face const * const this)
 
 static Color getTopLeftCell(Face const * const this)
 {
-	return this->cells[TOP_SLICE][LEFT];
+	return this->cells[TOP_SLICE][LEFT_CELL];
 }
 
 
 static Color getTopCenterCell(Face const * const this)
 {
-	return this->cells[TOP_SLICE][CENTER];
+	return this->cells[TOP_SLICE][CENTER_CELL];
 }
 
 
 static Color getTopRightCell(Face const * const this)
 {
-	return this->cells[TOP_SLICE][RIGHT];
+	return this->cells[TOP_SLICE][RIGHT_CELL];
 }
 
 
 static Color getMiddleLeftCell(Face const * const this)
 {
-	return this->cells[MIDDLE_SLICE][LEFT];
+	return this->cells[MIDDLE_SLICE][LEFT_CELL];
 }
 
 
 static Color getMiddleCenterCell(Face const * const this)
 {
-	return this->cells[MIDDLE_SLICE][CENTER];
+	return this->cells[MIDDLE_SLICE][CENTER_CELL];
 }
 
 
 static Color getMiddleRightCell(Face const * const this)
 {
-	return this->cells[MIDDLE_SLICE][RIGHT];
+	return this->cells[MIDDLE_SLICE][RIGHT_CELL];
 }
 
 
 static Color getBottomLeftCell(Face const * const this)
 {
-	return this->cells[BOTTOM_SLICE][LEFT];
+	return this->cells[BOTTOM_SLICE][LEFT_CELL];
 }
 
 
 static Color getBottomCenterCell(Face const * const this)
 {
-	return this->cells[BOTTOM_SLICE][CENTER];
+	return this->cells[BOTTOM_SLICE][CENTER_CELL];
 }
 
 
 static Color getBottomRightCell(Face const * const this)
 {
-	return this->cells[BOTTOM_SLICE][RIGHT];
+	return this->cells[BOTTOM_SLICE][RIGHT_CELL];
 }
 
 
@@ -277,12 +277,12 @@ static void createAndPositionFaces(Cube * this)
 	 * - red opposes orange,
 	 * - blue, white & red are in anti-clockwise order around a corner
 	 */
-	this->faces[LEFT] = _Face->create(RED);
-	this->faces[FRONT] = _Face->create(BLUE);
-	this->faces[RIGHT] = _Face->create(ORANGE);
-	this->faces[TOP] = _Face->create(WHITE);
-	this->faces[BOTTOM] = _Face->create(YELLOW);
-	this->faces[BACK] = _Face->create(GREEN);
+	this->faces[LEFT_FACE] = _Face->create(RED);
+	this->faces[FRONT_FACE] = _Face->create(BLUE);
+	this->faces[RIGHT_FACE] = _Face->create(ORANGE);
+	this->faces[TOP_FACE] = _Face->create(WHITE);
+	this->faces[BOTTOM_FACE] = _Face->create(YELLOW);
+	this->faces[BACK_FACE] = _Face->create(GREEN);
 }
 
 
@@ -313,37 +313,37 @@ static void deleteCube(Cube ** this)
 
 static Face * getLeftFace(Cube const * const this)
 {
-	return this->faces[LEFT];
+	return this->faces[LEFT_FACE];
 }
 
 
 static Face * getFrontFace(Cube const * const this)
 {
-	return this->faces[FRONT];
+	return this->faces[FRONT_FACE];
 }
 
 
 static Face * getRightFace(Cube const * const this)
 {
-	return this->faces[RIGHT];
+	return this->faces[RIGHT_FACE];
 }
 
 
 static Face * getTopFace(Cube const * const this)
 {
-	return this->faces[TOP];
+	return this->faces[TOP_FACE];
 }
 
 
 static Face * getBottomFace(Cube const * const this)
 {
-	return this->faces[BOTTOM];
+	return this->faces[BOTTOM_FACE];
 }
 
 
 static Face * getBackFace(Cube const * const this)
 {
-	return this->faces[BACK];
+	return this->faces[BACK_FACE];
 }
 
 
@@ -360,42 +360,42 @@ static void rotateCamera(Cube * const this, int faceIndexesCycle[4])
 
 static void rotateCameraLeft(Cube * const this)
 {
-	int cycle[4] = { FRONT, RIGHT, BACK, LEFT };
+	int cycle[4] = { FRONT_FACE, RIGHT_FACE, BACK_FACE, LEFT_FACE };
 	rotateCamera(this, cycle);
 }
 
 
 static void rotateCameraRight(Cube * const this)
 {
-	int cycle[4] = { FRONT, LEFT, BACK, RIGHT };
+	int cycle[4] = { FRONT_FACE, LEFT_FACE, BACK_FACE, RIGHT_FACE };
 	rotateCamera(this, cycle);
 }
 
 
 static void rotateCameraUp(Cube * const this)
 {
-	int cycle[4] = { FRONT, BOTTOM, BACK, TOP };
+	int cycle[4] = { FRONT_FACE, BOTTOM_FACE, BACK_FACE, TOP_FACE };
 	rotateCamera(this, cycle);
 }
 
 
 static void rotateCameraDown(Cube * const this)
 {
-	int cycle[4] = { FRONT, TOP, BACK, BOTTOM };
+	int cycle[4] = { FRONT_FACE, TOP_FACE, BACK_FACE, BOTTOM_FACE };
 	rotateCamera(this, cycle);
 }
 
 
 static void rotateCameraClockwise(Cube * const this)
 {
-	int cycle[4] = { TOP, LEFT, BOTTOM, RIGHT };
+	int cycle[4] = { TOP_FACE, LEFT_FACE, BOTTOM_FACE, RIGHT_FACE };
 	rotateCamera(this, cycle);
 }
 
 
 static void rotateCameraAnticlockwise(Cube * const this)
 {
-	int cycle[4] = { TOP, RIGHT, BOTTOM, LEFT };
+	int cycle[4] = { TOP_FACE, RIGHT_FACE, BOTTOM_FACE, LEFT_FACE };
 	rotateCamera(this, cycle);
 }
 
@@ -403,9 +403,9 @@ static void rotateCameraAnticlockwise(Cube * const this)
 static void turnTopSliceLeft(Cube * this)
 {
 	memcpy(
-		this->faces[LEFT]->cells[TOP_SLICE],
-		this->faces[FRONT]->cells[TOP_SLICE],
-		3 * sizeof(this->faces[FRONT]->cells[TOP_SLICE][0]));
+		this->faces[LEFT_FACE]->cells[TOP_SLICE],
+		this->faces[FRONT_FACE]->cells[TOP_SLICE],
+		3 * sizeof(this->faces[FRONT_FACE]->cells[TOP_SLICE][0]));
 }
 
 
