@@ -1,0 +1,6 @@
+
+# Objects
+*/**/*.o
+
+# Binaries
+*/**/bin/*
