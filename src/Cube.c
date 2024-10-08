@@ -199,6 +199,9 @@ static void turnBottomSliceRight(Cube * this);
 static void turnLeftSliceUp(Cube * this);
 
 
+static void turnLeftSliceDown(Cube * this);
+
+
 
 
 static void paintSlice(Face * const this, int sliceIndex, Color color)
@@ -583,6 +586,39 @@ static void turnLeftSliceUp(Cube * this)
 }
 
 
+static void turnLeftSliceDown(Cube * this)
+{
+	int sliceIndex;
+
+	Color sliceBackup[FACE_SIZE];
+	getVerticalSlice(this->faces[FRONT_FACE], sliceBackup, LEFT_CELL);
+
+	for (sliceIndex = 0; sliceIndex < 3; sliceIndex++)
+	{
+		this->faces[FRONT_FACE]->cells[sliceIndex][LEFT_CELL] =
+			this->faces[TOP_FACE]->cells[sliceIndex][LEFT_CELL];
+	}
+
+	for (sliceIndex = 0; sliceIndex < 3; sliceIndex++)
+	{
+		this->faces[TOP_FACE]->cells[sliceIndex][LEFT_CELL] =
+			this->faces[BACK_FACE]->cells[sliceIndex][LEFT_CELL];
+	}
+
+	for (sliceIndex = 0; sliceIndex < 3; sliceIndex++)
+	{
+		this->faces[BACK_FACE]->cells[sliceIndex][LEFT_CELL] =
+			this->faces[BOTTOM_FACE]->cells[sliceIndex][LEFT_CELL];
+	}
+
+	for (sliceIndex = 0; sliceIndex < 3; sliceIndex++)
+	{
+		this->faces[BOTTOM_FACE]->cells[sliceIndex][LEFT_CELL] =
+			sliceBackup[sliceIndex];
+	}
+}
+
+
 
 
 static FaceMethods faceMethods =
@@ -637,6 +673,7 @@ static CubeMethods cubeMethods =
 	turnBottomSliceLeft,
 	turnBottomSliceRight,
 
-	turnLeftSliceUp
+	turnLeftSliceUp,
+	turnLeftSliceDown
 };
 CubeMethods const * const _Cube = & cubeMethods;
