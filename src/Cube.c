@@ -7,23 +7,23 @@
 #include "Face.h"
 
 
-/** The horizontal slices composing the face (Y axis), based on CUBE_SIZE */
+/** The horizontal slices composing the face (Y axis), based on FACE_SIZE */
 #define TOP_SLICE 0
 #define MIDDLE_SLICE 1
 #define BOTTOM_SLICE 2
 
 
-/** The vertical slices composing the face (Y axis), based on CUBE_SIZE */
+/** The vertical slices composing the face (Y axis), based on FACE_SIZE */
 #define LEFT_SLICE 0
 
 
-/** The position of a cell in a slice (X axis), based on CUBE_SIZE */
+/** The position of a cell in a slice (X axis), based on FACE_SIZE */
 #define LEFT_CELL 0
 #define CENTER_CELL 1
 #define RIGHT_CELL 2
 
 
-/** The position of a cell in a slice (Y axis), based on CUBE_SIZE */
+/** The position of a cell in a slice (Y axis), based on FACE_SIZE */
 #define TOP_CELL 0
 #define MIDDLE_CELL 1
 #define BOTTOM_CELL 2
@@ -42,7 +42,7 @@
 
 struct Face
 {
-	Color cells[CUBE_SIZE][CUBE_SIZE];
+	Color cells[FACE_SIZE][FACE_SIZE];
 };
 
 
@@ -96,16 +96,28 @@ static Color getBottomCenterCell(Face const * this);
 static Color getBottomRightCell(Face const * this);
 
 
-static Color * getTopSlice(Face const * this);
+static void getHorizontalSlice(
+	Face const * this,
+	Color storage[FACE_SIZE],
+	int sliceIndex);
 
 
-static Color * getMiddleSlice(Face const * this);
+static void getTopSlice(Face const * this, Color storage[FACE_SIZE]);
 
 
-static Color * getBottomSlice(Face const * this);
+static void getMiddleSlice(Face const * this, Color storage[FACE_SIZE]);
 
 
-static Color * getLeftSlice(Face const * this);
+static void getBottomSlice(Face const * this, Color storage[FACE_SIZE]);
+
+
+static void getVerticalSlice(
+	Face const * this,
+	Color storage[FACE_SIZE],
+	int sliceIndex);
+
+
+static void getLeftSlice(Face const * this, Color storage[FACE_SIZE]);
 
 
 static void createAndPositionFaces(Cube * this);
@@ -290,74 +302,47 @@ static Color getBottomRightCell(Face const * const this)
 }
 
 
-static Color * getTopSlice(Face const * const this)
+static void getHorizontalSlice(
+	Face const * const this,
+	Color storage[FACE_SIZE],
+	int sliceIndex)
 {
-	Color * slice = calloc(CUBE_SIZE, sizeof(slice[0]));
-	if (slice == NULL)
-	{
-		fputs("Slice allocation failed", stderr);
-		exit(EXIT_FAILURE);
-	}
+	size_t sliceSizeInBytes = FACE_SIZE * sizeof(this->cells[sliceIndex][0]);
+	memcpy(storage, this->cells[sliceIndex], sliceSizeInBytes);
+}
 
-	memcpy(
-		slice,
-		this->cells[TOP_SLICE],
-		CUBE_SIZE * sizeof(this->cells[TOP_SLICE][0]));
-
-	return slice;
+static void getTopSlice(Face const * const this, Color storage[FACE_SIZE])
+{
+	getHorizontalSlice(this, storage, TOP_SLICE);
 }
 
 
-static Color * getMiddleSlice(Face const * const this)
+static void getMiddleSlice(Face const * const this, Color storage[FACE_SIZE])
 {
-	Color * slice = calloc(CUBE_SIZE, sizeof(slice[0]));
-	if (slice == NULL)
-	{
-		fputs("Slice allocation failed", stderr);
-		exit(EXIT_FAILURE);
-	}
-
-	memcpy(
-		slice,
-		this->cells[MIDDLE_SLICE],
-		CUBE_SIZE * sizeof(this->cells[MIDDLE_SLICE][0]));
-
-	return slice;
+	getHorizontalSlice(this, storage, MIDDLE_SLICE);
 }
 
 
-static Color * getBottomSlice(Face const * const this)
+void getBottomSlice(Face const * const this, Color storage[FACE_SIZE])
 {
-	Color * slice = calloc(CUBE_SIZE, sizeof(slice[0]));
-	if (slice == NULL)
-	{
-		fputs("Slice allocation failed", stderr);
-		exit(EXIT_FAILURE);
-	}
-
-	memcpy(
-		slice,
-		this->cells[BOTTOM_SLICE],
-		CUBE_SIZE * sizeof(this->cells[BOTTOM_SLICE][0]));
-
-	return slice;
+	getHorizontalSlice(this, storage, BOTTOM_SLICE);
 }
 
 
-static Color * getLeftSlice(Face const * const this)
+static void getVerticalSlice(
+	Face const * const this,
+	Color storage[FACE_SIZE],
+	int sliceIndex)
 {
-	Color * slice = calloc(CUBE_SIZE, sizeof(slice[0]));
-	if (slice == NULL)
-	{
-		fputs("Slice allocation failed", stderr);
-		exit(EXIT_FAILURE);
-	}
+	int cellIndex;
+	for (cellIndex = TOP_CELL; cellIndex <= BOTTOM_CELL; cellIndex++)
+		storage[cellIndex] = this->cells[sliceIndex][cellIndex];
+}
 
-	slice[0] = this->cells[LEFT_SLICE][TOP_CELL];
-	slice[1] = this->cells[LEFT_SLICE][MIDDLE_CELL];
-	slice[2] = this->cells[LEFT_SLICE][BOTTOM_CELL];
 
-	return slice;
+static void getLeftSlice(Face const * const this, Color storage[FACE_SIZE])
+{
+	getVerticalSlice(this, storage, LEFT_SLICE);
 }
 
 
@@ -496,13 +481,10 @@ static void rotateCameraAnticlockwise(Cube * const this)
 static void turnTopSliceLeft(Cube * this)
 {
 	size_t sliceSizeInBytes =
-		CUBE_SIZE * sizeof(this->faces[FRONT_FACE]->cells[TOP_SLICE][0]);
+		FACE_SIZE * sizeof(this->faces[FRONT_FACE]->cells[TOP_SLICE][0]);
 
-	Color * sliceBackup = calloc(CUBE_SIZE, sliceSizeInBytes);
-	memcpy(
-		sliceBackup,
-		this->faces[FRONT_FACE]->cells[TOP_SLICE],
-		sliceSizeInBytes);
+	Color sliceBackup[FACE_SIZE];
+	getTopSlice(this->faces[FRONT_FACE], sliceBackup);
 
 	memcpy(
 		this->faces[FRONT_FACE]->cells[TOP_SLICE],
@@ -526,13 +508,10 @@ static void turnTopSliceLeft(Cube * this)
 static void turnTopSliceRight(Cube * this)
 {
 	size_t sliceSizeInBytes =
-		CUBE_SIZE * sizeof(this->faces[FRONT_FACE]->cells[TOP_SLICE][0]);
+		FACE_SIZE * sizeof(this->faces[FRONT_FACE]->cells[TOP_SLICE][0]);
 
-	Color * sliceBackup = calloc(CUBE_SIZE, sliceSizeInBytes);
-	memcpy(
-		sliceBackup,
-		this->faces[FRONT_FACE]->cells[TOP_SLICE],
-		sliceSizeInBytes);
+	Color sliceBackup[FACE_SIZE];
+	getTopSlice(this->faces[FRONT_FACE], sliceBackup);
 
 	memcpy(
 		this->faces[FRONT_FACE]->cells[TOP_SLICE],
@@ -556,13 +535,10 @@ static void turnTopSliceRight(Cube * this)
 static void turnMiddleSliceLeft(Cube * this)
 {
 	size_t sliceSizeInBytes =
-		CUBE_SIZE * sizeof(this->faces[FRONT_FACE]->cells[MIDDLE_SLICE][0]);
+		FACE_SIZE * sizeof(this->faces[FRONT_FACE]->cells[MIDDLE_SLICE][0]);
 
-	Color * sliceBackup = calloc(CUBE_SIZE, sliceSizeInBytes);
-	memcpy(
-		sliceBackup,
-		this->faces[FRONT_FACE]->cells[MIDDLE_SLICE],
-		sliceSizeInBytes);
+	Color sliceBackup[FACE_SIZE];
+	getMiddleSlice(this->faces[FRONT_FACE], sliceBackup);
 
 	memcpy(
 		this->faces[FRONT_FACE]->cells[MIDDLE_SLICE],
@@ -586,13 +562,10 @@ static void turnMiddleSliceLeft(Cube * this)
 static void turnMiddleSliceRight(Cube * this)
 {
 	size_t sliceSizeInBytes =
-		CUBE_SIZE * sizeof(this->faces[FRONT_FACE]->cells[MIDDLE_SLICE][0]);
+		FACE_SIZE * sizeof(this->faces[FRONT_FACE]->cells[MIDDLE_SLICE][0]);
 
-	Color * sliceBackup = calloc(CUBE_SIZE, sliceSizeInBytes);
-	memcpy(
-		sliceBackup,
-		this->faces[FRONT_FACE]->cells[MIDDLE_SLICE],
-		sliceSizeInBytes);
+	Color sliceBackup[FACE_SIZE];
+	getMiddleSlice(this->faces[FRONT_FACE], sliceBackup);
 
 	memcpy(
 		this->faces[FRONT_FACE]->cells[MIDDLE_SLICE],
@@ -616,13 +589,10 @@ static void turnMiddleSliceRight(Cube * this)
 static void turnBottomSliceLeft(Cube * this)
 {
 	size_t sliceSizeInBytes =
-		CUBE_SIZE * sizeof(this->faces[FRONT_FACE]->cells[BOTTOM_SLICE][0]);
+		FACE_SIZE * sizeof(this->faces[FRONT_FACE]->cells[BOTTOM_SLICE][0]);
 
-	Color * sliceBackup = calloc(CUBE_SIZE, sliceSizeInBytes);
-	memcpy(
-		sliceBackup,
-		this->faces[FRONT_FACE]->cells[BOTTOM_SLICE],
-		sliceSizeInBytes);
+	Color sliceBackup[FACE_SIZE];
+	getBottomSlice(this->faces[FRONT_FACE], sliceBackup);
 
 	memcpy(
 		this->faces[FRONT_FACE]->cells[BOTTOM_SLICE],
@@ -646,13 +616,10 @@ static void turnBottomSliceLeft(Cube * this)
 static void turnBottomSliceRight(Cube * this)
 {
 	size_t sliceSizeInBytes =
-		CUBE_SIZE * sizeof(this->faces[FRONT_FACE]->cells[BOTTOM_SLICE][0]);
+		FACE_SIZE * sizeof(this->faces[FRONT_FACE]->cells[BOTTOM_SLICE][0]);
 
-	Color * sliceBackup = calloc(CUBE_SIZE, sliceSizeInBytes);
-	memcpy(
-		sliceBackup,
-		this->faces[FRONT_FACE]->cells[BOTTOM_SLICE],
-		sliceSizeInBytes);
+	Color sliceBackup[FACE_SIZE];
+	getBottomSlice(this->faces[FRONT_FACE], sliceBackup);
 
 	memcpy(
 		this->faces[FRONT_FACE]->cells[BOTTOM_SLICE],
@@ -675,7 +642,7 @@ static void turnBottomSliceRight(Cube * this)
 
 static void turnLeftSliceUp(Cube * this)
 {
-	Color sliceBackup[CUBE_SIZE];
+	Color sliceBackup[FACE_SIZE];
 	sliceBackup[0] = this->faces[FRONT_FACE]->cells[LEFT_SLICE][TOP_CELL],
 	sliceBackup[1] =this->faces[FRONT_FACE]->cells[LEFT_SLICE][MIDDLE_CELL];
 	sliceBackup[2] =this->faces[FRONT_FACE]->cells[LEFT_SLICE][BOTTOM_CELL];

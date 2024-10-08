@@ -4,8 +4,6 @@
 
 #include "Face.h"
 
-#define CUBE_SIZE 3
-
 
 
 

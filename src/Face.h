@@ -4,6 +4,8 @@
 
 #include "Color.h"
 
+#define FACE_SIZE 3
+
 
 
 
@@ -27,10 +29,10 @@ typedef struct
 	Color (* bottomCenterCell)(Face const * this);
 	Color (* bottomRightCell)(Face const * this);
 
-	Color * (* topSlice)(Face const * this);
-	Color * (* middleSlice)(Face const * this);
-	Color * (* bottomSlice)(Face const * this);
-	Color * (* leftSlice)(Face const * this);
+	void (* topSlice)(Face const * this, Color storage[FACE_SIZE]);
+	void (* middleSlice)(Face const * this, Color storage[FACE_SIZE]);
+	void (* bottomSlice)(Face const * this, Color storage[FACE_SIZE]);
+	void (* leftSlice)(Face const * this, Color storage[FACE_SIZE]);
 
 } FaceMethods;
 
