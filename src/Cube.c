@@ -175,6 +175,9 @@ static void rotateCameraClockwise(Cube * this);
 static void rotateCameraAnticlockwise(Cube * this);
 
 
+static void turnHorizontalSlice(Cube * this, int sliceIndex, int cycle[4]);
+
+
 static void turnTopSliceLeft(Cube * this);
 
 
@@ -478,165 +481,69 @@ static void rotateCameraAnticlockwise(Cube * const this)
 }
 
 
-static void turnTopSliceLeft(Cube * this)
+static void turnHorizontalSlice(Cube * this, int sliceIndex, int cycle[4])
 {
 	size_t sliceSizeInBytes =
-		FACE_SIZE * sizeof(this->faces[FRONT_FACE]->cells[TOP_SLICE][0]);
+		FACE_SIZE * sizeof(this->faces[FRONT_FACE]->cells[sliceIndex][0]);
+
+	int cycleIndex;
 
 	Color sliceBackup[FACE_SIZE];
-	getTopSlice(this->faces[FRONT_FACE], sliceBackup);
+	memcpy(sliceBackup, this->faces[cycle[0]], sliceSizeInBytes);
+
+	for (cycleIndex = 0; cycleIndex < 3; cycleIndex++)
+	{
+		memcpy(
+			this->faces[cycle[cycleIndex]]->cells[sliceIndex],
+			this->faces[cycle[cycleIndex + 1]]->cells[sliceIndex],
+			sliceSizeInBytes);
+	}
 
 	memcpy(
-		this->faces[FRONT_FACE]->cells[TOP_SLICE],
-		this->faces[RIGHT_FACE]->cells[TOP_SLICE],
-		sliceSizeInBytes);
-	memcpy(
-		this->faces[RIGHT_FACE]->cells[TOP_SLICE],
-		this->faces[BACK_FACE]->cells[TOP_SLICE],
-		sliceSizeInBytes);
-	memcpy(
-		this->faces[BACK_FACE]->cells[TOP_SLICE],
-		this->faces[LEFT_FACE]->cells[TOP_SLICE],
-		sliceSizeInBytes);
-	memcpy(
-		this->faces[LEFT_FACE]->cells[TOP_SLICE],
+		this->faces[cycle[cycleIndex]]->cells[sliceIndex],
 		sliceBackup,
 		sliceSizeInBytes);
+}
+
+static void turnTopSliceLeft(Cube * this)
+{
+	int cycle[] = { FRONT_FACE, RIGHT_FACE, BACK_FACE, LEFT_FACE };
+	turnHorizontalSlice(this, TOP_SLICE, cycle);
 }
 
 
 static void turnTopSliceRight(Cube * this)
 {
-	size_t sliceSizeInBytes =
-		FACE_SIZE * sizeof(this->faces[FRONT_FACE]->cells[TOP_SLICE][0]);
-
-	Color sliceBackup[FACE_SIZE];
-	getTopSlice(this->faces[FRONT_FACE], sliceBackup);
-
-	memcpy(
-		this->faces[FRONT_FACE]->cells[TOP_SLICE],
-		this->faces[LEFT_FACE]->cells[TOP_SLICE],
-		sliceSizeInBytes);
-	memcpy(
-		this->faces[LEFT_FACE]->cells[TOP_SLICE],
-		this->faces[BACK_FACE]->cells[TOP_SLICE],
-		sliceSizeInBytes);
-	memcpy(
-		this->faces[BACK_FACE]->cells[TOP_SLICE],
-		this->faces[RIGHT_FACE]->cells[TOP_SLICE],
-		sliceSizeInBytes);
-	memcpy(
-		this->faces[RIGHT_FACE]->cells[TOP_SLICE],
-		sliceBackup,
-		sliceSizeInBytes);
+	int cycle[] = { FRONT_FACE, LEFT_FACE, BACK_FACE, RIGHT_FACE };
+	turnHorizontalSlice(this, TOP_SLICE, cycle);
 }
 
 
 static void turnMiddleSliceLeft(Cube * this)
 {
-	size_t sliceSizeInBytes =
-		FACE_SIZE * sizeof(this->faces[FRONT_FACE]->cells[MIDDLE_SLICE][0]);
-
-	Color sliceBackup[FACE_SIZE];
-	getMiddleSlice(this->faces[FRONT_FACE], sliceBackup);
-
-	memcpy(
-		this->faces[FRONT_FACE]->cells[MIDDLE_SLICE],
-		this->faces[RIGHT_FACE]->cells[MIDDLE_SLICE],
-		sliceSizeInBytes);
-	memcpy(
-		this->faces[RIGHT_FACE]->cells[MIDDLE_SLICE],
-		this->faces[BACK_FACE]->cells[MIDDLE_SLICE],
-		sliceSizeInBytes);
-	memcpy(
-		this->faces[BACK_FACE]->cells[MIDDLE_SLICE],
-		this->faces[LEFT_FACE]->cells[MIDDLE_SLICE],
-		sliceSizeInBytes);
-	memcpy(
-		this->faces[LEFT_FACE]->cells[MIDDLE_SLICE],
-		sliceBackup,
-		sliceSizeInBytes);
+	int cycle[] = { FRONT_FACE, RIGHT_FACE, BACK_FACE, LEFT_FACE };
+	turnHorizontalSlice(this, MIDDLE_SLICE, cycle);
 }
 
 
 static void turnMiddleSliceRight(Cube * this)
 {
-	size_t sliceSizeInBytes =
-		FACE_SIZE * sizeof(this->faces[FRONT_FACE]->cells[MIDDLE_SLICE][0]);
-
-	Color sliceBackup[FACE_SIZE];
-	getMiddleSlice(this->faces[FRONT_FACE], sliceBackup);
-
-	memcpy(
-		this->faces[FRONT_FACE]->cells[MIDDLE_SLICE],
-		this->faces[LEFT_FACE]->cells[MIDDLE_SLICE],
-		sliceSizeInBytes);
-	memcpy(
-		this->faces[LEFT_FACE]->cells[MIDDLE_SLICE],
-		this->faces[BACK_FACE]->cells[MIDDLE_SLICE],
-		sliceSizeInBytes);
-	memcpy(
-		this->faces[BACK_FACE]->cells[MIDDLE_SLICE],
-		this->faces[RIGHT_FACE]->cells[MIDDLE_SLICE],
-		sliceSizeInBytes);
-	memcpy(
-		this->faces[RIGHT_FACE]->cells[MIDDLE_SLICE],
-		sliceBackup,
-		sliceSizeInBytes);
+	int cycle[] = { FRONT_FACE, LEFT_FACE, BACK_FACE, RIGHT_FACE };
+	turnHorizontalSlice(this, MIDDLE_SLICE, cycle);
 }
 
 
 static void turnBottomSliceLeft(Cube * this)
 {
-	size_t sliceSizeInBytes =
-		FACE_SIZE * sizeof(this->faces[FRONT_FACE]->cells[BOTTOM_SLICE][0]);
-
-	Color sliceBackup[FACE_SIZE];
-	getBottomSlice(this->faces[FRONT_FACE], sliceBackup);
-
-	memcpy(
-		this->faces[FRONT_FACE]->cells[BOTTOM_SLICE],
-		this->faces[RIGHT_FACE]->cells[BOTTOM_SLICE],
-		sliceSizeInBytes);
-	memcpy(
-		this->faces[RIGHT_FACE]->cells[BOTTOM_SLICE],
-		this->faces[BACK_FACE]->cells[BOTTOM_SLICE],
-		sliceSizeInBytes);
-	memcpy(
-		this->faces[BACK_FACE]->cells[BOTTOM_SLICE],
-		this->faces[LEFT_FACE]->cells[BOTTOM_SLICE],
-		sliceSizeInBytes);
-	memcpy(
-		this->faces[LEFT_FACE]->cells[BOTTOM_SLICE],
-		sliceBackup,
-		sliceSizeInBytes);
+	int cycle[] = { FRONT_FACE, RIGHT_FACE, BACK_FACE, LEFT_FACE };
+	turnHorizontalSlice(this, BOTTOM_SLICE, cycle);
 }
 
 
 static void turnBottomSliceRight(Cube * this)
 {
-	size_t sliceSizeInBytes =
-		FACE_SIZE * sizeof(this->faces[FRONT_FACE]->cells[BOTTOM_SLICE][0]);
-
-	Color sliceBackup[FACE_SIZE];
-	getBottomSlice(this->faces[FRONT_FACE], sliceBackup);
-
-	memcpy(
-		this->faces[FRONT_FACE]->cells[BOTTOM_SLICE],
-		this->faces[LEFT_FACE]->cells[BOTTOM_SLICE],
-		sliceSizeInBytes);
-	memcpy(
-		this->faces[LEFT_FACE]->cells[BOTTOM_SLICE],
-		this->faces[BACK_FACE]->cells[BOTTOM_SLICE],
-		sliceSizeInBytes);
-	memcpy(
-		this->faces[BACK_FACE]->cells[BOTTOM_SLICE],
-		this->faces[RIGHT_FACE]->cells[BOTTOM_SLICE],
-		sliceSizeInBytes);
-	memcpy(
-		this->faces[RIGHT_FACE]->cells[BOTTOM_SLICE],
-		sliceBackup,
-		sliceSizeInBytes);
+	int cycle[] = { FRONT_FACE, LEFT_FACE, BACK_FACE, RIGHT_FACE };
+	turnHorizontalSlice(this, BOTTOM_SLICE, cycle);
 }
 
 
