@@ -114,7 +114,7 @@ static void getBottomSlice(Face const * this, Color storage[FACE_SIZE]);
 static void getVerticalSlice(
 	Face const * this,
 	Color storage[FACE_SIZE],
-	int sliceIndex);
+	int cellIndex);
 
 
 static void getLeftSlice(Face const * this, Color storage[FACE_SIZE]);
@@ -335,17 +335,17 @@ void getBottomSlice(Face const * const this, Color storage[FACE_SIZE])
 static void getVerticalSlice(
 	Face const * const this,
 	Color storage[FACE_SIZE],
-	int sliceIndex)
+	int cellIndex)
 {
-	int cellIndex;
-	for (cellIndex = TOP_CELL; cellIndex <= BOTTOM_CELL; cellIndex++)
-		storage[cellIndex] = this->cells[sliceIndex][cellIndex];
+	int sliceIndex;
+	for (sliceIndex = TOP_SLICE; sliceIndex <= BOTTOM_SLICE; sliceIndex++)
+		storage[sliceIndex] = this->cells[sliceIndex][cellIndex];
 }
 
 
 static void getLeftSlice(Face const * const this, Color storage[FACE_SIZE])
 {
-	getVerticalSlice(this, storage, LEFT_SLICE);
+	getVerticalSlice(this, storage, LEFT_CELL);
 }
 
 
