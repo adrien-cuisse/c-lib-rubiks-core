@@ -552,44 +552,34 @@ static void turnBottomSliceRight(Cube * this)
 
 static void turnLeftSliceUp(Cube * this)
 {
+	int sliceIndex;
+
 	Color sliceBackup[FACE_SIZE];
-	sliceBackup[0] = this->faces[FRONT_FACE]->cells[LEFT_SLICE][TOP_CELL],
-	sliceBackup[1] =this->faces[FRONT_FACE]->cells[LEFT_SLICE][MIDDLE_CELL];
-	sliceBackup[2] =this->faces[FRONT_FACE]->cells[LEFT_SLICE][BOTTOM_CELL];
+	getVerticalSlice(this->faces[BOTTOM_FACE], sliceBackup, LEFT_CELL);
 
-	this->faces[FRONT_FACE]->cells[LEFT_SLICE][TOP_CELL] =
-		this->faces[BOTTOM_FACE]->cells[LEFT_SLICE][TOP_CELL];
+	for (sliceIndex = 0; sliceIndex < 3; sliceIndex++)
+	{
+		this->faces[BOTTOM_FACE]->cells[sliceIndex][LEFT_CELL] =
+			this->faces[BACK_FACE]->cells[sliceIndex][LEFT_CELL];
+	}
 
-	this->faces[FRONT_FACE]->cells[LEFT_SLICE][MIDDLE_CELL] =
-		this->faces[BOTTOM_FACE]->cells[LEFT_SLICE][MIDDLE_CELL];
+	for (sliceIndex = 0; sliceIndex < 3; sliceIndex++)
+	{
+		this->faces[BACK_FACE]->cells[sliceIndex][LEFT_CELL] =
+			this->faces[TOP_FACE]->cells[sliceIndex][LEFT_CELL];
+	}
 
-	this->faces[FRONT_FACE]->cells[LEFT_SLICE][BOTTOM_CELL] =
-		this->faces[BOTTOM_FACE]->cells[LEFT_SLICE][BOTTOM_CELL];
+	for (sliceIndex = 0; sliceIndex < 3; sliceIndex++)
+	{
+		this->faces[TOP_FACE]->cells[sliceIndex][LEFT_CELL] =
+			this->faces[FRONT_FACE]->cells[sliceIndex][LEFT_CELL];
+	}
 
-
-	this->faces[BOTTOM_FACE]->cells[LEFT_SLICE][TOP_CELL] =
-		this->faces[BACK_FACE]->cells[LEFT_SLICE][TOP_CELL];
-
-	this->faces[BOTTOM_FACE]->cells[LEFT_SLICE][MIDDLE_CELL] =
-		this->faces[BACK_FACE]->cells[LEFT_SLICE][MIDDLE_CELL];
-
-	this->faces[BOTTOM_FACE]->cells[LEFT_SLICE][BOTTOM_CELL] =
-		this->faces[BACK_FACE]->cells[LEFT_SLICE][BOTTOM_CELL];
-
-
-	this->faces[BACK_FACE]->cells[LEFT_SLICE][TOP_CELL] =
-		this->faces[TOP_FACE]->cells[LEFT_SLICE][TOP_CELL];
-
-	this->faces[BACK_FACE]->cells[LEFT_SLICE][MIDDLE_CELL] =
-		this->faces[TOP_FACE]->cells[LEFT_SLICE][MIDDLE_CELL];
-
-	this->faces[BACK_FACE]->cells[LEFT_SLICE][BOTTOM_CELL] =
-		this->faces[TOP_FACE]->cells[LEFT_SLICE][BOTTOM_CELL];
-
-
-	this->faces[TOP_FACE]->cells[LEFT_SLICE][TOP_CELL] = sliceBackup[0];
-	this->faces[TOP_FACE]->cells[LEFT_SLICE][MIDDLE_CELL] = sliceBackup[1];
-	this->faces[TOP_FACE]->cells[LEFT_SLICE][BOTTOM_CELL] = sliceBackup[2];
+	for (sliceIndex = 0; sliceIndex < 3; sliceIndex++)
+	{
+		this->faces[FRONT_FACE]->cells[sliceIndex][LEFT_CELL] =
+			sliceBackup[sliceIndex];
+	}
 }
 
 
