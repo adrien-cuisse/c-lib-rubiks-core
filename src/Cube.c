@@ -481,7 +481,7 @@ static void rotateCameraAnticlockwise(Cube * const this)
 }
 
 
-static void turnHorizontalSlice(Cube * this, int sliceIndex, int cycle[4])
+static void turnHorizontalSlice(Cube * this, int sliceIndex, int facesCycle[4])
 {
 	size_t sliceSizeInBytes =
 		FACE_SIZE * sizeof(this->faces[FRONT_FACE]->cells[sliceIndex][0]);
@@ -489,61 +489,64 @@ static void turnHorizontalSlice(Cube * this, int sliceIndex, int cycle[4])
 	int cycleIndex;
 
 	Color sliceBackup[FACE_SIZE];
-	memcpy(sliceBackup, this->faces[cycle[0]], sliceSizeInBytes);
+	memcpy(
+		sliceBackup,
+		this->faces[facesCycle[3]]->cells[sliceIndex],
+		sliceSizeInBytes);
 
-	for (cycleIndex = 0; cycleIndex < 3; cycleIndex++)
+	for (cycleIndex = 3; cycleIndex > 0; cycleIndex--)
 	{
 		memcpy(
-			this->faces[cycle[cycleIndex]]->cells[sliceIndex],
-			this->faces[cycle[cycleIndex + 1]]->cells[sliceIndex],
+			this->faces[facesCycle[cycleIndex]]->cells[sliceIndex],
+			this->faces[facesCycle[cycleIndex - 1]]->cells[sliceIndex],
 			sliceSizeInBytes);
 	}
 
 	memcpy(
-		this->faces[cycle[cycleIndex]]->cells[sliceIndex],
+		this->faces[facesCycle[0]]->cells[sliceIndex],
 		sliceBackup,
 		sliceSizeInBytes);
 }
 
 static void turnTopSliceLeft(Cube * this)
 {
-	int cycle[] = { FRONT_FACE, RIGHT_FACE, BACK_FACE, LEFT_FACE };
-	turnHorizontalSlice(this, TOP_SLICE, cycle);
+	int facesCycle[] = { FRONT_FACE, LEFT_FACE, BACK_FACE, RIGHT_FACE };
+	turnHorizontalSlice(this, TOP_SLICE, facesCycle);
 }
 
 
 static void turnTopSliceRight(Cube * this)
 {
-	int cycle[] = { FRONT_FACE, LEFT_FACE, BACK_FACE, RIGHT_FACE };
-	turnHorizontalSlice(this, TOP_SLICE, cycle);
+	int facesCycle[] = { FRONT_FACE, RIGHT_FACE, BACK_FACE, LEFT_FACE };
+	turnHorizontalSlice(this, TOP_SLICE, facesCycle);
 }
 
 
 static void turnMiddleSliceLeft(Cube * this)
 {
-	int cycle[] = { FRONT_FACE, RIGHT_FACE, BACK_FACE, LEFT_FACE };
-	turnHorizontalSlice(this, MIDDLE_SLICE, cycle);
+	int facesCycle[] = { FRONT_FACE, LEFT_FACE, BACK_FACE, RIGHT_FACE };
+	turnHorizontalSlice(this, MIDDLE_SLICE, facesCycle);
 }
 
 
 static void turnMiddleSliceRight(Cube * this)
 {
-	int cycle[] = { FRONT_FACE, LEFT_FACE, BACK_FACE, RIGHT_FACE };
-	turnHorizontalSlice(this, MIDDLE_SLICE, cycle);
+	int facesCycle[] = { FRONT_FACE, RIGHT_FACE, BACK_FACE, LEFT_FACE };
+	turnHorizontalSlice(this, MIDDLE_SLICE, facesCycle);
 }
 
 
 static void turnBottomSliceLeft(Cube * this)
 {
-	int cycle[] = { FRONT_FACE, RIGHT_FACE, BACK_FACE, LEFT_FACE };
-	turnHorizontalSlice(this, BOTTOM_SLICE, cycle);
+	int facesCycle[] = { FRONT_FACE, LEFT_FACE, BACK_FACE, RIGHT_FACE };
+	turnHorizontalSlice(this, BOTTOM_SLICE, facesCycle);
 }
 
 
 static void turnBottomSliceRight(Cube * this)
 {
-	int cycle[] = { FRONT_FACE, LEFT_FACE, BACK_FACE, RIGHT_FACE };
-	turnHorizontalSlice(this, BOTTOM_SLICE, cycle);
+	int facesCycle[] = { FRONT_FACE, RIGHT_FACE, BACK_FACE, LEFT_FACE };
+	turnHorizontalSlice(this, BOTTOM_SLICE, facesCycle);
 }
 
 
