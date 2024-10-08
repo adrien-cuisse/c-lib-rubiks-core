@@ -869,5 +869,75 @@ Test(Cube, turnBottomSliceRight_leftSliceComesToTheFront)
 
 Test(Cube, turnLeftSliceUp_frontSliceComesToTheTop)
 {
-	cr_assert_fail("WIP");
+	// given
+	Cube * cube = _Cube->create();
+	Face * frontFace = _Cube->frontFace(cube);
+	Color * oldFrontFaceLeftSlice = _Face->leftSlice(frontFace);
+	// when
+	_Cube->turnLeftSliceUp(cube);
+	// then
+	Face * topFace = _Cube->topFace(cube);
+	Color * newTopFaceLeftSlice = _Face->leftSlice(topFace);
+	cr_assert_arr_eq(
+		newTopFaceLeftSlice,
+		oldFrontFaceLeftSlice,
+		CUBE_SIZE,
+		"front face left slice wasn't moved to the top face");
+}
+
+
+Test(Cube, turnLeftSliceUp_topSliceComesToTheBack)
+{
+	// given
+	Cube * cube = _Cube->create();
+	Face * topFace = _Cube->topFace(cube);
+	Color * oldTopFaceLeftSlice = _Face->leftSlice(topFace);
+	// when
+	_Cube->turnLeftSliceUp(cube);
+	// then
+	Face * backFace = _Cube->backFace(cube);
+	Color * newBackFaceLeftSlice = _Face->leftSlice(backFace);
+	cr_assert_arr_eq(
+		newBackFaceLeftSlice,
+		oldTopFaceLeftSlice,
+		CUBE_SIZE,
+		"top face left slice wasn't moved to the back face");
+}
+
+
+Test(Cube, turnLeftSliceUp_backSliceComesToTheBottom)
+{
+	// given
+	Cube * cube = _Cube->create();
+	Face * backFace = _Cube->backFace(cube);
+	Color * oldBackFaceLeftSlice = _Face->leftSlice(backFace);
+	// when
+	_Cube->turnLeftSliceUp(cube);
+	// then
+	Face * bottomFace = _Cube->bottomFace(cube);
+	Color * newBottomFaceLeftSlice = _Face->leftSlice(bottomFace);
+	cr_assert_arr_eq(
+		newBottomFaceLeftSlice,
+		oldBackFaceLeftSlice,
+		CUBE_SIZE,
+		"back face left slice wasn't moved to the bottom face");
+}
+
+
+Test(Cube, turnLeftSliceUp_bottomSliceComesToTheFront)
+{
+	// given
+	Cube * cube = _Cube->create();
+	Face * bottomFace = _Cube->bottomFace(cube);
+	Color * oldBottomFaceLeftSlice = _Face->leftSlice(bottomFace);
+	// when
+	_Cube->turnLeftSliceUp(cube);
+	// then
+	Face * frontFace = _Cube->frontFace(cube);
+	Color * newFrontFaceLeftSlice = _Face->leftSlice(frontFace);
+	cr_assert_arr_eq(
+		newFrontFaceLeftSlice,
+		oldBottomFaceLeftSlice,
+		CUBE_SIZE,
+		"bottom face left slice wasn't moved to the front face");
 }

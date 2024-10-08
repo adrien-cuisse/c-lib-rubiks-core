@@ -30,6 +30,7 @@ typedef struct
 	Color * (* topSlice)(Face const * this);
 	Color * (* middleSlice)(Face const * this);
 	Color * (* bottomSlice)(Face const * this);
+	Color * (* leftSlice)(Face const * this);
 
 } FaceMethods;
 

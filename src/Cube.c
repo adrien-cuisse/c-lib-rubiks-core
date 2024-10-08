@@ -13,10 +13,20 @@
 #define BOTTOM_SLICE 2
 
 
+/** The vertical slices composing the face (Y axis), based on CUBE_SIZE */
+#define LEFT_SLICE 0
+
+
 /** The position of a cell in a slice (X axis), based on CUBE_SIZE */
 #define LEFT_CELL 0
 #define CENTER_CELL 1
 #define RIGHT_CELL 2
+
+
+/** The position of a cell in a slice (Y axis), based on CUBE_SIZE */
+#define TOP_CELL 0
+#define MIDDLE_CELL 1
+#define BOTTOM_CELL 2
 
 
 /** The position of each face in the T-shaped pattern of the unfolded cube */
@@ -95,6 +105,9 @@ static Color * getMiddleSlice(Face const * this);
 static Color * getBottomSlice(Face const * this);
 
 
+static Color * getLeftSlice(Face const * this);
+
+
 static void createAndPositionFaces(Cube * this);
 
 
@@ -166,6 +179,9 @@ static void turnBottomSliceLeft(Cube * this);
 
 
 static void turnBottomSliceRight(Cube * this);
+
+
+static void turnLeftSliceUp(Cube * this);
 
 
 
@@ -274,7 +290,7 @@ static Color getBottomRightCell(Face const * const this)
 }
 
 
-static Color * getTopSlice(Face const * this)
+static Color * getTopSlice(Face const * const this)
 {
 	Color * slice = calloc(CUBE_SIZE, sizeof(slice[0]));
 	if (slice == NULL)
@@ -292,7 +308,7 @@ static Color * getTopSlice(Face const * this)
 }
 
 
-static Color * getMiddleSlice(Face const * this)
+static Color * getMiddleSlice(Face const * const this)
 {
 	Color * slice = calloc(CUBE_SIZE, sizeof(slice[0]));
 	if (slice == NULL)
@@ -310,7 +326,7 @@ static Color * getMiddleSlice(Face const * this)
 }
 
 
-static Color * getBottomSlice(Face const * this)
+static Color * getBottomSlice(Face const * const this)
 {
 	Color * slice = calloc(CUBE_SIZE, sizeof(slice[0]));
 	if (slice == NULL)
@@ -323,6 +339,23 @@ static Color * getBottomSlice(Face const * this)
 		slice,
 		this->cells[BOTTOM_SLICE],
 		CUBE_SIZE * sizeof(this->cells[BOTTOM_SLICE][0]));
+
+	return slice;
+}
+
+
+static Color * getLeftSlice(Face const * const this)
+{
+	Color * slice = calloc(CUBE_SIZE, sizeof(slice[0]));
+	if (slice == NULL)
+	{
+		fputs("Slice allocation failed", stderr);
+		exit(EXIT_FAILURE);
+	}
+
+	slice[0] = this->cells[LEFT_SLICE][TOP_CELL];
+	slice[1] = this->cells[LEFT_SLICE][MIDDLE_CELL];
+	slice[2] = this->cells[LEFT_SLICE][BOTTOM_CELL];
 
 	return slice;
 }
@@ -640,6 +673,49 @@ static void turnBottomSliceRight(Cube * this)
 }
 
 
+static void turnLeftSliceUp(Cube * this)
+{
+	Color sliceBackup[CUBE_SIZE];
+	sliceBackup[0] = this->faces[FRONT_FACE]->cells[LEFT_SLICE][TOP_CELL],
+	sliceBackup[1] =this->faces[FRONT_FACE]->cells[LEFT_SLICE][MIDDLE_CELL];
+	sliceBackup[2] =this->faces[FRONT_FACE]->cells[LEFT_SLICE][BOTTOM_CELL];
+
+	this->faces[FRONT_FACE]->cells[LEFT_SLICE][TOP_CELL] =
+		this->faces[BOTTOM_FACE]->cells[LEFT_SLICE][TOP_CELL];
+
+	this->faces[FRONT_FACE]->cells[LEFT_SLICE][MIDDLE_CELL] =
+		this->faces[BOTTOM_FACE]->cells[LEFT_SLICE][MIDDLE_CELL];
+
+	this->faces[FRONT_FACE]->cells[LEFT_SLICE][BOTTOM_CELL] =
+		this->faces[BOTTOM_FACE]->cells[LEFT_SLICE][BOTTOM_CELL];
+
+
+	this->faces[BOTTOM_FACE]->cells[LEFT_SLICE][TOP_CELL] =
+		this->faces[BACK_FACE]->cells[LEFT_SLICE][TOP_CELL];
+
+	this->faces[BOTTOM_FACE]->cells[LEFT_SLICE][MIDDLE_CELL] =
+		this->faces[BACK_FACE]->cells[LEFT_SLICE][MIDDLE_CELL];
+
+	this->faces[BOTTOM_FACE]->cells[LEFT_SLICE][BOTTOM_CELL] =
+		this->faces[BACK_FACE]->cells[LEFT_SLICE][BOTTOM_CELL];
+
+
+	this->faces[BACK_FACE]->cells[LEFT_SLICE][TOP_CELL] =
+		this->faces[TOP_FACE]->cells[LEFT_SLICE][TOP_CELL];
+
+	this->faces[BACK_FACE]->cells[LEFT_SLICE][MIDDLE_CELL] =
+		this->faces[TOP_FACE]->cells[LEFT_SLICE][MIDDLE_CELL];
+
+	this->faces[BACK_FACE]->cells[LEFT_SLICE][BOTTOM_CELL] =
+		this->faces[TOP_FACE]->cells[LEFT_SLICE][BOTTOM_CELL];
+
+
+	this->faces[TOP_FACE]->cells[LEFT_SLICE][TOP_CELL] = sliceBackup[0];
+	this->faces[TOP_FACE]->cells[LEFT_SLICE][MIDDLE_CELL] = sliceBackup[1];
+	this->faces[TOP_FACE]->cells[LEFT_SLICE][BOTTOM_CELL] = sliceBackup[2];
+}
+
+
 
 
 static FaceMethods faceMethods =
@@ -661,7 +737,9 @@ static FaceMethods faceMethods =
 
 	getTopSlice,
 	getMiddleSlice,
-	getBottomSlice
+	getBottomSlice,
+
+	getLeftSlice
 };
 FaceMethods const * const _Face = & faceMethods;
 
@@ -690,6 +768,8 @@ static CubeMethods cubeMethods =
 	turnMiddleSliceLeft,
 	turnMiddleSliceRight,
 	turnBottomSliceLeft,
-	turnBottomSliceRight
+	turnBottomSliceRight,
+
+	turnLeftSliceUp
 };
 CubeMethods const * const _Cube = & cubeMethods;
