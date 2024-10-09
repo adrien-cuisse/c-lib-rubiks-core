@@ -125,6 +125,9 @@ static void getLeftColumn(Face const * this, Color storage[FACE_SIZE]);
 static void getMiddleColumn(Face const * this, Color storage[FACE_SIZE]);
 
 
+static void getRightColumn(Face const * this, Color storage[FACE_SIZE]);
+
+
 static void createAndPositionFaces(Cube * this);
 
 
@@ -214,6 +217,9 @@ static void turnMiddleSliceUp(Cube * this);
 
 
 static void turnMiddleSliceDown(Cube * this);
+
+
+static void turnRightSliceUp(Cube * this);
 
 
 
@@ -369,6 +375,12 @@ static void getLeftColumn(Face const * const this, Color storage[FACE_SIZE])
 static void getMiddleColumn(Face const * const this, Color storage[FACE_SIZE])
 {
 	getColumn(this, storage, MIDDLE_COLUMN);
+}
+
+
+static void getRightColumn(Face const * const this, Color storage[FACE_SIZE])
+{
+	getColumn(this, storage, RIGHT_COLUMN);
 }
 
 
@@ -621,6 +633,13 @@ static void turnMiddleSliceDown(Cube * this)
 }
 
 
+static void turnRightSliceUp(Cube * this)
+{
+	int facesCycle[] = { FRONT_FACE, TOP_FACE, BACK_FACE, BOTTOM_FACE };
+	turnVerticalSlice(this, RIGHT_COLUMN, facesCycle);
+}
+
+
 
 
 static FaceMethods faceMethods =
@@ -645,7 +664,8 @@ static FaceMethods faceMethods =
 	getBottomRow,
 
 	getLeftColumn,
-	getMiddleColumn
+	getMiddleColumn,
+	getRightColumn
 };
 FaceMethods const * const _Face = & faceMethods;
 
@@ -679,6 +699,7 @@ static CubeMethods cubeMethods =
 	turnLeftSliceUp,
 	turnLeftSliceDown,
 	turnMiddleSliceUp,
-	turnMiddleSliceDown
+	turnMiddleSliceDown,
+	turnRightSliceUp
 };
 CubeMethods const * const _Cube = & cubeMethods;

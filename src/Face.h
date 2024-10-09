@@ -35,6 +35,7 @@ typedef struct
 
 	void (* leftColumn)(Face const * this, Color storage[FACE_SIZE]);
 	void (* middleColumn)(Face const * this, Color storage[FACE_SIZE]);
+	void (* rightColumn)(Face const * this, Color storage[FACE_SIZE]);
 
 } FaceMethods;
 

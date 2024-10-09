@@ -915,7 +915,7 @@ Test(Cube, turnBottomSliceRight_leftRowGoesFront)
 }
 
 
-Test(Cube, turnLeftSliceUp_frontRowGoesTop)
+Test(Cube, turnLeftSliceUp_frontColumnGoesTop)
 {
 	// given
 	Cube * cube = _Cube->create();
@@ -936,7 +936,7 @@ Test(Cube, turnLeftSliceUp_frontRowGoesTop)
 }
 
 
-Test(Cube, turnLeftSliceUp_topRowGoesBack)
+Test(Cube, turnLeftSliceUp_topColumnGoesBack)
 {
 	// given
 	Cube * cube = _Cube->create();
@@ -957,7 +957,7 @@ Test(Cube, turnLeftSliceUp_topRowGoesBack)
 }
 
 
-Test(Cube, turnLeftSliceUp_backRowGoesBottom)
+Test(Cube, turnLeftSliceUp_backColumnGoesBottom)
 {
 	// given
 	Cube * cube = _Cube->create();
@@ -978,7 +978,7 @@ Test(Cube, turnLeftSliceUp_backRowGoesBottom)
 }
 
 
-Test(Cube, turnLeftSliceUp_bottomRowGoesFront)
+Test(Cube, turnLeftSliceUp_bottomColumnGoesFront)
 {
 	// given
 	Cube * cube = _Cube->create();
@@ -999,7 +999,7 @@ Test(Cube, turnLeftSliceUp_bottomRowGoesFront)
 }
 
 
-Test(Cube, turnLeftSliceDown_frontRowGoesBottom)
+Test(Cube, turnLeftSliceDown_frontColumnGoesBottom)
 {
 	// given
 	Cube * cube = _Cube->create();
@@ -1020,7 +1020,7 @@ Test(Cube, turnLeftSliceDown_frontRowGoesBottom)
 }
 
 
-Test(Cube, turnLeftSliceDown_bottomRowGoesBack)
+Test(Cube, turnLeftSliceDown_bottomColumnGoesBack)
 {
 	// given
 	Cube * cube = _Cube->create();
@@ -1041,7 +1041,7 @@ Test(Cube, turnLeftSliceDown_bottomRowGoesBack)
 }
 
 
-Test(Cube, turnLeftSliceDown_backRowGoesTop)
+Test(Cube, turnLeftSliceDown_backColumnGoesTop)
 {
 	// given
 	Cube * cube = _Cube->create();
@@ -1062,7 +1062,7 @@ Test(Cube, turnLeftSliceDown_backRowGoesTop)
 }
 
 
-Test(Cube, turnLeftSliceDown_topRowGoesFront)
+Test(Cube, turnLeftSliceDown_topColumnGoesFront)
 {
 	// given
 	Cube * cube = _Cube->create();
@@ -1083,7 +1083,7 @@ Test(Cube, turnLeftSliceDown_topRowGoesFront)
 }
 
 
-Test(Cube, turnMiddleSliceUp_frontRowGoesTop)
+Test(Cube, turnMiddleSliceUp_frontColumnGoesTop)
 {
 	// given
 	Cube * cube = _Cube->create();
@@ -1104,7 +1104,7 @@ Test(Cube, turnMiddleSliceUp_frontRowGoesTop)
 }
 
 
-Test(Cube, turnMiddleSliceUp_topRowGoesBack)
+Test(Cube, turnMiddleSliceUp_topColumnGoesBack)
 {
 	// given
 	Cube * cube = _Cube->create();
@@ -1125,7 +1125,7 @@ Test(Cube, turnMiddleSliceUp_topRowGoesBack)
 }
 
 
-Test(Cube, turnMiddleSliceUp_backRowGoesBottom)
+Test(Cube, turnMiddleSliceUp_backColumnGoesBottom)
 {
 	// given
 	Cube * cube = _Cube->create();
@@ -1146,7 +1146,7 @@ Test(Cube, turnMiddleSliceUp_backRowGoesBottom)
 }
 
 
-Test(Cube, turnMiddleSliceUp_bottomRowGoesFront)
+Test(Cube, turnMiddleSliceUp_bottomColumnGoesFront)
 {
 	// given
 	Cube * cube = _Cube->create();
@@ -1167,7 +1167,7 @@ Test(Cube, turnMiddleSliceUp_bottomRowGoesFront)
 }
 
 
-Test(Cube, turnMiddleSliceDown_frontRowGoesBottom)
+Test(Cube, turnMiddleSliceDown_frontColumnGoesBottom)
 {
 	// given
 	Cube * cube = _Cube->create();
@@ -1188,7 +1188,7 @@ Test(Cube, turnMiddleSliceDown_frontRowGoesBottom)
 }
 
 
-Test(Cube, turnMiddleSliceDown_bottomRowGoesBack)
+Test(Cube, turnMiddleSliceDown_bottomColumnGoesBack)
 {
 	// given
 	Cube * cube = _Cube->create();
@@ -1209,7 +1209,7 @@ Test(Cube, turnMiddleSliceDown_bottomRowGoesBack)
 }
 
 
-Test(Cube, turnMiddleSliceDown_backRowGoesTop)
+Test(Cube, turnMiddleSliceDown_backColumnGoesTop)
 {
 	// given
 	Cube * cube = _Cube->create();
@@ -1230,7 +1230,7 @@ Test(Cube, turnMiddleSliceDown_backRowGoesTop)
 }
 
 
-Test(Cube, turnMiddleSliceDown_topRowGoesFront)
+Test(Cube, turnMiddleSliceDown_topColumnGoesFront)
 {
 	// given
 	Cube * cube = _Cube->create();
@@ -1248,4 +1248,88 @@ Test(Cube, turnMiddleSliceDown_topRowGoesFront)
 		oldTopFaceMiddleColumn,
 		FACE_SIZE,
 		"top face middle column wasn't moved to the front face");
+}
+
+
+Test(Cube, turnRightSliceUp_frontColumnGoesTop)
+{
+	// given
+	Cube * cube = _Cube->create();
+	Face * frontFace = _Cube->frontFace(cube);
+	Color oldFrontFaceMiddleColumn[FACE_SIZE];
+	_Face->rightColumn(frontFace, oldFrontFaceMiddleColumn);
+	// when
+	_Cube->turnRightSliceUp(cube);
+	// then
+	Face * topFace = _Cube->topFace(cube);
+	Color newTopFaceMiddleColumn[FACE_SIZE];
+	_Face->rightColumn(topFace, newTopFaceMiddleColumn);
+	cr_assert_arr_eq(
+		newTopFaceMiddleColumn,
+		oldFrontFaceMiddleColumn,
+		FACE_SIZE,
+		"front face right column wasn't moved to the top face");
+}
+
+
+Test(Cube, turnRightSliceUp_topColumnGoesBack)
+{
+	// given
+	Cube * cube = _Cube->create();
+	Face * topFace = _Cube->topFace(cube);
+	Color oldTopFaceMiddleColumn[FACE_SIZE];
+	_Face->rightColumn(topFace, oldTopFaceMiddleColumn);
+	// when
+	_Cube->turnRightSliceUp(cube);
+	// then
+	Face * backFace = _Cube->backFace(cube);
+	Color newBackFaceMiddleColumn[FACE_SIZE];
+	_Face->rightColumn(backFace, newBackFaceMiddleColumn);
+	cr_assert_arr_eq(
+		newBackFaceMiddleColumn,
+		oldTopFaceMiddleColumn,
+		FACE_SIZE,
+		"top face right column wasn't moved to the back face");
+}
+
+
+Test(Cube, turnRightSliceUp_backColumnGoesBottom)
+{
+	// given
+	Cube * cube = _Cube->create();
+	Face * backFace = _Cube->backFace(cube);
+	Color oldBackFaceMiddleColumn[FACE_SIZE];
+	_Face->rightColumn(backFace, oldBackFaceMiddleColumn);
+	// when
+	_Cube->turnRightSliceUp(cube);
+	// then
+	Face * bottomFace = _Cube->bottomFace(cube);
+	Color newBottomFaceMiddleColumn[FACE_SIZE];
+	_Face->rightColumn(bottomFace, newBottomFaceMiddleColumn);
+	cr_assert_arr_eq(
+		newBottomFaceMiddleColumn,
+		oldBackFaceMiddleColumn,
+		FACE_SIZE,
+		"back face right column wasn't moved to the bottom face");
+}
+
+
+Test(Cube, turnRightSliceUp_bottomColumnGoesFront)
+{
+	// given
+	Cube * cube = _Cube->create();
+	Face * bottomFace = _Cube->bottomFace(cube);
+	Color oldBottomFaceMiddleColumn[FACE_SIZE];
+	_Face->rightColumn(bottomFace, oldBottomFaceMiddleColumn);
+	// when
+	_Cube->turnRightSliceUp(cube);
+	// then
+	Face * frontFace = _Cube->frontFace(cube);
+	Color newFrontFaceMiddleColumn[FACE_SIZE];
+	_Face->rightColumn(frontFace, newFrontFaceMiddleColumn);
+	cr_assert_arr_eq(
+		newFrontFaceMiddleColumn,
+		oldBottomFaceMiddleColumn,
+		FACE_SIZE,
+		"bottom face right column wasn't moved to the front face");
 }
