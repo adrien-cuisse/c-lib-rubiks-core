@@ -29,12 +29,12 @@ typedef struct
 	Color (* bottomCenterCell)(Face const * this);
 	Color (* bottomRightCell)(Face const * this);
 
-	void (* topSlice)(Face const * this, Color storage[FACE_SIZE]);
-	void (* equatorSlice)(Face const * this, Color storage[FACE_SIZE]);
-	void (* bottomSlice)(Face const * this, Color storage[FACE_SIZE]);
+	void (* topRow)(Face const * this, Color storage[FACE_SIZE]);
+	void (* equatorRow)(Face const * this, Color storage[FACE_SIZE]);
+	void (* bottomRow)(Face const * this, Color storage[FACE_SIZE]);
 
-	void (* leftSlice)(Face const * this, Color storage[FACE_SIZE]);
-	void (* middleSlice)(Face const * this, Color storage[FACE_SIZE]);
+	void (* leftColumn)(Face const * this, Color storage[FACE_SIZE]);
+	void (* middleColumn)(Face const * this, Color storage[FACE_SIZE]);
 
 } FaceMethods;
 
