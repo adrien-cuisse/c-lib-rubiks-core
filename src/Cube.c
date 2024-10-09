@@ -222,6 +222,9 @@ static void turnMiddleSliceDown(Cube * this);
 static void turnRightSliceUp(Cube * this);
 
 
+static void turnRightSliceDown(Cube * this);
+
+
 
 
 static void applyColorOnRow(Face * const this, int rowIndex, Color color)
@@ -640,6 +643,14 @@ static void turnRightSliceUp(Cube * this)
 }
 
 
+static void turnRightSliceDown(Cube * this)
+{
+	int facesCycle[] = { FRONT_FACE, BOTTOM_FACE, BACK_FACE, TOP_FACE };
+	turnVerticalSlice(this, RIGHT_COLUMN, facesCycle);
+}
+
+
+
 
 
 static FaceMethods faceMethods =
@@ -700,6 +711,7 @@ static CubeMethods cubeMethods =
 	turnLeftSliceDown,
 	turnMiddleSliceUp,
 	turnMiddleSliceDown,
-	turnRightSliceUp
+	turnRightSliceUp,
+	turnRightSliceDown
 };
 CubeMethods const * const _Cube = & cubeMethods;

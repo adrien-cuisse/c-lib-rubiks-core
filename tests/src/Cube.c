@@ -1333,3 +1333,87 @@ Test(Cube, turnRightSliceUp_bottomColumnGoesFront)
 		FACE_SIZE,
 		"bottom face right column wasn't moved to the front face");
 }
+
+
+Test(Cube, turnRightSliceDown_frontColumnGoesBottom)
+{
+	// given
+	Cube * cube = _Cube->create();
+	Face * frontFace = _Cube->frontFace(cube);
+	Color oldFrontFaceMiddleColumn[FACE_SIZE];
+	_Face->rightColumn(frontFace, oldFrontFaceMiddleColumn);
+	// when
+	_Cube->turnRightSliceDown(cube);
+	// then
+	Face * bottomFace = _Cube->bottomFace(cube);
+	Color newBottomFaceMiddleColumn[FACE_SIZE];
+	_Face->rightColumn(bottomFace, newBottomFaceMiddleColumn);
+	cr_assert_arr_eq(
+		newBottomFaceMiddleColumn,
+		oldFrontFaceMiddleColumn,
+		FACE_SIZE,
+		"front face right column wasn't moved to the bottom face");
+}
+
+
+Test(Cube, turnRightSliceDown_bottomColumnGoesBack)
+{
+	// given
+	Cube * cube = _Cube->create();
+	Face * bottomFace = _Cube->bottomFace(cube);
+	Color oldBottomFaceMiddleColumn[FACE_SIZE];
+	_Face->rightColumn(bottomFace, oldBottomFaceMiddleColumn);
+	// when
+	_Cube->turnRightSliceDown(cube);
+	// then
+	Face * backFace = _Cube->backFace(cube);
+	Color newBackFaceMiddleColumn[FACE_SIZE];
+	_Face->rightColumn(backFace, newBackFaceMiddleColumn);
+	cr_assert_arr_eq(
+		newBackFaceMiddleColumn,
+		oldBottomFaceMiddleColumn,
+		FACE_SIZE,
+		"bottom face right column wasn't moved to the back face");
+}
+
+
+Test(Cube, turnRightSliceDown_backColumnGoesTop)
+{
+	// given
+	Cube * cube = _Cube->create();
+	Face * backFace = _Cube->backFace(cube);
+	Color oldBackFaceMiddleColumn[FACE_SIZE];
+	_Face->rightColumn(backFace, oldBackFaceMiddleColumn);
+	// when
+	_Cube->turnRightSliceDown(cube);
+	// then
+	Face * topFace = _Cube->topFace(cube);
+	Color newTopFaceMiddleColumn[FACE_SIZE];
+	_Face->rightColumn(topFace, newTopFaceMiddleColumn);
+	cr_assert_arr_eq(
+		newTopFaceMiddleColumn,
+		oldBackFaceMiddleColumn,
+		FACE_SIZE,
+		"back face right column wasn't moved to the top face");
+}
+
+
+Test(Cube, turnRightSliceDown_topColumnGoesFront)
+{
+	// given
+	Cube * cube = _Cube->create();
+	Face * topFace = _Cube->topFace(cube);
+	Color oldTopFaceMiddleColumn[FACE_SIZE];
+	_Face->rightColumn(topFace, oldTopFaceMiddleColumn);
+	// when
+	_Cube->turnRightSliceDown(cube);
+	// then
+	Face * frontFace = _Cube->frontFace(cube);
+	Color newFrontFaceMiddleColumn[FACE_SIZE];
+	_Face->rightColumn(frontFace, newFrontFaceMiddleColumn);
+	cr_assert_arr_eq(
+		newFrontFaceMiddleColumn,
+		oldTopFaceMiddleColumn,
+		FACE_SIZE,
+		"top face right column wasn't moved to the front face");
+}
