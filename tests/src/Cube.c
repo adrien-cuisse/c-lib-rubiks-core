@@ -1528,8 +1528,8 @@ Test(Cube, turnFrontSliceAnticlockwise_leftColumnGoesBottom)
 	// given
 	Cube * cube = _Cube->create();
 	Face * leftFace = _Cube->leftFace(cube);
-	Color oldTopFaceRightColumn[FACE_SIZE];
-	_Face->rightColumn(leftFace, oldTopFaceRightColumn);
+	Color oldLeftFaceRightColumn[FACE_SIZE];
+	_Face->rightColumn(leftFace, oldLeftFaceRightColumn);
 	// when
 	_Cube->turnFrontSliceAnticlockwise(cube);
 	// then
@@ -1538,7 +1538,7 @@ Test(Cube, turnFrontSliceAnticlockwise_leftColumnGoesBottom)
 	_Face->topRow(bottomFace, newBottomFaceTopRow);
 	cr_assert_arr_eq(
 		newBottomFaceTopRow,
-		oldTopFaceRightColumn,
+		oldLeftFaceRightColumn,
 		FACE_SIZE,
 		"left face right column wasn't moved to the bottom face top row");
 }
