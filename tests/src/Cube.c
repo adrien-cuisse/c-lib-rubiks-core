@@ -1163,5 +1163,5 @@ Test(Cube, turnMiddleSliceUp_bottomRowGoesFront)
 		newFrontFaceMiddleColumn,
 		oldBottomFaceMiddleColumn,
 		FACE_SIZE,
-		"bottom face middle column wasn't moved to the bottom front");
+		"bottom face middle column wasn't moved to the bottom face");
 }
