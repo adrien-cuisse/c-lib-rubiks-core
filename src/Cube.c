@@ -13,7 +13,7 @@
 #define BOTTOM_SLICE 2
 
 
-/** The vertical slices composing the face (Y axis), based on FACE_SIZE */
+/** The vertical slices composing the face (X axis), based on FACE_SIZE */
 #define LEFT_SLICE 0
 
 
