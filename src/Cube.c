@@ -19,7 +19,7 @@
 
 /** The position of a cell in a slice (X axis), based on FACE_SIZE */
 #define LEFT_CELL 0
-#define CENTER_CELL 1
+#define MIDDLE_CELL 1
 #define RIGHT_CELL 2
 
 
@@ -265,7 +265,7 @@ static Color getTopLeftCell(Face const * const this)
 
 static Color getTopCenterCell(Face const * const this)
 {
-	return this->cells[TOP_SLICE][CENTER_CELL];
+	return this->cells[TOP_SLICE][MIDDLE_CELL];
 }
 
 
@@ -283,7 +283,7 @@ static Color getEquatorLeftCell(Face const * const this)
 
 static Color getEquatorCenterCell(Face const * const this)
 {
-	return this->cells[EQUATOR_SLICE][CENTER_CELL];
+	return this->cells[EQUATOR_SLICE][MIDDLE_CELL];
 }
 
 
@@ -301,7 +301,7 @@ static Color getBottomLeftCell(Face const * const this)
 
 static Color getBottomCenterCell(Face const * const this)
 {
-	return this->cells[BOTTOM_SLICE][CENTER_CELL];
+	return this->cells[BOTTOM_SLICE][MIDDLE_CELL];
 }
 
 
