@@ -552,23 +552,44 @@ static void rotateCameraAnticlockwise(Cube * const this)
 static void turnHorizontalSlice(Cube * this, int rowIndex, int facesCycle[4])
 {
 	int columnIndex;
+	int cycleIndex;
 
 	Color rowBackup[FACE_SIZE];
 	getRow(this->faces[facesCycle[3]], rowBackup, rowIndex);
 
-	for (columnIndex = LEFT_COLUMN; columnIndex < RIGHT_COLUMN; columnIndex++)
+	for (cycleIndex = 3; cycleIndex > 0; cycleIndex--)
 	{
-		this->faces[facesCycle[3]]->cells[rowIndex][columnIndex] =
-			this->faces[facesCycle[2]]->cells[rowIndex][columnIndex];
+		/* because of how we unfold the cube, top row becomes bottom row for
+			the back face, and bottom row becomes top row, this has no effect
+			for equator row */
+		if (facesCycle[cycleIndex] == BACK_FACE)
+			rowIndex = 2 - rowIndex;
 
-		this->faces[facesCycle[2]]->cells[rowIndex][columnIndex] =
-			this->faces[facesCycle[1]]->cells[rowIndex][columnIndex];
+		for (columnIndex = LEFT_COLUMN; columnIndex <= RIGHT_COLUMN; columnIndex++)
+		{
+			this->faces[facesCycle[cycleIndex]]->cells[2 - rowIndex][columnIndex] =
+				this->faces[facesCycle[cycleIndex - 1]]->cells[rowIndex][columnIndex];
 
-		this->faces[facesCycle[1]]->cells[rowIndex][columnIndex] =
-			this->faces[facesCycle[0]]->cells[rowIndex][columnIndex];
+			this->faces[facesCycle[cycleIndex]]->cells[rowIndex][columnIndex] =
+				this->faces[facesCycle[cycleIndex - 1]]->cells[rowIndex][columnIndex];
+		}
 
-		this->faces[facesCycle[0]]->cells[rowIndex][columnIndex] =
+		/* reverse previous coord flip */
+		if (facesCycle[cycleIndex] == BACK_FACE)
+			rowIndex = 2 - rowIndex;
+	}
+
+	for (columnIndex = LEFT_COLUMN; columnIndex <= RIGHT_COLUMN; columnIndex++)
+	{
+		/* same as above, we need this one if cycle starts with BACK_FACE */
+		if (facesCycle[cycleIndex] == BACK_FACE)
+			rowIndex = 2 - rowIndex;
+
+		this->faces[facesCycle[cycleIndex]]->cells[rowIndex][columnIndex] =
 			rowBackup[columnIndex];
+
+		if (facesCycle[cycleIndex] == BACK_FACE)
+			rowIndex = 2 - rowIndex;
 	}
 }
 
