@@ -25,7 +25,7 @@
 
 /** The position of a cell in a slice (Y axis), based on FACE_SIZE */
 #define TOP_CELL 0
-#define MIDDLE_CELL 1
+#define EQUATOR_CELL 1
 #define BOTTOM_CELL 2
 
 
