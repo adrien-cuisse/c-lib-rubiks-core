@@ -1081,3 +1081,87 @@ Test(Cube, turnLeftSliceDown_topSliceComesToTheFront)
 		FACE_SIZE,
 		"top face left slice wasn't moved to the front face");
 }
+
+
+Test(Cube, turnMiddleSliceUp_frontSliceComesToTheTop)
+{
+	// given
+	Cube * cube = _Cube->create();
+	Face * frontFace = _Cube->frontFace(cube);
+	Color oldFrontFaceMiddleSlice[FACE_SIZE];
+	_Face->middleSlice(frontFace, oldFrontFaceMiddleSlice);
+	// when
+	_Cube->turnMiddleSliceUp(cube);
+	// then
+	Face * topFace = _Cube->topFace(cube);
+	Color newTopFaceMiddleSlice[FACE_SIZE];
+	_Face->middleSlice(topFace, newTopFaceMiddleSlice);
+	cr_assert_arr_eq(
+		newTopFaceMiddleSlice,
+		oldFrontFaceMiddleSlice,
+		FACE_SIZE,
+		"front face middle slice wasn't moved to the top face");
+}
+
+
+Test(Cube, turnMiddleSliceUp_topSliceComesToTheBack)
+{
+	// given
+	Cube * cube = _Cube->create();
+	Face * topFace = _Cube->topFace(cube);
+	Color oldTopFaceMiddleSlice[FACE_SIZE];
+	_Face->middleSlice(topFace, oldTopFaceMiddleSlice);
+	// when
+	_Cube->turnMiddleSliceUp(cube);
+	// then
+	Face * backFace = _Cube->backFace(cube);
+	Color newBackFaceMiddleSlice[FACE_SIZE];
+	_Face->middleSlice(backFace, newBackFaceMiddleSlice);
+	cr_assert_arr_eq(
+		newBackFaceMiddleSlice,
+		oldTopFaceMiddleSlice,
+		FACE_SIZE,
+		"top face middle slice wasn't moved to the back face");
+}
+
+
+Test(Cube, turnMiddleSliceUp_backSliceComesToTheBottom)
+{
+	// given
+	Cube * cube = _Cube->create();
+	Face * backFace = _Cube->backFace(cube);
+	Color oldBackFaceMiddleSlice[FACE_SIZE];
+	_Face->middleSlice(backFace, oldBackFaceMiddleSlice);
+	// when
+	_Cube->turnMiddleSliceUp(cube);
+	// then
+	Face * bottomFace = _Cube->bottomFace(cube);
+	Color newBottomFaceMiddleSlice[FACE_SIZE];
+	_Face->middleSlice(bottomFace, newBottomFaceMiddleSlice);
+	cr_assert_arr_eq(
+		newBottomFaceMiddleSlice,
+		oldBackFaceMiddleSlice,
+		FACE_SIZE,
+		"back face middle slice wasn't moved to the bottom face");
+}
+
+
+Test(Cube, turnMiddleSliceUp_bottomSliceComesToTheFront)
+{
+	// given
+	Cube * cube = _Cube->create();
+	Face * bottomFace = _Cube->bottomFace(cube);
+	Color oldBottomFaceMiddleSlice[FACE_SIZE];
+	_Face->middleSlice(bottomFace, oldBottomFaceMiddleSlice);
+	// when
+	_Cube->turnMiddleSliceUp(cube);
+	// then
+	Face * frontFace = _Cube->frontFace(cube);
+	Color newFrontFaceMiddleSlice[FACE_SIZE];
+	_Face->middleSlice(frontFace, newFrontFaceMiddleSlice);
+	cr_assert_arr_eq(
+		newFrontFaceMiddleSlice,
+		oldBottomFaceMiddleSlice,
+		FACE_SIZE,
+		"bottom face middle slice wasn't moved to the bottom front");
+}

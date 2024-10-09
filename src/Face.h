@@ -32,7 +32,9 @@ typedef struct
 	void (* topSlice)(Face const * this, Color storage[FACE_SIZE]);
 	void (* equatorSlice)(Face const * this, Color storage[FACE_SIZE]);
 	void (* bottomSlice)(Face const * this, Color storage[FACE_SIZE]);
+
 	void (* leftSlice)(Face const * this, Color storage[FACE_SIZE]);
+	void (* middleSlice)(Face const * this, Color storage[FACE_SIZE]);
 
 } FaceMethods;
 

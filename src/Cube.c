@@ -15,6 +15,7 @@
 
 /** The vertical slices composing the face (X axis), based on FACE_SIZE */
 #define LEFT_SLICE 0
+#define MIDDLE_SLICE 1
 
 
 /** The position of a cell in a slice (X axis), based on FACE_SIZE */
@@ -120,6 +121,9 @@ static void getVerticalSlice(
 static void getLeftSlice(Face const * this, Color storage[FACE_SIZE]);
 
 
+static void getMiddleSlice(Face const * this, Color storage[FACE_SIZE]);
+
+
 static void createAndPositionFaces(Cube * this);
 
 
@@ -203,6 +207,9 @@ static void turnLeftSliceUp(Cube * this);
 
 
 static void turnLeftSliceDown(Cube * this);
+
+
+static void turnMiddleSliceUp(Cube * this);
 
 
 
@@ -352,6 +359,12 @@ static void getVerticalSlice(
 static void getLeftSlice(Face const * const this, Color storage[FACE_SIZE])
 {
 	getVerticalSlice(this, storage, LEFT_CELL);
+}
+
+
+static void getMiddleSlice(Face const * const this, Color storage[FACE_SIZE])
+{
+	getVerticalSlice(this, storage, MIDDLE_SLICE);
 }
 
 
@@ -594,6 +607,13 @@ static void turnLeftSliceDown(Cube * this)
 }
 
 
+static void turnMiddleSliceUp(Cube * this)
+{
+	int facesCycle[] = { FRONT_FACE, TOP_FACE, BACK_FACE, BOTTOM_FACE };
+	turnVerticalSlice(this, MIDDLE_SLICE, facesCycle);
+}
+
+
 
 
 static FaceMethods faceMethods =
@@ -617,7 +637,8 @@ static FaceMethods faceMethods =
 	getEquatoreSlice,
 	getBottomSlice,
 
-	getLeftSlice
+	getLeftSlice,
+	getMiddleSlice
 };
 FaceMethods const * const _Face = & faceMethods;
 
@@ -649,6 +670,7 @@ static CubeMethods cubeMethods =
 	turnBottomSliceRight,
 
 	turnLeftSliceUp,
-	turnLeftSliceDown
+	turnLeftSliceDown,
+	turnMiddleSliceUp
 };
 CubeMethods const * const _Cube = & cubeMethods;
