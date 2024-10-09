@@ -16,6 +16,7 @@
 /** The columns composing the face (X axis), based on FACE_SIZE */
 #define LEFT_COLUMN 0
 #define MIDDLE_COLUMN 1
+#define RIGHT_COLUMN 2
 
 
 /** The position of a cell in a row (X axis), based on FACE_SIZE */
@@ -55,10 +56,10 @@ struct Cube
 
 
 
-static void paintSlice(Face * this, int sliceIndex, Color color);
+static void applyColorOnRow(Face * this, int rowIndex, Color color);
 
 
-static void paintSlices(Face * this, Color color);
+static void applyColor(Face * this, Color color);
 
 
 static Face * createFace(Color color);
@@ -214,21 +215,21 @@ static void turnMiddleSliceUp(Cube * this);
 
 
 
-static void paintSlice(Face * const this, int sliceIndex, Color color)
+static void applyColorOnRow(Face * const this, int rowIndex, Color color)
 {
-	int cellIndex;
+	int columnIndex;
 
-	for (cellIndex = LEFT_CELL; cellIndex <= RIGHT_CELL; cellIndex++)
-			this->cells[sliceIndex][cellIndex] = color;
+	for (columnIndex = LEFT_COLUMN; columnIndex <= RIGHT_COLUMN; columnIndex++)
+		this->cells[rowIndex][columnIndex] = color;
 }
 
 
-static void paintSlices(Face * const this, Color color)
+static void applyColor(Face * const this, Color color)
 {
-	int sliceIndex;
+	int rowIndex;
 
-	for (sliceIndex = TOP_ROW; sliceIndex <= BOTTOM_ROW; sliceIndex++)
-		paintSlice(this, sliceIndex, color);
+	for (rowIndex = TOP_ROW; rowIndex <= BOTTOM_ROW; rowIndex++)
+		applyColorOnRow(this, rowIndex, color);
 }
 
 
@@ -241,7 +242,7 @@ static Face * createFace(Color color)
 		exit(EXIT_FAILURE);
 	}
 
-	paintSlices(this, color);
+	applyColor(this, color);
 
 	return this;
 }
