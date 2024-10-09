@@ -1570,8 +1570,8 @@ Test(Cube, turnFrontSliceAnticlockwise_rightColumnGoesTop)
 	// given
 	Cube * cube = _Cube->create();
 	Face * rightFace = _Cube->rightFace(cube);
-	Color oldTopFaceLeftColumn[FACE_SIZE];
-	_Face->leftColumn(rightFace, oldTopFaceLeftColumn);
+	Color oldRightFaceLeftColumn[FACE_SIZE];
+	_Face->leftColumn(rightFace, oldRightFaceLeftColumn);
 	// when
 	_Cube->turnFrontSliceAnticlockwise(cube);
 	// then
@@ -1580,7 +1580,91 @@ Test(Cube, turnFrontSliceAnticlockwise_rightColumnGoesTop)
 	_Face->bottomRow(topFace, newTopFaceBottomRow);
 	cr_assert_arr_eq(
 		newTopFaceBottomRow,
-		oldTopFaceLeftColumn,
+		oldRightFaceLeftColumn,
 		FACE_SIZE,
 		"right face left column wasn't moved to the top face bottom row");
+}
+
+
+Test(Cube, turnStandingSliceClockwise_topRowGoesRight)
+{
+	// given
+	Cube * cube = _Cube->create();
+	Face * topFace = _Cube->topFace(cube);
+	Color oldTopFaceEquatorRow[FACE_SIZE];
+	_Face->equatorRow(topFace, oldTopFaceEquatorRow);
+	// when
+	_Cube->turnStandingSliceClockwise(cube);
+	// then
+	Face * rightFace = _Cube->rightFace(cube);
+	Color newRightFaceMiddleColumn[FACE_SIZE];
+	_Face->middleColumn(rightFace, newRightFaceMiddleColumn);
+	cr_assert_arr_eq(
+		newRightFaceMiddleColumn,
+		oldTopFaceEquatorRow,
+		FACE_SIZE,
+		"top face equator row wasn't moved to the right face middle column");
+}
+
+
+Test(Cube, turnStandingSliceClockwise_rightColumnGoesBottom)
+{
+	// given
+	Cube * cube = _Cube->create();
+	Face * rightFace = _Cube->rightFace(cube);
+	Color oldRightFaceMiddleColumn[FACE_SIZE];
+	_Face->middleColumn(rightFace, oldRightFaceMiddleColumn);
+	// when
+	_Cube->turnStandingSliceClockwise(cube);
+	// then
+	Face * bottomFace = _Cube->bottomFace(cube);
+	Color newBottomFaceEquatorRow[FACE_SIZE];
+	_Face->equatorRow(bottomFace, newBottomFaceEquatorRow);
+	cr_assert_arr_eq(
+		newBottomFaceEquatorRow,
+		oldRightFaceMiddleColumn,
+		FACE_SIZE,
+		"right face middle column wasn't moved to the bottom face equator row");
+}
+
+
+Test(Cube, turnStandingSliceClockwise_bottomRowGoesLeft)
+{
+	// given
+	Cube * cube = _Cube->create();
+	Face * bottomFace = _Cube->bottomFace(cube);
+	Color oldBottomFaceEquatorRow[FACE_SIZE];
+	_Face->equatorRow(bottomFace, oldBottomFaceEquatorRow);
+	// when
+	_Cube->turnStandingSliceClockwise(cube);
+	// then
+	Face * leftFace = _Cube->leftFace(cube);
+	Color newLeftFaceMiddleColumn[FACE_SIZE];
+	_Face->middleColumn(leftFace, newLeftFaceMiddleColumn);
+	cr_assert_arr_eq(
+		newLeftFaceMiddleColumn,
+		oldBottomFaceEquatorRow,
+		FACE_SIZE,
+		"bottom face equator row wasn't moved to the left face middle column");
+}
+
+
+Test(Cube, turnStandingSliceClockwise_leftColumnGoesTop)
+{
+	// given
+	Cube * cube = _Cube->create();
+	Face * leftFace = _Cube->leftFace(cube);
+	Color oldLeftFaceMiddleColumn[FACE_SIZE];
+	_Face->middleColumn(leftFace, oldLeftFaceMiddleColumn);
+	// when
+	_Cube->turnStandingSliceClockwise(cube);
+	// then
+	Face * topFace = _Cube->topFace(cube);
+	Color newTopFaceEquatorRow[FACE_SIZE];
+	_Face->equatorRow(topFace, newTopFaceEquatorRow);
+	cr_assert_arr_eq(
+		newTopFaceEquatorRow,
+		oldLeftFaceMiddleColumn,
+		FACE_SIZE,
+		"left face middle column wasn't moved to the top face equator row");
 }
