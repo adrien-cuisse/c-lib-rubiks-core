@@ -579,171 +579,171 @@ Test(Cube, turnTopSliceRight_leftSliceComesToTheFront)
 }
 
 
-Test(Cube, turnMiddleSliceLeft_frontSliceComesToTheLeft)
+Test(Cube, turnEquatorSliceLeft_frontSliceComesToTheLeft)
 {
 	// given
 	Cube * cube = _Cube->create();
 	Face * frontFace = _Cube->frontFace(cube);
-	Color oldFrontFaceMiddleSlice[FACE_SIZE];
-	_Face->middleSlice(frontFace, oldFrontFaceMiddleSlice);
+	Color oldFrontFaceEquatorSlice[FACE_SIZE];
+	_Face->equatorSlice(frontFace, oldFrontFaceEquatorSlice);
 	// when
-	_Cube->turnMiddleSliceLeft(cube);
+	_Cube->turnEquatorSliceLeft(cube);
 	// then
 	Face * leftFace = _Cube->leftFace(cube);
-	Color newLeftFaceMiddleSlice[FACE_SIZE];
-	_Face->middleSlice(leftFace, newLeftFaceMiddleSlice);
+	Color newLeftFaceEquatorSlice[FACE_SIZE];
+	_Face->equatorSlice(leftFace, newLeftFaceEquatorSlice);
 	cr_assert_arr_eq(
-		newLeftFaceMiddleSlice,
-		oldFrontFaceMiddleSlice,
+		newLeftFaceEquatorSlice,
+		oldFrontFaceEquatorSlice,
 		FACE_SIZE,
-		"front face middle slice wasn't moved to the left face");
+		"front face equator slice wasn't moved to the left face");
 }
 
 
-Test(Cube, turnMiddleSliceLeft_leftSliceComesToTheBack)
+Test(Cube, turnEquatorSliceLeft_leftSliceComesToTheBack)
 {
 	// given
 	Cube * cube = _Cube->create();
 	Face * leftFace = _Cube->leftFace(cube);
-	Color oldLeftFaceMiddleSlice[FACE_SIZE];
-	_Face->middleSlice(leftFace, oldLeftFaceMiddleSlice);
+	Color oldLeftFaceEquatorSlice[FACE_SIZE];
+	_Face->equatorSlice(leftFace, oldLeftFaceEquatorSlice);
 	// when
-	_Cube->turnMiddleSliceLeft(cube);
+	_Cube->turnEquatorSliceLeft(cube);
 	// then
 	Face * backFace = _Cube->backFace(cube);
-	Color newBackFaceMiddleSlice[FACE_SIZE];
-	_Face->middleSlice(backFace, newBackFaceMiddleSlice);
+	Color newBackFaceEquatorSlice[FACE_SIZE];
+	_Face->equatorSlice(backFace, newBackFaceEquatorSlice);
 	cr_assert_arr_eq(
-		newBackFaceMiddleSlice,
-		oldLeftFaceMiddleSlice,
+		newBackFaceEquatorSlice,
+		oldLeftFaceEquatorSlice,
 		FACE_SIZE,
-		"left face middle slice wasn't moved to the back face");
+		"left face equator slice wasn't moved to the back face");
 }
 
 
-Test(Cube, turnMiddleSliceLeft_backSliceComesToTheRight)
+Test(Cube, turnEquatorSliceLeft_backSliceComesToTheRight)
 {
 	// given
 	Cube * cube = _Cube->create();
 	Face * backFace = _Cube->backFace(cube);
-	Color oldBackFaceMiddleSlice[FACE_SIZE];
-	_Face->middleSlice(backFace, oldBackFaceMiddleSlice);
+	Color oldBackFaceEquatorSlice[FACE_SIZE];
+	_Face->equatorSlice(backFace, oldBackFaceEquatorSlice);
 	// when
-	_Cube->turnMiddleSliceLeft(cube);
+	_Cube->turnEquatorSliceLeft(cube);
 	// then
 	Face * rightFace = _Cube->rightFace(cube);
-	Color newRightFaceMiddleSlice[FACE_SIZE];
-	_Face->middleSlice(rightFace, newRightFaceMiddleSlice);
+	Color newRightFaceEquatorSlice[FACE_SIZE];
+	_Face->equatorSlice(rightFace, newRightFaceEquatorSlice);
 	cr_assert_arr_eq(
-		newRightFaceMiddleSlice,
-		oldBackFaceMiddleSlice,
+		newRightFaceEquatorSlice,
+		oldBackFaceEquatorSlice,
 		FACE_SIZE,
-		"back face middle slice wasn't moved to the right face");
+		"back face equator slice wasn't moved to the right face");
 }
 
 
-Test(Cube, turnMiddleSliceLeft_rightSliceComesToTheFront)
+Test(Cube, turnEquatorSliceLeft_rightSliceComesToTheFront)
 {
 	// given
 	Cube * cube = _Cube->create();
 	Face * rightFace = _Cube->rightFace(cube);
-	Color oldRightFaceMiddleSlice[FACE_SIZE];
-	_Face->middleSlice(rightFace, oldRightFaceMiddleSlice);
+	Color oldRightFaceEquatorSlice[FACE_SIZE];
+	_Face->equatorSlice(rightFace, oldRightFaceEquatorSlice);
 	// when
-	_Cube->turnMiddleSliceLeft(cube);
+	_Cube->turnEquatorSliceLeft(cube);
 	// then
 	Face * frontFace = _Cube->frontFace(cube);
-	Color newFrontFaceMiddleSlice[FACE_SIZE];
-	_Face->middleSlice(frontFace, newFrontFaceMiddleSlice);
+	Color newFrontFaceEquatorSlice[FACE_SIZE];
+	_Face->equatorSlice(frontFace, newFrontFaceEquatorSlice);
 	cr_assert_arr_eq(
-		newFrontFaceMiddleSlice,
-		oldRightFaceMiddleSlice,
+		newFrontFaceEquatorSlice,
+		oldRightFaceEquatorSlice,
 		FACE_SIZE,
-		"right face middle slice wasn't moved to the front face");
+		"right face equator slice wasn't moved to the front face");
 }
 
 
-Test(Cube, turnMiddleSliceRight_frontSliceComesToTheRight)
+Test(Cube, turnEquatorSliceRight_frontSliceComesToTheRight)
 {
 	// given
 	Cube * cube = _Cube->create();
 	Face * frontFace = _Cube->frontFace(cube);
-	Color oldFrontFaceMiddleSlice[FACE_SIZE];
-	_Face->middleSlice(frontFace, oldFrontFaceMiddleSlice);
+	Color oldFrontFaceEquatorSlice[FACE_SIZE];
+	_Face->equatorSlice(frontFace, oldFrontFaceEquatorSlice);
 	// when
-	_Cube->turnMiddleSliceRight(cube);
+	_Cube->turnEquatorSliceRight(cube);
 	// then
 	Face * rightFace = _Cube->rightFace(cube);
-	Color newRightFaceMiddleSlice[FACE_SIZE];
-	_Face->middleSlice(rightFace, newRightFaceMiddleSlice);
+	Color newRightFaceEquatorSlice[FACE_SIZE];
+	_Face->equatorSlice(rightFace, newRightFaceEquatorSlice);
 	cr_assert_arr_eq(
-		newRightFaceMiddleSlice,
-		oldFrontFaceMiddleSlice,
+		newRightFaceEquatorSlice,
+		oldFrontFaceEquatorSlice,
 		FACE_SIZE,
-		"front face middle slice wasn't moved to the right face");
+		"front face equator slice wasn't moved to the right face");
 }
 
 
-Test(Cube, turnMiddleSliceRight_rightSliceComesToTheBack)
+Test(Cube, turnEquatorSliceRight_rightSliceComesToTheBack)
 {
 	// given
 	Cube * cube = _Cube->create();
 	Face * rightFace = _Cube->rightFace(cube);
-	Color oldRightFaceMiddleSlice[FACE_SIZE];
-	_Face->middleSlice(rightFace, oldRightFaceMiddleSlice);
+	Color oldRightFaceEquatorSlice[FACE_SIZE];
+	_Face->equatorSlice(rightFace, oldRightFaceEquatorSlice);
 	// when
-	_Cube->turnMiddleSliceRight(cube);
+	_Cube->turnEquatorSliceRight(cube);
 	// then
 	Face * backFace = _Cube->backFace(cube);
-	Color newBackFaceMiddleSlice[FACE_SIZE];
-	_Face->middleSlice(backFace, newBackFaceMiddleSlice);
+	Color newBackFaceEquatorSlice[FACE_SIZE];
+	_Face->equatorSlice(backFace, newBackFaceEquatorSlice);
 	cr_assert_arr_eq(
-		newBackFaceMiddleSlice,
-		oldRightFaceMiddleSlice,
+		newBackFaceEquatorSlice,
+		oldRightFaceEquatorSlice,
 		FACE_SIZE,
-		"right face middle slice wasn't moved to the back face");
+		"right face equator slice wasn't moved to the back face");
 }
 
 
-Test(Cube, turnMiddleSliceRight_backSliceComesToTheLeft)
+Test(Cube, turnEquatorSliceRight_backSliceComesToTheLeft)
 {
 	// given
 	Cube * cube = _Cube->create();
 	Face * backFace = _Cube->backFace(cube);
-	Color oldBackFaceMiddleSlice[FACE_SIZE];
-	_Face->middleSlice(backFace, oldBackFaceMiddleSlice);
+	Color oldBackFaceEquatorSlice[FACE_SIZE];
+	_Face->equatorSlice(backFace, oldBackFaceEquatorSlice);
 	// when
-	_Cube->turnMiddleSliceRight(cube);
+	_Cube->turnEquatorSliceRight(cube);
 	// then
 	Face * leftFace = _Cube->leftFace(cube);
-	Color newLeftFaceMiddleSlice[FACE_SIZE];
-	_Face->middleSlice(leftFace, newLeftFaceMiddleSlice);
+	Color newLeftFaceEquatorSlice[FACE_SIZE];
+	_Face->equatorSlice(leftFace, newLeftFaceEquatorSlice);
 	cr_assert_arr_eq(
-		newLeftFaceMiddleSlice,
-		oldBackFaceMiddleSlice,
+		newLeftFaceEquatorSlice,
+		oldBackFaceEquatorSlice,
 		FACE_SIZE,
-		"back face middle slice wasn't moved to the left face");
+		"back face equator slice wasn't moved to the left face");
 }
 
 
-Test(Cube, turnMiddleSliceRight_leftSliceComesToTheFront)
+Test(Cube, turnEquatorSliceRight_leftSliceComesToTheFront)
 {
 	// given
 	Cube * cube = _Cube->create();
 	Face * leftFace = _Cube->leftFace(cube);
-	Color oldLeftFaceMiddleSlice[FACE_SIZE];
-	_Face->middleSlice(leftFace, oldLeftFaceMiddleSlice);
+	Color oldLeftFaceEquatorSlice[FACE_SIZE];
+	_Face->equatorSlice(leftFace, oldLeftFaceEquatorSlice);
 	// when
-	_Cube->turnMiddleSliceRight(cube);
+	_Cube->turnEquatorSliceRight(cube);
 	// then
 	Face * frontFace = _Cube->frontFace(cube);
-	Color newFrontFaceMiddleSlice[FACE_SIZE];
-	_Face->middleSlice(frontFace, newFrontFaceMiddleSlice);
+	Color newFrontFaceEquatorSlice[FACE_SIZE];
+	_Face->equatorSlice(frontFace, newFrontFaceEquatorSlice);
 	cr_assert_arr_eq(
-		newFrontFaceMiddleSlice,
-		oldLeftFaceMiddleSlice,
+		newFrontFaceEquatorSlice,
+		oldLeftFaceEquatorSlice,
 		FACE_SIZE,
-		"left face middle slice wasn't moved to the front face");
+		"left face equator slice wasn't moved to the front face");
 }
 
 

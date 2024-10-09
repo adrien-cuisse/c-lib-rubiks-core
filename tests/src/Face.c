@@ -66,36 +66,36 @@ Test(Face, create_topRightCellHasGivenColor)
 }
 
 
-Test(Face, create_middleLeftCellHasGivenColor)
+Test(Face, create_equatorLeftCellHasGivenColor)
 {
 	// given
 	Face * face = _Face->create(ANY_COLOR);
 	// when
 	// then
-	Color middleLeftColor = _Face->middleLeftCell(face);
-	cr_assert_eq(ANY_COLOR, middleLeftColor, "middle left cell has wrong color");
+	Color equatorLeftColor = _Face->equatorLeftCell(face);
+	cr_assert_eq(ANY_COLOR, equatorLeftColor, "equator left cell has wrong color");
 }
 
 
-Test(Face, create_middleCenterCellHasGivenColor)
+Test(Face, create_equatorCenterCellHasGivenColor)
 {
 	// given
 	Face * face = _Face->create(ANY_COLOR);
 	// when
 	// then
-	Color middleCenterColor = _Face->middleCenterCell(face);
-	cr_assert_eq(ANY_COLOR, middleCenterColor, "middle center cell has wrong color");
+	Color equatorCenterColor = _Face->equatorCenterCell(face);
+	cr_assert_eq(ANY_COLOR, equatorCenterColor, "equator center cell has wrong color");
 }
 
 
-Test(Face, create_middleRightCellHasGivenColor)
+Test(Face, create_equatorRightCellHasGivenColor)
 {
 	// given
 	Face * face = _Face->create(ANY_COLOR);
 	// when
 	// then
-	Color middleRightColor = _Face->middleRightCell(face);
-	cr_assert_eq(ANY_COLOR, middleRightColor, "middle right cell has wrong color");
+	Color equatorRightColor = _Face->equatorRightCell(face);
+	cr_assert_eq(ANY_COLOR, equatorRightColor, "equator right cell has wrong color");
 }
 
 

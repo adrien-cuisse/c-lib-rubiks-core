@@ -9,7 +9,7 @@
 
 /** The horizontal slices composing the face (Y axis), based on FACE_SIZE */
 #define TOP_SLICE 0
-#define MIDDLE_SLICE 1
+#define EQUATOR_SLICE 1
 #define BOTTOM_SLICE 2
 
 
@@ -78,13 +78,13 @@ static Color getTopCenterCell(Face const * this);
 static Color getTopRightCell(Face const * this);
 
 
-static Color getMiddleLeftCell(Face const * this);
+static Color getEquatorLeftCell(Face const * this);
 
 
-static Color getMiddleCenterCell(Face const * this);
+static Color getEquatorCenterCell(Face const * this);
 
 
-static Color getMiddleRightCell(Face const * this);
+static Color getEquatorRightCell(Face const * this);
 
 
 static Color getBottomLeftCell(Face const * this);
@@ -105,7 +105,7 @@ static void getHorizontalSlice(
 static void getTopSlice(Face const * this, Color storage[FACE_SIZE]);
 
 
-static void getMiddleSlice(Face const * this, Color storage[FACE_SIZE]);
+static void getEquatoreSlice(Face const * this, Color storage[FACE_SIZE]);
 
 
 static void getBottomSlice(Face const * this, Color storage[FACE_SIZE]);
@@ -184,10 +184,10 @@ static void turnTopSliceLeft(Cube * this);
 static void turnTopSliceRight(Cube * this);
 
 
-static void turnMiddleSliceLeft(Cube * this);
+static void turnEquatorSliceLeft(Cube * this);
 
 
-static void turnMiddleSliceRight(Cube * this);
+static void turnEquatorSliceRight(Cube * this);
 
 
 static void turnBottomSliceLeft(Cube * this);
@@ -253,7 +253,7 @@ static void deleteFace(Face ** this)
 static Color getColor(Face const * const this)
 {
 	/* center cells are fixed */
-	return getMiddleCenterCell(this);
+	return getEquatorCenterCell(this);
 }
 
 
@@ -275,21 +275,21 @@ static Color getTopRightCell(Face const * const this)
 }
 
 
-static Color getMiddleLeftCell(Face const * const this)
+static Color getEquatorLeftCell(Face const * const this)
 {
-	return this->cells[MIDDLE_SLICE][LEFT_CELL];
+	return this->cells[EQUATOR_SLICE][LEFT_CELL];
 }
 
 
-static Color getMiddleCenterCell(Face const * const this)
+static Color getEquatorCenterCell(Face const * const this)
 {
-	return this->cells[MIDDLE_SLICE][CENTER_CELL];
+	return this->cells[EQUATOR_SLICE][CENTER_CELL];
 }
 
 
-static Color getMiddleRightCell(Face const * const this)
+static Color getEquatorRightCell(Face const * const this)
 {
-	return this->cells[MIDDLE_SLICE][RIGHT_CELL];
+	return this->cells[EQUATOR_SLICE][RIGHT_CELL];
 }
 
 
@@ -326,9 +326,9 @@ static void getTopSlice(Face const * const this, Color storage[FACE_SIZE])
 }
 
 
-static void getMiddleSlice(Face const * const this, Color storage[FACE_SIZE])
+static void getEquatoreSlice(Face const * const this, Color storage[FACE_SIZE])
 {
-	getHorizontalSlice(this, storage, MIDDLE_SLICE);
+	getHorizontalSlice(this, storage, EQUATOR_SLICE);
 }
 
 
@@ -528,17 +528,17 @@ static void turnTopSliceRight(Cube * this)
 }
 
 
-static void turnMiddleSliceLeft(Cube * this)
+static void turnEquatorSliceLeft(Cube * this)
 {
 	int facesCycle[] = { FRONT_FACE, LEFT_FACE, BACK_FACE, RIGHT_FACE };
-	turnHorizontalSlice(this, MIDDLE_SLICE, facesCycle);
+	turnHorizontalSlice(this, EQUATOR_SLICE, facesCycle);
 }
 
 
-static void turnMiddleSliceRight(Cube * this)
+static void turnEquatorSliceRight(Cube * this)
 {
 	int facesCycle[] = { FRONT_FACE, RIGHT_FACE, BACK_FACE, LEFT_FACE };
-	turnHorizontalSlice(this, MIDDLE_SLICE, facesCycle);
+	turnHorizontalSlice(this, EQUATOR_SLICE, facesCycle);
 }
 
 
@@ -606,15 +606,15 @@ static FaceMethods faceMethods =
 	getTopLeftCell,
 	getTopCenterCell,
 	getTopRightCell,
-	getMiddleLeftCell,
-	getMiddleCenterCell,
-	getMiddleRightCell,
+	getEquatorLeftCell,
+	getEquatorCenterCell,
+	getEquatorRightCell,
 	getBottomLeftCell,
 	getBottomCenterCell,
 	getBottomRightCell,
 
 	getTopSlice,
-	getMiddleSlice,
+	getEquatoreSlice,
 	getBottomSlice,
 
 	getLeftSlice
@@ -643,8 +643,8 @@ static CubeMethods cubeMethods =
 
 	turnTopSliceLeft,
 	turnTopSliceRight,
-	turnMiddleSliceLeft,
-	turnMiddleSliceRight,
+	turnEquatorSliceLeft,
+	turnEquatorSliceRight,
 	turnBottomSliceLeft,
 	turnBottomSliceRight,
 

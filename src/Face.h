@@ -22,15 +22,15 @@ typedef struct
 	Color (* topLeftCell)(Face const * this);
 	Color (* topCenterCell)(Face const * this);
 	Color (* topRightCell)(Face const * this);
-	Color (* middleLeftCell)(Face const * this);
-	Color (* middleCenterCell)(Face const * this);
-	Color (* middleRightCell)(Face const * this);
+	Color (* equatorLeftCell)(Face const * this);
+	Color (* equatorCenterCell)(Face const * this);
+	Color (* equatorRightCell)(Face const * this);
 	Color (* bottomLeftCell)(Face const * this);
 	Color (* bottomCenterCell)(Face const * this);
 	Color (* bottomRightCell)(Face const * this);
 
 	void (* topSlice)(Face const * this, Color storage[FACE_SIZE]);
-	void (* middleSlice)(Face const * this, Color storage[FACE_SIZE]);
+	void (* equatorSlice)(Face const * this, Color storage[FACE_SIZE]);
 	void (* bottomSlice)(Face const * this, Color storage[FACE_SIZE]);
 	void (* leftSlice)(Face const * this, Color storage[FACE_SIZE]);
 
