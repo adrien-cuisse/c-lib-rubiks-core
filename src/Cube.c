@@ -541,8 +541,8 @@ static void turnHorizontalSlice(Cube * this, int rowIndex, int facesCycle[4])
 {
 	int columnIndex;
 
-	Color sliceBackup[FACE_SIZE];
-	getRow(this->faces[facesCycle[3]], sliceBackup, rowIndex);
+	Color rowBackup[FACE_SIZE];
+	getRow(this->faces[facesCycle[3]], rowBackup, rowIndex);
 
 	for (columnIndex = LEFT_COLUMN; columnIndex < RIGHT_COLUMN; columnIndex++)
 	{
@@ -556,7 +556,7 @@ static void turnHorizontalSlice(Cube * this, int rowIndex, int facesCycle[4])
 			this->faces[facesCycle[0]]->cells[rowIndex][columnIndex];
 
 		this->faces[facesCycle[0]]->cells[rowIndex][columnIndex] =
-			sliceBackup[columnIndex];
+			rowBackup[columnIndex];
 	}
 }
 
@@ -615,8 +615,8 @@ static void turnVerticalSlice(Cube * this, int columnIndex, int facesCycle[4])
 {
 	int rowIndex;
 
-	Color sliceBackup[FACE_SIZE];
-	getColumn(this->faces[facesCycle[3]], sliceBackup, columnIndex);
+	Color columnBackup[FACE_SIZE];
+	getColumn(this->faces[facesCycle[3]], columnBackup, columnIndex);
 
 	for (rowIndex = TOP_ROW; rowIndex < BOTTOM_ROW; rowIndex++)
 	{
@@ -630,7 +630,7 @@ static void turnVerticalSlice(Cube * this, int columnIndex, int facesCycle[4])
 			this->faces[facesCycle[0]]->cells[rowIndex][columnIndex];
 
 		this->faces[facesCycle[0]]->cells[rowIndex][columnIndex] =
-			sliceBackup[columnIndex];
+			columnBackup[columnIndex];
 	}
 }
 
