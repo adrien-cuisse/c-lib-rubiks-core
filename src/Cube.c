@@ -249,6 +249,9 @@ static void turnStandingSliceClockwise(Cube * this);
 static void turnStandingSliceAnticlockwise(Cube * this);
 
 
+static void turnBackSliceClockwise(Cube * this);
+
+
 
 
 static void applyColorOnRow(Face * const this, int rowIndex, Color color)
@@ -791,6 +794,31 @@ static void turnStandingSliceAnticlockwise(Cube * this)
 }
 
 
+static void turnBackSliceClockwise(Cube * this)
+{
+	int cellIndex;
+
+	Color backup[FACE_SIZE];
+	for (cellIndex = 0; cellIndex < FACE_SIZE; cellIndex++)
+	{
+		backup[cellIndex] =
+			this->faces[TOP_FACE]->cells[TOP_ROW][cellIndex];
+
+		this->faces[TOP_FACE]->cells[TOP_ROW][cellIndex] =
+			this->faces[LEFT_FACE]->cells[cellIndex][LEFT_COLUMN];
+
+		this->faces[LEFT_FACE]->cells[cellIndex][LEFT_COLUMN] =
+			this->faces[BOTTOM_FACE]->cells[BOTTOM_ROW][cellIndex];
+
+		this->faces[BOTTOM_FACE]->cells[BOTTOM_ROW][cellIndex] =
+			this->faces[RIGHT_FACE]->cells[cellIndex][RIGHT_COLUMN];
+
+		this->faces[RIGHT_FACE]->cells[cellIndex][RIGHT_COLUMN] =
+			backup[cellIndex];
+	}
+}
+
+
 
 
 static FaceMethods faceMethods =
@@ -857,6 +885,7 @@ static CubeMethods cubeMethods =
 	turnFrontSliceClockwise,
 	turnFrontSliceAnticlockwise,
 	turnStandingSliceClockwise,
-	turnStandingSliceAnticlockwise
+	turnStandingSliceAnticlockwise,
+	turnBackSliceClockwise
 };
 CubeMethods const * const _Cube = & cubeMethods;

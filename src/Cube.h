@@ -47,6 +47,7 @@ typedef struct
 	void (* turnFrontSliceAnticlockwise)(Cube * this);
 	void (* turnStandingSliceClockwise)(Cube * this);
 	void (* turnStandingSliceAnticlockwise)(Cube * this);
+	void (* turnBackSliceClockwise)(Cube * this);
 
 } CubeMethods;
 
