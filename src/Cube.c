@@ -764,7 +764,7 @@ static void turnParallelSlice(Cube * this, int linesCoordsCycle[4][3])
 				: linesCoordsCycle[cycleIndex][1];
 
 			this->faces[linesCoordsCycle[cycleIndex][0]]->cells[toOrdinate][toAbscissa] =
-				this->faces[linesCoordsCycle[cycleIndex - 1][0]]->cells[fromOrdinate][toAbscissa];
+				this->faces[linesCoordsCycle[cycleIndex - 1][0]]->cells[fromOrdinate][fromAbscissa];
 		}
 
 		toAbscissa = linesCoordsCycle[0][2] == -1
