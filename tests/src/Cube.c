@@ -428,7 +428,7 @@ Test(Cube, turnTopSliceLeft_frontRowGoesLeft)
 		newLeftFaceTopRow,
 		oldFrontFaceTopRow,
 		FACE_SIZE,
-		"front face top row wasn't moved to the left face");
+		"front face top row wasn't moved to the left face top row");
 }
 
 
@@ -449,7 +449,7 @@ Test(Cube, turnTopSliceLeft_leftRowGoesBack)
 		newBackFaceBottomRow,
 		oldLeftFaceTopRow,
 		FACE_SIZE,
-		"left face top row wasn't moved to the back face");
+		"left face top row wasn't moved to the back face bottom row");
 }
 
 
@@ -470,7 +470,7 @@ Test(Cube, turnTopSliceLeft_backRowGoesRight)
 		newRightFaceTopRow,
 		oldBackFaceBottomRow,
 		FACE_SIZE,
-		"back face bottom row wasn't moved to the right face");
+		"back face bottom row wasn't moved to the right face top row");
 }
 
 
@@ -491,7 +491,7 @@ Test(Cube, turnTopSliceLeft_rightRowGoesFront)
 		newFrontFaceTopRow,
 		oldRightFaceTopRow,
 		FACE_SIZE,
-		"right face top row wasn't moved to the front face");
+		"right face top row wasn't moved to the front face top row");
 }
 
 
@@ -512,7 +512,7 @@ Test(Cube, turnTopSliceRight_frontRowGoesRight)
 		newRightFaceTopRow,
 		oldFrontFaceTopRow,
 		FACE_SIZE,
-		"front face top row wasn't moved to the right face");
+		"front face top row wasn't moved to the right face top row");
 }
 
 
@@ -533,7 +533,7 @@ Test(Cube, turnTopSliceRight_rightRowGoesBack)
 		newBackFaceBottomRow,
 		oldRightFaceTopRow,
 		FACE_SIZE,
-		"right face top row wasn't moved to the back face");
+		"right face top row wasn't moved to the back face bottom row");
 }
 
 
@@ -554,7 +554,7 @@ Test(Cube, turnTopSliceRight_backRowGoesLeft)
 		newLeftFaceTopRow,
 		oldBackFaceBottomRow,
 		FACE_SIZE,
-		"back face bottom row wasn't moved to the left face");
+		"back face bottom row wasn't moved to the left face top row");
 }
 
 
@@ -575,7 +575,7 @@ Test(Cube, turnTopSliceRight_leftRowGoesFront)
 		newFrontFaceTopRow,
 		oldLeftFaceTopRow,
 		FACE_SIZE,
-		"left face top row wasn't moved to the front face");
+		"left face top row wasn't moved to the front face top row");
 }
 
 
@@ -596,7 +596,7 @@ Test(Cube, turnEquatorSliceLeft_frontRowGoesLeft)
 		newLeftFaceEquatorRow,
 		oldFrontFaceEquatorRow,
 		FACE_SIZE,
-		"front face equator row wasn't moved to the left face");
+		"front face equator row wasn't moved to the left face equator row");
 }
 
 
@@ -617,7 +617,7 @@ Test(Cube, turnEquatorSliceLeft_leftRowGoesBack)
 		newBackFaceEquatorRow,
 		oldLeftFaceEquatorRow,
 		FACE_SIZE,
-		"left face equator row wasn't moved to the back face");
+		"left face equator row wasn't moved to the back face equator row");
 }
 
 
@@ -638,7 +638,7 @@ Test(Cube, turnEquatorSliceLeft_backRowGoesRight)
 		newRightFaceEquatorRow,
 		oldBackFaceEquatorRow,
 		FACE_SIZE,
-		"back face equator row wasn't moved to the right face");
+		"back face equator row wasn't moved to the right face equator row");
 }
 
 
@@ -659,7 +659,7 @@ Test(Cube, turnEquatorSliceLeft_rightRowGoesFront)
 		newFrontFaceEquatorRow,
 		oldRightFaceEquatorRow,
 		FACE_SIZE,
-		"right face equator row wasn't moved to the front face");
+		"right face equator row wasn't moved to the front face equator row");
 }
 
 
@@ -680,7 +680,7 @@ Test(Cube, turnEquatorSliceRight_frontRowGoesRight)
 		newRightFaceEquatorRow,
 		oldFrontFaceEquatorRow,
 		FACE_SIZE,
-		"front face equator row wasn't moved to the right face");
+		"front face equator row wasn't moved to the right face equator row");
 }
 
 
@@ -701,7 +701,7 @@ Test(Cube, turnEquatorSliceRight_rightRowGoesBack)
 		newBackFaceEquatorRow,
 		oldRightFaceEquatorRow,
 		FACE_SIZE,
-		"right face equator row wasn't moved to the back face");
+		"right face equator row wasn't moved to the back face equator row");
 }
 
 
@@ -722,7 +722,7 @@ Test(Cube, turnEquatorSliceRight_backRowGoesLeft)
 		newLeftFaceEquatorRow,
 		oldBackFaceEquatorRow,
 		FACE_SIZE,
-		"back face equator row wasn't moved to the left face");
+		"back face equator row wasn't moved to the left face equator row");
 }
 
 
@@ -743,7 +743,7 @@ Test(Cube, turnEquatorSliceRight_leftRowGoesFront)
 		newFrontFaceEquatorRow,
 		oldLeftFaceEquatorRow,
 		FACE_SIZE,
-		"left face equator row wasn't moved to the front face");
+		"left face equator row wasn't moved to the front face equator row");
 }
 
 
@@ -764,7 +764,7 @@ Test(Cube, turnBottomSliceLeft_frontRowGoesLeft)
 		newLeftFaceBottomRow,
 		oldFrontFaceBottomRow,
 		FACE_SIZE,
-		"front face bottom row wasn't moved to the left face");
+		"front face bottom row wasn't moved to the left face bottom row");
 }
 
 
@@ -785,7 +785,7 @@ Test(Cube, turnBottomSliceLeft_leftRowGoesBack)
 		newBackFaceTopRow,
 		oldLeftFaceBottomRow,
 		FACE_SIZE,
-		"left face bottom row wasn't moved to the back face");
+		"left face bottom row wasn't moved to the back face top row");
 }
 
 
@@ -806,7 +806,7 @@ Test(Cube, turnBottomSliceLeft_backRowGoesRight)
 		newRightFaceBottomRow,
 		oldBackFaceTopRow,
 		FACE_SIZE,
-		"back face top row wasn't moved to the right face");
+		"back face top row wasn't moved to the right face bottom row");
 }
 
 
@@ -827,7 +827,7 @@ Test(Cube, turnBottomSliceLeft_rightRowGoesFront)
 		newFrontFaceBottomRow,
 		oldRightFaceBottomRow,
 		FACE_SIZE,
-		"right face bottom row wasn't moved to the front face");
+		"right face bottom row wasn't moved to the front face bottom row");
 }
 
 
@@ -848,7 +848,7 @@ Test(Cube, turnBottomSliceRight_frontRowGoesRight)
 		newRightFaceBottomRow,
 		oldFrontFaceBottomRow,
 		FACE_SIZE,
-		"front face bottom row wasn't moved to the right face");
+		"front face bottom row wasn't moved to the right face bottom row");
 }
 
 
@@ -869,7 +869,7 @@ Test(Cube, turnBottomSliceRight_rightRowGoesBack)
 		newBackFaceTopRow,
 		oldRightFaceBottomRow,
 		FACE_SIZE,
-		"right face bottom row wasn't moved to the back face");
+		"right face bottom row wasn't moved to the back face top row");
 }
 
 
@@ -890,7 +890,7 @@ Test(Cube, turnBottomSliceRight_backRowGoesLeft)
 		newLeftFaceBottomRow,
 		oldBackFaceTopRow,
 		FACE_SIZE,
-		"back face top row wasn't moved to the left face");
+		"back face top row wasn't moved to the left face bottom row");
 }
 
 
@@ -911,7 +911,7 @@ Test(Cube, turnBottomSliceRight_leftRowGoesFront)
 		newFrontFaceBottomRow,
 		oldLeftFaceBottomRow,
 		FACE_SIZE,
-		"left face bottom row wasn't moved to the front face");
+		"left face bottom row wasn't moved to the front face bottom row");
 }
 
 
@@ -932,7 +932,7 @@ Test(Cube, turnLeftSliceUp_frontColumnGoesTop)
 		newTopFaceLeftColumn,
 		oldFrontFaceLeftColumn,
 		FACE_SIZE,
-		"front face left column wasn't moved to the top face");
+		"front face left column wasn't moved to the top face left column");
 }
 
 
@@ -953,7 +953,7 @@ Test(Cube, turnLeftSliceUp_topColumnGoesBack)
 		newBackFaceLeftColumn,
 		oldTopFaceLeftColumn,
 		FACE_SIZE,
-		"top face left column wasn't moved to the back face");
+		"top face left column wasn't moved to the back face left column");
 }
 
 
@@ -974,7 +974,7 @@ Test(Cube, turnLeftSliceUp_backColumnGoesBottom)
 		newBottomFaceLeftColumn,
 		oldBackFaceLeftColumn,
 		FACE_SIZE,
-		"back face left column wasn't moved to the bottom face");
+		"back face left column wasn't moved to the bottom face left column");
 }
 
 
@@ -995,7 +995,7 @@ Test(Cube, turnLeftSliceUp_bottomColumnGoesFront)
 		newFrontFaceLeftColumn,
 		oldBottomFaceLeftColumn,
 		FACE_SIZE,
-		"bottom face left column wasn't moved to the front face");
+		"bottom face left column wasn't moved to the front face left column");
 }
 
 
@@ -1016,7 +1016,7 @@ Test(Cube, turnLeftSliceDown_frontColumnGoesBottom)
 		newBottomFaceLeftColumn,
 		oldFrontFaceLeftColumn,
 		FACE_SIZE,
-		"front face left column wasn't moved to the bottom face");
+		"front face left column wasn't moved to the bottom face left column");
 }
 
 
@@ -1037,7 +1037,7 @@ Test(Cube, turnLeftSliceDown_bottomColumnGoesBack)
 		newBackFaceLeftColumn,
 		oldBottomFaceLeftColumn,
 		FACE_SIZE,
-		"bottom face left column wasn't moved to the back face");
+		"bottom face left column wasn't moved to the back face left column");
 }
 
 
@@ -1058,7 +1058,7 @@ Test(Cube, turnLeftSliceDown_backColumnGoesTop)
 		newTopFaceLeftColumn,
 		oldBackFaceLeftColumn,
 		FACE_SIZE,
-		"back face left column wasn't moved to the top face");
+		"back face left column wasn't moved to the top face left column");
 }
 
 
@@ -1079,7 +1079,7 @@ Test(Cube, turnLeftSliceDown_topColumnGoesFront)
 		newFrontFaceLeftColumn,
 		oldTopFaceLeftColumn,
 		FACE_SIZE,
-		"top face left column wasn't moved to the front face");
+		"top face left column wasn't moved to the front face left column");
 }
 
 
@@ -1100,7 +1100,7 @@ Test(Cube, turnMiddleSliceUp_frontColumnGoesTop)
 		newTopFaceMiddleColumn,
 		oldFrontFaceMiddleColumn,
 		FACE_SIZE,
-		"front face middle column wasn't moved to the top face");
+		"front face middle column wasn't moved to the top face middle column");
 }
 
 
@@ -1121,7 +1121,7 @@ Test(Cube, turnMiddleSliceUp_topColumnGoesBack)
 		newBackFaceMiddleColumn,
 		oldTopFaceMiddleColumn,
 		FACE_SIZE,
-		"top face middle column wasn't moved to the back face");
+		"top face middle column wasn't moved to the back face middle column");
 }
 
 
@@ -1142,7 +1142,7 @@ Test(Cube, turnMiddleSliceUp_backColumnGoesBottom)
 		newBottomFaceMiddleColumn,
 		oldBackFaceMiddleColumn,
 		FACE_SIZE,
-		"back face middle column wasn't moved to the bottom face");
+		"back face middle column wasn't moved to the bottom face middle column");
 }
 
 
@@ -1163,7 +1163,7 @@ Test(Cube, turnMiddleSliceUp_bottomColumnGoesFront)
 		newFrontFaceMiddleColumn,
 		oldBottomFaceMiddleColumn,
 		FACE_SIZE,
-		"bottom face middle column wasn't moved to the bottom face");
+		"bottom face middle column wasn't moved to the bottom face middle column");
 }
 
 
@@ -1184,7 +1184,7 @@ Test(Cube, turnMiddleSliceDown_frontColumnGoesBottom)
 		newBottomFaceMiddleColumn,
 		oldFrontFaceMiddleColumn,
 		FACE_SIZE,
-		"front face middle column wasn't moved to the bottom face");
+		"front face middle column wasn't moved to the bottom face middle column");
 }
 
 
@@ -1205,7 +1205,7 @@ Test(Cube, turnMiddleSliceDown_bottomColumnGoesBack)
 		newBackFaceMiddleColumn,
 		oldBottomFaceMiddleColumn,
 		FACE_SIZE,
-		"bottom face middle column wasn't moved to the back face");
+		"bottom face middle column wasn't moved to the back face middle column");
 }
 
 
@@ -1226,7 +1226,7 @@ Test(Cube, turnMiddleSliceDown_backColumnGoesTop)
 		newTopFaceMiddleColumn,
 		oldBackFaceMiddleColumn,
 		FACE_SIZE,
-		"back face middle column wasn't moved to the top face");
+		"back face middle column wasn't moved to the top face middle column");
 }
 
 
@@ -1247,7 +1247,7 @@ Test(Cube, turnMiddleSliceDown_topColumnGoesFront)
 		newFrontFaceMiddleColumn,
 		oldTopFaceMiddleColumn,
 		FACE_SIZE,
-		"top face middle column wasn't moved to the front face");
+		"top face middle column wasn't moved to the front face middle column");
 }
 
 
@@ -1268,7 +1268,7 @@ Test(Cube, turnRightSliceUp_frontColumnGoesTop)
 		newTopFaceMiddleColumn,
 		oldFrontFaceMiddleColumn,
 		FACE_SIZE,
-		"front face right column wasn't moved to the top face");
+		"front face right column wasn't moved to the top face right column");
 }
 
 
@@ -1289,7 +1289,7 @@ Test(Cube, turnRightSliceUp_topColumnGoesBack)
 		newBackFaceMiddleColumn,
 		oldTopFaceMiddleColumn,
 		FACE_SIZE,
-		"top face right column wasn't moved to the back face");
+		"top face right column wasn't moved to the back face right column");
 }
 
 
@@ -1310,7 +1310,7 @@ Test(Cube, turnRightSliceUp_backColumnGoesBottom)
 		newBottomFaceMiddleColumn,
 		oldBackFaceMiddleColumn,
 		FACE_SIZE,
-		"back face right column wasn't moved to the bottom face");
+		"back face right column wasn't moved to the bottom face right column");
 }
 
 
@@ -1331,7 +1331,7 @@ Test(Cube, turnRightSliceUp_bottomColumnGoesFront)
 		newFrontFaceMiddleColumn,
 		oldBottomFaceMiddleColumn,
 		FACE_SIZE,
-		"bottom face right column wasn't moved to the front face");
+		"bottom face right column wasn't moved to the front face right column");
 }
 
 
@@ -1352,7 +1352,7 @@ Test(Cube, turnRightSliceDown_frontColumnGoesBottom)
 		newBottomFaceMiddleColumn,
 		oldFrontFaceMiddleColumn,
 		FACE_SIZE,
-		"front face right column wasn't moved to the bottom face");
+		"front face right column wasn't moved to the bottom face right column");
 }
 
 
@@ -1373,7 +1373,7 @@ Test(Cube, turnRightSliceDown_bottomColumnGoesBack)
 		newBackFaceMiddleColumn,
 		oldBottomFaceMiddleColumn,
 		FACE_SIZE,
-		"bottom face right column wasn't moved to the back face");
+		"bottom face right column wasn't moved to the back face right column");
 }
 
 
@@ -1394,7 +1394,7 @@ Test(Cube, turnRightSliceDown_backColumnGoesTop)
 		newTopFaceMiddleColumn,
 		oldBackFaceMiddleColumn,
 		FACE_SIZE,
-		"back face right column wasn't moved to the top face");
+		"back face right column wasn't moved to the top face right column");
 }
 
 
@@ -1415,7 +1415,7 @@ Test(Cube, turnRightSliceDown_topColumnGoesFront)
 		newFrontFaceMiddleColumn,
 		oldTopFaceMiddleColumn,
 		FACE_SIZE,
-		"top face right column wasn't moved to the front face");
+		"top face right column wasn't moved to the front face right column");
 }
 
 
