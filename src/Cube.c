@@ -243,11 +243,7 @@ static void turnRightSliceUp(Cube * this);
 static void turnRightSliceDown(Cube * this);
 
 
-static void turnParallelSlice(
-	Cube * this,
-	int facesCycle[4],
-	int ordinates[4],
-	int abscissas[4]);
+static void turnParallelSlice(Cube * this, int linesCoordsCycle[4][3]);
 
 
 static void turnFrontSliceClockwise(Cube * this);
@@ -731,11 +727,7 @@ static void turnRightSliceDown(Cube * this)
 }
 
 
-static void turnParallelSlice(
-	Cube * this,
-	int facesCycle[4],
-	int ordinates[4],
-	int abscissas[4])
+static void turnParallelSlice(Cube * this, int linesCoordsCycle[4][3])
 {
 	int cellIndex;
 	int cycleIndex;
@@ -745,44 +737,44 @@ static void turnParallelSlice(
 	Color backup[FACE_SIZE];
 	for (cellIndex = 0; cellIndex < FACE_SIZE; cellIndex++)
 	{
-		fromAbscissa = abscissas[3] == -1
+		fromAbscissa = linesCoordsCycle[3][2] == -1
 			? cellIndex
-			: abscissas[3];
-		fromOrdinate = ordinates[3] == -1
+			: linesCoordsCycle[3][2];
+		fromOrdinate = linesCoordsCycle[3][1] == -1
 			? cellIndex
-			: ordinates[3];
+			: linesCoordsCycle[3][1];
 
 		backup[cellIndex] =
-			this->faces[facesCycle[3]]->cells[fromOrdinate][fromAbscissa];
+			this->faces[linesCoordsCycle[3][0]]->cells[fromOrdinate][fromAbscissa];
 
 		for (cycleIndex = 3; cycleIndex > 0; cycleIndex--)
 		{
-			fromAbscissa = abscissas[cycleIndex - 1] == -1
+			fromAbscissa = linesCoordsCycle[cycleIndex - 1][2] == -1
 				? cellIndex
-				: abscissas[cycleIndex - 1];
-			fromOrdinate = ordinates[cycleIndex - 1] == -1
+				: linesCoordsCycle[cycleIndex - 1][2];
+			fromOrdinate = linesCoordsCycle[cycleIndex - 1][1] == -1
 				? cellIndex
-				: ordinates[cycleIndex - 1];
+				: linesCoordsCycle[cycleIndex - 1][1];
 
-			toAbscissa = abscissas[cycleIndex] == -1
+			toAbscissa = linesCoordsCycle[cycleIndex][2] == -1
 				? cellIndex
-				: abscissas[cycleIndex];
-			toOrdinate = ordinates[cycleIndex] == -1
+				: linesCoordsCycle[cycleIndex][2];
+			toOrdinate = linesCoordsCycle[cycleIndex][1] == -1
 				? cellIndex
-				: ordinates[cycleIndex];
+				: linesCoordsCycle[cycleIndex][1];
 
-			this->faces[facesCycle[cycleIndex]]->cells[toOrdinate][toAbscissa] =
-				this->faces[facesCycle[cycleIndex - 1]]->cells[fromOrdinate][toAbscissa];
+			this->faces[linesCoordsCycle[cycleIndex][0]]->cells[toOrdinate][toAbscissa] =
+				this->faces[linesCoordsCycle[cycleIndex - 1][0]]->cells[fromOrdinate][toAbscissa];
 		}
 
-		toAbscissa = abscissas[0] == -1
+		toAbscissa = linesCoordsCycle[0][2] == -1
 			? cellIndex
-			: abscissas[0];
-		toOrdinate = ordinates[0] == -1
+			: linesCoordsCycle[0][2];
+		toOrdinate = linesCoordsCycle[0][1] == -1
 			? cellIndex
-			: ordinates[0];
+			: linesCoordsCycle[0][1];
 
-		this->faces[facesCycle[0]]->cells[toOrdinate][toAbscissa] =
+		this->faces[linesCoordsCycle[0][0]]->cells[toOrdinate][toAbscissa] =
 			backup[cellIndex];
 	}
 }
@@ -790,57 +782,80 @@ static void turnParallelSlice(
 
 static void turnFrontSliceClockwise(Cube * this)
 {
-	int facesCycle[] = { TOP_FACE, RIGHT_FACE, BOTTOM_FACE, LEFT_FACE };
-	int ordinates[] = { BOTTOM_ROW, -1, TOP_ROW, -1, };
-	int abscissas[] = { -1, LEFT_COLUMN, -1, RIGHT_COLUMN, };
-	turnParallelSlice(this, facesCycle, ordinates, abscissas);
+	int linesCoordsCycle[4][3] =
+	{
+		{ TOP_FACE, BOTTOM_ROW, -1 },
+		{ RIGHT_FACE, -1, LEFT_COLUMN },
+		{ BOTTOM_FACE, TOP_ROW, -1 },
+		{ LEFT_FACE, -1, RIGHT_COLUMN }
+	};
+	turnParallelSlice(this, linesCoordsCycle);
 }
 
 
 static void turnFrontSliceAnticlockwise(Cube * this)
 {
-	int facesCycle[] = { TOP_FACE, LEFT_FACE, BOTTOM_FACE, RIGHT_FACE };
-	int ordinates[] = { BOTTOM_ROW, -1, TOP_ROW, -1 };
-	int abscissas[] = { -1, RIGHT_COLUMN, -1, LEFT_COLUMN };
-	turnParallelSlice(this, facesCycle, ordinates, abscissas);
+	int linesCoordsCycle[4][3] =
+	{
+		{ TOP_FACE, BOTTOM_ROW, -1 },
+		{ LEFT_FACE, -1, RIGHT_COLUMN },
+		{ BOTTOM_FACE, TOP_ROW, -1 },
+		{ RIGHT_FACE, -1, LEFT_COLUMN }
+	};
+	turnParallelSlice(this, linesCoordsCycle);
 }
 
 
 static void turnStandingSliceClockwise(Cube * this)
 {
-	int facesCycle[] = { TOP_FACE, RIGHT_FACE, BOTTOM_FACE, LEFT_FACE };
-	int ordinates[] = { EQUATOR_ROW, -1, EQUATOR_ROW, -1 };
-	int abscissas[] = { -1, MIDDLE_COLUMN, -1, MIDDLE_COLUMN };
-	turnParallelSlice(this, facesCycle, ordinates, abscissas);
+	int linesCoordsCycle[4][3] =
+	{
+		{ TOP_FACE, EQUATOR_ROW, -1 },
+		{ RIGHT_FACE, -1, MIDDLE_COLUMN },
+		{ BOTTOM_FACE, EQUATOR_ROW, -1 },
+		{ LEFT_FACE, -1, MIDDLE_COLUMN }
+	};
+	turnParallelSlice(this, linesCoordsCycle);
 }
 
 
 static void turnStandingSliceAnticlockwise(Cube * this)
 {
-	int facesCycle[] = { TOP_FACE, LEFT_FACE, BOTTOM_FACE, RIGHT_FACE };
-	int ordinates[] = { EQUATOR_ROW, -1, EQUATOR_ROW, -1 };
-	int abscissas[] = { -1, MIDDLE_COLUMN, -1, MIDDLE_COLUMN };
-	turnParallelSlice(this, facesCycle, ordinates, abscissas);
+	int linesCoordsCycle[4][3] =
+	{
+		{ TOP_FACE, EQUATOR_ROW, -1 },
+		{ LEFT_FACE, -1, MIDDLE_COLUMN },
+		{ BOTTOM_FACE, EQUATOR_ROW, -1 },
+		{ RIGHT_FACE, -1, MIDDLE_COLUMN }
+	};
+	turnParallelSlice(this, linesCoordsCycle);
 }
 
 
 static void turnBackSliceClockwise(Cube * this)
 {
-	int facesCycle[] = { TOP_FACE, RIGHT_FACE, BOTTOM_FACE, LEFT_FACE };
-	int ordinates[] = { TOP_ROW, -1, BOTTOM_ROW, -1 };
-	int abscissas[] = { -1, RIGHT_COLUMN, -1, LEFT_COLUMN };
-	turnParallelSlice(this, facesCycle, ordinates, abscissas);
+	int linesCoordsCycle[4][3] =
+	{
+		{ TOP_FACE, TOP_ROW, -1 },
+		{ RIGHT_FACE, -1, RIGHT_COLUMN },
+		{ BOTTOM_FACE, BOTTOM_ROW, -1 },
+		{ LEFT_FACE, -1, LEFT_COLUMN }
+	};
+	turnParallelSlice(this, linesCoordsCycle);
 }
 
 
 static void turnBackSliceAnticlockwise(Cube * this)
 {
-	int facesCycle[] = { TOP_FACE, LEFT_FACE, BOTTOM_FACE, RIGHT_FACE };
-	int ordinates[] = { TOP_ROW, -1, BOTTOM_ROW, -1 };
-	int abscissas[] = { -1, LEFT_COLUMN, -1, RIGHT_COLUMN };
-	turnParallelSlice(this, facesCycle, ordinates, abscissas);
+	int linesCoordsCycle[4][3] =
+	{
+		{ TOP_FACE, TOP_ROW, -1 },
+		{ LEFT_FACE, -1, LEFT_COLUMN },
+		{ BOTTOM_FACE, BOTTOM_ROW, -1 },
+		{ RIGHT_FACE, -1, RIGHT_COLUMN }
+	};
+	turnParallelSlice(this, linesCoordsCycle);
 }
-
 
 
 
