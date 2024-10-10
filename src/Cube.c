@@ -166,7 +166,8 @@ static Face * getBackFace(Cube const * this);
  * @param faceIndexesCycle - the cycle of index of faces to move in the
  * 		unfolded pattern, the face at position cycle[i] will take the place of
  * 		the face at position cycle[i+1]
- * 		eg: {TOP_FACE, RIGHT_FACE, BOTTOM_FACE, LEFT_FACE} will put TOP_FACE face where RIGHT_FACE face is
+ * 		eg: {TOP_FACE, RIGHT_FACE, BOTTOM_FACE, LEFT_FACE}
+ * 			will put TOP_FACE face where RIGHT_FACE face is
  */
 static void rotateCamera(Cube * this, int faceIndexesCycle[4]);
 
