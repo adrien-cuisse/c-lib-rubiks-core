@@ -19,6 +19,12 @@
 #define RIGHT_COLUMN 2
 
 
+/** The slices composing the cube (Z axis), based on FACE_SIZE */
+#define FRONT_SLICE 0
+#define STANDING_SLICE 1
+#define BACK_SLICE 2
+
+
 /** The position of a cell in a row (X axis), based on FACE_SIZE */
 #define LEFT_CELL 0
 #define MIDDLE_CELL 1
@@ -235,6 +241,13 @@ static void turnRightSliceUp(Cube * this);
 
 
 static void turnRightSliceDown(Cube * this);
+
+
+static void turnParallelSlice(
+	Cube * this,
+	int facesCycle[4],
+	int ordinates[4],
+	int abscissas[4]);
 
 
 static void turnFrontSliceClockwise(Cube * this);
@@ -718,154 +731,116 @@ static void turnRightSliceDown(Cube * this)
 }
 
 
-static void turnFrontSliceClockwise(Cube * this)
+static void turnParallelSlice(
+	Cube * this,
+	int facesCycle[4],
+	int ordinates[4],
+	int abscissas[4])
 {
 	int cellIndex;
+	int cycleIndex;
+	int fromAbscissa, fromOrdinate;
+	int toAbscissa, toOrdinate;
 
 	Color backup[FACE_SIZE];
 	for (cellIndex = 0; cellIndex < FACE_SIZE; cellIndex++)
 	{
+		fromAbscissa = abscissas[3] == -1
+			? cellIndex
+			: abscissas[3];
+		fromOrdinate = ordinates[3] == -1
+			? cellIndex
+			: ordinates[3];
+
 		backup[cellIndex] =
-			this->faces[TOP_FACE]->cells[BOTTOM_ROW][cellIndex];
+			this->faces[facesCycle[3]]->cells[fromOrdinate][fromAbscissa];
 
-		this->faces[TOP_FACE]->cells[BOTTOM_ROW][cellIndex] =
-			this->faces[LEFT_FACE]->cells[cellIndex][RIGHT_COLUMN];
+		for (cycleIndex = 3; cycleIndex > 0; cycleIndex--)
+		{
+			fromAbscissa = abscissas[cycleIndex - 1] == -1
+				? cellIndex
+				: abscissas[cycleIndex - 1];
+			fromOrdinate = ordinates[cycleIndex - 1] == -1
+				? cellIndex
+				: ordinates[cycleIndex - 1];
 
-		this->faces[LEFT_FACE]->cells[cellIndex][RIGHT_COLUMN] =
-			this->faces[BOTTOM_FACE]->cells[TOP_ROW][cellIndex];
+			toAbscissa = abscissas[cycleIndex] == -1
+				? cellIndex
+				: abscissas[cycleIndex];
+			toOrdinate = ordinates[cycleIndex] == -1
+				? cellIndex
+				: ordinates[cycleIndex];
 
-		this->faces[BOTTOM_FACE]->cells[TOP_ROW][cellIndex] =
-			this->faces[RIGHT_FACE]->cells[cellIndex][LEFT_COLUMN];
+			this->faces[facesCycle[cycleIndex]]->cells[toOrdinate][toAbscissa] =
+				this->faces[facesCycle[cycleIndex - 1]]->cells[fromOrdinate][toAbscissa];
+		}
 
-		this->faces[RIGHT_FACE]->cells[cellIndex][LEFT_COLUMN] =
+		toAbscissa = abscissas[0] == -1
+			? cellIndex
+			: abscissas[0];
+		toOrdinate = ordinates[0] == -1
+			? cellIndex
+			: ordinates[0];
+
+		this->faces[facesCycle[0]]->cells[toOrdinate][toAbscissa] =
 			backup[cellIndex];
 	}
+}
+
+
+static void turnFrontSliceClockwise(Cube * this)
+{
+	int facesCycle[] = { TOP_FACE, RIGHT_FACE, BOTTOM_FACE, LEFT_FACE };
+	int ordinates[] = { BOTTOM_ROW, -1, TOP_ROW, -1, };
+	int abscissas[] = { -1, LEFT_COLUMN, -1, RIGHT_COLUMN, };
+	turnParallelSlice(this, facesCycle, ordinates, abscissas);
 }
 
 
 static void turnFrontSliceAnticlockwise(Cube * this)
 {
-	int cellIndex;
-
-	Color backup[FACE_SIZE];
-	for (cellIndex = 0; cellIndex < FACE_SIZE; cellIndex++)
-	{
-		backup[cellIndex] =
-			this->faces[TOP_FACE]->cells[BOTTOM_ROW][cellIndex];
-
-		this->faces[TOP_FACE]->cells[BOTTOM_ROW][cellIndex] =
-			this->faces[RIGHT_FACE]->cells[cellIndex][LEFT_COLUMN];
-
-		this->faces[RIGHT_FACE]->cells[cellIndex][LEFT_COLUMN] =
-			this->faces[BOTTOM_FACE]->cells[TOP_ROW][cellIndex];
-
-		this->faces[BOTTOM_FACE]->cells[TOP_ROW][cellIndex] =
-			this->faces[LEFT_FACE]->cells[cellIndex][RIGHT_COLUMN];
-
-		this->faces[LEFT_FACE]->cells[cellIndex][RIGHT_COLUMN] =
-			backup[cellIndex];
-	}
+	int facesCycle[] = { TOP_FACE, LEFT_FACE, BOTTOM_FACE, RIGHT_FACE };
+	int ordinates[] = { BOTTOM_ROW, -1, TOP_ROW, -1 };
+	int abscissas[] = { -1, RIGHT_COLUMN, -1, LEFT_COLUMN };
+	turnParallelSlice(this, facesCycle, ordinates, abscissas);
 }
 
 
 static void turnStandingSliceClockwise(Cube * this)
 {
-	int cellIndex;
-
-	Color backup[FACE_SIZE];
-	for (cellIndex = 0; cellIndex < FACE_SIZE; cellIndex++)
-	{
-		backup[cellIndex] =
-			this->faces[TOP_FACE]->cells[EQUATOR_ROW][cellIndex];
-
-		this->faces[TOP_FACE]->cells[EQUATOR_ROW][cellIndex] =
-			this->faces[LEFT_FACE]->cells[cellIndex][MIDDLE_COLUMN];
-
-		this->faces[LEFT_FACE]->cells[cellIndex][MIDDLE_COLUMN] =
-			this->faces[BOTTOM_FACE]->cells[EQUATOR_ROW][cellIndex];
-
-		this->faces[BOTTOM_FACE]->cells[EQUATOR_ROW][cellIndex] =
-			this->faces[RIGHT_FACE]->cells[cellIndex][MIDDLE_COLUMN];
-
-		this->faces[RIGHT_FACE]->cells[cellIndex][MIDDLE_COLUMN] =
-			backup[cellIndex];
-	}
+	int facesCycle[] = { TOP_FACE, RIGHT_FACE, BOTTOM_FACE, LEFT_FACE };
+	int ordinates[] = { EQUATOR_ROW, -1, EQUATOR_ROW, -1 };
+	int abscissas[] = { -1, MIDDLE_COLUMN, -1, MIDDLE_COLUMN };
+	turnParallelSlice(this, facesCycle, ordinates, abscissas);
 }
 
 
 static void turnStandingSliceAnticlockwise(Cube * this)
 {
-	int cellIndex;
-
-	Color backup[FACE_SIZE];
-	for (cellIndex = 0; cellIndex < FACE_SIZE; cellIndex++)
-	{
-		backup[cellIndex] =
-			this->faces[TOP_FACE]->cells[EQUATOR_ROW][cellIndex];
-
-		this->faces[TOP_FACE]->cells[EQUATOR_ROW][cellIndex] =
-			this->faces[RIGHT_FACE]->cells[cellIndex][MIDDLE_COLUMN];
-
-		this->faces[RIGHT_FACE]->cells[cellIndex][MIDDLE_COLUMN] =
-			this->faces[BOTTOM_FACE]->cells[EQUATOR_ROW][cellIndex];
-
-		this->faces[BOTTOM_FACE]->cells[EQUATOR_ROW][cellIndex] =
-			this->faces[LEFT_FACE]->cells[cellIndex][MIDDLE_COLUMN];
-
-		this->faces[LEFT_FACE]->cells[cellIndex][MIDDLE_COLUMN] =
-			backup[cellIndex];
-	}
+	int facesCycle[] = { TOP_FACE, LEFT_FACE, BOTTOM_FACE, RIGHT_FACE };
+	int ordinates[] = { EQUATOR_ROW, -1, EQUATOR_ROW, -1 };
+	int abscissas[] = { -1, MIDDLE_COLUMN, -1, MIDDLE_COLUMN };
+	turnParallelSlice(this, facesCycle, ordinates, abscissas);
 }
 
 
 static void turnBackSliceClockwise(Cube * this)
 {
-	int cellIndex;
-
-	Color backup[FACE_SIZE];
-	for (cellIndex = 0; cellIndex < FACE_SIZE; cellIndex++)
-	{
-		backup[cellIndex] =
-			this->faces[TOP_FACE]->cells[TOP_ROW][cellIndex];
-
-		this->faces[TOP_FACE]->cells[TOP_ROW][cellIndex] =
-			this->faces[LEFT_FACE]->cells[cellIndex][LEFT_COLUMN];
-
-		this->faces[LEFT_FACE]->cells[cellIndex][LEFT_COLUMN] =
-			this->faces[BOTTOM_FACE]->cells[BOTTOM_ROW][cellIndex];
-
-		this->faces[BOTTOM_FACE]->cells[BOTTOM_ROW][cellIndex] =
-			this->faces[RIGHT_FACE]->cells[cellIndex][RIGHT_COLUMN];
-
-		this->faces[RIGHT_FACE]->cells[cellIndex][RIGHT_COLUMN] =
-			backup[cellIndex];
-	}
+	int facesCycle[] = { TOP_FACE, RIGHT_FACE, BOTTOM_FACE, LEFT_FACE };
+	int ordinates[] = { TOP_ROW, -1, BOTTOM_ROW, -1 };
+	int abscissas[] = { -1, RIGHT_COLUMN, -1, LEFT_COLUMN };
+	turnParallelSlice(this, facesCycle, ordinates, abscissas);
 }
 
 
 static void turnBackSliceAnticlockwise(Cube * this)
 {
-	int cellIndex;
-
-	Color backup[FACE_SIZE];
-	for (cellIndex = 0; cellIndex < FACE_SIZE; cellIndex++)
-	{
-		backup[cellIndex] =
-			this->faces[TOP_FACE]->cells[TOP_ROW][cellIndex];
-
-		this->faces[TOP_FACE]->cells[TOP_ROW][cellIndex] =
-			this->faces[RIGHT_FACE]->cells[cellIndex][RIGHT_COLUMN];
-
-		this->faces[RIGHT_FACE]->cells[cellIndex][RIGHT_COLUMN] =
-			this->faces[BOTTOM_FACE]->cells[BOTTOM_ROW][cellIndex];
-
-		this->faces[BOTTOM_FACE]->cells[BOTTOM_ROW][cellIndex] =
-			this->faces[LEFT_FACE]->cells[cellIndex][LEFT_COLUMN];
-
-		this->faces[LEFT_FACE]->cells[cellIndex][LEFT_COLUMN] =
-			backup[cellIndex];
-	}
+	int facesCycle[] = { TOP_FACE, LEFT_FACE, BOTTOM_FACE, RIGHT_FACE };
+	int ordinates[] = { TOP_ROW, -1, BOTTOM_ROW, -1 };
+	int abscissas[] = { -1, LEFT_COLUMN, -1, RIGHT_COLUMN };
+	turnParallelSlice(this, facesCycle, ordinates, abscissas);
 }
+
 
 
 
