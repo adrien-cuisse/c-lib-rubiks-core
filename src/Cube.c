@@ -62,7 +62,7 @@ struct Cube
 
 
 
-static void applyColorOnRow(Face * this, int rowIndex, Color color);
+static void applyColorOnRow(Face * this, Color color, int rowIndex);
 
 
 static void applyColor(Face * this, Color color);
@@ -266,7 +266,7 @@ static void turnBackSliceAnticlockwise(Cube * this);
 
 
 
-static void applyColorOnRow(Face * const this, int rowIndex, Color color)
+static void applyColorOnRow(Face * const this, Color color, int rowIndex)
 {
 	int columnIndex;
 
@@ -280,7 +280,7 @@ static void applyColor(Face * const this, Color color)
 	int rowIndex;
 
 	for (rowIndex = TOP_ROW; rowIndex <= BOTTOM_ROW; rowIndex++)
-		applyColorOnRow(this, rowIndex, color);
+		applyColorOnRow(this, color, rowIndex);
 }
 
 
