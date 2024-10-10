@@ -243,7 +243,7 @@ static void turnRightSliceUp(Cube * this);
 static void turnRightSliceDown(Cube * this);
 
 
-static void turnParallelSlice(Cube * this, int linesCoordsCycle[4][3]);
+static void turnSlice(Cube * this, int linesCoordsCycle[4][3]);
 
 
 static void turnFrontSliceClockwise(Cube * this);
@@ -560,46 +560,26 @@ static void rotateCameraAnticlockwise(Cube * const this)
 
 static void turnHorizontalSlice(Cube * this, int rowIndex, int facesCycle[4])
 {
-	int columnIndex;
 	int cycleIndex;
+	int rowsCoordsCycle[4][3];
 
-	Color rowBackup[FACE_SIZE];
-	getRow(this->faces[facesCycle[3]], rowBackup, rowIndex);
-
-	for (cycleIndex = 3; cycleIndex > 0; cycleIndex--)
+	for (cycleIndex = 0; cycleIndex < 4; cycleIndex++)
 	{
-		/* because of how we unfold the cube, top row becomes bottom row for
-			the back face, and bottom row becomes top row, this has no effect
-			for equator row */
+		rowsCoordsCycle[cycleIndex][0] = facesCycle[cycleIndex];
+
+		/* because of how we unfold the cube, we have only 3 faces aligned
+			horizontally, the back face get its destination coord flipped,
+			the top row becomes the bottom row, and the bottom row becomes
+			the top row, this has no effect for the equator row */
 		if (facesCycle[cycleIndex] == BACK_FACE)
-			rowIndex = 2 - rowIndex;
+			rowsCoordsCycle[cycleIndex][1] = 2 - rowIndex;
+		else
+			rowsCoordsCycle[cycleIndex][1] = rowIndex;
 
-		for (columnIndex = LEFT_COLUMN; columnIndex <= RIGHT_COLUMN; columnIndex++)
-		{
-			this->faces[facesCycle[cycleIndex]]->cells[2 - rowIndex][columnIndex] =
-				this->faces[facesCycle[cycleIndex - 1]]->cells[rowIndex][columnIndex];
-
-			this->faces[facesCycle[cycleIndex]]->cells[rowIndex][columnIndex] =
-				this->faces[facesCycle[cycleIndex - 1]]->cells[rowIndex][columnIndex];
-		}
-
-		/* reverse previous coord flip */
-		if (facesCycle[cycleIndex] == BACK_FACE)
-			rowIndex = 2 - rowIndex;
+		rowsCoordsCycle[cycleIndex][2] = -1;
 	}
 
-	for (columnIndex = LEFT_COLUMN; columnIndex <= RIGHT_COLUMN; columnIndex++)
-	{
-		/* same as above, we need this one if cycle starts with BACK_FACE */
-		if (facesCycle[cycleIndex] == BACK_FACE)
-			rowIndex = 2 - rowIndex;
-
-		this->faces[facesCycle[cycleIndex]]->cells[rowIndex][columnIndex] =
-			rowBackup[columnIndex];
-
-		if (facesCycle[cycleIndex] == BACK_FACE)
-			rowIndex = 2 - rowIndex;
-	}
+	turnSlice(this, rowsCoordsCycle);
 }
 
 
@@ -655,25 +635,17 @@ static void turnBottomSliceRight(Cube * this)
 
 static void turnVerticalSlice(Cube * this, int columnIndex, int facesCycle[4])
 {
-	int rowIndex;
+	int cycleIndex;
+	int columnsCoordsCycle[4][3];
 
-	Color columnBackup[FACE_SIZE];
-	getColumn(this->faces[facesCycle[3]], columnBackup, columnIndex);
-
-	for (rowIndex = TOP_ROW; rowIndex < BOTTOM_ROW; rowIndex++)
+	for (cycleIndex = 0; cycleIndex < 4; cycleIndex++)
 	{
-		this->faces[facesCycle[3]]->cells[rowIndex][columnIndex] =
-			this->faces[facesCycle[2]]->cells[rowIndex][columnIndex];
-
-		this->faces[facesCycle[2]]->cells[rowIndex][columnIndex] =
-			this->faces[facesCycle[1]]->cells[rowIndex][columnIndex];
-
-		this->faces[facesCycle[1]]->cells[rowIndex][columnIndex] =
-			this->faces[facesCycle[0]]->cells[rowIndex][columnIndex];
-
-		this->faces[facesCycle[0]]->cells[rowIndex][columnIndex] =
-			columnBackup[columnIndex];
+		columnsCoordsCycle[cycleIndex][0] = facesCycle[cycleIndex];
+		columnsCoordsCycle[cycleIndex][1] = -1;
+		columnsCoordsCycle[cycleIndex][2] = columnIndex;
 	}
+
+	turnSlice(this, columnsCoordsCycle);
 }
 
 
@@ -727,7 +699,7 @@ static void turnRightSliceDown(Cube * this)
 }
 
 
-static void turnParallelSlice(Cube * this, int linesCoordsCycle[4][3])
+static void turnSlice(Cube * this, int linesCoordsCycle[4][3])
 {
 	int cellIndex;
 	int cycleIndex;
@@ -789,7 +761,7 @@ static void turnFrontSliceClockwise(Cube * this)
 		{ BOTTOM_FACE, TOP_ROW, -1 },
 		{ LEFT_FACE, -1, RIGHT_COLUMN }
 	};
-	turnParallelSlice(this, linesCoordsCycle);
+	turnSlice(this, linesCoordsCycle);
 }
 
 
@@ -802,7 +774,7 @@ static void turnFrontSliceAnticlockwise(Cube * this)
 		{ BOTTOM_FACE, TOP_ROW, -1 },
 		{ RIGHT_FACE, -1, LEFT_COLUMN }
 	};
-	turnParallelSlice(this, linesCoordsCycle);
+	turnSlice(this, linesCoordsCycle);
 }
 
 
@@ -815,7 +787,7 @@ static void turnStandingSliceClockwise(Cube * this)
 		{ BOTTOM_FACE, EQUATOR_ROW, -1 },
 		{ LEFT_FACE, -1, MIDDLE_COLUMN }
 	};
-	turnParallelSlice(this, linesCoordsCycle);
+	turnSlice(this, linesCoordsCycle);
 }
 
 
@@ -828,7 +800,7 @@ static void turnStandingSliceAnticlockwise(Cube * this)
 		{ BOTTOM_FACE, EQUATOR_ROW, -1 },
 		{ RIGHT_FACE, -1, MIDDLE_COLUMN }
 	};
-	turnParallelSlice(this, linesCoordsCycle);
+	turnSlice(this, linesCoordsCycle);
 }
 
 
@@ -841,7 +813,7 @@ static void turnBackSliceClockwise(Cube * this)
 		{ BOTTOM_FACE, BOTTOM_ROW, -1 },
 		{ LEFT_FACE, -1, LEFT_COLUMN }
 	};
-	turnParallelSlice(this, linesCoordsCycle);
+	turnSlice(this, linesCoordsCycle);
 }
 
 
@@ -854,7 +826,7 @@ static void turnBackSliceAnticlockwise(Cube * this)
 		{ BOTTOM_FACE, BOTTOM_ROW, -1 },
 		{ RIGHT_FACE, -1, RIGHT_COLUMN }
 	};
-	turnParallelSlice(this, linesCoordsCycle);
+	turnSlice(this, linesCoordsCycle);
 }
 
 
