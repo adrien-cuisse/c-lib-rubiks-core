@@ -6,6 +6,14 @@
 
 
 
+static Cube * createScrambledCube(void);
+
+
+static void readFace(Face const * face, Color storage[FACE_SIZE][FACE_SIZE]);
+
+
+
+
 Test(Cube, create_allocatesMemory)
 {
 	// given
@@ -1919,4 +1927,392 @@ Test(Cube, turnBackSliceAnticlockwise_rightColumnGoesTop)
 		oldRightFaceRightColumn,
 		FACE_SIZE,
 		"right face right column wasn't moved to the top face top row");
+}
+
+
+Test(Cube, turnTopSliceLeft_topFaceIsRotatedClockwise)
+{
+	int rowIndex;
+	int columnIndex;
+
+	// given
+	Cube * cube = createScrambledCube();
+	Color cellsBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(_Cube->topFace(cube), cellsBeforeRotation);
+
+	// when
+	_Cube->turnTopSliceLeft(cube);
+
+	// then
+	Color cellsAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(_Cube->topFace(cube), cellsAfterRotation);
+	for (rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				cellsAfterRotation[rowIndex][columnIndex],
+				cellsBeforeRotation[2 - columnIndex][rowIndex],
+				"top face was not rotated clockwise");
+		}
+	}
+}
+
+
+Test(Cube, turnTopSliceRight_topFaceIsRotatedAnticlockwise)
+{
+	int rowIndex;
+	int columnIndex;
+
+	// given
+	Cube * cube = createScrambledCube();
+	Color cellsBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(_Cube->topFace(cube), cellsBeforeRotation);
+
+	// when
+	_Cube->turnTopSliceRight(cube);
+
+	// then
+	Color cellsAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(_Cube->topFace(cube), cellsAfterRotation);
+	for (rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				cellsAfterRotation[rowIndex][columnIndex],
+				cellsBeforeRotation[columnIndex][2 - rowIndex],
+				"top face was not rotated anticlockwise");
+		}
+	}
+}
+
+
+Test(Cube, turnBottomSliceLeft_bottomFaceIsRotatedAnticlockwise)
+{
+	int rowIndex;
+	int columnIndex;
+
+	// given
+	Cube * cube = createScrambledCube();
+	Color cellsBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(_Cube->bottomFace(cube), cellsBeforeRotation);
+
+	// when
+	_Cube->turnBottomSliceLeft(cube);
+
+	// then
+	Color cellsAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(_Cube->bottomFace(cube), cellsAfterRotation);
+	for (rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				cellsAfterRotation[rowIndex][columnIndex],
+				cellsBeforeRotation[columnIndex][2 - rowIndex],
+				"bottom face was not rotated anticlockwise");
+		}
+	}
+}
+
+
+Test(Cube, turnBottomSliceRight_bottomFaceIsRotatedClockwise)
+{
+	int rowIndex;
+	int columnIndex;
+
+	// given
+	Cube * cube = createScrambledCube();
+	Color cellsBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(_Cube->bottomFace(cube), cellsBeforeRotation);
+
+	// when
+	_Cube->turnBottomSliceRight(cube);
+
+	// then
+	Color cellsAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(_Cube->bottomFace(cube), cellsAfterRotation);
+	for (rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				cellsAfterRotation[rowIndex][columnIndex],
+				cellsBeforeRotation[2 - columnIndex][rowIndex],
+				"bottom face was not rotated clockwise");
+		}
+	}
+}
+
+
+Test(Cube, turnLeftSliceUp_leftFaceIsRotatedAnticlockwise)
+{
+	int rowIndex;
+	int columnIndex;
+
+	// given
+	Cube * cube = createScrambledCube();
+	Color cellsBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(_Cube->leftFace(cube), cellsBeforeRotation);
+
+	// when
+	_Cube->turnLeftSliceUp(cube);
+
+	// then
+	Color cellsAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(_Cube->leftFace(cube), cellsAfterRotation);
+	for (rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				cellsAfterRotation[rowIndex][columnIndex],
+				cellsBeforeRotation[columnIndex][2 - rowIndex],
+				"left face was not rotated anticlockwise");
+		}
+	}
+}
+
+
+Test(Cube, turnLeftSliceDown_leftFaceIsRotatedClockwise)
+{
+	int rowIndex;
+	int columnIndex;
+
+	// given
+	Cube * cube = createScrambledCube();
+	Color cellsBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(_Cube->leftFace(cube), cellsBeforeRotation);
+
+	// when
+	_Cube->turnLeftSliceDown(cube);
+
+	// then
+	Color cellsAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(_Cube->leftFace(cube), cellsAfterRotation);
+	for (rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				cellsAfterRotation[rowIndex][columnIndex],
+				cellsBeforeRotation[2 - columnIndex][rowIndex],
+				"left face was not rotated clockwise");
+		}
+	}
+}
+
+
+Test(Cube, turnRightSliceUp_rightFaceIsRotatedClockwise)
+{
+	int rowIndex;
+	int columnIndex;
+
+	// given
+	Cube * cube = createScrambledCube();
+	Color cellsBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(_Cube->rightFace(cube), cellsBeforeRotation);
+
+	// when
+	_Cube->turnRightSliceUp(cube);
+
+	// then
+	Color cellsAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(_Cube->rightFace(cube), cellsAfterRotation);
+	for (rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				cellsAfterRotation[rowIndex][columnIndex],
+				cellsBeforeRotation[2 - columnIndex][rowIndex],
+				"right face was not rotated clockwise");
+		}
+	}
+}
+
+
+Test(Cube, turnRightSliceDown_rightFaceIsRotatedAnticlockwise)
+{
+	int rowIndex;
+	int columnIndex;
+
+	// given
+	Cube * cube = createScrambledCube();
+	Color cellsBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(_Cube->rightFace(cube), cellsBeforeRotation);
+
+	// when
+	_Cube->turnRightSliceDown(cube);
+
+	// then
+	Color cellsAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(_Cube->rightFace(cube), cellsAfterRotation);
+	for (rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				cellsAfterRotation[rowIndex][columnIndex],
+				cellsBeforeRotation[columnIndex][2 - rowIndex],
+				"right face was not rotated anticlockwise");
+		}
+	}
+}
+
+
+Test(Cube, turnFrontSliceClockwise_frontFaceIsRotatedClockwise)
+{
+	int rowIndex;
+	int columnIndex;
+
+	// given
+	Cube * cube = createScrambledCube();
+	Color cellsBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(_Cube->frontFace(cube), cellsBeforeRotation);
+
+	// when
+	_Cube->turnFrontSliceClockwise(cube);
+
+	// then
+	Color cellsAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(_Cube->frontFace(cube), cellsAfterRotation);
+	for (rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				cellsAfterRotation[rowIndex][columnIndex],
+				cellsBeforeRotation[2 - columnIndex][rowIndex],
+				"front face was not rotated clockwise");
+		}
+	}
+}
+
+
+Test(Cube, turnFrontSliceAnticlockwise_frontFaceIsRotatedAnticlockwise)
+{
+	int rowIndex;
+	int columnIndex;
+
+	// given
+	Cube * cube = createScrambledCube();
+	Color cellsBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(_Cube->frontFace(cube), cellsBeforeRotation);
+
+	// when
+	_Cube->turnFrontSliceAnticlockwise(cube);
+
+	// then
+	Color cellsAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(_Cube->frontFace(cube), cellsAfterRotation);
+	for (rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				cellsAfterRotation[rowIndex][columnIndex],
+				cellsBeforeRotation[columnIndex][2 - rowIndex],
+				"front face was not rotated anticlockwise");
+		}
+	}
+}
+
+
+Test(Cube, turnBackSliceClockwise_backFaceIsRotatedAnticlockwise)
+{
+	int rowIndex;
+	int columnIndex;
+
+	// given
+	Cube * cube = createScrambledCube();
+	Color cellsBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(_Cube->backFace(cube), cellsBeforeRotation);
+
+	// when
+	_Cube->turnBackSliceClockwise(cube);
+
+	// then
+	Color cellsAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(_Cube->backFace(cube), cellsAfterRotation);
+	for (rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				cellsAfterRotation[rowIndex][columnIndex],
+				cellsBeforeRotation[columnIndex][2 - rowIndex],
+				"back face was not rotated anticlockwise");
+		}
+	}
+}
+
+
+Test(Cube, turnBackSliceAnticlockwise_backFaceIsRotatedClockwise)
+{
+	int rowIndex;
+	int columnIndex;
+
+	// given
+	Cube * cube = createScrambledCube();
+	Color cellsBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(_Cube->backFace(cube), cellsBeforeRotation);
+
+	// when
+	_Cube->turnBackSliceAnticlockwise(cube);
+
+	// then
+	Color cellsAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(_Cube->backFace(cube), cellsAfterRotation);
+	for (rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				cellsAfterRotation[rowIndex][columnIndex],
+				cellsBeforeRotation[2 - columnIndex][rowIndex],
+				"back face was not rotated clockwise");
+		}
+	}
+}
+
+
+
+
+
+
+static Cube * createScrambledCube(void)
+{
+	Cube * cube = _Cube->create();
+
+	int rotationsLeft = 7;
+	while (rotationsLeft--)
+	{
+		_Cube->turnTopSliceLeft(cube);
+		_Cube->turnLeftSliceUp(cube);
+		_Cube->turnFrontSliceClockwise(cube);
+
+		_Cube->turnBottomSliceRight(cube);
+		_Cube->turnRightSliceDown(cube);
+		_Cube->turnBackSliceAnticlockwise(cube);
+	}
+
+	return cube;
+}
+
+
+static void readFace(Face const * face, Color storage[FACE_SIZE][FACE_SIZE])
+{
+	size_t rowSizeInBytes = FACE_SIZE * sizeof(storage[0][0]);
+	Color buffer[FACE_SIZE];
+
+	_Face->topRow(face, buffer);
+	memcpy(storage[0], buffer, rowSizeInBytes);
+
+	_Face->equatorRow(face, buffer);
+	memcpy(storage[1], buffer, rowSizeInBytes);
+
+	_Face->bottomRow(face, buffer);
+	memcpy(storage[2], buffer, rowSizeInBytes);
 }
