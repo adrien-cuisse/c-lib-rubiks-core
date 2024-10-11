@@ -242,10 +242,10 @@ static void turnSlice(Cube * this, int linesCoordsCycle[4][3]);
 static void turnHorizontalSlice(Cube * this, int rowIndex, int cycle[4]);
 
 
-static void turnHorizontalSliceLeft(Cube * this, int rowIndex);
+static void turnSliceLeft(Cube * this, int rowIndex);
 
 
-static void turnHorizontalSliceRight(Cube * this, int rowIndex);
+static void turnSliceRight(Cube * this, int rowIndex);
 
 
 static void turnTopSliceLeft(Cube * this);
@@ -269,10 +269,10 @@ static void turnBottomSliceRight(Cube * this);
 static void turnVerticalSlice(Cube * this, int columnIndex, int facesCycle[4]);
 
 
-static void turnVerticalSliceUp(Cube * this, int columnIndex);
+static void turnSliceUp(Cube * this, int columnIndex);
 
 
-static void turnVerticalSliceDown(Cube * this, int columnIndex);
+static void turnSliceDown(Cube * this, int columnIndex);
 
 
 static void turnLeftSliceUp(Cube * this);
@@ -719,14 +719,14 @@ static void turnHorizontalSlice(Cube * this, int rowIndex, int facesCycle[4])
 }
 
 
-static void turnHorizontalSliceLeft(Cube * this, int rowIndex)
+static void turnSliceLeft(Cube * this, int rowIndex)
 {
 	int facesCycle[] = { FRONT_FACE, LEFT_FACE, BACK_FACE, RIGHT_FACE };
 	turnHorizontalSlice(this, rowIndex, facesCycle);
 }
 
 
-static void turnHorizontalSliceRight(Cube * this, int rowIndex)
+static void turnSliceRight(Cube * this, int rowIndex)
 {
 	int facesCycle[] = { FRONT_FACE, RIGHT_FACE, BACK_FACE, LEFT_FACE };
 	turnHorizontalSlice(this, rowIndex, facesCycle);
@@ -735,37 +735,37 @@ static void turnHorizontalSliceRight(Cube * this, int rowIndex)
 
 static void turnTopSliceLeft(Cube * this)
 {
-	turnHorizontalSliceLeft(this, TOP_ROW);
+	turnSliceLeft(this, TOP_ROW);
 }
 
 
 static void turnTopSliceRight(Cube * this)
 {
-	turnHorizontalSliceRight(this, TOP_ROW);
+	turnSliceRight(this, TOP_ROW);
 }
 
 
 static void turnEquatorSliceLeft(Cube * this)
 {
-	turnHorizontalSliceLeft(this, EQUATOR_ROW);
+	turnSliceLeft(this, EQUATOR_ROW);
 }
 
 
 static void turnEquatorSliceRight(Cube * this)
 {
-	turnHorizontalSliceRight(this, EQUATOR_ROW);
+	turnSliceRight(this, EQUATOR_ROW);
 }
 
 
 static void turnBottomSliceLeft(Cube * this)
 {
-	turnHorizontalSliceLeft(this, BOTTOM_ROW);
+	turnSliceLeft(this, BOTTOM_ROW);
 }
 
 
 static void turnBottomSliceRight(Cube * this)
 {
-	turnHorizontalSliceRight(this, BOTTOM_ROW);
+	turnSliceRight(this, BOTTOM_ROW);
 }
 
 
@@ -785,14 +785,14 @@ static void turnVerticalSlice(Cube * this, int columnIndex, int facesCycle[4])
 }
 
 
-static void turnVerticalSliceUp(Cube * this, int columnIndex)
+static void turnSliceUp(Cube * this, int columnIndex)
 {
 	int facesCycle[] = { FRONT_FACE, TOP_FACE, BACK_FACE, BOTTOM_FACE };
 	turnVerticalSlice(this, columnIndex, facesCycle);
 }
 
 
-static void turnVerticalSliceDown(Cube * this, int columnIndex)
+static void turnSliceDown(Cube * this, int columnIndex)
 {
 	int facesCycle[] = { FRONT_FACE, BOTTOM_FACE, BACK_FACE, TOP_FACE };
 	turnVerticalSlice(this, columnIndex, facesCycle);
@@ -801,37 +801,37 @@ static void turnVerticalSliceDown(Cube * this, int columnIndex)
 
 static void turnLeftSliceUp(Cube * this)
 {
-	turnVerticalSliceUp(this, LEFT_COLUMN);
+	turnSliceUp(this, LEFT_COLUMN);
 }
 
 
 static void turnLeftSliceDown(Cube * this)
 {
-	turnVerticalSliceDown(this, LEFT_COLUMN);
+	turnSliceDown(this, LEFT_COLUMN);
 }
 
 
 static void turnMiddleSliceUp(Cube * this)
 {
-	turnVerticalSliceUp(this, MIDDLE_COLUMN);
+	turnSliceUp(this, MIDDLE_COLUMN);
 }
 
 
 static void turnMiddleSliceDown(Cube * this)
 {
-	turnVerticalSliceDown(this, MIDDLE_COLUMN);
+	turnSliceDown(this, MIDDLE_COLUMN);
 }
 
 
 static void turnRightSliceUp(Cube * this)
 {
-	turnVerticalSliceUp(this, RIGHT_COLUMN);
+	turnSliceUp(this, RIGHT_COLUMN);
 }
 
 
 static void turnRightSliceDown(Cube * this)
 {
-	turnVerticalSliceDown(this, RIGHT_COLUMN);
+	turnSliceDown(this, RIGHT_COLUMN);
 }
 
 
