@@ -152,6 +152,9 @@ static Cube * createCube(void);
 static void deleteCube(Cube ** this);
 
 
+static Face * getFace(Cube const * this, int faceIndex);
+
+
 static Face * getLeftFace(Cube const * this);
 
 
@@ -538,39 +541,45 @@ static void deleteCube(Cube ** this)
 }
 
 
+static Face * getFace(Cube const * this, int faceIndex)
+{
+	return this->faces[faceIndex];
+}
+
+
 static Face * getLeftFace(Cube const * this)
 {
-	return this->faces[LEFT_FACE];
+	return getFace(this, LEFT_FACE);
 }
 
 
 static Face * getFrontFace(Cube const * this)
 {
-	return this->faces[FRONT_FACE];
+	return getFace(this, FRONT_FACE);
 }
 
 
 static Face * getRightFace(Cube const * this)
 {
-	return this->faces[RIGHT_FACE];
+	return getFace(this, RIGHT_FACE);
 }
 
 
 static Face * getTopFace(Cube const * this)
 {
-	return this->faces[TOP_FACE];
+	return getFace(this, TOP_FACE);
 }
 
 
 static Face * getBottomFace(Cube const * this)
 {
-	return this->faces[BOTTOM_FACE];
+	return getFace(this, BOTTOM_FACE);
 }
 
 
 static Face * getBackFace(Cube const * this)
 {
-	return this->faces[BACK_FACE];
+	return getFace(this, BACK_FACE);
 }
 
 
