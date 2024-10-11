@@ -83,6 +83,9 @@ static void deleteFace(Face ** this);
 static Color getColor(Face const * this);
 
 
+static Color getCell(Face const * this, int rowIndex, int columnIndex);
+
+
 static Color getTopLeftCell(Face const * this);
 
 
@@ -443,6 +446,7 @@ static void getRow(
 	size_t sliceSizeInBytes = FACE_SIZE * sizeof(this->cells[rowIndex][0]);
 	memcpy(storage, this->cells[rowIndex], sliceSizeInBytes);
 }
+
 
 static void getTopRow(Face const * this, Color storage[FACE_SIZE])
 {
