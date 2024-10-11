@@ -375,57 +375,63 @@ static Color getColor(Face const * this)
 }
 
 
+static Color getCell(Face const * this, int rowIndex, int columnIndex)
+{
+	return this->cells[rowIndex][columnIndex];
+}
+
+
 static Color getTopLeftCell(Face const * this)
 {
-	return this->cells[TOP_ROW][LEFT_CELL];
+	return getCell(this, TOP_ROW, LEFT_CELL);
 }
 
 
 static Color getTopCenterCell(Face const * this)
 {
-	return this->cells[TOP_ROW][MIDDLE_CELL];
+	return getCell(this, TOP_ROW, MIDDLE_CELL);
 }
 
 
 static Color getTopRightCell(Face const * this)
 {
-	return this->cells[TOP_ROW][RIGHT_CELL];
+	return getCell(this, TOP_ROW, RIGHT_CELL);
 }
 
 
 static Color getEquatorLeftCell(Face const * this)
 {
-	return this->cells[EQUATOR_ROW][LEFT_CELL];
+	return getCell(this, EQUATOR_ROW, LEFT_CELL);
 }
 
 
 static Color getEquatorCenterCell(Face const * this)
 {
-	return this->cells[EQUATOR_ROW][MIDDLE_CELL];
+	return getCell(this, EQUATOR_ROW, MIDDLE_CELL);
 }
 
 
 static Color getEquatorRightCell(Face const * this)
 {
-	return this->cells[EQUATOR_ROW][RIGHT_CELL];
+	return getCell(this, EQUATOR_ROW, RIGHT_CELL);
 }
 
 
 static Color getBottomLeftCell(Face const * this)
 {
-	return this->cells[BOTTOM_ROW][LEFT_CELL];
+	return getCell(this, BOTTOM_ROW, LEFT_CELL);
 }
 
 
 static Color getBottomCenterCell(Face const * this)
 {
-	return this->cells[BOTTOM_ROW][MIDDLE_CELL];
+	return getCell(this, BOTTOM_ROW, MIDDLE_CELL);
 }
 
 
 static Color getBottomRightCell(Face const * this)
 {
-	return this->cells[BOTTOM_ROW][RIGHT_CELL];
+	return getCell(this, BOTTOM_ROW, RIGHT_CELL);
 }
 
 
@@ -656,7 +662,7 @@ static void turnSlice(Cube * this, int linesCoordsCycle[4][3])
 	int * sourceCoords;
 	int * destinationCoords;
 
-	Face * toFace = this->faces[linesCoordsCycle[3][0]];
+	toFace = this->faces[linesCoordsCycle[3][0]];
 	destinationCoords = & linesCoordsCycle[3][1];
 	getLine(toFace, initialLineBackup, destinationCoords);
 
