@@ -622,53 +622,93 @@ static Face * getBackFace(Cube const * this)
 
 static void rotateCube(Cube * this, int faceIndexesCycle[4])
 {
-	Face * backupFace = this->faces[faceIndexesCycle[0]];
+	Face * backupFace = this->faces[faceIndexesCycle[3]];
 
-	this->faces[faceIndexesCycle[0]] = this->faces[faceIndexesCycle[1]];
-	this->faces[faceIndexesCycle[1]] = this->faces[faceIndexesCycle[2]];
-	this->faces[faceIndexesCycle[2]] = this->faces[faceIndexesCycle[3]];
-	this->faces[faceIndexesCycle[3]] = backupFace;
+	this->faces[faceIndexesCycle[3]] = this->faces[faceIndexesCycle[2]];
+	this->faces[faceIndexesCycle[2]] = this->faces[faceIndexesCycle[1]];
+	this->faces[faceIndexesCycle[1]] = this->faces[faceIndexesCycle[0]];
+	this->faces[faceIndexesCycle[0]] = backupFace;
 }
 
 
 static void rotateCubeLeft(Cube * this)
 {
-	int cycle[4] = { FRONT_FACE, RIGHT_FACE, BACK_FACE, LEFT_FACE };
+	int cycle[4] = { FRONT_FACE, LEFT_FACE, BACK_FACE, RIGHT_FACE };
+
+	rotateFaceClockwise(getLeftFace(this));
+	rotateFaceClockwise(getLeftFace(this));
+	rotateFaceClockwise(getBottomFace(this));
+	rotateFaceClockwise(getBackFace(this));
+	rotateFaceClockwise(getBackFace(this));
+	rotateFaceAnticlockwise(getTopFace(this));
+
 	rotateCube(this, cycle);
 }
 
 
 static void rotateCubeRight(Cube * this)
 {
-	int cycle[4] = { FRONT_FACE, LEFT_FACE, BACK_FACE, RIGHT_FACE };
+	int cycle[4] = { FRONT_FACE, RIGHT_FACE, BACK_FACE, LEFT_FACE };
+
+	rotateFaceAnticlockwise(getRightFace(this));
+	rotateFaceAnticlockwise(getRightFace(this));
+	rotateFaceAnticlockwise(getBottomFace(this));
+	rotateFaceAnticlockwise(getBackFace(this));
+	rotateFaceAnticlockwise(getBackFace(this));
+	rotateFaceClockwise(getTopFace(this));
+
 	rotateCube(this, cycle);
 }
 
 
 static void rotateCubeUp(Cube * this)
 {
-	int cycle[4] = { FRONT_FACE, BOTTOM_FACE, BACK_FACE, TOP_FACE };
+	int cycle[4] = { FRONT_FACE, TOP_FACE, BACK_FACE, BOTTOM_FACE };
+
+	rotateFaceAnticlockwise(getLeftFace(this));
+	rotateFaceClockwise(getRightFace(this));
+
 	rotateCube(this, cycle);
 }
 
 
 static void rotateCubeDown(Cube * this)
 {
-	int cycle[4] = { FRONT_FACE, TOP_FACE, BACK_FACE, BOTTOM_FACE };
+	int cycle[4] = { FRONT_FACE, BOTTOM_FACE, BACK_FACE, TOP_FACE };
+
+	rotateFaceClockwise(getLeftFace(this));
+	rotateFaceAnticlockwise(getRightFace(this));
+
 	rotateCube(this, cycle);
 }
 
 
 static void rotateCubeClockwise(Cube * this)
 {
-	int cycle[4] = { TOP_FACE, LEFT_FACE, BOTTOM_FACE, RIGHT_FACE };
+	int cycle[4] = { TOP_FACE, RIGHT_FACE, BOTTOM_FACE, LEFT_FACE };
+
+	rotateFaceClockwise(getLeftFace(this));
+	rotateFaceClockwise(getFrontFace(this));
+	rotateFaceClockwise(getRightFace(this));
+	rotateFaceClockwise(getBottomFace(this));
+	rotateFaceAnticlockwise(getBackFace(this));
+	rotateFaceClockwise(getTopFace(this));
+
 	rotateCube(this, cycle);
 }
 
 
 static void rotateCubeAnticlockwise(Cube * this)
 {
-	int cycle[4] = { TOP_FACE, RIGHT_FACE, BOTTOM_FACE, LEFT_FACE };
+	int cycle[4] = { TOP_FACE, LEFT_FACE, BOTTOM_FACE, RIGHT_FACE };
+
+	rotateFaceAnticlockwise(getLeftFace(this));
+	rotateFaceAnticlockwise(getFrontFace(this));
+	rotateFaceAnticlockwise(getRightFace(this));
+	rotateFaceAnticlockwise(getBottomFace(this));
+	rotateFaceClockwise(getBackFace(this));
+	rotateFaceAnticlockwise(getTopFace(this));
+
 	rotateCube(this, cycle);
 }
 

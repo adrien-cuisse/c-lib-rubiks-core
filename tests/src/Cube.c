@@ -2278,6 +2278,627 @@ Test(Cube, turnBackSliceAnticlockwise_backFaceIsRotatedClockwise)
 }
 
 
+Test(Cube, rotateCubeLeft_leftFaceIsRotatedTwice)
+{
+	// given
+	Cube * cube = createScrambledCube();
+	Face * leftFace = _Cube->leftFace(cube);
+	Color faceBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(leftFace, faceBeforeRotation);
+
+	// when
+	_Cube->rotateLeft(cube);
+
+	// then
+	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(leftFace, faceAfterRotation);
+	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				faceBeforeRotation[FACE_SIZE - 1 - rowIndex][FACE_SIZE - 1 - columnIndex],
+				faceAfterRotation[rowIndex][columnIndex]);
+		}
+	}
+}
+
+
+
+Test(Cube, rotateCubeLeft_bottomFaceIsRotatedClockwise)
+{
+	// given
+	Cube * cube = createScrambledCube();
+	Face * bottomFace = _Cube->bottomFace(cube);
+	Color faceBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(bottomFace, faceBeforeRotation);
+
+	// when
+	_Cube->rotateLeft(cube);
+
+	// then
+	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(bottomFace, faceAfterRotation);
+	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				faceAfterRotation[rowIndex][columnIndex],
+				faceBeforeRotation[FACE_SIZE - 1 - columnIndex][rowIndex]);
+		}
+	}
+}
+
+
+Test(Cube, rotateCubeLeft_backFaceIsRotatedTwice)
+{
+	// given
+	Cube * cube = createScrambledCube();
+	Face * backFace = _Cube->backFace(cube);
+	Color faceBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(backFace, faceBeforeRotation);
+
+	// when
+	_Cube->rotateLeft(cube);
+
+	// then
+	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(backFace, faceAfterRotation);
+	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				faceBeforeRotation[FACE_SIZE - 1 - rowIndex][FACE_SIZE - 1 - columnIndex],
+				faceAfterRotation[rowIndex][columnIndex]);
+		}
+	}
+}
+
+
+Test(Cube, rotateCubeLeft_topFaceIsRotatedAntiClockwise)
+{
+	// given
+	Cube * cube = createScrambledCube();
+	Face * topFace = _Cube->topFace(cube);
+	Color faceBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(topFace, faceBeforeRotation);
+
+	// when
+	_Cube->rotateLeft(cube);
+
+	// then
+	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(topFace, faceAfterRotation);
+	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				faceAfterRotation[rowIndex][columnIndex],
+				faceBeforeRotation[columnIndex][FACE_SIZE - 1 - rowIndex]);
+		}
+	}
+}
+
+
+Test(Cube, rotateCubeRight_rightFaceIsRotatedTwice)
+{
+	// given
+	Cube * cube = createScrambledCube();
+	Face * rightFace = _Cube->rightFace(cube);
+	Color faceBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(rightFace, faceBeforeRotation);
+
+	// when
+	_Cube->rotateRight(cube);
+
+	// then
+	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(rightFace, faceAfterRotation);
+	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				faceBeforeRotation[FACE_SIZE - 1 - rowIndex][FACE_SIZE - 1 - columnIndex],
+				faceAfterRotation[rowIndex][columnIndex]);
+		}
+	}
+}
+
+
+Test(Cube, rotateCubeRight_bottomFaceIsRotatedAntiClockwise)
+{
+	// given
+	Cube * cube = createScrambledCube();
+	Face * bottomFace = _Cube->bottomFace(cube);
+	Color faceBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(bottomFace, faceBeforeRotation);
+
+	// when
+	_Cube->rotateRight(cube);
+
+	// then
+	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(bottomFace, faceAfterRotation);
+	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				faceAfterRotation[rowIndex][columnIndex],
+				faceBeforeRotation[columnIndex][FACE_SIZE - 1 - rowIndex]);
+		}
+	}
+}
+
+
+Test(Cube, rotateCubeRight_backFaceIsRotatedTwice)
+{
+	// given
+	Cube * cube = createScrambledCube();
+	Face * backFace = _Cube->backFace(cube);
+	Color faceBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(backFace, faceBeforeRotation);
+
+	// when
+	_Cube->rotateRight(cube);
+
+	// then
+	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(backFace, faceAfterRotation);
+	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				faceBeforeRotation[FACE_SIZE - 1 - rowIndex][FACE_SIZE - 1 - columnIndex],
+				faceAfterRotation[rowIndex][columnIndex]);
+		}
+	}
+}
+
+
+Test(Cube, rotateCubeRight_topFaceIsRotatedClockwise)
+{
+	// given
+	Cube * cube = createScrambledCube();
+	Face * topFace = _Cube->topFace(cube);
+	Color faceBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(topFace, faceBeforeRotation);
+
+	// when
+	_Cube->rotateRight(cube);
+
+	// then
+	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(topFace, faceAfterRotation);
+	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				faceAfterRotation[rowIndex][columnIndex],
+				faceBeforeRotation[FACE_SIZE - 1 - columnIndex][rowIndex]);
+		}
+	}
+}
+
+
+Test(Cube, rotateCubeUp_leftFaceIsRotatedAntiClockwise)
+{
+	// given
+	Cube * cube = createScrambledCube();
+	Face * leftFace = _Cube->leftFace(cube);
+	Color faceBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(leftFace, faceBeforeRotation);
+
+	// when
+	_Cube->rotateUp(cube);
+
+	// then
+	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(leftFace, faceAfterRotation);
+	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				faceAfterRotation[rowIndex][columnIndex],
+				faceBeforeRotation[columnIndex][FACE_SIZE - 1 - rowIndex]);
+		}
+	}
+}
+
+
+Test(Cube, rotateCubeUp_rightFaceIsRotatedClockwise)
+{
+	// given
+	Cube * cube = createScrambledCube();
+	Face * rightFace = _Cube->rightFace(cube);
+	Color faceBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(rightFace, faceBeforeRotation);
+
+	// when
+	_Cube->rotateUp(cube);
+
+	// then
+	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(rightFace, faceAfterRotation);
+	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				faceAfterRotation[rowIndex][columnIndex],
+				faceBeforeRotation[FACE_SIZE - 1 - columnIndex][rowIndex]);
+		}
+	}
+}
+
+
+Test(Cube, rotateCubeDown_leftFaceIsRotatedClockwise)
+{
+	// given
+	Cube * cube = createScrambledCube();
+	Face * leftFace = _Cube->leftFace(cube);
+	Color faceBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(leftFace, faceBeforeRotation);
+
+	// when
+	_Cube->rotateDown(cube);
+
+	// then
+	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(leftFace, faceAfterRotation);
+	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				faceAfterRotation[rowIndex][columnIndex],
+				faceBeforeRotation[FACE_SIZE - 1 - columnIndex][rowIndex]);
+		}
+	}
+}
+Test(Cube, rotateCubeDown_rightFaceIsRotatedAnticlockwise)
+{
+	// given
+	Cube * cube = createScrambledCube();
+	Face * rightFace = _Cube->rightFace(cube);
+	Color faceBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(rightFace, faceBeforeRotation);
+
+	// when
+	_Cube->rotateDown(cube);
+
+	// then
+	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(rightFace, faceAfterRotation);
+	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				faceAfterRotation[rowIndex][columnIndex],
+				faceBeforeRotation[columnIndex][FACE_SIZE - 1 - rowIndex]);
+		}
+	}
+}
+
+
+Test(Cube, rotateCubeClockwise_leftFaceIsRotatedClockwise)
+{
+	// given
+	Cube * cube = createScrambledCube();
+	Face * leftFace = _Cube->leftFace(cube);
+	Color faceBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(leftFace, faceBeforeRotation);
+
+	// when
+	_Cube->rotateClockwise(cube);
+
+	// then
+	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(leftFace, faceAfterRotation);
+	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				faceAfterRotation[rowIndex][columnIndex],
+				faceBeforeRotation[FACE_SIZE - 1 - columnIndex][rowIndex]);
+		}
+	}
+}
+
+
+Test(Cube, rotateCubeClockwise_frontFaceIsRotatedClockwise)
+{
+	// given
+	Cube * cube = createScrambledCube();
+	Face * frontFace = _Cube->frontFace(cube);
+	Color faceBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(frontFace, faceBeforeRotation);
+
+	// when
+	_Cube->rotateClockwise(cube);
+
+	// then
+	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(frontFace, faceAfterRotation);
+	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				faceAfterRotation[rowIndex][columnIndex],
+				faceBeforeRotation[FACE_SIZE - 1 - columnIndex][rowIndex]);
+		}
+	}
+}
+
+
+Test(Cube, rotateCubeClockwise_rightFaceIsRotatedClockwise)
+{
+	// given
+	Cube * cube = createScrambledCube();
+	Face * rightFace = _Cube->rightFace(cube);
+	Color faceBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(rightFace, faceBeforeRotation);
+
+	// when
+	_Cube->rotateClockwise(cube);
+
+	// then
+	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(rightFace, faceAfterRotation);
+	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				faceAfterRotation[rowIndex][columnIndex],
+				faceBeforeRotation[FACE_SIZE - 1 - columnIndex][rowIndex]);
+		}
+	}
+}
+
+
+Test(Cube, rotateCubeClockwise_bottomFaceIsRotatedClockwise)
+{
+	// given
+	Cube * cube = createScrambledCube();
+	Face * bottomFace = _Cube->bottomFace(cube);
+	Color faceBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(bottomFace, faceBeforeRotation);
+
+	// when
+	_Cube->rotateClockwise(cube);
+
+	// then
+	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(bottomFace, faceAfterRotation);
+	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				faceAfterRotation[rowIndex][columnIndex],
+				faceBeforeRotation[FACE_SIZE - 1 - columnIndex][rowIndex]);
+		}
+	}
+}
+
+
+Test(Cube, rotateCubeClockwise_backFaceIsRotatedAntiClockwise)
+{
+	// given
+	Cube * cube = createScrambledCube();
+	Face * backFace = _Cube->backFace(cube);
+	Color faceBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(backFace, faceBeforeRotation);
+
+	// when
+	_Cube->rotateClockwise(cube);
+
+	// then
+	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(backFace, faceAfterRotation);
+	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				faceAfterRotation[rowIndex][columnIndex],
+				faceBeforeRotation[columnIndex][FACE_SIZE - 1 - rowIndex]);
+		}
+	}
+}
+
+
+Test(Cube, rotateCubeClockwise_topFaceIsRotatedClockwise)
+{
+	// given
+	Cube * cube = createScrambledCube();
+	Face * topFace = _Cube->topFace(cube);
+	Color faceBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(topFace, faceBeforeRotation);
+
+	// when
+	_Cube->rotateClockwise(cube);
+
+	// then
+	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(topFace, faceAfterRotation);
+	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				faceAfterRotation[rowIndex][columnIndex],
+				faceBeforeRotation[FACE_SIZE - 1 - columnIndex][rowIndex]);
+		}
+	}
+}
+
+
+Test(Cube, rotateCubeAnticlockwise_leftFaceIsRotatedAnticlockwise)
+{
+	// given
+	Cube * cube = createScrambledCube();
+	Face * leftFace = _Cube->leftFace(cube);
+	Color faceBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(leftFace, faceBeforeRotation);
+
+	// when
+	_Cube->rotateAnticlockwise(cube);
+
+	// then
+	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(leftFace, faceAfterRotation);
+	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				faceAfterRotation[rowIndex][columnIndex],
+				faceBeforeRotation[columnIndex][FACE_SIZE - 1 - rowIndex]);
+		}
+	}
+}
+
+
+Test(Cube, rotateCubeAnticlockwise_frontFaceIsRotatedAnticlockwise)
+{
+	// given
+	Cube * cube = createScrambledCube();
+	Face * frontFace = _Cube->frontFace(cube);
+	Color faceBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(frontFace, faceBeforeRotation);
+
+	// when
+	_Cube->rotateAnticlockwise(cube);
+
+	// then
+	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(frontFace, faceAfterRotation);
+	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				faceAfterRotation[rowIndex][columnIndex],
+				faceBeforeRotation[columnIndex][FACE_SIZE - 1 - rowIndex]);
+		}
+	}
+}
+
+
+Test(Cube, rotateCubeAnticlockwise_rightFaceIsRotatedAnticlockwise)
+{
+	// given
+	Cube * cube = createScrambledCube();
+	Face * rightFace = _Cube->rightFace(cube);
+	Color faceBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(rightFace, faceBeforeRotation);
+
+	// when
+	_Cube->rotateAnticlockwise(cube);
+
+	// then
+	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(rightFace, faceAfterRotation);
+	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				faceAfterRotation[rowIndex][columnIndex],
+				faceBeforeRotation[columnIndex][FACE_SIZE - 1 - rowIndex]);
+		}
+	}
+}
+
+
+Test(Cube, rotateCubeAnticlockwise_bottomFaceIsRotatedAnticlockwise)
+{
+	// given
+	Cube * cube = createScrambledCube();
+	Face * bottomFace = _Cube->bottomFace(cube);
+	Color faceBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(bottomFace, faceBeforeRotation);
+
+	// when
+	_Cube->rotateAnticlockwise(cube);
+
+	// then
+	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(bottomFace, faceAfterRotation);
+	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				faceAfterRotation[rowIndex][columnIndex],
+				faceBeforeRotation[columnIndex][FACE_SIZE - 1 - rowIndex]);
+		}
+	}
+}
+
+
+Test(Cube, rotateCubeAnticlockwise_backFaceIsRotatedClockwise)
+{
+	// given
+	Cube * cube = createScrambledCube();
+	Face * backFace = _Cube->backFace(cube);
+	Color faceBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(backFace, faceBeforeRotation);
+
+	// when
+	_Cube->rotateAnticlockwise(cube);
+
+	// then
+	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(backFace, faceAfterRotation);
+	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				faceAfterRotation[rowIndex][columnIndex],
+				faceBeforeRotation[FACE_SIZE - 1 - columnIndex][rowIndex]);
+		}
+	}
+}
+
+
+Test(Cube, rotateCubeAnticlockwise_topFaceIsRotatedAntiClockwise)
+{
+	// given
+	Cube * cube = createScrambledCube();
+	Face * topFace = _Cube->topFace(cube);
+	Color faceBeforeRotation[FACE_SIZE][FACE_SIZE];
+	readFace(topFace, faceBeforeRotation);
+
+	// when
+	_Cube->rotateAnticlockwise(cube);
+
+	// then
+	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
+	readFace(topFace, faceAfterRotation);
+	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
+	{
+		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
+		{
+			cr_assert_eq(
+				faceAfterRotation[rowIndex][columnIndex],
+				faceBeforeRotation[columnIndex][FACE_SIZE - 1 - rowIndex]);
+		}
+	}
+}
 
 
 
