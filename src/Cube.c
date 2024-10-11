@@ -62,6 +62,12 @@ struct Cube
 
 
 
+static void setRow(Face * face, Color row[FACE_SIZE], int rowIndex);
+
+
+static void setColumn(Face * face, Color column[FACE_SIZE], int columnIndex);
+
+
 static void applyColorOnRow(Face * this, Color color, int rowIndex);
 
 
@@ -190,6 +196,40 @@ static void rotateCameraClockwise(Cube * this);
 static void rotateCameraAnticlockwise(Cube * this);
 
 
+/**
+ * @param face - the face to get a line from
+ * @param storage - the buffer where to write the line
+ * @param coords - [ordinate, abscissa],
+ * 		one coord in range [0;FACE_SIZE[ and the other one set to -1, depending
+ * 		if the line is a row or a column
+ */
+static void getLine(
+	Face const * face,
+	Color storage[FACE_SIZE],
+	int coords[2]);
+
+
+/**
+ * @param face - the face to set a line to
+ * @param storage - the line to set
+ * @param coords - [ordinate, abscissa],
+ * 		one coord in range [0;FACE_SIZE[ and the other one set to -1, depending
+ * 		if the line is a row or a column
+ */
+static void setLine(
+	Face * face,
+	Color storage[FACE_SIZE],
+	int coords[2]);
+
+
+/**
+ * @param this - the cube containing the slice to turn
+ * @param linesCoordsCycle - 4 entries [face, ordinate, abscissa],
+ * 		in each entry, either abscissa or ordinate must be set to -1, depending
+ * 		if the line is a row or column, the other coord being the row/column
+ * 		index in range [0;FACE_SIZE[
+ * 		the line of each entry will be moved to the coord of the next entry
+ */
 static void turnSlice(Cube * this, int linesCoordsCycle[4][3]);
 
 
@@ -267,12 +307,30 @@ static void turnBackSliceAnticlockwise(Cube * this);
 
 
 
+static void setRow(Face * const face, Color row[FACE_SIZE], int rowIndex)
+{
+	size_t sliceSizeInBytes = FACE_SIZE * sizeof(row[0]);
+	memcpy(face->cells[rowIndex], row, sliceSizeInBytes);
+}
+
+
+static void setColumn(Face * const face, Color column[FACE_SIZE], int columnIndex)
+{
+	int rowIndex;
+	for (rowIndex = TOP_ROW; rowIndex <= BOTTOM_ROW; rowIndex++)
+		face->cells[rowIndex][columnIndex] = column[rowIndex];
+}
+
+
 static void applyColorOnRow(Face * const this, Color color, int rowIndex)
 {
 	int columnIndex;
+	Color row[FACE_SIZE];
 
 	for (columnIndex = LEFT_COLUMN; columnIndex <= RIGHT_COLUMN; columnIndex++)
-		this->cells[rowIndex][columnIndex] = color;
+		row[columnIndex] = color;
+
+	setRow(this, row, rowIndex);
 }
 
 
@@ -559,56 +617,61 @@ static void rotateCameraAnticlockwise(Cube * const this)
 }
 
 
+static void getLine(
+	Face const * const face,
+	Color storage[FACE_SIZE],
+	int coords[2])
+{
+	int isRow = (coords[1] == -1);
+	if (isRow)
+		getRow(face, storage, coords[0]);
+	else
+		getColumn(face, storage, coords[1]);
+}
+
+
+static void setLine(
+	Face * const face,
+	Color storage[FACE_SIZE],
+	int coords[2])
+{
+	int isRow = (coords[1] == -1);
+	if (isRow)
+		setRow(face, storage, coords[0]);
+	else
+		setColumn(face, storage, coords[1]);
+}
+
+
 static void turnSlice(Cube * this, int linesCoordsCycle[4][3])
 {
-	int cellIndex;
 	int cycleIndex;
-	int fromAbscissa, fromOrdinate;
-	int toAbscissa, toOrdinate;
 
-	Color backup[FACE_SIZE];
-	for (cellIndex = 0; cellIndex < FACE_SIZE; cellIndex++)
+	Face * fromFace;
+	Face * toFace;
+
+	Color initialLineBackup[FACE_SIZE];
+	Color line[FACE_SIZE];
+
+	int * sourceCoords;
+	int * destinationCoords;
+
+	Face * toFace = this->faces[linesCoordsCycle[3][0]];
+	destinationCoords = & linesCoordsCycle[3][1];
+	getLine(toFace, initialLineBackup, destinationCoords);
+
+	for (cycleIndex = 3; cycleIndex > 0; cycleIndex--)
 	{
-		fromAbscissa = linesCoordsCycle[3][2] == -1
-			? cellIndex
-			: linesCoordsCycle[3][2];
-		fromOrdinate = linesCoordsCycle[3][1] == -1
-			? cellIndex
-			: linesCoordsCycle[3][1];
+		fromFace = this->faces[linesCoordsCycle[cycleIndex - 1][0]];
+		sourceCoords = & linesCoordsCycle[cycleIndex - 1][1];
+		getLine(fromFace, line, sourceCoords);
 
-		backup[cellIndex] =
-			this->faces[linesCoordsCycle[3][0]]->cells[fromOrdinate][fromAbscissa];
-
-		for (cycleIndex = 3; cycleIndex > 0; cycleIndex--)
-		{
-			fromAbscissa = linesCoordsCycle[cycleIndex - 1][2] == -1
-				? cellIndex
-				: linesCoordsCycle[cycleIndex - 1][2];
-			fromOrdinate = linesCoordsCycle[cycleIndex - 1][1] == -1
-				? cellIndex
-				: linesCoordsCycle[cycleIndex - 1][1];
-
-			toAbscissa = linesCoordsCycle[cycleIndex][2] == -1
-				? cellIndex
-				: linesCoordsCycle[cycleIndex][2];
-			toOrdinate = linesCoordsCycle[cycleIndex][1] == -1
-				? cellIndex
-				: linesCoordsCycle[cycleIndex][1];
-
-			this->faces[linesCoordsCycle[cycleIndex][0]]->cells[toOrdinate][toAbscissa] =
-				this->faces[linesCoordsCycle[cycleIndex - 1][0]]->cells[fromOrdinate][fromAbscissa];
-		}
-
-		toAbscissa = linesCoordsCycle[0][2] == -1
-			? cellIndex
-			: linesCoordsCycle[0][2];
-		toOrdinate = linesCoordsCycle[0][1] == -1
-			? cellIndex
-			: linesCoordsCycle[0][1];
-
-		this->faces[linesCoordsCycle[0][0]]->cells[toOrdinate][toAbscissa] =
-			backup[cellIndex];
+		setLine(toFace, line, destinationCoords);
+		toFace = fromFace;
+		destinationCoords = sourceCoords;
 	}
+
+	setLine(toFace, initialLineBackup, destinationCoords);
 }
 
 
