@@ -343,7 +343,6 @@ static void applyColorOnRow(Face * this, Color color, int rowIndex)
 static void applyColor(Face * this, Color color)
 {
 	int rowIndex;
-
 	for (rowIndex = TOP_ROW; rowIndex <= BOTTOM_ROW; rowIndex++)
 		applyColorOnRow(this, color, rowIndex);
 }
