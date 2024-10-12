@@ -570,8 +570,16 @@ static Cube * createCube(void)
 
 static void deleteCube(Cube ** this)
 {
+	int faceIndex;
+
 	if ((this == NULL) || (* this == NULL))
 		return;
+
+	for (faceIndex = 0; faceIndex < 6; faceIndex++)
+	{
+		_Face->delete(& (* this)->faces[faceIndex]);
+		(* this)->faces[faceIndex] = NULL;
+	};
 
 	free(* this);
 	* this = NULL;
