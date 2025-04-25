@@ -45,77 +45,6 @@ struct Cube
 
 
 
-static void createAndPositionFaces(Cube * this);
-
-
-/**
- * @param this - the cube to rotate
- * @param faceIndexesCycle - the cycle of index of faces to move in the
- * 		unfolded pattern, the face at position cycle[i] will take the place of
- * 		the face at position cycle[i+1]
- * 		eg: {TOP_FACE, RIGHT_FACE, BOTTOM_FACE, LEFT_FACE}
- * 			will put TOP_FACE face where RIGHT_FACE face is
- */
-static void rotateCube(Cube * this, int faceIndexesCycle[4]);
-
-
-/**
- * @param face - the face to get a line from
- * @param storage - the buffer where to write the line
- * @param coords - [ordinate, abscissa],
- * 		one coord in range [0;FACE_SIZE[ and the other one set to -1, depending
- * 		if the line is a row or a column
- */
-static void getLine(
-	Face const * face,
-	Color storage[FACE_SIZE],
-	int coords[2]);
-
-
-/**
- * @param face - the face to set a line to
- * @param storage - the line to set
- * @param coords - [ordinate, abscissa],
- * 		one coord in range [0;FACE_SIZE[ and the other one set to -1, depending
- * 		if the line is a row or a column
- */
-static void setLine(
-	Face * face,
-	Color storage[FACE_SIZE],
-	int coords[2]);
-
-
-/**
- * @param this - the cube containing the slice to turn
- * @param linesCoordsCycle - 4 entries [face, ordinate, abscissa],
- * 		in each entry, either abscissa or ordinate must be set to -1, depending
- * 		if the line is a row or column, the other coord being the row/column
- * 		index in range [0;FACE_SIZE[
- * 		the line of each entry will be moved to the coord of the next entry
- */
-static void turnSlice(Cube * this, int linesCoordsCycle[4][3]);
-
-
-static void turnHorizontalSlice(Cube * this, int rowIndex, int cycle[4]);
-
-
-static void turnSliceLeft(Cube * this, int rowIndex);
-
-
-static void turnSliceRight(Cube * this, int rowIndex);
-
-
-static void turnVerticalSlice(Cube * this, int columnIndex, int facesCycle[4]);
-
-
-static void turnSliceUp(Cube * this, int columnIndex);
-
-
-static void turnSliceDown(Cube * this, int columnIndex);
-
-
-
-
 static void createAndPositionFaces(Cube * this)
 {
 	/*
@@ -209,6 +138,15 @@ Face * Cube_backFace(Cube const * this)
 }
 
 
+/**
+ * @param this - the cube to rotate
+ *
+ * @param faceIndexesCycle - the cycle of index of faces to move in the
+ * 		unfolded pattern, the face at position cycle[i] will take the place of
+ * 		the face at position cycle[i+1]
+ * 		eg: {TOP_FACE, RIGHT_FACE, BOTTOM_FACE, LEFT_FACE}
+ * 			will put TOP_FACE face where RIGHT_FACE face is
+ */
 static void rotateCube(Cube * this, int faceIndexesCycle[4])
 {
 	Face * backupFace = this->faces[faceIndexesCycle[3]];
@@ -302,10 +240,16 @@ void Cube_rotateAnticlockwise(Cube * this)
 }
 
 
-static void getLine(
-	Face const * face,
-	Color storage[FACE_SIZE],
-	int coords[2])
+/**
+ * @param face - the face to get a line from
+ *
+ * @param storage - the buffer where to write the line
+ *
+ * @param coords - [ordinate, abscissa],
+ * 		one coord in range [0;FACE_SIZE[ and the other one set to -1, depending
+ * 		if the line is a row or a column
+ */
+static void getLine(Face const * face, Color storage[FACE_SIZE], int coords[2])
 {
 	int isRow = (coords[1] == -1);
 	if (isRow)
@@ -315,10 +259,16 @@ static void getLine(
 }
 
 
-static void setLine(
-	Face * face,
-	Color storage[FACE_SIZE],
-	int coords[2])
+/**
+ * @param face - the face to set a line to
+ *
+ * @param storage - the line to set
+ *
+ * @param coords - [ordinate, abscissa],
+ * 		one coord in range [0;FACE_SIZE[ and the other one set to -1, depending
+ * 		if the line is a row or a column
+ */
+static void setLine(Face * face, Color storage[FACE_SIZE], int coords[2])
 {
 	int isRow = (coords[1] == -1);
 	if (isRow)
@@ -328,6 +278,15 @@ static void setLine(
 }
 
 
+/**
+ * @param this - the cube containing the slice to turn
+ *
+ * @param linesCoordsCycle - 4 entries [face, ordinate, abscissa],
+ * 		in each entry, either abscissa or ordinate must be set to -1, depending
+ * 		if the line is a row or column, the other coord being the row/column
+ * 		index in range [0;FACE_SIZE[
+ * 		the line of each entry will be moved to the coord of the next entry
+ */
 static void turnSlice(Cube * this, int linesCoordsCycle[4][3])
 {
 	int cycleIndex;
