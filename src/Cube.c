@@ -3,7 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "Cube.h"
+#include "../include/Cube.h"
+
 #include "Face.h"
 
 

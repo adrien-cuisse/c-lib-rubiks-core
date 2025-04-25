@@ -1,8 +1,9 @@
 
 #include <criterion/criterion.h>
 
-#include "../../src/Cube.h"
+#include "../../include/Cube.h"
 
+#include "../../src/Face.h"
 
 
 
