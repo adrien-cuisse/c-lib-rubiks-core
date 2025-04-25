@@ -2,7 +2,7 @@
 #ifndef FACE_HEADER
 #define FACE_HEADER
 
-#include "Color.h"
+#include "../include/Color.h"
 
 #define FACE_SIZE 3
 
