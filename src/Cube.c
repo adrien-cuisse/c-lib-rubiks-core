@@ -74,43 +74,8 @@ static void applyColorOnRow(Face * this, Color color, int rowIndex);
 static void applyColor(Face * this, Color color);
 
 
-static Face * createFace(Color color);
+static Color Face_cell(Face const * this, int rowIndex, int columnIndex);
 
-
-static void deleteFace(Face ** this);
-
-
-static Color getColor(Face const * this);
-
-
-static Color getCell(Face const * this, int rowIndex, int columnIndex);
-
-
-static Color getTopLeftCell(Face const * this);
-
-
-static Color getTopCenterCell(Face const * this);
-
-
-static Color getTopRightCell(Face const * this);
-
-
-static Color getEquatorLeftCell(Face const * this);
-
-
-static Color getEquatorCenterCell(Face const * this);
-
-
-static Color getEquatorRightCell(Face const * this);
-
-
-static Color getBottomLeftCell(Face const * this);
-
-
-static Color getBottomCenterCell(Face const * this);
-
-
-static Color getBottomRightCell(Face const * this);
 
 
 static void getRow(
@@ -119,28 +84,10 @@ static void getRow(
 	int rowIndex);
 
 
-static void getTopRow(Face const * this, Color storage[FACE_SIZE]);
-
-
-static void getEquatorRow(Face const * this, Color storage[FACE_SIZE]);
-
-
-static void getBottomRow(Face const * this, Color storage[FACE_SIZE]);
-
-
 static void getColumn(
 	Face const * this,
 	Color storage[FACE_SIZE],
 	int columnIndex);
-
-
-static void getLeftColumn(Face const * this, Color storage[FACE_SIZE]);
-
-
-static void getMiddleColumn(Face const * this, Color storage[FACE_SIZE]);
-
-
-static void getRightColumn(Face const * this, Color storage[FACE_SIZE]);
 
 
 static void rotateFaceClockwise(Face * this);
@@ -354,7 +301,7 @@ static void applyColor(Face * this, Color color)
 }
 
 
-static Face * createFace(Color color)
+Face * Face_create(Color color)
 {
 	Face * this = calloc(1, sizeof(* this));
 	if (this == NULL)
@@ -369,7 +316,7 @@ static Face * createFace(Color color)
 }
 
 
-static void deleteFace(Face ** this)
+void Face_delete(Face ** this)
 {
 	if ((this == NULL) || (* this == NULL))
 		return;
@@ -379,70 +326,70 @@ static void deleteFace(Face ** this)
 }
 
 
-static Color getColor(Face const * this)
+Color Face_color(Face const * this)
 {
 	/* center cells are fixed */
-	return getEquatorCenterCell(this);
+	return Face_equatorCenterCell(this);
 }
 
 
-static Color getCell(Face const * this, int rowIndex, int columnIndex)
+static Color Face_cell(Face const * this, int rowIndex, int columnIndex)
 {
 	return this->cells[rowIndex][columnIndex];
 }
 
 
-static Color getTopLeftCell(Face const * this)
+Color Face_topLeftCell(Face const * this)
 {
-	return getCell(this, TOP_ROW, LEFT_CELL);
+	return Face_cell(this, TOP_ROW, LEFT_COLUMN);
 }
 
 
-static Color getTopCenterCell(Face const * this)
+Color Face_topCenterCell(Face const * this)
 {
-	return getCell(this, TOP_ROW, MIDDLE_CELL);
+	return Face_cell(this, TOP_ROW, MIDDLE_COLUMN);
 }
 
 
-static Color getTopRightCell(Face const * this)
+Color Face_topRightCell(Face const * this)
 {
-	return getCell(this, TOP_ROW, RIGHT_CELL);
+	return Face_cell(this, TOP_ROW, RIGHT_COLUMN);
 }
 
 
-static Color getEquatorLeftCell(Face const * this)
+Color Face_equatorLeftCell(Face const * this)
 {
-	return getCell(this, EQUATOR_ROW, LEFT_CELL);
+	return Face_cell(this, EQUATOR_ROW, LEFT_COLUMN);
 }
 
 
-static Color getEquatorCenterCell(Face const * this)
+Color Face_equatorCenterCell(Face const * this)
 {
-	return getCell(this, EQUATOR_ROW, MIDDLE_CELL);
+	return Face_cell(this, EQUATOR_ROW, MIDDLE_COLUMN);
 }
 
 
-static Color getEquatorRightCell(Face const * this)
+Color Face_equatorRightCell(Face const * this)
 {
-	return getCell(this, EQUATOR_ROW, RIGHT_CELL);
+	return Face_cell(this, EQUATOR_ROW, RIGHT_COLUMN);
 }
 
 
-static Color getBottomLeftCell(Face const * this)
+Color Face_bottomLeftCell(Face const * this)
 {
-	return getCell(this, BOTTOM_ROW, LEFT_CELL);
+	return Face_cell(this, BOTTOM_ROW, LEFT_COLUMN);
 }
 
 
-static Color getBottomCenterCell(Face const * this)
+Color Face_bottomCenterCell(Face const * this)
 {
-	return getCell(this, BOTTOM_ROW, MIDDLE_CELL);
+	return Face_cell(this, BOTTOM_ROW, MIDDLE_COLUMN);
 }
 
 
-static Color getBottomRightCell(Face const * this)
+Color Face_bottomRightCell(Face const * this)
 {
-	return getCell(this, BOTTOM_ROW, RIGHT_CELL);
+	return Face_cell(this, BOTTOM_ROW, RIGHT_COLUMN);
 }
 
 
@@ -456,19 +403,19 @@ static void getRow(
 }
 
 
-static void getTopRow(Face const * this, Color storage[FACE_SIZE])
+void Face_topRow(Face const * this, Color storage[FACE_SIZE])
 {
 	getRow(this, storage, TOP_ROW);
 }
 
 
-static void getEquatorRow(Face const * this, Color storage[FACE_SIZE])
+void Face_equatorRow(Face const * this, Color storage[FACE_SIZE])
 {
 	getRow(this, storage, EQUATOR_ROW);
 }
 
 
-void getBottomRow(Face const * this, Color storage[FACE_SIZE])
+void Face_bottomRow(Face const * this, Color storage[FACE_SIZE])
 {
 	getRow(this, storage, BOTTOM_ROW);
 }
@@ -485,19 +432,19 @@ static void getColumn(
 }
 
 
-static void getLeftColumn(Face const * this, Color storage[FACE_SIZE])
+void Face_leftColumn(Face const * this, Color storage[FACE_SIZE])
 {
 	getColumn(this, storage, LEFT_COLUMN);
 }
 
 
-static void getMiddleColumn(Face const * this, Color storage[FACE_SIZE])
+void Face_middleColumn(Face const * this, Color storage[FACE_SIZE])
 {
 	getColumn(this, storage, MIDDLE_COLUMN);
 }
 
 
-static void getRightColumn(Face const * this, Color storage[FACE_SIZE])
+void Face_rightColumn(Face const * this, Color storage[FACE_SIZE])
 {
 	getColumn(this, storage, RIGHT_COLUMN);
 }
@@ -544,12 +491,12 @@ static void createAndPositionFaces(Cube * this)
 	 * - red opposes orange,
 	 * - blue, white & red are in anti-clockwise order around a corner
 	 */
-	this->faces[LEFT_FACE] = _Face->create(RED);
-	this->faces[FRONT_FACE] = _Face->create(BLUE);
-	this->faces[RIGHT_FACE] = _Face->create(ORANGE);
-	this->faces[TOP_FACE] = _Face->create(WHITE);
-	this->faces[BOTTOM_FACE] = _Face->create(YELLOW);
-	this->faces[BACK_FACE] = _Face->create(GREEN);
+	this->faces[LEFT_FACE] = Face_create(RED);
+	this->faces[FRONT_FACE] = Face_create(BLUE);
+	this->faces[RIGHT_FACE] = Face_create(ORANGE);
+	this->faces[TOP_FACE] = Face_create(WHITE);
+	this->faces[BOTTOM_FACE] = Face_create(YELLOW);
+	this->faces[BACK_FACE] = Face_create(GREEN);
 }
 
 
@@ -577,7 +524,7 @@ static void deleteCube(Cube ** this)
 
 	for (faceIndex = 0; faceIndex < 6; faceIndex++)
 	{
-		_Face->delete(& (* this)->faces[faceIndex]);
+		Face_delete(& (* this)->faces[faceIndex]);
 		(* this)->faces[faceIndex] = NULL;
 	};
 
@@ -1012,35 +959,7 @@ static void turnBackSliceAnticlockwise(Cube * this)
 
 
 
-static FaceMethods faceMethods =
-{
-	createFace,
-	deleteFace,
 
-	getColor,
-
-	getTopLeftCell,
-	getTopCenterCell,
-	getTopRightCell,
-	getEquatorLeftCell,
-	getEquatorCenterCell,
-	getEquatorRightCell,
-	getBottomLeftCell,
-	getBottomCenterCell,
-	getBottomRightCell,
-
-	getTopRow,
-	getEquatorRow,
-	getBottomRow,
-
-	getLeftColumn,
-	getMiddleColumn,
-	getRightColumn,
-
-	rotateFaceClockwise,
-	rotateFaceAnticlockwise
-};
-FaceMethods const * const _Face = & faceMethods;
 
 
 static CubeMethods cubeMethods =

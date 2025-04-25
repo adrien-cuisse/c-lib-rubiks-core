@@ -12,40 +12,33 @@
 typedef struct Face Face;
 
 
-typedef struct
-{
-	Face * (* create)(Color color);
-	void (* delete)(Face ** this);
-
-	Color (* color)(Face const * this);
-
-	Color (* topLeftCell)(Face const * this);
-	Color (* topCenterCell)(Face const * this);
-	Color (* topRightCell)(Face const * this);
-	Color (* equatorLeftCell)(Face const * this);
-	Color (* equatorCenterCell)(Face const * this);
-	Color (* equatorRightCell)(Face const * this);
-	Color (* bottomLeftCell)(Face const * this);
-	Color (* bottomCenterCell)(Face const * this);
-	Color (* bottomRightCell)(Face const * this);
-
-	void (* topRow)(Face const * this, Color storage[FACE_SIZE]);
-	void (* equatorRow)(Face const * this, Color storage[FACE_SIZE]);
-	void (* bottomRow)(Face const * this, Color storage[FACE_SIZE]);
-
-	void (* leftColumn)(Face const * this, Color storage[FACE_SIZE]);
-	void (* middleColumn)(Face const * this, Color storage[FACE_SIZE]);
-	void (* rightColumn)(Face const * this, Color storage[FACE_SIZE]);
-
-	void (* rotateClockwise)(Face * this);
-	void (* rotateAnticlockwise)(Face * this);
-
-} FaceMethods;
 
 
+Face * Face_create(Color color);
+void Face_delete(Face ** this);
 
+Color Face_color(Face const * this);
 
-extern FaceMethods const * const _Face;
+Color Face_topLeftCell(Face const * this);
+Color Face_topCenterCell(Face const * this);
+Color Face_topRightCell(Face const * this);
+Color Face_equatorLeftCell(Face const * this);
+Color Face_equatorCenterCell(Face const * this);
+Color Face_equatorRightCell(Face const * this);
+Color Face_bottomLeftCell(Face const * this);
+Color Face_bottomCenterCell(Face const * this);
+Color Face_bottomRightCell(Face const * this);
+
+void Face_topRow(Face const * this, Color storage[FACE_SIZE]);
+void Face_equatorRow(Face const * this, Color storage[FACE_SIZE]);
+void Face_bottomRow(Face const * this, Color storage[FACE_SIZE]);
+
+void Face_leftColumn(Face const * this, Color storage[FACE_SIZE]);
+void Face_middleColumn(Face const * this, Color storage[FACE_SIZE]);
+void Face_rightColumn(Face const * this, Color storage[FACE_SIZE]);
+
+void Face_rotateClockwise(Face * this);
+void Face_rotateAnticlockwise(Face * this);
 
 
 

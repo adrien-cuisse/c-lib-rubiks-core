@@ -15,7 +15,7 @@
 Test(Face, create_allocatesMemory)
 {
 	// given
-	Face * allocatedMemory = _Face->create(0);
+	Face * allocatedMemory = Face_create(0);
 	// when
 	// then
 	cr_assert_not_null(allocatedMemory, "no memory was allocated");
@@ -25,9 +25,9 @@ Test(Face, create_allocatesMemory)
 Test(Face, delete_deallocatesMemory)
 {
 	// given
-	Face * allocatedMemory = _Face->create(0);
+	Face * allocatedMemory = Face_create(0);
 	// when
-	_Face->delete(& allocatedMemory);
+	Face_delete(& allocatedMemory);
 	// then
 	cr_assert_null(allocatedMemory, "memory was not deallocated");
 }
@@ -36,10 +36,10 @@ Test(Face, delete_deallocatesMemory)
 Test(Face, create_topLeftCellHasGivenColor)
 {
 	// given
-	Face * face = _Face->create(ANY_COLOR);
+	Face * face = Face_create(ANY_COLOR);
 	// when
 	// then
-	Color topLeftColor = _Face->topLeftCell(face);
+	Color topLeftColor = Face_topLeftCell(face);
 	cr_assert_eq(ANY_COLOR, topLeftColor, "top left cell has wrong color");
 }
 
@@ -47,10 +47,10 @@ Test(Face, create_topLeftCellHasGivenColor)
 Test(Face, create_topCenterCellHasGivenColor)
 {
 	// given
-	Face * face = _Face->create(ANY_COLOR);
+	Face * face = Face_create(ANY_COLOR);
 	// when
 	// then
-	Color topCenterColor = _Face->topCenterCell(face);
+	Color topCenterColor = Face_topCenterCell(face);
 	cr_assert_eq(ANY_COLOR, topCenterColor, "top center cell has wrong color");
 }
 
@@ -58,10 +58,10 @@ Test(Face, create_topCenterCellHasGivenColor)
 Test(Face, create_topRightCellHasGivenColor)
 {
 	// given
-	Face * face = _Face->create(ANY_COLOR);
+	Face * face = Face_create(ANY_COLOR);
 	// when
 	// then
-	Color topRightColor = _Face->topRightCell(face);
+	Color topRightColor = Face_topRightCell(face);
 	cr_assert_eq(ANY_COLOR, topRightColor, "top right cell has wrong color");
 }
 
@@ -69,10 +69,10 @@ Test(Face, create_topRightCellHasGivenColor)
 Test(Face, create_equatorLeftCellHasGivenColor)
 {
 	// given
-	Face * face = _Face->create(ANY_COLOR);
+	Face * face = Face_create(ANY_COLOR);
 	// when
 	// then
-	Color equatorLeftColor = _Face->equatorLeftCell(face);
+	Color equatorLeftColor = Face_equatorLeftCell(face);
 	cr_assert_eq(ANY_COLOR, equatorLeftColor, "equator left cell has wrong color");
 }
 
@@ -80,10 +80,10 @@ Test(Face, create_equatorLeftCellHasGivenColor)
 Test(Face, create_equatorCenterCellHasGivenColor)
 {
 	// given
-	Face * face = _Face->create(ANY_COLOR);
+	Face * face = Face_create(ANY_COLOR);
 	// when
 	// then
-	Color equatorCenterColor = _Face->equatorCenterCell(face);
+	Color equatorCenterColor = Face_equatorCenterCell(face);
 	cr_assert_eq(ANY_COLOR, equatorCenterColor, "equator center cell has wrong color");
 }
 
@@ -91,10 +91,10 @@ Test(Face, create_equatorCenterCellHasGivenColor)
 Test(Face, create_equatorRightCellHasGivenColor)
 {
 	// given
-	Face * face = _Face->create(ANY_COLOR);
+	Face * face = Face_create(ANY_COLOR);
 	// when
 	// then
-	Color equatorRightColor = _Face->equatorRightCell(face);
+	Color equatorRightColor = Face_equatorRightCell(face);
 	cr_assert_eq(ANY_COLOR, equatorRightColor, "equator right cell has wrong color");
 }
 
@@ -102,10 +102,10 @@ Test(Face, create_equatorRightCellHasGivenColor)
 Test(Face, create_bottomLeftCellHasGivenColor)
 {
 	// given
-	Face * face = _Face->create(ANY_COLOR);
+	Face * face = Face_create(ANY_COLOR);
 	// when
 	// then
-	Color bottomLeftColor = _Face->bottomLeftCell(face);
+	Color bottomLeftColor = Face_bottomLeftCell(face);
 	cr_assert_eq(ANY_COLOR, bottomLeftColor, "bottom left cell has wrong color");
 }
 
@@ -113,10 +113,10 @@ Test(Face, create_bottomLeftCellHasGivenColor)
 Test(Face, create_bottomCenterCellHasGivenColor)
 {
 	// given
-	Face * face = _Face->create(ANY_COLOR);
+	Face * face = Face_create(ANY_COLOR);
 	// when
 	// then
-	Color bottomCenterColor = _Face->bottomCenterCell(face);
+	Color bottomCenterColor = Face_bottomCenterCell(face);
 	cr_assert_eq(ANY_COLOR, bottomCenterColor, "bottom center cell has wrong color");
 }
 
@@ -124,9 +124,9 @@ Test(Face, create_bottomCenterCellHasGivenColor)
 Test(Face, create_bottomRightCellHasGivenColor)
 {
 	// given
-	Face * face = _Face->create(ANY_COLOR);
+	Face * face = Face_create(ANY_COLOR);
 	// when
 	// then
-	Color bottomRightColor = _Face->bottomRightCell(face);
+	Color bottomRightColor = Face_bottomRightCell(face);
 	cr_assert_eq(ANY_COLOR, bottomRightColor, "bottom right cell has wrong color");
 }
