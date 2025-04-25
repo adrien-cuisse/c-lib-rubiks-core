@@ -99,31 +99,7 @@ static void rotateFaceAnticlockwise(Face * this);
 static void createAndPositionFaces(Cube * this);
 
 
-static Cube * createCube(void);
-
-
-static void deleteCube(Cube ** this);
-
-
 static Face * getFace(Cube const * this, int faceIndex);
-
-
-static Face * getLeftFace(Cube const * this);
-
-
-static Face * getFrontFace(Cube const * this);
-
-
-static Face * getRightFace(Cube const * this);
-
-
-static Face * getTopFace(Cube const * this);
-
-
-static Face * getBottomFace(Cube const * this);
-
-
-static Face * getBackFace(Cube const * this);
 
 
 /**
@@ -135,24 +111,6 @@ static Face * getBackFace(Cube const * this);
  * 			will put TOP_FACE face where RIGHT_FACE face is
  */
 static void rotateCube(Cube * this, int faceIndexesCycle[4]);
-
-
-static void rotateCubeLeft(Cube * this);
-
-
-static void rotateCubeRight(Cube * this);
-
-
-static void rotateCubeUp(Cube * this);
-
-
-static void rotateCubeDown(Cube * this);
-
-
-static void rotateCubeClockwise(Cube * this);
-
-
-static void rotateCubeAnticlockwise(Cube * this);
 
 
 /**
@@ -201,24 +159,6 @@ static void turnSliceLeft(Cube * this, int rowIndex);
 static void turnSliceRight(Cube * this, int rowIndex);
 
 
-static void turnTopSliceLeft(Cube * this);
-
-
-static void turnTopSliceRight(Cube * this);
-
-
-static void turnEquatorSliceLeft(Cube * this);
-
-
-static void turnEquatorSliceRight(Cube * this);
-
-
-static void turnBottomSliceLeft(Cube * this);
-
-
-static void turnBottomSliceRight(Cube * this);
-
-
 static void turnVerticalSlice(Cube * this, int columnIndex, int facesCycle[4]);
 
 
@@ -226,44 +166,6 @@ static void turnSliceUp(Cube * this, int columnIndex);
 
 
 static void turnSliceDown(Cube * this, int columnIndex);
-
-
-static void turnLeftSliceUp(Cube * this);
-
-
-static void turnLeftSliceDown(Cube * this);
-
-
-static void turnMiddleSliceUp(Cube * this);
-
-
-static void turnMiddleSliceDown(Cube * this);
-
-
-static void turnRightSliceUp(Cube * this);
-
-
-static void turnRightSliceDown(Cube * this);
-
-
-static void turnFrontSliceClockwise(Cube * this);
-
-
-static void turnFrontSliceAnticlockwise(Cube * this);
-
-
-static void turnStandingSliceClockwise(Cube * this);
-
-
-static void turnStandingSliceAnticlockwise(Cube * this);
-
-
-static void turnBackSliceClockwise(Cube * this);
-
-
-static void turnBackSliceAnticlockwise(Cube * this);
-
-
 
 
 static void setRow(Face * face, Color row[FACE_SIZE], int rowIndex)
@@ -500,7 +402,7 @@ static void createAndPositionFaces(Cube * this)
 }
 
 
-static Cube * createCube(void)
+Cube * Cube_create(void)
 {
 	Cube * this = calloc(1, sizeof(* this));
 	if (this == NULL)
@@ -515,7 +417,7 @@ static Cube * createCube(void)
 }
 
 
-static void deleteCube(Cube ** this)
+void Cube_delete(Cube ** this)
 {
 	int faceIndex;
 
@@ -539,37 +441,37 @@ static Face * getFace(Cube const * this, int faceIndex)
 }
 
 
-static Face * getLeftFace(Cube const * this)
+Face * Cube_leftFace(Cube const * this)
 {
 	return getFace(this, LEFT_FACE);
 }
 
 
-static Face * getFrontFace(Cube const * this)
+Face * Cube_frontFace(Cube const * this)
 {
 	return getFace(this, FRONT_FACE);
 }
 
 
-static Face * getRightFace(Cube const * this)
+Face * Cube_rightFace(Cube const * this)
 {
 	return getFace(this, RIGHT_FACE);
 }
 
 
-static Face * getTopFace(Cube const * this)
+Face * Cube_topFace(Cube const * this)
 {
 	return getFace(this, TOP_FACE);
 }
 
 
-static Face * getBottomFace(Cube const * this)
+Face * Cube_bottomFace(Cube const * this)
 {
 	return getFace(this, BOTTOM_FACE);
 }
 
 
-static Face * getBackFace(Cube const * this)
+Face * Cube_backFace(Cube const * this)
 {
 	return getFace(this, BACK_FACE);
 }
@@ -586,83 +488,83 @@ static void rotateCube(Cube * this, int faceIndexesCycle[4])
 }
 
 
-static void rotateCubeLeft(Cube * this)
+void Cube_rotateLeft(Cube * this)
 {
 	int cycle[4] = { FRONT_FACE, LEFT_FACE, BACK_FACE, RIGHT_FACE };
 
-	rotateFaceClockwise(getLeftFace(this));
-	rotateFaceClockwise(getLeftFace(this));
-	rotateFaceClockwise(getBottomFace(this));
-	rotateFaceClockwise(getBackFace(this));
-	rotateFaceClockwise(getBackFace(this));
-	rotateFaceAnticlockwise(getTopFace(this));
+	rotateFaceClockwise(Cube_leftFace(this));
+	rotateFaceClockwise(Cube_leftFace(this));
+	rotateFaceClockwise(Cube_bottomFace(this));
+	rotateFaceClockwise(Cube_backFace(this));
+	rotateFaceClockwise(Cube_backFace(this));
+	rotateFaceAnticlockwise(Cube_topFace(this));
 
 	rotateCube(this, cycle);
 }
 
 
-static void rotateCubeRight(Cube * this)
+void Cube_rotateRight(Cube * this)
 {
 	int cycle[4] = { FRONT_FACE, RIGHT_FACE, BACK_FACE, LEFT_FACE };
 
-	rotateFaceAnticlockwise(getRightFace(this));
-	rotateFaceAnticlockwise(getRightFace(this));
-	rotateFaceAnticlockwise(getBottomFace(this));
-	rotateFaceAnticlockwise(getBackFace(this));
-	rotateFaceAnticlockwise(getBackFace(this));
-	rotateFaceClockwise(getTopFace(this));
+	rotateFaceAnticlockwise(Cube_rightFace(this));
+	rotateFaceAnticlockwise(Cube_rightFace(this));
+	rotateFaceAnticlockwise(Cube_bottomFace(this));
+	rotateFaceAnticlockwise(Cube_backFace(this));
+	rotateFaceAnticlockwise(Cube_backFace(this));
+	rotateFaceClockwise(Cube_topFace(this));
 
 	rotateCube(this, cycle);
 }
 
 
-static void rotateCubeUp(Cube * this)
+void Cube_rotateUp(Cube * this)
 {
 	int cycle[4] = { FRONT_FACE, TOP_FACE, BACK_FACE, BOTTOM_FACE };
 
-	rotateFaceAnticlockwise(getLeftFace(this));
-	rotateFaceClockwise(getRightFace(this));
+	rotateFaceAnticlockwise(Cube_leftFace(this));
+	rotateFaceClockwise(Cube_rightFace(this));
 
 	rotateCube(this, cycle);
 }
 
 
-static void rotateCubeDown(Cube * this)
+void Cube_rotateDown(Cube * this)
 {
 	int cycle[4] = { FRONT_FACE, BOTTOM_FACE, BACK_FACE, TOP_FACE };
 
-	rotateFaceClockwise(getLeftFace(this));
-	rotateFaceAnticlockwise(getRightFace(this));
+	rotateFaceClockwise(Cube_leftFace(this));
+	rotateFaceAnticlockwise(Cube_rightFace(this));
 
 	rotateCube(this, cycle);
 }
 
 
-static void rotateCubeClockwise(Cube * this)
+void Cube_rotateClockwise(Cube * this)
 {
 	int cycle[4] = { TOP_FACE, RIGHT_FACE, BOTTOM_FACE, LEFT_FACE };
 
-	rotateFaceClockwise(getLeftFace(this));
-	rotateFaceClockwise(getFrontFace(this));
-	rotateFaceClockwise(getRightFace(this));
-	rotateFaceClockwise(getBottomFace(this));
-	rotateFaceAnticlockwise(getBackFace(this));
-	rotateFaceClockwise(getTopFace(this));
+	rotateFaceClockwise(Cube_leftFace(this));
+	rotateFaceClockwise(Cube_frontFace(this));
+	rotateFaceClockwise(Cube_rightFace(this));
+	rotateFaceClockwise(Cube_bottomFace(this));
+	rotateFaceAnticlockwise(Cube_backFace(this));
+	rotateFaceClockwise(Cube_topFace(this));
 
 	rotateCube(this, cycle);
 }
 
 
-static void rotateCubeAnticlockwise(Cube * this)
+void Cube_rotateAnticlockwise(Cube * this)
 {
 	int cycle[4] = { TOP_FACE, LEFT_FACE, BOTTOM_FACE, RIGHT_FACE };
 
-	rotateFaceAnticlockwise(getLeftFace(this));
-	rotateFaceAnticlockwise(getFrontFace(this));
-	rotateFaceAnticlockwise(getRightFace(this));
-	rotateFaceAnticlockwise(getBottomFace(this));
-	rotateFaceClockwise(getBackFace(this));
-	rotateFaceAnticlockwise(getTopFace(this));
+	rotateFaceAnticlockwise(Cube_leftFace(this));
+	rotateFaceAnticlockwise(Cube_frontFace(this));
+	rotateFaceAnticlockwise(Cube_rightFace(this));
+	rotateFaceAnticlockwise(Cube_bottomFace(this));
+	rotateFaceClockwise(Cube_backFace(this));
+	rotateFaceAnticlockwise(Cube_topFace(this));
 
 	rotateCube(this, cycle);
 }
@@ -765,40 +667,40 @@ static void turnSliceRight(Cube * this, int rowIndex)
 }
 
 
-static void turnTopSliceLeft(Cube * this)
+void Cube_turnTopSliceLeft(Cube * this)
 {
 	turnSliceLeft(this, TOP_ROW);
 	rotateFaceClockwise(getFace(this, TOP_FACE));
 }
 
 
-static void turnTopSliceRight(Cube * this)
+void Cube_turnTopSliceRight(Cube * this)
 {
 	turnSliceRight(this, TOP_ROW);
 	rotateFaceAnticlockwise(getFace(this, TOP_FACE));
 }
 
 
-static void turnEquatorSliceLeft(Cube * this)
+void Cube_turnEquatorSliceLeft(Cube * this)
 {
 	turnSliceLeft(this, EQUATOR_ROW);
 }
 
 
-static void turnEquatorSliceRight(Cube * this)
+void Cube_turnEquatorSliceRight(Cube * this)
 {
 	turnSliceRight(this, EQUATOR_ROW);
 }
 
 
-static void turnBottomSliceLeft(Cube * this)
+void Cube_turnBottomSliceLeft(Cube * this)
 {
 	turnSliceLeft(this, BOTTOM_ROW);
 	rotateFaceAnticlockwise(getFace(this, BOTTOM_FACE));
 }
 
 
-static void turnBottomSliceRight(Cube * this)
+void Cube_turnBottomSliceRight(Cube * this)
 {
 	turnSliceRight(this, BOTTOM_ROW);
 	rotateFaceClockwise(getFace(this, BOTTOM_FACE));
@@ -835,47 +737,47 @@ static void turnSliceDown(Cube * this, int columnIndex)
 }
 
 
-static void turnLeftSliceUp(Cube * this)
+void Cube_turnLeftSliceUp(Cube * this)
 {
 	turnSliceUp(this, LEFT_COLUMN);
 	rotateFaceAnticlockwise(getFace(this, LEFT_FACE));
 }
 
 
-static void turnLeftSliceDown(Cube * this)
+void Cube_turnLeftSliceDown(Cube * this)
 {
 	turnSliceDown(this, LEFT_COLUMN);
 	rotateFaceClockwise(getFace(this, LEFT_FACE));
 }
 
 
-static void turnMiddleSliceUp(Cube * this)
+void Cube_turnMiddleSliceUp(Cube * this)
 {
 	turnSliceUp(this, MIDDLE_COLUMN);
 }
 
 
-static void turnMiddleSliceDown(Cube * this)
+void Cube_turnMiddleSliceDown(Cube * this)
 {
 	turnSliceDown(this, MIDDLE_COLUMN);
 }
 
 
-static void turnRightSliceUp(Cube * this)
+void Cube_turnRightSliceUp(Cube * this)
 {
 	turnSliceUp(this, RIGHT_COLUMN);
 	rotateFaceClockwise(getFace(this, RIGHT_FACE));
 }
 
 
-static void turnRightSliceDown(Cube * this)
+void Cube_turnRightSliceDown(Cube * this)
 {
 	turnSliceDown(this, RIGHT_COLUMN);
 	rotateFaceAnticlockwise(getFace(this, RIGHT_FACE));
 }
 
 
-static void turnFrontSliceClockwise(Cube * this)
+void Cube_turnFrontSliceClockwise(Cube * this)
 {
 	int linesCoordsCycle[4][3] =
 	{
@@ -889,7 +791,7 @@ static void turnFrontSliceClockwise(Cube * this)
 }
 
 
-static void turnFrontSliceAnticlockwise(Cube * this)
+void Cube_turnFrontSliceAnticlockwise(Cube * this)
 {
 	int linesCoordsCycle[4][3] =
 	{
@@ -903,7 +805,7 @@ static void turnFrontSliceAnticlockwise(Cube * this)
 }
 
 
-static void turnStandingSliceClockwise(Cube * this)
+void Cube_turnStandingSliceClockwise(Cube * this)
 {
 	int linesCoordsCycle[4][3] =
 	{
@@ -916,7 +818,7 @@ static void turnStandingSliceClockwise(Cube * this)
 }
 
 
-static void turnStandingSliceAnticlockwise(Cube * this)
+void Cube_turnStandingSliceAnticlockwise(Cube * this)
 {
 	int linesCoordsCycle[4][3] =
 	{
@@ -929,7 +831,7 @@ static void turnStandingSliceAnticlockwise(Cube * this)
 }
 
 
-static void turnBackSliceClockwise(Cube * this)
+void Cube_turnBackSliceClockwise(Cube * this)
 {
 	int linesCoordsCycle[4][3] =
 	{
@@ -943,7 +845,7 @@ static void turnBackSliceClockwise(Cube * this)
 }
 
 
-static void turnBackSliceAnticlockwise(Cube * this)
+void Cube_turnBackSliceAnticlockwise(Cube * this)
 {
 	int linesCoordsCycle[4][3] =
 	{
@@ -955,51 +857,3 @@ static void turnBackSliceAnticlockwise(Cube * this)
 	turnSlice(this, linesCoordsCycle);
 	rotateFaceClockwise(getFace(this, BACK_FACE));
 }
-
-
-
-
-
-
-
-static CubeMethods cubeMethods =
-{
-	createCube,
-	deleteCube,
-
-	getLeftFace,
-	getFrontFace,
-	getRightFace,
-	getTopFace,
-	getBottomFace,
-	getBackFace,
-
-	rotateCubeLeft,
-	rotateCubeRight,
-	rotateCubeUp,
-	rotateCubeDown,
-	rotateCubeClockwise,
-	rotateCubeAnticlockwise,
-
-	turnTopSliceLeft,
-	turnTopSliceRight,
-	turnEquatorSliceLeft,
-	turnEquatorSliceRight,
-	turnBottomSliceLeft,
-	turnBottomSliceRight,
-
-	turnLeftSliceUp,
-	turnLeftSliceDown,
-	turnMiddleSliceUp,
-	turnMiddleSliceDown,
-	turnRightSliceUp,
-	turnRightSliceDown,
-
-	turnFrontSliceClockwise,
-	turnFrontSliceAnticlockwise,
-	turnStandingSliceClockwise,
-	turnStandingSliceAnticlockwise,
-	turnBackSliceClockwise,
-	turnBackSliceAnticlockwise
-};
-CubeMethods const * const _Cube = & cubeMethods;
