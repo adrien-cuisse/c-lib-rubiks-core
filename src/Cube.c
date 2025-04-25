@@ -7,18 +7,6 @@
 #include "Face.h"
 
 
-/** The rows composing the face (Y axis), based on FACE_SIZE */
-#define TOP_ROW 0
-#define EQUATOR_ROW 1
-#define BOTTOM_ROW 2
-
-
-/** The columns composing the face (X axis), based on FACE_SIZE */
-#define LEFT_COLUMN 0
-#define MIDDLE_COLUMN 1
-#define RIGHT_COLUMN 2
-
-
 /** The slices composing the cube (Z axis), based on FACE_SIZE */
 #define FRONT_SLICE 0
 #define STANDING_SLICE 1
@@ -48,52 +36,12 @@
 
 
 
-struct Face
-{
-	Color cells[FACE_SIZE][FACE_SIZE];
-};
-
-
 struct Cube
 {
 	Face * faces[6];
 };
 
 
-
-
-static void setRow(Face * face, Color row[FACE_SIZE], int rowIndex);
-
-
-static void setColumn(Face * face, Color column[FACE_SIZE], int columnIndex);
-
-
-static void applyColorOnRow(Face * this, Color color, int rowIndex);
-
-
-static void applyColor(Face * this, Color color);
-
-
-static Color Face_cell(Face const * this, int rowIndex, int columnIndex);
-
-
-
-static void getRow(
-	Face const * this,
-	Color storage[FACE_SIZE],
-	int rowIndex);
-
-
-static void getColumn(
-	Face const * this,
-	Color storage[FACE_SIZE],
-	int columnIndex);
-
-
-static void rotateFaceClockwise(Face * this);
-
-
-static void rotateFaceAnticlockwise(Face * this);
 
 
 static void createAndPositionFaces(Cube * this);
@@ -168,220 +116,6 @@ static void turnSliceUp(Cube * this, int columnIndex);
 static void turnSliceDown(Cube * this, int columnIndex);
 
 
-static void setRow(Face * face, Color row[FACE_SIZE], int rowIndex)
-{
-	size_t sliceSizeInBytes = FACE_SIZE * sizeof(row[0]);
-	memcpy(face->cells[rowIndex], row, sliceSizeInBytes);
-}
-
-
-static void setColumn(Face * face, Color column[FACE_SIZE], int columnIndex)
-{
-	int rowIndex;
-	for (rowIndex = TOP_ROW; rowIndex <= BOTTOM_ROW; rowIndex++)
-		face->cells[rowIndex][columnIndex] = column[rowIndex];
-}
-
-
-static void applyColorOnRow(Face * this, Color color, int rowIndex)
-{
-	int columnIndex;
-	Color row[FACE_SIZE];
-
-	for (columnIndex = LEFT_COLUMN; columnIndex <= RIGHT_COLUMN; columnIndex++)
-		row[columnIndex] = color;
-
-	setRow(this, row, rowIndex);
-}
-
-
-static void applyColor(Face * this, Color color)
-{
-	int rowIndex;
-	for (rowIndex = TOP_ROW; rowIndex <= BOTTOM_ROW; rowIndex++)
-		applyColorOnRow(this, color, rowIndex);
-}
-
-
-Face * Face_create(Color color)
-{
-	Face * this = calloc(1, sizeof(* this));
-	if (this == NULL)
-	{
-		fputs("Face allocation failed", stderr);
-		exit(EXIT_FAILURE);
-	}
-
-	applyColor(this, color);
-
-	return this;
-}
-
-
-void Face_delete(Face ** this)
-{
-	if ((this == NULL) || (* this == NULL))
-		return;
-
-	free(* this);
-	* this = NULL;
-}
-
-
-Color Face_color(Face const * this)
-{
-	/* center cells are fixed */
-	return Face_equatorCenterCell(this);
-}
-
-
-static Color Face_cell(Face const * this, int rowIndex, int columnIndex)
-{
-	return this->cells[rowIndex][columnIndex];
-}
-
-
-Color Face_topLeftCell(Face const * this)
-{
-	return Face_cell(this, TOP_ROW, LEFT_COLUMN);
-}
-
-
-Color Face_topCenterCell(Face const * this)
-{
-	return Face_cell(this, TOP_ROW, MIDDLE_COLUMN);
-}
-
-
-Color Face_topRightCell(Face const * this)
-{
-	return Face_cell(this, TOP_ROW, RIGHT_COLUMN);
-}
-
-
-Color Face_equatorLeftCell(Face const * this)
-{
-	return Face_cell(this, EQUATOR_ROW, LEFT_COLUMN);
-}
-
-
-Color Face_equatorCenterCell(Face const * this)
-{
-	return Face_cell(this, EQUATOR_ROW, MIDDLE_COLUMN);
-}
-
-
-Color Face_equatorRightCell(Face const * this)
-{
-	return Face_cell(this, EQUATOR_ROW, RIGHT_COLUMN);
-}
-
-
-Color Face_bottomLeftCell(Face const * this)
-{
-	return Face_cell(this, BOTTOM_ROW, LEFT_COLUMN);
-}
-
-
-Color Face_bottomCenterCell(Face const * this)
-{
-	return Face_cell(this, BOTTOM_ROW, MIDDLE_COLUMN);
-}
-
-
-Color Face_bottomRightCell(Face const * this)
-{
-	return Face_cell(this, BOTTOM_ROW, RIGHT_COLUMN);
-}
-
-
-static void getRow(
-	Face const * this,
-	Color storage[FACE_SIZE],
-	int rowIndex)
-{
-	size_t sliceSizeInBytes = FACE_SIZE * sizeof(this->cells[rowIndex][0]);
-	memcpy(storage, this->cells[rowIndex], sliceSizeInBytes);
-}
-
-
-void Face_topRow(Face const * this, Color storage[FACE_SIZE])
-{
-	getRow(this, storage, TOP_ROW);
-}
-
-
-void Face_equatorRow(Face const * this, Color storage[FACE_SIZE])
-{
-	getRow(this, storage, EQUATOR_ROW);
-}
-
-
-void Face_bottomRow(Face const * this, Color storage[FACE_SIZE])
-{
-	getRow(this, storage, BOTTOM_ROW);
-}
-
-
-static void getColumn(
-	Face const * this,
-	Color storage[FACE_SIZE],
-	int columnIndex)
-{
-	int rowIndex;
-	for (rowIndex = TOP_ROW; rowIndex <= BOTTOM_ROW; rowIndex++)
-		storage[rowIndex] = this->cells[rowIndex][columnIndex];
-}
-
-
-void Face_leftColumn(Face const * this, Color storage[FACE_SIZE])
-{
-	getColumn(this, storage, LEFT_COLUMN);
-}
-
-
-void Face_middleColumn(Face const * this, Color storage[FACE_SIZE])
-{
-	getColumn(this, storage, MIDDLE_COLUMN);
-}
-
-
-void Face_rightColumn(Face const * this, Color storage[FACE_SIZE])
-{
-	getColumn(this, storage, RIGHT_COLUMN);
-}
-
-
-static void rotateFaceClockwise(Face * this)
-{
-	Color newRightColumn[FACE_SIZE];
-	Color newMiddleColumn[FACE_SIZE];
-	Color newLeftColumn[FACE_SIZE];
-
-	getRow(this, newRightColumn, TOP_ROW);
-	getRow(this, newMiddleColumn, EQUATOR_ROW);
-	getRow(this, newLeftColumn, BOTTOM_ROW);
-
-	setColumn(this, newRightColumn, RIGHT_COLUMN);
-	setColumn(this, newMiddleColumn, MIDDLE_COLUMN);
-	setColumn(this, newLeftColumn, LEFT_COLUMN);
-}
-
-
-static void rotateFaceAnticlockwise(Face * this)
-{
-	Color newTopRow[FACE_SIZE];
-	Color newEquatorRow[FACE_SIZE];
-	Color newBottomRow[FACE_SIZE];
-
-	getColumn(this, newTopRow, RIGHT_COLUMN);
-	getColumn(this, newEquatorRow, MIDDLE_COLUMN);
-	getColumn(this, newBottomRow, LEFT_COLUMN);
-
-	setRow(this, newTopRow, TOP_ROW);
-	setRow(this, newEquatorRow, EQUATOR_ROW);
-	setRow(this, newBottomRow, BOTTOM_ROW);
-}
 
 
 static void createAndPositionFaces(Cube * this)
@@ -492,12 +226,12 @@ void Cube_rotateLeft(Cube * this)
 {
 	int cycle[4] = { FRONT_FACE, LEFT_FACE, BACK_FACE, RIGHT_FACE };
 
-	rotateFaceClockwise(Cube_leftFace(this));
-	rotateFaceClockwise(Cube_leftFace(this));
-	rotateFaceClockwise(Cube_bottomFace(this));
-	rotateFaceClockwise(Cube_backFace(this));
-	rotateFaceClockwise(Cube_backFace(this));
-	rotateFaceAnticlockwise(Cube_topFace(this));
+	Face_rotateClockwise(Cube_leftFace(this));
+	Face_rotateClockwise(Cube_leftFace(this));
+	Face_rotateClockwise(Cube_bottomFace(this));
+	Face_rotateClockwise(Cube_backFace(this));
+	Face_rotateClockwise(Cube_backFace(this));
+	Face_rotateAnticlockwise(Cube_topFace(this));
 
 	rotateCube(this, cycle);
 }
@@ -507,12 +241,12 @@ void Cube_rotateRight(Cube * this)
 {
 	int cycle[4] = { FRONT_FACE, RIGHT_FACE, BACK_FACE, LEFT_FACE };
 
-	rotateFaceAnticlockwise(Cube_rightFace(this));
-	rotateFaceAnticlockwise(Cube_rightFace(this));
-	rotateFaceAnticlockwise(Cube_bottomFace(this));
-	rotateFaceAnticlockwise(Cube_backFace(this));
-	rotateFaceAnticlockwise(Cube_backFace(this));
-	rotateFaceClockwise(Cube_topFace(this));
+	Face_rotateAnticlockwise(Cube_rightFace(this));
+	Face_rotateAnticlockwise(Cube_rightFace(this));
+	Face_rotateAnticlockwise(Cube_bottomFace(this));
+	Face_rotateAnticlockwise(Cube_backFace(this));
+	Face_rotateAnticlockwise(Cube_backFace(this));
+	Face_rotateClockwise(Cube_topFace(this));
 
 	rotateCube(this, cycle);
 }
@@ -522,8 +256,8 @@ void Cube_rotateUp(Cube * this)
 {
 	int cycle[4] = { FRONT_FACE, TOP_FACE, BACK_FACE, BOTTOM_FACE };
 
-	rotateFaceAnticlockwise(Cube_leftFace(this));
-	rotateFaceClockwise(Cube_rightFace(this));
+	Face_rotateAnticlockwise(Cube_leftFace(this));
+	Face_rotateClockwise(Cube_rightFace(this));
 
 	rotateCube(this, cycle);
 }
@@ -533,8 +267,8 @@ void Cube_rotateDown(Cube * this)
 {
 	int cycle[4] = { FRONT_FACE, BOTTOM_FACE, BACK_FACE, TOP_FACE };
 
-	rotateFaceClockwise(Cube_leftFace(this));
-	rotateFaceAnticlockwise(Cube_rightFace(this));
+	Face_rotateClockwise(Cube_leftFace(this));
+	Face_rotateAnticlockwise(Cube_rightFace(this));
 
 	rotateCube(this, cycle);
 }
@@ -544,12 +278,12 @@ void Cube_rotateClockwise(Cube * this)
 {
 	int cycle[4] = { TOP_FACE, RIGHT_FACE, BOTTOM_FACE, LEFT_FACE };
 
-	rotateFaceClockwise(Cube_leftFace(this));
-	rotateFaceClockwise(Cube_frontFace(this));
-	rotateFaceClockwise(Cube_rightFace(this));
-	rotateFaceClockwise(Cube_bottomFace(this));
-	rotateFaceAnticlockwise(Cube_backFace(this));
-	rotateFaceClockwise(Cube_topFace(this));
+	Face_rotateClockwise(Cube_leftFace(this));
+	Face_rotateClockwise(Cube_frontFace(this));
+	Face_rotateClockwise(Cube_rightFace(this));
+	Face_rotateClockwise(Cube_bottomFace(this));
+	Face_rotateAnticlockwise(Cube_backFace(this));
+	Face_rotateClockwise(Cube_topFace(this));
 
 	rotateCube(this, cycle);
 }
@@ -559,12 +293,12 @@ void Cube_rotateAnticlockwise(Cube * this)
 {
 	int cycle[4] = { TOP_FACE, LEFT_FACE, BOTTOM_FACE, RIGHT_FACE };
 
-	rotateFaceAnticlockwise(Cube_leftFace(this));
-	rotateFaceAnticlockwise(Cube_frontFace(this));
-	rotateFaceAnticlockwise(Cube_rightFace(this));
-	rotateFaceAnticlockwise(Cube_bottomFace(this));
-	rotateFaceClockwise(Cube_backFace(this));
-	rotateFaceAnticlockwise(Cube_topFace(this));
+	Face_rotateAnticlockwise(Cube_leftFace(this));
+	Face_rotateAnticlockwise(Cube_frontFace(this));
+	Face_rotateAnticlockwise(Cube_rightFace(this));
+	Face_rotateAnticlockwise(Cube_bottomFace(this));
+	Face_rotateClockwise(Cube_backFace(this));
+	Face_rotateAnticlockwise(Cube_topFace(this));
 
 	rotateCube(this, cycle);
 }
@@ -577,9 +311,9 @@ static void getLine(
 {
 	int isRow = (coords[1] == -1);
 	if (isRow)
-		getRow(face, storage, coords[0]);
+		Face_copyRow(face, storage, coords[0]);
 	else
-		getColumn(face, storage, coords[1]);
+		Face_copyColumn(face, storage, coords[1]);
 }
 
 
@@ -590,9 +324,9 @@ static void setLine(
 {
 	int isRow = (coords[1] == -1);
 	if (isRow)
-		setRow(face, storage, coords[0]);
+		Face_setRow(face, storage, coords[0]);
 	else
-		setColumn(face, storage, coords[1]);
+		Face_setColumn(face, storage, coords[1]);
 }
 
 
@@ -670,14 +404,14 @@ static void turnSliceRight(Cube * this, int rowIndex)
 void Cube_turnTopSliceLeft(Cube * this)
 {
 	turnSliceLeft(this, TOP_ROW);
-	rotateFaceClockwise(getFace(this, TOP_FACE));
+	Face_rotateClockwise(getFace(this, TOP_FACE));
 }
 
 
 void Cube_turnTopSliceRight(Cube * this)
 {
 	turnSliceRight(this, TOP_ROW);
-	rotateFaceAnticlockwise(getFace(this, TOP_FACE));
+	Face_rotateAnticlockwise(getFace(this, TOP_FACE));
 }
 
 
@@ -696,14 +430,14 @@ void Cube_turnEquatorSliceRight(Cube * this)
 void Cube_turnBottomSliceLeft(Cube * this)
 {
 	turnSliceLeft(this, BOTTOM_ROW);
-	rotateFaceAnticlockwise(getFace(this, BOTTOM_FACE));
+	Face_rotateAnticlockwise(getFace(this, BOTTOM_FACE));
 }
 
 
 void Cube_turnBottomSliceRight(Cube * this)
 {
 	turnSliceRight(this, BOTTOM_ROW);
-	rotateFaceClockwise(getFace(this, BOTTOM_FACE));
+	Face_rotateClockwise(getFace(this, BOTTOM_FACE));
 }
 
 
@@ -740,14 +474,14 @@ static void turnSliceDown(Cube * this, int columnIndex)
 void Cube_turnLeftSliceUp(Cube * this)
 {
 	turnSliceUp(this, LEFT_COLUMN);
-	rotateFaceAnticlockwise(getFace(this, LEFT_FACE));
+	Face_rotateAnticlockwise(getFace(this, LEFT_FACE));
 }
 
 
 void Cube_turnLeftSliceDown(Cube * this)
 {
 	turnSliceDown(this, LEFT_COLUMN);
-	rotateFaceClockwise(getFace(this, LEFT_FACE));
+	Face_rotateClockwise(getFace(this, LEFT_FACE));
 }
 
 
@@ -766,14 +500,14 @@ void Cube_turnMiddleSliceDown(Cube * this)
 void Cube_turnRightSliceUp(Cube * this)
 {
 	turnSliceUp(this, RIGHT_COLUMN);
-	rotateFaceClockwise(getFace(this, RIGHT_FACE));
+	Face_rotateClockwise(getFace(this, RIGHT_FACE));
 }
 
 
 void Cube_turnRightSliceDown(Cube * this)
 {
 	turnSliceDown(this, RIGHT_COLUMN);
-	rotateFaceAnticlockwise(getFace(this, RIGHT_FACE));
+	Face_rotateAnticlockwise(getFace(this, RIGHT_FACE));
 }
 
 
@@ -787,7 +521,7 @@ void Cube_turnFrontSliceClockwise(Cube * this)
 		{ LEFT_FACE, -1, RIGHT_COLUMN }
 	};
 	turnSlice(this, linesCoordsCycle);
-	rotateFaceClockwise(getFace(this, FRONT_FACE));
+	Face_rotateClockwise(getFace(this, FRONT_FACE));
 }
 
 
@@ -801,7 +535,7 @@ void Cube_turnFrontSliceAnticlockwise(Cube * this)
 		{ RIGHT_FACE, -1, LEFT_COLUMN }
 	};
 	turnSlice(this, linesCoordsCycle);
-	rotateFaceAnticlockwise(getFace(this, FRONT_FACE));
+	Face_rotateAnticlockwise(getFace(this, FRONT_FACE));
 }
 
 
@@ -841,7 +575,7 @@ void Cube_turnBackSliceClockwise(Cube * this)
 		{ LEFT_FACE, -1, LEFT_COLUMN }
 	};
 	turnSlice(this, linesCoordsCycle);
-	rotateFaceAnticlockwise(getFace(this, BACK_FACE));
+	Face_rotateAnticlockwise(getFace(this, BACK_FACE));
 }
 
 
@@ -855,5 +589,5 @@ void Cube_turnBackSliceAnticlockwise(Cube * this)
 		{ RIGHT_FACE, -1, RIGHT_COLUMN }
 	};
 	turnSlice(this, linesCoordsCycle);
-	rotateFaceClockwise(getFace(this, BACK_FACE));
+	Face_rotateClockwise(getFace(this, BACK_FACE));
 }
