@@ -48,9 +48,6 @@ struct Cube
 static void createAndPositionFaces(Cube * this);
 
 
-static Face * getFace(Cube const * this, int faceIndex);
-
-
 /**
  * @param this - the cube to rotate
  * @param faceIndexesCycle - the cycle of index of faces to move in the
@@ -405,14 +402,14 @@ static void turnSliceRight(Cube * this, int rowIndex)
 void Cube_turnTopSliceLeft(Cube * this)
 {
 	turnSliceLeft(this, TOP_ROW);
-	Face_rotateClockwise(getFace(this, TOP_FACE));
+	Face_rotateClockwise(Cube_topFace(this));
 }
 
 
 void Cube_turnTopSliceRight(Cube * this)
 {
 	turnSliceRight(this, TOP_ROW);
-	Face_rotateAnticlockwise(getFace(this, TOP_FACE));
+	Face_rotateAnticlockwise(Cube_topFace(this));
 }
 
 
@@ -431,14 +428,14 @@ void Cube_turnEquatorSliceRight(Cube * this)
 void Cube_turnBottomSliceLeft(Cube * this)
 {
 	turnSliceLeft(this, BOTTOM_ROW);
-	Face_rotateAnticlockwise(getFace(this, BOTTOM_FACE));
+	Face_rotateAnticlockwise(Cube_bottomFace(this));
 }
 
 
 void Cube_turnBottomSliceRight(Cube * this)
 {
 	turnSliceRight(this, BOTTOM_ROW);
-	Face_rotateClockwise(getFace(this, BOTTOM_FACE));
+	Face_rotateClockwise(Cube_bottomFace(this));
 }
 
 
@@ -475,14 +472,14 @@ static void turnSliceDown(Cube * this, int columnIndex)
 void Cube_turnLeftSliceUp(Cube * this)
 {
 	turnSliceUp(this, LEFT_COLUMN);
-	Face_rotateAnticlockwise(getFace(this, LEFT_FACE));
+	Face_rotateAnticlockwise(Cube_leftFace(this));
 }
 
 
 void Cube_turnLeftSliceDown(Cube * this)
 {
 	turnSliceDown(this, LEFT_COLUMN);
-	Face_rotateClockwise(getFace(this, LEFT_FACE));
+	Face_rotateClockwise(Cube_leftFace(this));
 }
 
 
@@ -501,14 +498,14 @@ void Cube_turnMiddleSliceDown(Cube * this)
 void Cube_turnRightSliceUp(Cube * this)
 {
 	turnSliceUp(this, RIGHT_COLUMN);
-	Face_rotateClockwise(getFace(this, RIGHT_FACE));
+	Face_rotateClockwise(Cube_rightFace(this));
 }
 
 
 void Cube_turnRightSliceDown(Cube * this)
 {
 	turnSliceDown(this, RIGHT_COLUMN);
-	Face_rotateAnticlockwise(getFace(this, RIGHT_FACE));
+	Face_rotateAnticlockwise(Cube_rightFace(this));
 }
 
 
@@ -522,7 +519,7 @@ void Cube_turnFrontSliceClockwise(Cube * this)
 		{ LEFT_FACE, -1, RIGHT_COLUMN }
 	};
 	turnSlice(this, linesCoordsCycle);
-	Face_rotateClockwise(getFace(this, FRONT_FACE));
+	Face_rotateClockwise(Cube_frontFace(this));
 }
 
 
@@ -536,7 +533,7 @@ void Cube_turnFrontSliceAnticlockwise(Cube * this)
 		{ RIGHT_FACE, -1, LEFT_COLUMN }
 	};
 	turnSlice(this, linesCoordsCycle);
-	Face_rotateAnticlockwise(getFace(this, FRONT_FACE));
+	Face_rotateAnticlockwise(Cube_frontFace(this));
 }
 
 
@@ -576,7 +573,7 @@ void Cube_turnBackSliceClockwise(Cube * this)
 		{ LEFT_FACE, -1, LEFT_COLUMN }
 	};
 	turnSlice(this, linesCoordsCycle);
-	Face_rotateAnticlockwise(getFace(this, BACK_FACE));
+	Face_rotateAnticlockwise(Cube_backFace(this));
 }
 
 
@@ -590,5 +587,5 @@ void Cube_turnBackSliceAnticlockwise(Cube * this)
 		{ RIGHT_FACE, -1, RIGHT_COLUMN }
 	};
 	turnSlice(this, linesCoordsCycle);
-	Face_rotateClockwise(getFace(this, BACK_FACE));
+	Face_rotateClockwise(Cube_backFace(this));
 }
