@@ -3,11 +3,29 @@
 
 #include "../../include/Cube.h"
 
-#include "../../src/Face.h"
+
 
 
 
 static Cube * createScrambledCube(void);
+
+
+static void readFaceTopRow(Face const * face, Color buffer[FACE_SIZE]);
+
+
+static void readFaceEquatorRow(Face const * face, Color buffer[FACE_SIZE]);
+
+
+static void readFaceBottomRow(Face const * face, Color buffer[FACE_SIZE]);
+
+
+static void readFaceLeftColumn(Face const * face, Color buffer[FACE_SIZE]);
+
+
+static void readFaceMiddleColumn(Face const * face, Color buffer[FACE_SIZE]);
+
+
+static void readFaceRightColumn(Face const * face, Color buffer[FACE_SIZE]);
 
 
 static void readFace(Face const * face, Color storage[FACE_SIZE][FACE_SIZE]);
@@ -426,13 +444,13 @@ Test(Cube, turnTopSliceLeft_frontRowGoesLeft)
 	Cube * cube = Cube_create();
 	Face * frontFace = Cube_frontFace(cube);
 	Color oldFrontFaceTopRow[FACE_SIZE];
-	Face_topRow(frontFace, oldFrontFaceTopRow);
+	readFaceTopRow(frontFace, oldFrontFaceTopRow);
 	// when
 	Cube_turnTopSliceLeft(cube);
 	// then
 	Face * leftFace = Cube_leftFace(cube);
 	Color newLeftFaceTopRow[FACE_SIZE];
-	Face_topRow(leftFace, newLeftFaceTopRow);
+	readFaceTopRow(leftFace, newLeftFaceTopRow);
 	cr_assert_arr_eq(
 		newLeftFaceTopRow,
 		oldFrontFaceTopRow,
@@ -447,13 +465,13 @@ Test(Cube, turnTopSliceLeft_leftRowGoesBack)
 	Cube * cube = Cube_create();
 	Face * leftFace = Cube_leftFace(cube);
 	Color oldLeftFaceTopRow[FACE_SIZE];
-	Face_topRow(leftFace, oldLeftFaceTopRow);
+	readFaceTopRow(leftFace, oldLeftFaceTopRow);
 	// when
 	Cube_turnTopSliceLeft(cube);
 	// then
 	Face * backFace = Cube_backFace(cube);
 	Color newBackFaceBottomRow[FACE_SIZE];
-	Face_bottomRow(backFace, newBackFaceBottomRow);
+	readFaceBottomRow(backFace, newBackFaceBottomRow);
 	cr_assert_arr_eq(
 		newBackFaceBottomRow,
 		oldLeftFaceTopRow,
@@ -468,13 +486,13 @@ Test(Cube, turnTopSliceLeft_backRowGoesRight)
 	Cube * cube = Cube_create();
 	Face * backFace = Cube_backFace(cube);
 	Color oldBackFaceBottomRow[FACE_SIZE];
-	Face_bottomRow(backFace, oldBackFaceBottomRow);
+	readFaceBottomRow(backFace, oldBackFaceBottomRow);
 	// when
 	Cube_turnTopSliceLeft(cube);
 	// then
 	Face * rightFace = Cube_rightFace(cube);
 	Color newRightFaceTopRow[FACE_SIZE];
-	Face_topRow(rightFace, newRightFaceTopRow);
+	readFaceTopRow(rightFace, newRightFaceTopRow);
 	cr_assert_arr_eq(
 		newRightFaceTopRow,
 		oldBackFaceBottomRow,
@@ -489,13 +507,13 @@ Test(Cube, turnTopSliceLeft_rightRowGoesFront)
 	Cube * cube = Cube_create();
 	Face * rightFace = Cube_rightFace(cube);
 	Color oldRightFaceTopRow[FACE_SIZE];
-	Face_topRow(rightFace, oldRightFaceTopRow);
+	readFaceTopRow(rightFace, oldRightFaceTopRow);
 	// when
 	Cube_turnTopSliceLeft(cube);
 	// then
 	Face * frontFace = Cube_frontFace(cube);
 	Color newFrontFaceTopRow[FACE_SIZE];
-	Face_topRow(frontFace, newFrontFaceTopRow);
+	readFaceTopRow(frontFace, newFrontFaceTopRow);
 	cr_assert_arr_eq(
 		newFrontFaceTopRow,
 		oldRightFaceTopRow,
@@ -510,13 +528,13 @@ Test(Cube, turnTopSliceRight_frontRowGoesRight)
 	Cube * cube = Cube_create();
 	Face * frontFace = Cube_frontFace(cube);
 	Color oldFrontFaceTopRow[FACE_SIZE];
-	Face_topRow(frontFace, oldFrontFaceTopRow);
+	readFaceTopRow(frontFace, oldFrontFaceTopRow);
 	// when
 	Cube_turnTopSliceRight(cube);
 	// then
 	Face * rightFace = Cube_rightFace(cube);
 	Color newRightFaceTopRow[FACE_SIZE];
-	Face_topRow(rightFace, newRightFaceTopRow);
+	readFaceTopRow(rightFace, newRightFaceTopRow);
 	cr_assert_arr_eq(
 		newRightFaceTopRow,
 		oldFrontFaceTopRow,
@@ -531,13 +549,13 @@ Test(Cube, turnTopSliceRight_rightRowGoesBack)
 	Cube * cube = Cube_create();
 	Face * rightFace = Cube_rightFace(cube);
 	Color oldRightFaceTopRow[FACE_SIZE];
-	Face_topRow(rightFace, oldRightFaceTopRow);
+	readFaceTopRow(rightFace, oldRightFaceTopRow);
 	// when
 	Cube_turnTopSliceRight(cube);
 	// then
 	Face * backFace = Cube_backFace(cube);
 	Color newBackFaceBottomRow[FACE_SIZE];
-	Face_bottomRow(backFace, newBackFaceBottomRow);
+	readFaceBottomRow(backFace, newBackFaceBottomRow);
 	cr_assert_arr_eq(
 		newBackFaceBottomRow,
 		oldRightFaceTopRow,
@@ -552,13 +570,13 @@ Test(Cube, turnTopSliceRight_backRowGoesLeft)
 	Cube * cube = Cube_create();
 	Face * backFace = Cube_backFace(cube);
 	Color oldBackFaceBottomRow[FACE_SIZE];
-	Face_bottomRow(backFace, oldBackFaceBottomRow);
+	readFaceBottomRow(backFace, oldBackFaceBottomRow);
 	// when
 	Cube_turnTopSliceRight(cube);
 	// then
 	Face * leftFace = Cube_leftFace(cube);
 	Color newLeftFaceTopRow[FACE_SIZE];
-	Face_topRow(leftFace, newLeftFaceTopRow);
+	readFaceTopRow(leftFace, newLeftFaceTopRow);
 	cr_assert_arr_eq(
 		newLeftFaceTopRow,
 		oldBackFaceBottomRow,
@@ -573,13 +591,13 @@ Test(Cube, turnTopSliceRight_leftRowGoesFront)
 	Cube * cube = Cube_create();
 	Face * leftFace = Cube_leftFace(cube);
 	Color oldLeftFaceTopRow[FACE_SIZE];
-	Face_topRow(leftFace, oldLeftFaceTopRow);
+	readFaceTopRow(leftFace, oldLeftFaceTopRow);
 	// when
 	Cube_turnTopSliceRight(cube);
 	// then
 	Face * frontFace = Cube_frontFace(cube);
 	Color newFrontFaceTopRow[FACE_SIZE];
-	Face_topRow(frontFace, newFrontFaceTopRow);
+	readFaceTopRow(frontFace, newFrontFaceTopRow);
 	cr_assert_arr_eq(
 		newFrontFaceTopRow,
 		oldLeftFaceTopRow,
@@ -594,13 +612,13 @@ Test(Cube, turnEquatorSliceLeft_frontRowGoesLeft)
 	Cube * cube = Cube_create();
 	Face * frontFace = Cube_frontFace(cube);
 	Color oldFrontFaceEquatorRow[FACE_SIZE];
-	Face_equatorRow(frontFace, oldFrontFaceEquatorRow);
+	readFaceEquatorRow(frontFace, oldFrontFaceEquatorRow);
 	// when
 	Cube_turnEquatorSliceLeft(cube);
 	// then
 	Face * leftFace = Cube_leftFace(cube);
 	Color newLeftFaceEquatorRow[FACE_SIZE];
-	Face_equatorRow(leftFace, newLeftFaceEquatorRow);
+	readFaceEquatorRow(leftFace, newLeftFaceEquatorRow);
 	cr_assert_arr_eq(
 		newLeftFaceEquatorRow,
 		oldFrontFaceEquatorRow,
@@ -615,13 +633,13 @@ Test(Cube, turnEquatorSliceLeft_leftRowGoesBack)
 	Cube * cube = Cube_create();
 	Face * leftFace = Cube_leftFace(cube);
 	Color oldLeftFaceEquatorRow[FACE_SIZE];
-	Face_equatorRow(leftFace, oldLeftFaceEquatorRow);
+	readFaceEquatorRow(leftFace, oldLeftFaceEquatorRow);
 	// when
 	Cube_turnEquatorSliceLeft(cube);
 	// then
 	Face * backFace = Cube_backFace(cube);
 	Color newBackFaceEquatorRow[FACE_SIZE];
-	Face_equatorRow(backFace, newBackFaceEquatorRow);
+	readFaceEquatorRow(backFace, newBackFaceEquatorRow);
 	cr_assert_arr_eq(
 		newBackFaceEquatorRow,
 		oldLeftFaceEquatorRow,
@@ -636,13 +654,13 @@ Test(Cube, turnEquatorSliceLeft_backRowGoesRight)
 	Cube * cube = Cube_create();
 	Face * backFace = Cube_backFace(cube);
 	Color oldBackFaceEquatorRow[FACE_SIZE];
-	Face_equatorRow(backFace, oldBackFaceEquatorRow);
+	readFaceEquatorRow(backFace, oldBackFaceEquatorRow);
 	// when
 	Cube_turnEquatorSliceLeft(cube);
 	// then
 	Face * rightFace = Cube_rightFace(cube);
 	Color newRightFaceEquatorRow[FACE_SIZE];
-	Face_equatorRow(rightFace, newRightFaceEquatorRow);
+	readFaceEquatorRow(rightFace, newRightFaceEquatorRow);
 	cr_assert_arr_eq(
 		newRightFaceEquatorRow,
 		oldBackFaceEquatorRow,
@@ -657,13 +675,13 @@ Test(Cube, turnEquatorSliceLeft_rightRowGoesFront)
 	Cube * cube = Cube_create();
 	Face * rightFace = Cube_rightFace(cube);
 	Color oldRightFaceEquatorRow[FACE_SIZE];
-	Face_equatorRow(rightFace, oldRightFaceEquatorRow);
+	readFaceEquatorRow(rightFace, oldRightFaceEquatorRow);
 	// when
 	Cube_turnEquatorSliceLeft(cube);
 	// then
 	Face * frontFace = Cube_frontFace(cube);
 	Color newFrontFaceEquatorRow[FACE_SIZE];
-	Face_equatorRow(frontFace, newFrontFaceEquatorRow);
+	readFaceEquatorRow(frontFace, newFrontFaceEquatorRow);
 	cr_assert_arr_eq(
 		newFrontFaceEquatorRow,
 		oldRightFaceEquatorRow,
@@ -678,13 +696,13 @@ Test(Cube, turnEquatorSliceRight_frontRowGoesRight)
 	Cube * cube = Cube_create();
 	Face * frontFace = Cube_frontFace(cube);
 	Color oldFrontFaceEquatorRow[FACE_SIZE];
-	Face_equatorRow(frontFace, oldFrontFaceEquatorRow);
+	readFaceEquatorRow(frontFace, oldFrontFaceEquatorRow);
 	// when
 	Cube_turnEquatorSliceRight(cube);
 	// then
 	Face * rightFace = Cube_rightFace(cube);
 	Color newRightFaceEquatorRow[FACE_SIZE];
-	Face_equatorRow(rightFace, newRightFaceEquatorRow);
+	readFaceEquatorRow(rightFace, newRightFaceEquatorRow);
 	cr_assert_arr_eq(
 		newRightFaceEquatorRow,
 		oldFrontFaceEquatorRow,
@@ -699,13 +717,13 @@ Test(Cube, turnEquatorSliceRight_rightRowGoesBack)
 	Cube * cube = Cube_create();
 	Face * rightFace = Cube_rightFace(cube);
 	Color oldRightFaceEquatorRow[FACE_SIZE];
-	Face_equatorRow(rightFace, oldRightFaceEquatorRow);
+	readFaceEquatorRow(rightFace, oldRightFaceEquatorRow);
 	// when
 	Cube_turnEquatorSliceRight(cube);
 	// then
 	Face * backFace = Cube_backFace(cube);
 	Color newBackFaceEquatorRow[FACE_SIZE];
-	Face_equatorRow(backFace, newBackFaceEquatorRow);
+	readFaceEquatorRow(backFace, newBackFaceEquatorRow);
 	cr_assert_arr_eq(
 		newBackFaceEquatorRow,
 		oldRightFaceEquatorRow,
@@ -720,13 +738,13 @@ Test(Cube, turnEquatorSliceRight_backRowGoesLeft)
 	Cube * cube = Cube_create();
 	Face * backFace = Cube_backFace(cube);
 	Color oldBackFaceEquatorRow[FACE_SIZE];
-	Face_equatorRow(backFace, oldBackFaceEquatorRow);
+	readFaceEquatorRow(backFace, oldBackFaceEquatorRow);
 	// when
 	Cube_turnEquatorSliceRight(cube);
 	// then
 	Face * leftFace = Cube_leftFace(cube);
 	Color newLeftFaceEquatorRow[FACE_SIZE];
-	Face_equatorRow(leftFace, newLeftFaceEquatorRow);
+	readFaceEquatorRow(leftFace, newLeftFaceEquatorRow);
 	cr_assert_arr_eq(
 		newLeftFaceEquatorRow,
 		oldBackFaceEquatorRow,
@@ -741,13 +759,13 @@ Test(Cube, turnEquatorSliceRight_leftRowGoesFront)
 	Cube * cube = Cube_create();
 	Face * leftFace = Cube_leftFace(cube);
 	Color oldLeftFaceEquatorRow[FACE_SIZE];
-	Face_equatorRow(leftFace, oldLeftFaceEquatorRow);
+	readFaceEquatorRow(leftFace, oldLeftFaceEquatorRow);
 	// when
 	Cube_turnEquatorSliceRight(cube);
 	// then
 	Face * frontFace = Cube_frontFace(cube);
 	Color newFrontFaceEquatorRow[FACE_SIZE];
-	Face_equatorRow(frontFace, newFrontFaceEquatorRow);
+	readFaceEquatorRow(frontFace, newFrontFaceEquatorRow);
 	cr_assert_arr_eq(
 		newFrontFaceEquatorRow,
 		oldLeftFaceEquatorRow,
@@ -762,13 +780,13 @@ Test(Cube, turnBottomSliceLeft_frontRowGoesLeft)
 	Cube * cube = Cube_create();
 	Face * frontFace = Cube_frontFace(cube);
 	Color oldFrontFaceBottomRow[FACE_SIZE];
-	Face_bottomRow(frontFace, oldFrontFaceBottomRow);
+	readFaceBottomRow(frontFace, oldFrontFaceBottomRow);
 	// when
 	Cube_turnBottomSliceLeft(cube);
 	// then
 	Face * leftFace = Cube_leftFace(cube);
 	Color newLeftFaceBottomRow[FACE_SIZE];
-	Face_bottomRow(leftFace, newLeftFaceBottomRow);
+	readFaceBottomRow(leftFace, newLeftFaceBottomRow);
 	cr_assert_arr_eq(
 		newLeftFaceBottomRow,
 		oldFrontFaceBottomRow,
@@ -783,13 +801,13 @@ Test(Cube, turnBottomSliceLeft_leftRowGoesBack)
 	Cube * cube = Cube_create();
 	Face * leftFace = Cube_leftFace(cube);
 	Color oldLeftFaceBottomRow[FACE_SIZE];
-	Face_bottomRow(leftFace, oldLeftFaceBottomRow);
+	readFaceBottomRow(leftFace, oldLeftFaceBottomRow);
 	// when
 	Cube_turnBottomSliceLeft(cube);
 	// then
 	Face * backFace = Cube_backFace(cube);
 	Color newBackFaceTopRow[FACE_SIZE];
-	Face_topRow(backFace, newBackFaceTopRow);
+	readFaceTopRow(backFace, newBackFaceTopRow);
 	cr_assert_arr_eq(
 		newBackFaceTopRow,
 		oldLeftFaceBottomRow,
@@ -804,13 +822,13 @@ Test(Cube, turnBottomSliceLeft_backRowGoesRight)
 	Cube * cube = Cube_create();
 	Face * backFace = Cube_backFace(cube);
 	Color oldBackFaceTopRow[FACE_SIZE];
-	Face_topRow(backFace, oldBackFaceTopRow);
+	readFaceTopRow(backFace, oldBackFaceTopRow);
 	// when
 	Cube_turnBottomSliceLeft(cube);
 	// then
 	Face * rightFace = Cube_rightFace(cube);
 	Color newRightFaceBottomRow[FACE_SIZE];
-	Face_bottomRow(rightFace, newRightFaceBottomRow);
+	readFaceBottomRow(rightFace, newRightFaceBottomRow);
 	cr_assert_arr_eq(
 		newRightFaceBottomRow,
 		oldBackFaceTopRow,
@@ -825,13 +843,13 @@ Test(Cube, turnBottomSliceLeft_rightRowGoesFront)
 	Cube * cube = Cube_create();
 	Face * rightFace = Cube_rightFace(cube);
 	Color oldRightFaceBottomRow[FACE_SIZE];
-	Face_bottomRow(rightFace, oldRightFaceBottomRow);
+	readFaceBottomRow(rightFace, oldRightFaceBottomRow);
 	// when
 	Cube_turnBottomSliceLeft(cube);
 	// then
 	Face * frontFace = Cube_frontFace(cube);
 	Color newFrontFaceBottomRow[FACE_SIZE];
-	Face_bottomRow(frontFace, newFrontFaceBottomRow);
+	readFaceBottomRow(frontFace, newFrontFaceBottomRow);
 	cr_assert_arr_eq(
 		newFrontFaceBottomRow,
 		oldRightFaceBottomRow,
@@ -846,13 +864,13 @@ Test(Cube, turnBottomSliceRight_frontRowGoesRight)
 	Cube * cube = Cube_create();
 	Face * frontFace = Cube_frontFace(cube);
 	Color oldFrontFaceBottomRow[FACE_SIZE];
-	Face_bottomRow(frontFace, oldFrontFaceBottomRow);
+	readFaceBottomRow(frontFace, oldFrontFaceBottomRow);
 	// when
 	Cube_turnBottomSliceRight(cube);
 	// then
 	Face * rightFace = Cube_rightFace(cube);
 	Color newRightFaceBottomRow[FACE_SIZE];
-	Face_bottomRow(rightFace, newRightFaceBottomRow);
+	readFaceBottomRow(rightFace, newRightFaceBottomRow);
 	cr_assert_arr_eq(
 		newRightFaceBottomRow,
 		oldFrontFaceBottomRow,
@@ -867,13 +885,13 @@ Test(Cube, turnBottomSliceRight_rightRowGoesBack)
 	Cube * cube = Cube_create();
 	Face * rightFace = Cube_rightFace(cube);
 	Color oldRightFaceBottomRow[FACE_SIZE];
-	Face_bottomRow(rightFace, oldRightFaceBottomRow);
+	readFaceBottomRow(rightFace, oldRightFaceBottomRow);
 	// when
 	Cube_turnBottomSliceRight(cube);
 	// then
 	Face * backFace = Cube_backFace(cube);
 	Color newBackFaceTopRow[FACE_SIZE];
-	Face_topRow(backFace, newBackFaceTopRow);
+	readFaceTopRow(backFace, newBackFaceTopRow);
 	cr_assert_arr_eq(
 		newBackFaceTopRow,
 		oldRightFaceBottomRow,
@@ -888,13 +906,13 @@ Test(Cube, turnBottomSliceRight_backRowGoesLeft)
 	Cube * cube = Cube_create();
 	Face * backFace = Cube_backFace(cube);
 	Color oldBackFaceTopRow[FACE_SIZE];
-	Face_topRow(backFace, oldBackFaceTopRow);
+	readFaceTopRow(backFace, oldBackFaceTopRow);
 	// when
 	Cube_turnBottomSliceRight(cube);
 	// then
 	Face * leftFace = Cube_leftFace(cube);
 	Color newLeftFaceBottomRow[FACE_SIZE];
-	Face_bottomRow(leftFace, newLeftFaceBottomRow);
+	readFaceBottomRow(leftFace, newLeftFaceBottomRow);
 	cr_assert_arr_eq(
 		newLeftFaceBottomRow,
 		oldBackFaceTopRow,
@@ -909,13 +927,13 @@ Test(Cube, turnBottomSliceRight_leftRowGoesFront)
 	Cube * cube = Cube_create();
 	Face * leftFace = Cube_leftFace(cube);
 	Color oldLeftFaceBottomRow[FACE_SIZE];
-	Face_bottomRow(leftFace, oldLeftFaceBottomRow);
+	readFaceBottomRow(leftFace, oldLeftFaceBottomRow);
 	// when
 	Cube_turnBottomSliceRight(cube);
 	// then
 	Face * frontFace = Cube_frontFace(cube);
 	Color newFrontFaceBottomRow[FACE_SIZE];
-	Face_bottomRow(frontFace, newFrontFaceBottomRow);
+	readFaceBottomRow(frontFace, newFrontFaceBottomRow);
 	cr_assert_arr_eq(
 		newFrontFaceBottomRow,
 		oldLeftFaceBottomRow,
@@ -930,13 +948,13 @@ Test(Cube, turnLeftSliceUp_frontColumnGoesTop)
 	Cube * cube = Cube_create();
 	Face * frontFace = Cube_frontFace(cube);
 	Color oldFrontFaceLeftColumn[FACE_SIZE];
-	Face_leftColumn(frontFace, oldFrontFaceLeftColumn);
+	readFaceLeftColumn(frontFace, oldFrontFaceLeftColumn);
 	// when
 	Cube_turnLeftSliceUp(cube);
 	// then
 	Face * topFace = Cube_topFace(cube);
 	Color newTopFaceLeftColumn[FACE_SIZE];
-	Face_leftColumn(topFace, newTopFaceLeftColumn);
+	readFaceLeftColumn(topFace, newTopFaceLeftColumn);
 	cr_assert_arr_eq(
 		newTopFaceLeftColumn,
 		oldFrontFaceLeftColumn,
@@ -951,13 +969,13 @@ Test(Cube, turnLeftSliceUp_topColumnGoesBack)
 	Cube * cube = Cube_create();
 	Face * topFace = Cube_topFace(cube);
 	Color oldTopFaceLeftColumn[FACE_SIZE];
-	Face_leftColumn(topFace, oldTopFaceLeftColumn);
+	readFaceLeftColumn(topFace, oldTopFaceLeftColumn);
 	// when
 	Cube_turnLeftSliceUp(cube);
 	// then
 	Face * backFace = Cube_backFace(cube);
 	Color newBackFaceLeftColumn[FACE_SIZE];
-	Face_leftColumn(backFace, newBackFaceLeftColumn);
+	readFaceLeftColumn(backFace, newBackFaceLeftColumn);
 	cr_assert_arr_eq(
 		newBackFaceLeftColumn,
 		oldTopFaceLeftColumn,
@@ -972,13 +990,13 @@ Test(Cube, turnLeftSliceUp_backColumnGoesBottom)
 	Cube * cube = Cube_create();
 	Face * backFace = Cube_backFace(cube);
 	Color oldBackFaceLeftColumn[FACE_SIZE];
-	Face_leftColumn(backFace, oldBackFaceLeftColumn);
+	readFaceLeftColumn(backFace, oldBackFaceLeftColumn);
 	// when
 	Cube_turnLeftSliceUp(cube);
 	// then
 	Face * bottomFace = Cube_bottomFace(cube);
 	Color newBottomFaceLeftColumn[FACE_SIZE];
-	Face_leftColumn(bottomFace, newBottomFaceLeftColumn);
+	readFaceLeftColumn(bottomFace, newBottomFaceLeftColumn);
 	cr_assert_arr_eq(
 		newBottomFaceLeftColumn,
 		oldBackFaceLeftColumn,
@@ -993,13 +1011,13 @@ Test(Cube, turnLeftSliceUp_bottomColumnGoesFront)
 	Cube * cube = Cube_create();
 	Face * bottomFace = Cube_bottomFace(cube);
 	Color oldBottomFaceLeftColumn[FACE_SIZE];
-	Face_leftColumn(bottomFace, oldBottomFaceLeftColumn);
+	readFaceLeftColumn(bottomFace, oldBottomFaceLeftColumn);
 	// when
 	Cube_turnLeftSliceUp(cube);
 	// then
 	Face * frontFace = Cube_frontFace(cube);
 	Color newFrontFaceLeftColumn[FACE_SIZE];
-	Face_leftColumn(frontFace, newFrontFaceLeftColumn);
+	readFaceLeftColumn(frontFace, newFrontFaceLeftColumn);
 	cr_assert_arr_eq(
 		newFrontFaceLeftColumn,
 		oldBottomFaceLeftColumn,
@@ -1014,13 +1032,13 @@ Test(Cube, turnLeftSliceDown_frontColumnGoesBottom)
 	Cube * cube = Cube_create();
 	Face * frontFace = Cube_frontFace(cube);
 	Color oldFrontFaceLeftColumn[FACE_SIZE];
-	Face_leftColumn(frontFace, oldFrontFaceLeftColumn);
+	readFaceLeftColumn(frontFace, oldFrontFaceLeftColumn);
 	// when
 	Cube_turnLeftSliceDown(cube);
 	// then
 	Face * bottomFace = Cube_bottomFace(cube);
 	Color newBottomFaceLeftColumn[FACE_SIZE];
-	Face_leftColumn(bottomFace, newBottomFaceLeftColumn);
+	readFaceLeftColumn(bottomFace, newBottomFaceLeftColumn);
 	cr_assert_arr_eq(
 		newBottomFaceLeftColumn,
 		oldFrontFaceLeftColumn,
@@ -1035,13 +1053,13 @@ Test(Cube, turnLeftSliceDown_bottomColumnGoesBack)
 	Cube * cube = Cube_create();
 	Face * bottomFace = Cube_bottomFace(cube);
 	Color oldBottomFaceLeftColumn[FACE_SIZE];
-	Face_leftColumn(bottomFace, oldBottomFaceLeftColumn);
+	readFaceLeftColumn(bottomFace, oldBottomFaceLeftColumn);
 	// when
 	Cube_turnLeftSliceDown(cube);
 	// then
 	Face * backFace = Cube_backFace(cube);
 	Color newBackFaceLeftColumn[FACE_SIZE];
-	Face_leftColumn(backFace, newBackFaceLeftColumn);
+	readFaceLeftColumn(backFace, newBackFaceLeftColumn);
 	cr_assert_arr_eq(
 		newBackFaceLeftColumn,
 		oldBottomFaceLeftColumn,
@@ -1056,13 +1074,13 @@ Test(Cube, turnLeftSliceDown_backColumnGoesTop)
 	Cube * cube = Cube_create();
 	Face * backFace = Cube_backFace(cube);
 	Color oldBackFaceLeftColumn[FACE_SIZE];
-	Face_leftColumn(backFace, oldBackFaceLeftColumn);
+	readFaceLeftColumn(backFace, oldBackFaceLeftColumn);
 	// when
 	Cube_turnLeftSliceDown(cube);
 	// then
 	Face * topFace = Cube_topFace(cube);
 	Color newTopFaceLeftColumn[FACE_SIZE];
-	Face_leftColumn(topFace, newTopFaceLeftColumn);
+	readFaceLeftColumn(topFace, newTopFaceLeftColumn);
 	cr_assert_arr_eq(
 		newTopFaceLeftColumn,
 		oldBackFaceLeftColumn,
@@ -1077,13 +1095,13 @@ Test(Cube, turnLeftSliceDown_topColumnGoesFront)
 	Cube * cube = Cube_create();
 	Face * topFace = Cube_topFace(cube);
 	Color oldTopFaceLeftColumn[FACE_SIZE];
-	Face_leftColumn(topFace, oldTopFaceLeftColumn);
+	readFaceLeftColumn(topFace, oldTopFaceLeftColumn);
 	// when
 	Cube_turnLeftSliceDown(cube);
 	// then
 	Face * frontFace = Cube_frontFace(cube);
 	Color newFrontFaceLeftColumn[FACE_SIZE];
-	Face_leftColumn(frontFace, newFrontFaceLeftColumn);
+	readFaceLeftColumn(frontFace, newFrontFaceLeftColumn);
 	cr_assert_arr_eq(
 		newFrontFaceLeftColumn,
 		oldTopFaceLeftColumn,
@@ -1098,13 +1116,13 @@ Test(Cube, turnMiddleSliceUp_frontColumnGoesTop)
 	Cube * cube = Cube_create();
 	Face * frontFace = Cube_frontFace(cube);
 	Color oldFrontFaceMiddleColumn[FACE_SIZE];
-	Face_middleColumn(frontFace, oldFrontFaceMiddleColumn);
+	readFaceMiddleColumn(frontFace, oldFrontFaceMiddleColumn);
 	// when
 	Cube_turnMiddleSliceUp(cube);
 	// then
 	Face * topFace = Cube_topFace(cube);
 	Color newTopFaceMiddleColumn[FACE_SIZE];
-	Face_middleColumn(topFace, newTopFaceMiddleColumn);
+	readFaceMiddleColumn(topFace, newTopFaceMiddleColumn);
 	cr_assert_arr_eq(
 		newTopFaceMiddleColumn,
 		oldFrontFaceMiddleColumn,
@@ -1119,13 +1137,13 @@ Test(Cube, turnMiddleSliceUp_topColumnGoesBack)
 	Cube * cube = Cube_create();
 	Face * topFace = Cube_topFace(cube);
 	Color oldTopFaceMiddleColumn[FACE_SIZE];
-	Face_middleColumn(topFace, oldTopFaceMiddleColumn);
+	readFaceMiddleColumn(topFace, oldTopFaceMiddleColumn);
 	// when
 	Cube_turnMiddleSliceUp(cube);
 	// then
 	Face * backFace = Cube_backFace(cube);
 	Color newBackFaceMiddleColumn[FACE_SIZE];
-	Face_middleColumn(backFace, newBackFaceMiddleColumn);
+	readFaceMiddleColumn(backFace, newBackFaceMiddleColumn);
 	cr_assert_arr_eq(
 		newBackFaceMiddleColumn,
 		oldTopFaceMiddleColumn,
@@ -1140,13 +1158,13 @@ Test(Cube, turnMiddleSliceUp_backColumnGoesBottom)
 	Cube * cube = Cube_create();
 	Face * backFace = Cube_backFace(cube);
 	Color oldBackFaceMiddleColumn[FACE_SIZE];
-	Face_middleColumn(backFace, oldBackFaceMiddleColumn);
+	readFaceMiddleColumn(backFace, oldBackFaceMiddleColumn);
 	// when
 	Cube_turnMiddleSliceUp(cube);
 	// then
 	Face * bottomFace = Cube_bottomFace(cube);
 	Color newBottomFaceMiddleColumn[FACE_SIZE];
-	Face_middleColumn(bottomFace, newBottomFaceMiddleColumn);
+	readFaceMiddleColumn(bottomFace, newBottomFaceMiddleColumn);
 	cr_assert_arr_eq(
 		newBottomFaceMiddleColumn,
 		oldBackFaceMiddleColumn,
@@ -1161,13 +1179,13 @@ Test(Cube, turnMiddleSliceUp_bottomColumnGoesFront)
 	Cube * cube = Cube_create();
 	Face * bottomFace = Cube_bottomFace(cube);
 	Color oldBottomFaceMiddleColumn[FACE_SIZE];
-	Face_middleColumn(bottomFace, oldBottomFaceMiddleColumn);
+	readFaceMiddleColumn(bottomFace, oldBottomFaceMiddleColumn);
 	// when
 	Cube_turnMiddleSliceUp(cube);
 	// then
 	Face * frontFace = Cube_frontFace(cube);
 	Color newFrontFaceMiddleColumn[FACE_SIZE];
-	Face_middleColumn(frontFace, newFrontFaceMiddleColumn);
+	readFaceMiddleColumn(frontFace, newFrontFaceMiddleColumn);
 	cr_assert_arr_eq(
 		newFrontFaceMiddleColumn,
 		oldBottomFaceMiddleColumn,
@@ -1182,13 +1200,13 @@ Test(Cube, turnMiddleSliceDown_frontColumnGoesBottom)
 	Cube * cube = Cube_create();
 	Face * frontFace = Cube_frontFace(cube);
 	Color oldFrontFaceMiddleColumn[FACE_SIZE];
-	Face_middleColumn(frontFace, oldFrontFaceMiddleColumn);
+	readFaceMiddleColumn(frontFace, oldFrontFaceMiddleColumn);
 	// when
 	Cube_turnMiddleSliceDown(cube);
 	// then
 	Face * bottomFace = Cube_bottomFace(cube);
 	Color newBottomFaceMiddleColumn[FACE_SIZE];
-	Face_middleColumn(bottomFace, newBottomFaceMiddleColumn);
+	readFaceMiddleColumn(bottomFace, newBottomFaceMiddleColumn);
 	cr_assert_arr_eq(
 		newBottomFaceMiddleColumn,
 		oldFrontFaceMiddleColumn,
@@ -1203,13 +1221,13 @@ Test(Cube, turnMiddleSliceDown_bottomColumnGoesBack)
 	Cube * cube = Cube_create();
 	Face * bottomFace = Cube_bottomFace(cube);
 	Color oldBottomFaceMiddleColumn[FACE_SIZE];
-	Face_middleColumn(bottomFace, oldBottomFaceMiddleColumn);
+	readFaceMiddleColumn(bottomFace, oldBottomFaceMiddleColumn);
 	// when
 	Cube_turnMiddleSliceDown(cube);
 	// then
 	Face * backFace = Cube_backFace(cube);
 	Color newBackFaceMiddleColumn[FACE_SIZE];
-	Face_middleColumn(backFace, newBackFaceMiddleColumn);
+	readFaceMiddleColumn(backFace, newBackFaceMiddleColumn);
 	cr_assert_arr_eq(
 		newBackFaceMiddleColumn,
 		oldBottomFaceMiddleColumn,
@@ -1224,13 +1242,13 @@ Test(Cube, turnMiddleSliceDown_backColumnGoesTop)
 	Cube * cube = Cube_create();
 	Face * backFace = Cube_backFace(cube);
 	Color oldBackFaceMiddleColumn[FACE_SIZE];
-	Face_middleColumn(backFace, oldBackFaceMiddleColumn);
+	readFaceMiddleColumn(backFace, oldBackFaceMiddleColumn);
 	// when
 	Cube_turnMiddleSliceDown(cube);
 	// then
 	Face * topFace = Cube_topFace(cube);
 	Color newTopFaceMiddleColumn[FACE_SIZE];
-	Face_middleColumn(topFace, newTopFaceMiddleColumn);
+	readFaceMiddleColumn(topFace, newTopFaceMiddleColumn);
 	cr_assert_arr_eq(
 		newTopFaceMiddleColumn,
 		oldBackFaceMiddleColumn,
@@ -1245,13 +1263,13 @@ Test(Cube, turnMiddleSliceDown_topColumnGoesFront)
 	Cube * cube = Cube_create();
 	Face * topFace = Cube_topFace(cube);
 	Color oldTopFaceMiddleColumn[FACE_SIZE];
-	Face_middleColumn(topFace, oldTopFaceMiddleColumn);
+	readFaceMiddleColumn(topFace, oldTopFaceMiddleColumn);
 	// when
 	Cube_turnMiddleSliceDown(cube);
 	// then
 	Face * frontFace = Cube_frontFace(cube);
 	Color newFrontFaceMiddleColumn[FACE_SIZE];
-	Face_middleColumn(frontFace, newFrontFaceMiddleColumn);
+	readFaceMiddleColumn(frontFace, newFrontFaceMiddleColumn);
 	cr_assert_arr_eq(
 		newFrontFaceMiddleColumn,
 		oldTopFaceMiddleColumn,
@@ -1266,13 +1284,13 @@ Test(Cube, turnRightSliceUp_frontColumnGoesTop)
 	Cube * cube = Cube_create();
 	Face * frontFace = Cube_frontFace(cube);
 	Color oldFrontFaceMiddleColumn[FACE_SIZE];
-	Face_rightColumn(frontFace, oldFrontFaceMiddleColumn);
+	readFaceRightColumn(frontFace, oldFrontFaceMiddleColumn);
 	// when
 	Cube_turnRightSliceUp(cube);
 	// then
 	Face * topFace = Cube_topFace(cube);
 	Color newTopFaceMiddleColumn[FACE_SIZE];
-	Face_rightColumn(topFace, newTopFaceMiddleColumn);
+	readFaceRightColumn(topFace, newTopFaceMiddleColumn);
 	cr_assert_arr_eq(
 		newTopFaceMiddleColumn,
 		oldFrontFaceMiddleColumn,
@@ -1287,13 +1305,13 @@ Test(Cube, turnRightSliceUp_topColumnGoesBack)
 	Cube * cube = Cube_create();
 	Face * topFace = Cube_topFace(cube);
 	Color oldTopFaceMiddleColumn[FACE_SIZE];
-	Face_rightColumn(topFace, oldTopFaceMiddleColumn);
+	readFaceRightColumn(topFace, oldTopFaceMiddleColumn);
 	// when
 	Cube_turnRightSliceUp(cube);
 	// then
 	Face * backFace = Cube_backFace(cube);
 	Color newBackFaceMiddleColumn[FACE_SIZE];
-	Face_rightColumn(backFace, newBackFaceMiddleColumn);
+	readFaceRightColumn(backFace, newBackFaceMiddleColumn);
 	cr_assert_arr_eq(
 		newBackFaceMiddleColumn,
 		oldTopFaceMiddleColumn,
@@ -1308,13 +1326,13 @@ Test(Cube, turnRightSliceUp_backColumnGoesBottom)
 	Cube * cube = Cube_create();
 	Face * backFace = Cube_backFace(cube);
 	Color oldBackFaceMiddleColumn[FACE_SIZE];
-	Face_rightColumn(backFace, oldBackFaceMiddleColumn);
+	readFaceRightColumn(backFace, oldBackFaceMiddleColumn);
 	// when
 	Cube_turnRightSliceUp(cube);
 	// then
 	Face * bottomFace = Cube_bottomFace(cube);
 	Color newBottomFaceMiddleColumn[FACE_SIZE];
-	Face_rightColumn(bottomFace, newBottomFaceMiddleColumn);
+	readFaceRightColumn(bottomFace, newBottomFaceMiddleColumn);
 	cr_assert_arr_eq(
 		newBottomFaceMiddleColumn,
 		oldBackFaceMiddleColumn,
@@ -1329,13 +1347,13 @@ Test(Cube, turnRightSliceUp_bottomColumnGoesFront)
 	Cube * cube = Cube_create();
 	Face * bottomFace = Cube_bottomFace(cube);
 	Color oldBottomFaceMiddleColumn[FACE_SIZE];
-	Face_rightColumn(bottomFace, oldBottomFaceMiddleColumn);
+	readFaceRightColumn(bottomFace, oldBottomFaceMiddleColumn);
 	// when
 	Cube_turnRightSliceUp(cube);
 	// then
 	Face * frontFace = Cube_frontFace(cube);
 	Color newFrontFaceMiddleColumn[FACE_SIZE];
-	Face_rightColumn(frontFace, newFrontFaceMiddleColumn);
+	readFaceRightColumn(frontFace, newFrontFaceMiddleColumn);
 	cr_assert_arr_eq(
 		newFrontFaceMiddleColumn,
 		oldBottomFaceMiddleColumn,
@@ -1350,13 +1368,13 @@ Test(Cube, turnRightSliceDown_frontColumnGoesBottom)
 	Cube * cube = Cube_create();
 	Face * frontFace = Cube_frontFace(cube);
 	Color oldFrontFaceMiddleColumn[FACE_SIZE];
-	Face_rightColumn(frontFace, oldFrontFaceMiddleColumn);
+	readFaceRightColumn(frontFace, oldFrontFaceMiddleColumn);
 	// when
 	Cube_turnRightSliceDown(cube);
 	// then
 	Face * bottomFace = Cube_bottomFace(cube);
 	Color newBottomFaceMiddleColumn[FACE_SIZE];
-	Face_rightColumn(bottomFace, newBottomFaceMiddleColumn);
+	readFaceRightColumn(bottomFace, newBottomFaceMiddleColumn);
 	cr_assert_arr_eq(
 		newBottomFaceMiddleColumn,
 		oldFrontFaceMiddleColumn,
@@ -1371,13 +1389,13 @@ Test(Cube, turnRightSliceDown_bottomColumnGoesBack)
 	Cube * cube = Cube_create();
 	Face * bottomFace = Cube_bottomFace(cube);
 	Color oldBottomFaceMiddleColumn[FACE_SIZE];
-	Face_rightColumn(bottomFace, oldBottomFaceMiddleColumn);
+	readFaceRightColumn(bottomFace, oldBottomFaceMiddleColumn);
 	// when
 	Cube_turnRightSliceDown(cube);
 	// then
 	Face * backFace = Cube_backFace(cube);
 	Color newBackFaceMiddleColumn[FACE_SIZE];
-	Face_rightColumn(backFace, newBackFaceMiddleColumn);
+	readFaceRightColumn(backFace, newBackFaceMiddleColumn);
 	cr_assert_arr_eq(
 		newBackFaceMiddleColumn,
 		oldBottomFaceMiddleColumn,
@@ -1392,13 +1410,13 @@ Test(Cube, turnRightSliceDown_backColumnGoesTop)
 	Cube * cube = Cube_create();
 	Face * backFace = Cube_backFace(cube);
 	Color oldBackFaceMiddleColumn[FACE_SIZE];
-	Face_rightColumn(backFace, oldBackFaceMiddleColumn);
+	readFaceRightColumn(backFace, oldBackFaceMiddleColumn);
 	// when
 	Cube_turnRightSliceDown(cube);
 	// then
 	Face * topFace = Cube_topFace(cube);
 	Color newTopFaceMiddleColumn[FACE_SIZE];
-	Face_rightColumn(topFace, newTopFaceMiddleColumn);
+	readFaceRightColumn(topFace, newTopFaceMiddleColumn);
 	cr_assert_arr_eq(
 		newTopFaceMiddleColumn,
 		oldBackFaceMiddleColumn,
@@ -1413,13 +1431,13 @@ Test(Cube, turnRightSliceDown_topColumnGoesFront)
 	Cube * cube = Cube_create();
 	Face * topFace = Cube_topFace(cube);
 	Color oldTopFaceMiddleColumn[FACE_SIZE];
-	Face_rightColumn(topFace, oldTopFaceMiddleColumn);
+	readFaceRightColumn(topFace, oldTopFaceMiddleColumn);
 	// when
 	Cube_turnRightSliceDown(cube);
 	// then
 	Face * frontFace = Cube_frontFace(cube);
 	Color newFrontFaceMiddleColumn[FACE_SIZE];
-	Face_rightColumn(frontFace, newFrontFaceMiddleColumn);
+	readFaceRightColumn(frontFace, newFrontFaceMiddleColumn);
 	cr_assert_arr_eq(
 		newFrontFaceMiddleColumn,
 		oldTopFaceMiddleColumn,
@@ -1434,13 +1452,13 @@ Test(Cube, turnFrontSliceClockwise_topRowGoesRight)
 	Cube * cube = Cube_create();
 	Face * topFace = Cube_topFace(cube);
 	Color oldTopFaceBottomRow[FACE_SIZE];
-	Face_bottomRow(topFace, oldTopFaceBottomRow);
+	readFaceBottomRow(topFace, oldTopFaceBottomRow);
 	// when
 	Cube_turnFrontSliceClockwise(cube);
 	// then
 	Face * rightFace = Cube_rightFace(cube);
 	Color newRightFaceLeftColumn[FACE_SIZE];
-	Face_leftColumn(rightFace, newRightFaceLeftColumn);
+	readFaceLeftColumn(rightFace, newRightFaceLeftColumn);
 	cr_assert_arr_eq(
 		newRightFaceLeftColumn,
 		oldTopFaceBottomRow,
@@ -1455,13 +1473,13 @@ Test(Cube, turnFrontSliceClockwise_rightColumnGoesBottom)
 	Cube * cube = Cube_create();
 	Face * rightFace = Cube_rightFace(cube);
 	Color oldRightFaceLeftColumn[FACE_SIZE];
-	Face_leftColumn(rightFace, oldRightFaceLeftColumn);
+	readFaceLeftColumn(rightFace, oldRightFaceLeftColumn);
 	// when
 	Cube_turnFrontSliceClockwise(cube);
 	// then
 	Face * bottomFace = Cube_bottomFace(cube);
 	Color newBottomFaceTopRow[FACE_SIZE];
-	Face_topRow(bottomFace, newBottomFaceTopRow);
+	readFaceTopRow(bottomFace, newBottomFaceTopRow);
 	cr_assert_arr_eq(
 		newBottomFaceTopRow,
 		oldRightFaceLeftColumn,
@@ -1475,13 +1493,13 @@ Test(Cube, turnFrontSliceClockwise_bottomRowGoesLeft)
 	Cube * cube = Cube_create();
 	Face * bottomFace = Cube_bottomFace(cube);
 	Color oldBottomFaceTopRow[FACE_SIZE];
-	Face_topRow(bottomFace, oldBottomFaceTopRow);
+	readFaceTopRow(bottomFace, oldBottomFaceTopRow);
 	// when
 	Cube_turnFrontSliceClockwise(cube);
 	// then
 	Face * leftFace = Cube_leftFace(cube);
 	Color newLeftFaceRightColumn[FACE_SIZE];
-	Face_rightColumn(leftFace, newLeftFaceRightColumn);
+	readFaceRightColumn(leftFace, newLeftFaceRightColumn);
 	cr_assert_arr_eq(
 		newLeftFaceRightColumn,
 		oldBottomFaceTopRow,
@@ -1496,13 +1514,13 @@ Test(Cube, turnFrontSliceClockwise_leftColumnGoesTop)
 	Cube * cube = Cube_create();
 	Face * leftFace = Cube_leftFace(cube);
 	Color oldLeftFaceRightColumn[FACE_SIZE];
-	Face_rightColumn(leftFace, oldLeftFaceRightColumn);
+	readFaceRightColumn(leftFace, oldLeftFaceRightColumn);
 	// when
 	Cube_turnFrontSliceClockwise(cube);
 	// then
 	Face * topFace = Cube_topFace(cube);
 	Color newTopFaceBottomRow[FACE_SIZE];
-	Face_bottomRow(topFace, newTopFaceBottomRow);
+	readFaceBottomRow(topFace, newTopFaceBottomRow);
 	cr_assert_arr_eq(
 		newTopFaceBottomRow,
 		oldLeftFaceRightColumn,
@@ -1517,13 +1535,13 @@ Test(Cube, turnFrontSliceAnticlockwise_topRowGoesLeft)
 	Cube * cube = Cube_create();
 	Face * topFace = Cube_topFace(cube);
 	Color oldTopFaceBottomRow[FACE_SIZE];
-	Face_bottomRow(topFace, oldTopFaceBottomRow);
+	readFaceBottomRow(topFace, oldTopFaceBottomRow);
 	// when
 	Cube_turnFrontSliceAnticlockwise(cube);
 	// then
 	Face * leftFace = Cube_leftFace(cube);
 	Color newLeftFaceRightColumn[FACE_SIZE];
-	Face_rightColumn(leftFace, newLeftFaceRightColumn);
+	readFaceRightColumn(leftFace, newLeftFaceRightColumn);
 	cr_assert_arr_eq(
 		newLeftFaceRightColumn,
 		oldTopFaceBottomRow,
@@ -1538,13 +1556,13 @@ Test(Cube, turnFrontSliceAnticlockwise_leftColumnGoesBottom)
 	Cube * cube = Cube_create();
 	Face * leftFace = Cube_leftFace(cube);
 	Color oldLeftFaceRightColumn[FACE_SIZE];
-	Face_rightColumn(leftFace, oldLeftFaceRightColumn);
+	readFaceRightColumn(leftFace, oldLeftFaceRightColumn);
 	// when
 	Cube_turnFrontSliceAnticlockwise(cube);
 	// then
 	Face * bottomFace = Cube_bottomFace(cube);
 	Color newBottomFaceTopRow[FACE_SIZE];
-	Face_topRow(bottomFace, newBottomFaceTopRow);
+	readFaceTopRow(bottomFace, newBottomFaceTopRow);
 	cr_assert_arr_eq(
 		newBottomFaceTopRow,
 		oldLeftFaceRightColumn,
@@ -1559,13 +1577,13 @@ Test(Cube, turnFrontSliceAnticlockwise_bottomRowGoesRight)
 	Cube * cube = Cube_create();
 	Face * bottomFace = Cube_bottomFace(cube);
 	Color oldBottomFaceTopRow[FACE_SIZE];
-	Face_topRow(bottomFace, oldBottomFaceTopRow);
+	readFaceTopRow(bottomFace, oldBottomFaceTopRow);
 	// when
 	Cube_turnFrontSliceAnticlockwise(cube);
 	// then
 	Face * rightFace = Cube_rightFace(cube);
 	Color newRightFaceLeftColumn[FACE_SIZE];
-	Face_leftColumn(rightFace, newRightFaceLeftColumn);
+	readFaceLeftColumn(rightFace, newRightFaceLeftColumn);
 	cr_assert_arr_eq(
 		newRightFaceLeftColumn,
 		oldBottomFaceTopRow,
@@ -1580,13 +1598,13 @@ Test(Cube, turnFrontSliceAnticlockwise_rightColumnGoesTop)
 	Cube * cube = Cube_create();
 	Face * rightFace = Cube_rightFace(cube);
 	Color oldRightFaceLeftColumn[FACE_SIZE];
-	Face_leftColumn(rightFace, oldRightFaceLeftColumn);
+	readFaceLeftColumn(rightFace, oldRightFaceLeftColumn);
 	// when
 	Cube_turnFrontSliceAnticlockwise(cube);
 	// then
 	Face * topFace = Cube_topFace(cube);
 	Color newTopFaceBottomRow[FACE_SIZE];
-	Face_bottomRow(topFace, newTopFaceBottomRow);
+	readFaceBottomRow(topFace, newTopFaceBottomRow);
 	cr_assert_arr_eq(
 		newTopFaceBottomRow,
 		oldRightFaceLeftColumn,
@@ -1601,13 +1619,13 @@ Test(Cube, turnStandingSliceClockwise_topRowGoesRight)
 	Cube * cube = Cube_create();
 	Face * topFace = Cube_topFace(cube);
 	Color oldTopFaceEquatorRow[FACE_SIZE];
-	Face_equatorRow(topFace, oldTopFaceEquatorRow);
+	readFaceEquatorRow(topFace, oldTopFaceEquatorRow);
 	// when
 	Cube_turnStandingSliceClockwise(cube);
 	// then
 	Face * rightFace = Cube_rightFace(cube);
 	Color newRightFaceMiddleColumn[FACE_SIZE];
-	Face_middleColumn(rightFace, newRightFaceMiddleColumn);
+	readFaceMiddleColumn(rightFace, newRightFaceMiddleColumn);
 	cr_assert_arr_eq(
 		newRightFaceMiddleColumn,
 		oldTopFaceEquatorRow,
@@ -1622,13 +1640,13 @@ Test(Cube, turnStandingSliceClockwise_rightColumnGoesBottom)
 	Cube * cube = Cube_create();
 	Face * rightFace = Cube_rightFace(cube);
 	Color oldRightFaceMiddleColumn[FACE_SIZE];
-	Face_middleColumn(rightFace, oldRightFaceMiddleColumn);
+	readFaceMiddleColumn(rightFace, oldRightFaceMiddleColumn);
 	// when
 	Cube_turnStandingSliceClockwise(cube);
 	// then
 	Face * bottomFace = Cube_bottomFace(cube);
 	Color newBottomFaceEquatorRow[FACE_SIZE];
-	Face_equatorRow(bottomFace, newBottomFaceEquatorRow);
+	readFaceEquatorRow(bottomFace, newBottomFaceEquatorRow);
 	cr_assert_arr_eq(
 		newBottomFaceEquatorRow,
 		oldRightFaceMiddleColumn,
@@ -1643,13 +1661,13 @@ Test(Cube, turnStandingSliceClockwise_bottomRowGoesLeft)
 	Cube * cube = Cube_create();
 	Face * bottomFace = Cube_bottomFace(cube);
 	Color oldBottomFaceEquatorRow[FACE_SIZE];
-	Face_equatorRow(bottomFace, oldBottomFaceEquatorRow);
+	readFaceEquatorRow(bottomFace, oldBottomFaceEquatorRow);
 	// when
 	Cube_turnStandingSliceClockwise(cube);
 	// then
 	Face * leftFace = Cube_leftFace(cube);
 	Color newLeftFaceMiddleColumn[FACE_SIZE];
-	Face_middleColumn(leftFace, newLeftFaceMiddleColumn);
+	readFaceMiddleColumn(leftFace, newLeftFaceMiddleColumn);
 	cr_assert_arr_eq(
 		newLeftFaceMiddleColumn,
 		oldBottomFaceEquatorRow,
@@ -1664,13 +1682,13 @@ Test(Cube, turnStandingSliceClockwise_leftColumnGoesTop)
 	Cube * cube = Cube_create();
 	Face * leftFace = Cube_leftFace(cube);
 	Color oldLeftFaceMiddleColumn[FACE_SIZE];
-	Face_middleColumn(leftFace, oldLeftFaceMiddleColumn);
+	readFaceMiddleColumn(leftFace, oldLeftFaceMiddleColumn);
 	// when
 	Cube_turnStandingSliceClockwise(cube);
 	// then
 	Face * topFace = Cube_topFace(cube);
 	Color newTopFaceEquatorRow[FACE_SIZE];
-	Face_equatorRow(topFace, newTopFaceEquatorRow);
+	readFaceEquatorRow(topFace, newTopFaceEquatorRow);
 	cr_assert_arr_eq(
 		newTopFaceEquatorRow,
 		oldLeftFaceMiddleColumn,
@@ -1685,13 +1703,13 @@ Test(Cube, turnStandingSliceAnticlockwise_topRowGoesLeft)
 	Cube * cube = Cube_create();
 	Face * topFace = Cube_topFace(cube);
 	Color oldTopFaceEquatorRow[FACE_SIZE];
-	Face_equatorRow(topFace, oldTopFaceEquatorRow);
+	readFaceEquatorRow(topFace, oldTopFaceEquatorRow);
 	// when
 	Cube_turnStandingSliceAnticlockwise(cube);
 	// then
 	Face * leftFace = Cube_leftFace(cube);
 	Color newLeftFaceMiddleColumn[FACE_SIZE];
-	Face_middleColumn(leftFace, newLeftFaceMiddleColumn);
+	readFaceMiddleColumn(leftFace, newLeftFaceMiddleColumn);
 	cr_assert_arr_eq(
 		newLeftFaceMiddleColumn,
 		oldTopFaceEquatorRow,
@@ -1706,13 +1724,13 @@ Test(Cube, turnStandingSliceAnticlockwise_leftColumnGoesBottom)
 	Cube * cube = Cube_create();
 	Face * leftFace = Cube_leftFace(cube);
 	Color oldLeftFaceMiddleColumn[FACE_SIZE];
-	Face_middleColumn(leftFace, oldLeftFaceMiddleColumn);
+	readFaceMiddleColumn(leftFace, oldLeftFaceMiddleColumn);
 	// when
 	Cube_turnStandingSliceAnticlockwise(cube);
 	// then
 	Face * bottomFace = Cube_bottomFace(cube);
 	Color newBottomFaceEquatorRow[FACE_SIZE];
-	Face_equatorRow(bottomFace, newBottomFaceEquatorRow);
+	readFaceEquatorRow(bottomFace, newBottomFaceEquatorRow);
 	cr_assert_arr_eq(
 		newBottomFaceEquatorRow,
 		oldLeftFaceMiddleColumn,
@@ -1727,13 +1745,13 @@ Test(Cube, turnStandingSliceAnticlockwise_bottomRowGoesRight)
 	Cube * cube = Cube_create();
 	Face * bottomFace = Cube_bottomFace(cube);
 	Color oldBottomFaceEquatorRow[FACE_SIZE];
-	Face_equatorRow(bottomFace, oldBottomFaceEquatorRow);
+	readFaceEquatorRow(bottomFace, oldBottomFaceEquatorRow);
 	// when
 	Cube_turnStandingSliceAnticlockwise(cube);
 	// then
 	Face * rightFace = Cube_rightFace(cube);
 	Color newRightFaceMiddleColumn[FACE_SIZE];
-	Face_middleColumn(rightFace, newRightFaceMiddleColumn);
+	readFaceMiddleColumn(rightFace, newRightFaceMiddleColumn);
 	cr_assert_arr_eq(
 		newRightFaceMiddleColumn,
 		oldBottomFaceEquatorRow,
@@ -1748,13 +1766,13 @@ Test(Cube, turnStandingSliceAnticlockwise_rightColumnGoesTop)
 	Cube * cube = Cube_create();
 	Face * rightFace = Cube_rightFace(cube);
 	Color oldRightFaceMiddleColumn[FACE_SIZE];
-	Face_middleColumn(rightFace, oldRightFaceMiddleColumn);
+	readFaceMiddleColumn(rightFace, oldRightFaceMiddleColumn);
 	// when
 	Cube_turnStandingSliceAnticlockwise(cube);
 	// then
 	Face * topFace = Cube_topFace(cube);
 	Color newTopFaceEquatorRow[FACE_SIZE];
-	Face_equatorRow(topFace, newTopFaceEquatorRow);
+	readFaceEquatorRow(topFace, newTopFaceEquatorRow);
 	cr_assert_arr_eq(
 		newTopFaceEquatorRow,
 		oldRightFaceMiddleColumn,
@@ -1769,13 +1787,13 @@ Test(Cube, turnBackSliceClockwise_topRowGoesRight)
 	Cube * cube = Cube_create();
 	Face * topFace = Cube_topFace(cube);
 	Color oldTopFaceTopRow[FACE_SIZE];
-	Face_topRow(topFace, oldTopFaceTopRow);
+	readFaceTopRow(topFace, oldTopFaceTopRow);
 	// when
 	Cube_turnBackSliceClockwise(cube);
 	// then
 	Face * rightFace = Cube_rightFace(cube);
 	Color newRightFaceRightColumn[FACE_SIZE];
-	Face_rightColumn(rightFace, newRightFaceRightColumn);
+	readFaceRightColumn(rightFace, newRightFaceRightColumn);
 	cr_assert_arr_eq(
 		newRightFaceRightColumn,
 		oldTopFaceTopRow,
@@ -1790,13 +1808,13 @@ Test(Cube, turnBackSliceClockwise_rightColumnGoesBottom)
 	Cube * cube = Cube_create();
 	Face * rightFace = Cube_rightFace(cube);
 	Color oldRightFaceRightColumn[FACE_SIZE];
-	Face_rightColumn(rightFace, oldRightFaceRightColumn);
+	readFaceRightColumn(rightFace, oldRightFaceRightColumn);
 	// when
 	Cube_turnBackSliceClockwise(cube);
 	// then
 	Face * bottomFace = Cube_bottomFace(cube);
 	Color newBottomFaceBottomRow[FACE_SIZE];
-	Face_bottomRow(bottomFace, newBottomFaceBottomRow);
+	readFaceBottomRow(bottomFace, newBottomFaceBottomRow);
 	cr_assert_arr_eq(
 		newBottomFaceBottomRow,
 		oldRightFaceRightColumn,
@@ -1811,13 +1829,13 @@ Test(Cube, turnBackSliceClockwise_bottomRowGoesLeft)
 	Cube * cube = Cube_create();
 	Face * bottomFace = Cube_bottomFace(cube);
 	Color oldBottomFaceBottomRow[FACE_SIZE];
-	Face_bottomRow(bottomFace, oldBottomFaceBottomRow);
+	readFaceBottomRow(bottomFace, oldBottomFaceBottomRow);
 	// when
 	Cube_turnBackSliceClockwise(cube);
 	// then
 	Face * leftFace = Cube_leftFace(cube);
 	Color newLeftFaceLeftColumn[FACE_SIZE];
-	Face_leftColumn(leftFace, newLeftFaceLeftColumn);
+	readFaceLeftColumn(leftFace, newLeftFaceLeftColumn);
 	cr_assert_arr_eq(
 		newLeftFaceLeftColumn,
 		oldBottomFaceBottomRow,
@@ -1832,13 +1850,13 @@ Test(Cube, turnBackSliceClockwise_leftColumnGoesTop)
 	Cube * cube = Cube_create();
 	Face * leftFace = Cube_leftFace(cube);
 	Color oldLeftFaceLeftColumn[FACE_SIZE];
-	Face_leftColumn(leftFace, oldLeftFaceLeftColumn);
+	readFaceLeftColumn(leftFace, oldLeftFaceLeftColumn);
 	// when
 	Cube_turnBackSliceClockwise(cube);
 	// then
 	Face * topFace = Cube_topFace(cube);
 	Color newTopFaceTopRow[FACE_SIZE];
-	Face_topRow(topFace, newTopFaceTopRow);
+	readFaceTopRow(topFace, newTopFaceTopRow);
 	cr_assert_arr_eq(
 		newTopFaceTopRow,
 		oldLeftFaceLeftColumn,
@@ -1853,13 +1871,13 @@ Test(Cube, turnBackSliceAnticlockwise_topRowGoesLeft)
 	Cube * cube = Cube_create();
 	Face * topFace = Cube_topFace(cube);
 	Color oldTopFaceTopRow[FACE_SIZE];
-	Face_topRow(topFace, oldTopFaceTopRow);
+	readFaceTopRow(topFace, oldTopFaceTopRow);
 	// when
 	Cube_turnBackSliceAnticlockwise(cube);
 	// then
 	Face * leftFace = Cube_leftFace(cube);
 	Color newLeftFaceLeftColumn[FACE_SIZE];
-	Face_leftColumn(leftFace, newLeftFaceLeftColumn);
+	readFaceLeftColumn(leftFace, newLeftFaceLeftColumn);
 	cr_assert_arr_eq(
 		newLeftFaceLeftColumn,
 		oldTopFaceTopRow,
@@ -1874,13 +1892,13 @@ Test(Cube, turnBackSliceAnticlockwise_leftColumnGoesBottom)
 	Cube * cube = Cube_create();
 	Face * leftFace = Cube_leftFace(cube);
 	Color oldLeftFaceLeftColumn[FACE_SIZE];
-	Face_leftColumn(leftFace, oldLeftFaceLeftColumn);
+	readFaceLeftColumn(leftFace, oldLeftFaceLeftColumn);
 	// when
 	Cube_turnBackSliceAnticlockwise(cube);
 	// then
 	Face * bottomFace = Cube_bottomFace(cube);
 	Color newBottomFaceBottomRow[FACE_SIZE];
-	Face_bottomRow(bottomFace, newBottomFaceBottomRow);
+	readFaceBottomRow(bottomFace, newBottomFaceBottomRow);
 	cr_assert_arr_eq(
 		newBottomFaceBottomRow,
 		oldLeftFaceLeftColumn,
@@ -1895,13 +1913,13 @@ Test(Cube, turnBackSliceAnticlockwise_bottomRowGoesRight)
 	Cube * cube = Cube_create();
 	Face * bottomFace = Cube_bottomFace(cube);
 	Color oldBottomFaceBottomRow[FACE_SIZE];
-	Face_bottomRow(bottomFace, oldBottomFaceBottomRow);
+	readFaceBottomRow(bottomFace, oldBottomFaceBottomRow);
 	// when
 	Cube_turnBackSliceAnticlockwise(cube);
 	// then
 	Face * rightFace = Cube_rightFace(cube);
 	Color newRightFaceRightColumn[FACE_SIZE];
-	Face_rightColumn(rightFace, newRightFaceRightColumn);
+	readFaceRightColumn(rightFace, newRightFaceRightColumn);
 	cr_assert_arr_eq(
 		newRightFaceRightColumn,
 		oldBottomFaceBottomRow,
@@ -1916,13 +1934,13 @@ Test(Cube, turnBackSliceAnticlockwise_rightColumnGoesTop)
 	Cube * cube = Cube_create();
 	Face * rightFace = Cube_rightFace(cube);
 	Color oldRightFaceRightColumn[FACE_SIZE];
-	Face_rightColumn(rightFace, oldRightFaceRightColumn);
+	readFaceRightColumn(rightFace, oldRightFaceRightColumn);
 	// when
 	Cube_turnBackSliceAnticlockwise(cube);
 	// then
 	Face * topFace = Cube_topFace(cube);
 	Color newTopFaceTopRow[FACE_SIZE];
-	Face_topRow(topFace, newTopFaceTopRow);
+	readFaceTopRow(topFace, newTopFaceTopRow);
 	cr_assert_arr_eq(
 		newTopFaceTopRow,
 		oldRightFaceRightColumn,
@@ -2924,17 +2942,64 @@ static Cube * createScrambledCube(void)
 }
 
 
+static void readFaceTopRow(Face const * face, Color buffer[FACE_SIZE])
+{
+	buffer[0] = Face_topLeftCell(face);
+	buffer[1] = Face_topCenterCell(face);
+	buffer[2] = Face_topRightCell(face);
+}
+
+static void readFaceEquatorRow(Face const * face, Color buffer[FACE_SIZE])
+{
+	buffer[0] = Face_equatorLeftCell(face);
+	buffer[1] = Face_equatorCenterCell(face);
+	buffer[2] = Face_equatorRightCell(face);
+}
+
+
+static void readFaceBottomRow(Face const * face, Color buffer[FACE_SIZE])
+{
+	buffer[0] = Face_bottomLeftCell(face);
+	buffer[1] = Face_bottomCenterCell(face);
+	buffer[2] = Face_bottomRightCell(face);
+}
+
+
+static void readFaceLeftColumn(Face const * face, Color buffer[FACE_SIZE])
+{
+	buffer[0] = Face_topLeftCell(face);
+	buffer[1] = Face_equatorLeftCell(face);
+	buffer[2] = Face_bottomLeftCell(face);
+}
+
+
+static void readFaceMiddleColumn(Face const * face, Color buffer[FACE_SIZE])
+{
+	buffer[0] = Face_topCenterCell(face);
+	buffer[1] = Face_equatorCenterCell(face);
+	buffer[2] = Face_bottomCenterCell(face);
+}
+
+
+static void readFaceRightColumn(Face const * face, Color buffer[FACE_SIZE])
+{
+	buffer[0] = Face_topRightCell(face);
+	buffer[1] = Face_equatorRightCell(face);
+	buffer[2] = Face_bottomRightCell(face);
+}
+
+
 static void readFace(Face const * face, Color storage[FACE_SIZE][FACE_SIZE])
 {
 	size_t rowSizeInBytes = FACE_SIZE * sizeof(storage[0][0]);
 	Color buffer[FACE_SIZE];
 
-	Face_topRow(face, buffer);
+	readFaceTopRow(face, buffer);
 	memcpy(storage[0], buffer, rowSizeInBytes);
 
-	Face_equatorRow(face, buffer);
+	readFaceEquatorRow(face, buffer);
 	memcpy(storage[1], buffer, rowSizeInBytes);
 
-	Face_bottomRow(face, buffer);
+	readFaceBottomRow(face, buffer);
 	memcpy(storage[2], buffer, rowSizeInBytes);
 }

@@ -30,14 +30,6 @@ void Face_setRow(Face * this, Color buffer[FACE_SIZE], int rowIndex);
 void Face_copyColumn(Face const * this, Color buffer[FACE_SIZE], int columnIndex);
 void Face_setColumn(Face * face, Color column[FACE_SIZE], int columnIndex);
 
-void Face_topRow(Face const * this, Color storage[FACE_SIZE]);
-void Face_equatorRow(Face const * this, Color storage[FACE_SIZE]);
-void Face_bottomRow(Face const * this, Color storage[FACE_SIZE]);
-
-void Face_leftColumn(Face const * this, Color storage[FACE_SIZE]);
-void Face_middleColumn(Face const * this, Color storage[FACE_SIZE]);
-void Face_rightColumn(Face const * this, Color storage[FACE_SIZE]);
-
 
 
 

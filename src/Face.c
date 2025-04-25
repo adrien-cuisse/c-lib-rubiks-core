@@ -196,40 +196,4 @@ void Face_rotateAnticlockwise(Face * this)
 	Face_setRow(this, newBottomRow, BOTTOM_ROW);
 }
 
-
-void Face_topRow(Face const * this, Color storage[FACE_SIZE])
-{
-	Face_copyRow(this, storage, TOP_ROW);
-}
-
-
-void Face_equatorRow(Face const * this, Color storage[FACE_SIZE])
-{
-	Face_copyRow(this, storage, EQUATOR_ROW);
-}
-
-
-void Face_bottomRow(Face const * this, Color storage[FACE_SIZE])
-{
-	Face_copyRow(this, storage, BOTTOM_ROW);
-}
-
-
-void Face_leftColumn(Face const * this, Color storage[FACE_SIZE])
-{
-	Face_copyColumn(this, storage, LEFT_COLUMN);
-}
-
-
-void Face_middleColumn(Face const * this, Color storage[FACE_SIZE])
-{
-	Face_copyColumn(this, storage, MIDDLE_COLUMN);
-}
-
-
-void Face_rightColumn(Face const * this, Color storage[FACE_SIZE])
-{
-	Face_copyColumn(this, storage, RIGHT_COLUMN);
-}
-
 /* --- Private API end --- */
