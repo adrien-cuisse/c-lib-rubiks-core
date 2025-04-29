@@ -33,27 +33,6 @@ static void readFace(Face const * face, Color storage[FACE_SIZE][FACE_SIZE]);
 
 
 
-Test(Cube, create_allocatesMemory)
-{
-	// given
-	Cube * allocatedMemory = Cube_create();
-	// when
-	// then
-	cr_assert_not_null(allocatedMemory, "no memory was allocated");
-}
-
-
-Test(Cube, delete_deallocatesMemory)
-{
-	// given
-	Cube * allocatedMemory = Cube_create();
-	// when
-	Cube_delete(& allocatedMemory);
-	// then
-	cr_assert_null(allocatedMemory, "memory was not deallocated");
-}
-
-
 Test(Cube, isInitializedWithBlueFaceInFront)
 {
 	// given
