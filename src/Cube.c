@@ -8,33 +8,17 @@
 #include "Face.h"
 
 
-/** The slices composing the cube (Z axis), based on FACE_SIZE */
-#define FRONT_SLICE 0
-#define STANDING_SLICE 1
-#define BACK_SLICE 2
 
-
-/** The position of a cell in a row (X axis), based on FACE_SIZE */
-#define LEFT_CELL 0
-#define MIDDLE_CELL 1
-#define RIGHT_CELL 2
-
-
-/** The position of a cell in a column (Y axis), based on FACE_SIZE */
-#define TOP_CELL 0
-#define EQUATOR_CELL 1
-#define BOTTOM_CELL 2
-
-
-/** The position of each face in the T-shaped pattern of the unfolded cube */
-#define LEFT_FACE 0
-#define FRONT_FACE 1
-#define RIGHT_FACE 2
-#define BOTTOM_FACE 3
-#define BACK_FACE 4
-#define TOP_FACE 5
-
-
+/** The position of each Face in the T-shaped pattern of the unfolded cube */
+typedef enum
+{
+	LEFT_FACE,
+	FRONT_FACE,
+	RIGHT_FACE,
+	BOTTOM_FACE,
+	BACK_FACE,
+	TOP_FACE
+} FacePosition;
 
 
 struct Cube
@@ -80,15 +64,15 @@ Cube * Cube_create(void)
 
 void Cube_delete(Cube ** this)
 {
-	int faceIndex;
+	FacePosition position;
 
 	if ((this == NULL) || (* this == NULL))
 		return;
 
-	for (faceIndex = 0; faceIndex < 6; faceIndex++)
+	for (position = 0; position < 6; position++)
 	{
-		Face_delete(& (* this)->faces[faceIndex]);
-		(* this)->faces[faceIndex] = NULL;
+		Face_delete(& (* this)->faces[position]);
+		(* this)->faces[position] = NULL;
 	};
 
 	free(* this);
@@ -96,9 +80,9 @@ void Cube_delete(Cube ** this)
 }
 
 
-static Face * getFace(Cube const * this, int faceIndex)
+static Face * getFace(Cube const * this, FacePosition position)
 {
-	return this->faces[faceIndex];
+	return this->faces[position];
 }
 
 
@@ -147,7 +131,7 @@ Face * Cube_backFace(Cube const * this)
  * 		eg: {TOP_FACE, RIGHT_FACE, BOTTOM_FACE, LEFT_FACE}
  * 			will put TOP_FACE face where RIGHT_FACE face is
  */
-static void rotateCube(Cube * this, int faceIndexesCycle[4])
+static void rotateCube(Cube * this, FacePosition faceIndexesCycle[4])
 {
 	Face * backupFace = this->faces[faceIndexesCycle[3]];
 
@@ -160,7 +144,7 @@ static void rotateCube(Cube * this, int faceIndexesCycle[4])
 
 void Cube_rotateLeft(Cube * this)
 {
-	int cycle[4] = { FRONT_FACE, LEFT_FACE, BACK_FACE, RIGHT_FACE };
+	FacePosition cycle[4] = { FRONT_FACE, LEFT_FACE, BACK_FACE, RIGHT_FACE };
 
 	Face_rotateClockwise(Cube_leftFace(this));
 	Face_rotateClockwise(Cube_leftFace(this));
@@ -175,7 +159,7 @@ void Cube_rotateLeft(Cube * this)
 
 void Cube_rotateRight(Cube * this)
 {
-	int cycle[4] = { FRONT_FACE, RIGHT_FACE, BACK_FACE, LEFT_FACE };
+	FacePosition cycle[4] = { FRONT_FACE, RIGHT_FACE, BACK_FACE, LEFT_FACE };
 
 	Face_rotateAnticlockwise(Cube_rightFace(this));
 	Face_rotateAnticlockwise(Cube_rightFace(this));
@@ -190,7 +174,7 @@ void Cube_rotateRight(Cube * this)
 
 void Cube_rotateUp(Cube * this)
 {
-	int cycle[4] = { FRONT_FACE, TOP_FACE, BACK_FACE, BOTTOM_FACE };
+	FacePosition cycle[4] = { FRONT_FACE, TOP_FACE, BACK_FACE, BOTTOM_FACE };
 
 	Face_rotateAnticlockwise(Cube_leftFace(this));
 	Face_rotateClockwise(Cube_rightFace(this));
@@ -201,7 +185,7 @@ void Cube_rotateUp(Cube * this)
 
 void Cube_rotateDown(Cube * this)
 {
-	int cycle[4] = { FRONT_FACE, BOTTOM_FACE, BACK_FACE, TOP_FACE };
+	FacePosition cycle[4] = { FRONT_FACE, BOTTOM_FACE, BACK_FACE, TOP_FACE };
 
 	Face_rotateClockwise(Cube_leftFace(this));
 	Face_rotateAnticlockwise(Cube_rightFace(this));
@@ -212,7 +196,7 @@ void Cube_rotateDown(Cube * this)
 
 void Cube_rotateClockwise(Cube * this)
 {
-	int cycle[4] = { TOP_FACE, RIGHT_FACE, BOTTOM_FACE, LEFT_FACE };
+	FacePosition cycle[4] = { TOP_FACE, RIGHT_FACE, BOTTOM_FACE, LEFT_FACE };
 
 	Face_rotateClockwise(Cube_leftFace(this));
 	Face_rotateClockwise(Cube_frontFace(this));
@@ -227,7 +211,7 @@ void Cube_rotateClockwise(Cube * this)
 
 void Cube_rotateAnticlockwise(Cube * this)
 {
-	int cycle[4] = { TOP_FACE, LEFT_FACE, BOTTOM_FACE, RIGHT_FACE };
+	FacePosition cycle[4] = { TOP_FACE, LEFT_FACE, BOTTOM_FACE, RIGHT_FACE };
 
 	Face_rotateAnticlockwise(Cube_leftFace(this));
 	Face_rotateAnticlockwise(Cube_frontFace(this));
@@ -319,7 +303,7 @@ static void turnSlice(Cube * this, int linesCoordsCycle[4][3])
 }
 
 
-static void turnHorizontalSlice(Cube * this, int rowIndex, int facesCycle[4])
+static void turnHorizontalSlice(Cube * this, Row row, FacePosition facesCycle[4])
 {
 	int cycleIndex;
 	int rowsCoordsCycle[4][3];
@@ -333,9 +317,9 @@ static void turnHorizontalSlice(Cube * this, int rowIndex, int facesCycle[4])
 			the top row becomes the bottom row, and the bottom row becomes
 			the top row, this has no effect for the equator row */
 		if (facesCycle[cycleIndex] == BACK_FACE)
-			rowsCoordsCycle[cycleIndex][1] = 2 - rowIndex;
+			rowsCoordsCycle[cycleIndex][1] = 2 - row;
 		else
-			rowsCoordsCycle[cycleIndex][1] = rowIndex;
+			rowsCoordsCycle[cycleIndex][1] = row;
 
 		rowsCoordsCycle[cycleIndex][2] = -1;
 	}
@@ -344,17 +328,17 @@ static void turnHorizontalSlice(Cube * this, int rowIndex, int facesCycle[4])
 }
 
 
-static void turnSliceLeft(Cube * this, int rowIndex)
+static void turnSliceLeft(Cube * this, Row row)
 {
-	int facesCycle[] = { FRONT_FACE, LEFT_FACE, BACK_FACE, RIGHT_FACE };
-	turnHorizontalSlice(this, rowIndex, facesCycle);
+	FacePosition facesCycle[] = { FRONT_FACE, LEFT_FACE, BACK_FACE, RIGHT_FACE };
+	turnHorizontalSlice(this, row, facesCycle);
 }
 
 
-static void turnSliceRight(Cube * this, int rowIndex)
+static void turnSliceRight(Cube * this, Row row)
 {
-	int facesCycle[] = { FRONT_FACE, RIGHT_FACE, BACK_FACE, LEFT_FACE };
-	turnHorizontalSlice(this, rowIndex, facesCycle);
+	FacePosition facesCycle[] = { FRONT_FACE, RIGHT_FACE, BACK_FACE, LEFT_FACE };
+	turnHorizontalSlice(this, row, facesCycle);
 }
 
 
@@ -398,7 +382,7 @@ void Cube_turnBottomSliceRight(Cube * this)
 }
 
 
-static void turnVerticalSlice(Cube * this, int columnIndex, int facesCycle[4])
+static void turnVerticalSlice(Cube * this, Column column, FacePosition facesCycle[4])
 {
 	int cycleIndex;
 	int columnsCoordsCycle[4][3];
@@ -407,24 +391,24 @@ static void turnVerticalSlice(Cube * this, int columnIndex, int facesCycle[4])
 	{
 		columnsCoordsCycle[cycleIndex][0] = facesCycle[cycleIndex];
 		columnsCoordsCycle[cycleIndex][1] = -1;
-		columnsCoordsCycle[cycleIndex][2] = columnIndex;
+		columnsCoordsCycle[cycleIndex][2] = column;
 	}
 
 	turnSlice(this, columnsCoordsCycle);
 }
 
 
-static void turnSliceUp(Cube * this, int columnIndex)
+static void turnSliceUp(Cube * this, Column column)
 {
-	int facesCycle[] = { FRONT_FACE, TOP_FACE, BACK_FACE, BOTTOM_FACE };
-	turnVerticalSlice(this, columnIndex, facesCycle);
+	FacePosition facesCycle[] = { FRONT_FACE, TOP_FACE, BACK_FACE, BOTTOM_FACE };
+	turnVerticalSlice(this, column, facesCycle);
 }
 
 
-static void turnSliceDown(Cube * this, int columnIndex)
+static void turnSliceDown(Cube * this, Column column)
 {
-	int facesCycle[] = { FRONT_FACE, BOTTOM_FACE, BACK_FACE, TOP_FACE };
-	turnVerticalSlice(this, columnIndex, facesCycle);
+	FacePosition facesCycle[] = { FRONT_FACE, BOTTOM_FACE, BACK_FACE, TOP_FACE };
+	turnVerticalSlice(this, column, facesCycle);
 }
 
 
