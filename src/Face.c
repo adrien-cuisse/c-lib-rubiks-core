@@ -25,9 +25,9 @@ Color Face_color(Face const * this)
 }
 
 
-static Color cell(Face const * this, int rowIndex, int columnIndex)
+static Color cell(Face const * this, Row row, Column column)
 {
-	return this->cells[rowIndex][columnIndex];
+	return this->cells[row][column];
 }
 
 
@@ -91,23 +91,23 @@ Color Face_bottomRightCell(Face const * this)
 
 /* --- Private API start --- */
 
-static void applyColorOnRow(Face * this, Color color, int rowIndex)
+static void applyColorOnRow(Face * this, Color color, Row row)
 {
 	int columnIndex;
-	Color row[FACE_SIZE];
+	Color cells[FACE_SIZE];
 
 	for (columnIndex = LEFT_COLUMN; columnIndex <= RIGHT_COLUMN; columnIndex++)
-		row[columnIndex] = color;
+		cells[columnIndex] = color;
 
-	Face_setRow(this, row, rowIndex);
+	Face_setRow(this, cells, row);
 }
 
 
 static void applyColor(Face * this, Color color)
 {
-	int rowIndex;
-	for (rowIndex = TOP_ROW; rowIndex <= BOTTOM_ROW; rowIndex++)
-		applyColorOnRow(this, color, rowIndex);
+	Row row;
+	for (row = TOP_ROW; row <= BOTTOM_ROW; row++)
+		applyColorOnRow(this, color, row);
 }
 
 
@@ -136,32 +136,33 @@ void Face_delete(Face ** this)
 }
 
 
-void Face_copyRow(Face const * this, Color buffer[FACE_SIZE], int rowIndex)
+void Face_copyRow(Face const * this, Color buffer[FACE_SIZE], Row row)
 {
-	size_t rowSizeInBytes = FACE_SIZE * sizeof(this->cells[rowIndex][0]);
-	memcpy(buffer, this->cells[rowIndex], rowSizeInBytes);
-}
-
-void Face_setRow(Face * face, Color row[FACE_SIZE], int rowIndex)
-{
-	size_t rowSizeInBytes = FACE_SIZE * sizeof(row[0]);
-	memcpy(face->cells[rowIndex], row, rowSizeInBytes);
+	size_t rowSizeInBytes = FACE_SIZE * sizeof(this->cells[row][0]);
+	memcpy(buffer, this->cells[row], rowSizeInBytes);
 }
 
 
-void Face_copyColumn(Face const * this, Color buffer[FACE_SIZE], int columnIndex)
+void Face_setRow(Face * face, Color const cells[FACE_SIZE], Row row)
 {
-	int rowIndex;
-	for (rowIndex = TOP_ROW; rowIndex <= BOTTOM_ROW; rowIndex++)
-		buffer[rowIndex] = this->cells[rowIndex][columnIndex];
+	size_t rowSizeInBytes = FACE_SIZE * sizeof(cells[0]);
+	memcpy(face->cells[row], cells, rowSizeInBytes);
 }
 
 
-void Face_setColumn(Face * face, Color column[FACE_SIZE], int columnIndex)
+void Face_copyColumn(Face const * this, Color buffer[FACE_SIZE], Column column)
 {
-	int rowIndex;
-	for (rowIndex = TOP_ROW; rowIndex <= BOTTOM_ROW; rowIndex++)
-		face->cells[rowIndex][columnIndex] = column[rowIndex];
+	Row row;
+	for (row = TOP_ROW; row <= BOTTOM_ROW; row++)
+		buffer[row] = this->cells[row][column];
+}
+
+
+void Face_setColumn(Face * face, Color const cells[FACE_SIZE], Column column)
+{
+	Row row;
+	for (row = TOP_ROW; row <= BOTTOM_ROW; row++)
+		face->cells[row][column] = cells[row];
 }
 
 
