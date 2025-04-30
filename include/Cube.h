@@ -29,26 +29,26 @@ void Cube_rotateDown(Cube * this);
 void Cube_rotateClockwise(Cube * this);
 void Cube_rotateAnticlockwise(Cube * this);
 
-void Cube_turnTopSliceLeft(Cube * this);
-void Cube_turnTopSliceRight(Cube * this);
-void Cube_turnEquatorSliceLeft(Cube * this);
-void Cube_turnEquatorSliceRight(Cube * this);
-void Cube_turnBottomSliceLeft(Cube * this);
-void Cube_turnBottomSliceRight(Cube * this);
+void Cube_rotateTopSliceLeft(Cube * this);
+void Cube_rotateTopSliceRight(Cube * this);
+void Cube_rotateEquatorSliceLeft(Cube * this);
+void Cube_rotateEquatorSliceRight(Cube * this);
+void Cube_rotateBottomSliceLeft(Cube * this);
+void Cube_rotateBottomSliceRight(Cube * this);
 
-void Cube_turnLeftSliceUp(Cube * this);
-void Cube_turnLeftSliceDown(Cube * this);
-void Cube_turnMiddleSliceUp(Cube * this);
-void Cube_turnMiddleSliceDown(Cube * this);
-void Cube_turnRightSliceUp(Cube * this);
-void Cube_turnRightSliceDown(Cube * this);
+void Cube_rotateLeftSliceUp(Cube * this);
+void Cube_rotateLeftSliceDown(Cube * this);
+void Cube_rotateMiddleSliceUp(Cube * this);
+void Cube_rotateMiddleSliceDown(Cube * this);
+void Cube_rotateRightSliceUp(Cube * this);
+void Cube_rotateRightSliceDown(Cube * this);
 
-void Cube_turnFrontSliceClockwise(Cube * this);
-void Cube_turnFrontSliceAnticlockwise(Cube * this);
-void Cube_turnStandingSliceClockwise(Cube * this);
-void Cube_turnStandingSliceAnticlockwise(Cube * this);
-void Cube_turnBackSliceClockwise(Cube * this);
-void Cube_turnBackSliceAnticlockwise(Cube * this);
+void Cube_rotateFrontSliceClockwise(Cube * this);
+void Cube_rotateFrontSliceAnticlockwise(Cube * this);
+void Cube_rotateStandingSliceClockwise(Cube * this);
+void Cube_rotateStandingSliceAnticlockwise(Cube * this);
+void Cube_rotateBackSliceClockwise(Cube * this);
+void Cube_rotateBackSliceAnticlockwise(Cube * this);
 
 
 
