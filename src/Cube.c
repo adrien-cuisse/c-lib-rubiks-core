@@ -11,6 +11,8 @@
 
 static void createAndPositionFaces(Cube * this)
 {
+	int faceIndex;
+
 	/*
 	 * official disposition:
 	 * - blue opposes green,
@@ -24,6 +26,15 @@ static void createAndPositionFaces(Cube * this)
 	this->faces[TOP_FACE] = Face_create(WHITE);
 	this->faces[BOTTOM_FACE] = Face_create(YELLOW);
 	this->faces[BACK_FACE] = Face_create(GREEN);
+
+	for (faceIndex = 0; faceIndex < 6; faceIndex++)
+	{
+		if (this->faces[faceIndex] == NULL)
+		{
+			Cube_delete(& this);
+			return;
+		}
+	}
 }
 
 
