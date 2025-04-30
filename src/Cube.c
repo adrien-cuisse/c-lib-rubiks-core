@@ -30,13 +30,8 @@ static void createAndPositionFaces(Cube * this)
 Cube * Cube_create(void)
 {
 	Cube * this = calloc(1, sizeof(* this));
-	if (this == NULL)
-	{
-		fputs("Cube allocation failed", stderr);
-		exit(EXIT_FAILURE);
-	}
-
-	createAndPositionFaces(this);
+	if (this != NULL)
+		createAndPositionFaces(this);
 
 	return this;
 }

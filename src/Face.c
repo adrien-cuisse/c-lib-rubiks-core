@@ -114,13 +114,8 @@ static void applyColor(Face * this, Color color)
 Face * Face_create(Color color)
 {
 	Face * this = calloc(1, sizeof(* this));
-	if (this == NULL)
-	{
-		fputs("Face allocation failed", stderr);
-		exit(EXIT_FAILURE);
-	}
-
-	applyColor(this, color);
+	if (this != NULL)
+		applyColor(this, color);
 
 	return this;
 }
