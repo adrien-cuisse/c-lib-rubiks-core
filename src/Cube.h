@@ -31,25 +31,5 @@ struct Cube
 
 
 
-Face * Cube_leftFace(Cube const * this);
-
-
-Face * Cube_frontFace(Cube const * this);
-
-
-Face * Cube_rightFace(Cube const * this);
-
-
-Face * Cube_topFace(Cube const * this);
-
-
-Face * Cube_bottomFace(Cube const * this);
-
-
-Face * Cube_backFace(Cube const * this);
-
-
-
-
 #endif /* CUBE_INTERNAL_HEADER */
 
