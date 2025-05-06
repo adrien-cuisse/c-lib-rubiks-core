@@ -32,7 +32,6 @@ typedef Line Slice[4];
 
 
 
-
 /**
  * @param this - the cube to get a line from
  *
