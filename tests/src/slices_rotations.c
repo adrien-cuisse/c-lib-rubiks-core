@@ -2518,53 +2518,6 @@ static void _assert_faceRotatedClockwise(
 		file,
 		line,
 		facePosition);
-	/*
-	cr_assert_eq(
-		before[0][0],
-		after[0][2],
-		"%s face clockwise rotation: top-left cell didn't go top-right",
-		facePosition);
-	cr_assert_eq(
-		before[0][1],
-		after[1][2],
-		"%s face clockwise rotation: top-center cell didn't go equator-right",
-		facePosition);
-	cr_assert_eq(
-		before[0][2],
-		after[2][2],
-		"%s face clockwise rotation: top-right cell didn't go bottom-right",
-		facePosition);
-	cr_assert_eq(
-		before[1][0],
-		after[0][1],
-		"%s face clockwise rotation: equator-left cell didn't go top-center",
-		facePosition);
-	cr_assert_eq(
-		before[1][1],
-		after[1][1],
-		"%s face clockwise rotation: face changed color",
-		facePosition);
-	cr_assert_eq(
-		before[1][2],
-		after[2][1],
-		"%s face clockwise rotation: equator-right cell didn't go bottom-center",
-		facePosition);
-	cr_assert_eq(
-		before[2][0],
-		after[0][0],
-		"%s face clockwise rotation: bottom-left cell didn't go top-left",
-		facePosition);
-	cr_assert_eq(
-		before[2][1],
-		after[1][0],
-		"%s face clockwise rotation: bottom-center cell didn't go equator-left",
-		facePosition);
-	cr_assert_eq(
-		before[2][2],
-		after[2][0],
-		"%s face clockwise rotation: bottom-right cell didn't go bottom-left",
-		facePosition);
-	*/
 }
 
 
