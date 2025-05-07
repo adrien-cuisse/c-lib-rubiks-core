@@ -94,81 +94,167 @@ static void rotateSlice(Cube * this, Slice slice)
 }
 
 
-static void rotateHorizontalSlice(Cube * this, Row row, Rotation rotation)
+static void reverseLine(Color line[FACE_SIZE])
+{
+	Color swap = line[0];
+	line[0] = line[2];
+	line[2] = swap;
+}
+
+
+static void moveReversedLine(Cube * this, Line from, Line to)
+{
+	Color line[FACE_SIZE];
+	getLine(this, from, line);
+	reverseLine(line);
+	setLine(this, to, line);
+}
+
+
+static void rotateSliceLeft(Cube * this, Slice slice)
 {
 	int cycleIndex;
-	Slice slice;
 
-	for (cycleIndex = 0; cycleIndex < 4; cycleIndex++)
+	FacePosition fromFace;
+	FacePosition toFace;
+
+	Color lineBackup[FACE_SIZE];
+
+	getLine(this, slice[3], lineBackup);
+
+	for (cycleIndex = 3; cycleIndex > 0; cycleIndex--)
 	{
-		slice[cycleIndex].face = rotation[cycleIndex];
+		fromFace = slice[cycleIndex - 1].face;
+		toFace = slice[cycleIndex].face;
 
-		/* because of how we unfold the cube, we have only 3 faces aligned
-			horizontally, the back face get its destination coord flipped,
-			the top row becomes the bottom row, and the bottom row becomes
-			the top row, this has no effect for the equator row */
-		if (rotation[cycleIndex] == BACK_FACE)
-			slice[cycleIndex].row = 2 - row;
+		if (fromFace == LEFT_FACE && toFace == BACK_FACE)
+			moveReversedLine(this, slice[cycleIndex - 1], slice[cycleIndex]);
+		else if (fromFace == BACK_FACE && toFace == RIGHT_FACE)
+			moveReversedLine(this, slice[cycleIndex - 1], slice[cycleIndex]);
 		else
-			slice[cycleIndex].row = row;
-
-		slice[cycleIndex].column = -1;
+			moveLine(this, slice[cycleIndex - 1], slice[cycleIndex]);
 	}
 
-	rotateSlice(this, slice);
+	fromFace = slice[3].face;
+	toFace = slice[0].face;
+	if (fromFace == LEFT_FACE && toFace == TOP_FACE)
+		reverseLine(lineBackup);
+
+	setLine(this, slice[0], lineBackup);
 }
 
 
-static void rotateSliceLeft(Cube * this, Row row)
+static void rotateSliceRight(Cube * this, Slice slice)
 {
-	Rotation rotation = { FRONT_FACE, LEFT_FACE, BACK_FACE, RIGHT_FACE };
-	rotateHorizontalSlice(this, row, rotation);
-}
+	int cycleIndex;
 
+	FacePosition fromFace;
+	FacePosition toFace;
 
-static void rotateSliceRight(Cube * this, Row row)
-{
-	Rotation rotation = { FRONT_FACE, RIGHT_FACE, BACK_FACE, LEFT_FACE };
-	rotateHorizontalSlice(this, row, rotation);
+	Color lineBackup[FACE_SIZE];
+
+	getLine(this, slice[3], lineBackup);
+
+	for (cycleIndex = 3; cycleIndex > 0; cycleIndex--)
+	{
+		fromFace = slice[cycleIndex - 1].face;
+		toFace = slice[cycleIndex].face;
+
+		if (fromFace == RIGHT_FACE && toFace == BACK_FACE)
+			moveReversedLine(this, slice[cycleIndex - 1], slice[cycleIndex]);
+		else if (fromFace == BACK_FACE && toFace == LEFT_FACE)
+			moveReversedLine(this, slice[cycleIndex - 1], slice[cycleIndex]);
+		else
+			moveLine(this, slice[cycleIndex - 1], slice[cycleIndex]);
+	}
+
+	fromFace = slice[3].face;
+	toFace = slice[0].face;
+	if (fromFace == LEFT_FACE && toFace == TOP_FACE)
+		reverseLine(lineBackup);
+
+	setLine(this, slice[0], lineBackup);
 }
 
 
 void Cube_rotateTopSliceLeft(Cube * this)
 {
-	rotateSliceLeft(this, TOP_ROW);
+	Slice slice =
+	{
+		{ FRONT_FACE, TOP_ROW, -1 },
+		{ LEFT_FACE, TOP_ROW, -1 },
+		{ BACK_FACE, BOTTOM_ROW, -1 },
+		{ RIGHT_FACE, TOP_ROW, -1 }
+	};
+	rotateSliceLeft(this, slice);
 	Face_rotateClockwise(Cube_topFace(this));
 }
 
 
 void Cube_rotateTopSliceRight(Cube * this)
 {
-	rotateSliceRight(this, TOP_ROW);
+	Slice slice =
+	{
+		{ FRONT_FACE, TOP_ROW, -1 },
+		{ RIGHT_FACE, TOP_ROW, -1 },
+		{ BACK_FACE, BOTTOM_ROW, -1 },
+		{ LEFT_FACE, TOP_ROW, -1 }
+	};
+	rotateSliceRight(this, slice);
 	Face_rotateAnticlockwise(Cube_topFace(this));
 }
 
 
 void Cube_rotateEquatorSliceLeft(Cube * this)
 {
-	rotateSliceLeft(this, EQUATOR_ROW);
+	Slice slice =
+	{
+		{ FRONT_FACE, EQUATOR_ROW, -1 },
+		{ LEFT_FACE, EQUATOR_ROW, -1 },
+		{ BACK_FACE, EQUATOR_ROW, -1 },
+		{ RIGHT_FACE, EQUATOR_ROW, -1 }
+	};
+	rotateSliceLeft(this, slice);
 }
 
 
 void Cube_rotateEquatorSliceRight(Cube * this)
 {
-	rotateSliceRight(this, EQUATOR_ROW);
+	Slice slice =
+	{
+		{ FRONT_FACE, EQUATOR_ROW, -1 },
+		{ RIGHT_FACE, EQUATOR_ROW, -1 },
+		{ BACK_FACE, EQUATOR_ROW, -1 },
+		{ LEFT_FACE, EQUATOR_ROW, -1 }
+	};
+	rotateSliceRight(this, slice);
 }
 
 
 void Cube_rotateBottomSliceLeft(Cube * this)
 {
-	rotateSliceLeft(this, BOTTOM_ROW);
+	Slice slice =
+	{
+		{ FRONT_FACE, BOTTOM_ROW, -1 },
+		{ LEFT_FACE, BOTTOM_ROW, -1 },
+		{ BACK_FACE, TOP_ROW, -1},
+		{ RIGHT_FACE, BOTTOM_ROW, -1 }
+	};
+	rotateSliceLeft(this, slice);
 	Face_rotateAnticlockwise(Cube_bottomFace(this));
 }
 
 
 void Cube_rotateBottomSliceRight(Cube * this)
 {
-	rotateSliceRight(this, BOTTOM_ROW);
+	Slice slice =
+	{
+		{ FRONT_FACE, BOTTOM_ROW, -1 },
+		{ RIGHT_FACE, BOTTOM_ROW, -1 },
+		{ BACK_FACE, TOP_ROW, -1 },
+		{ LEFT_FACE, BOTTOM_ROW, -1 }
+	};
+	rotateSliceRight(this, slice);
 	Face_rotateClockwise(Cube_bottomFace(this));
 }
 
@@ -243,6 +329,39 @@ void Cube_rotateRightSliceDown(Cube * this)
 }
 
 
+static void rotateSliceClockwise(Cube * this, Slice slice)
+{
+	int cycleIndex;
+
+	FacePosition fromFace;
+	FacePosition toFace;
+
+	Color lineBackup[FACE_SIZE];
+
+	getLine(this, slice[3], lineBackup);
+
+	for (cycleIndex = 3; cycleIndex > 0; cycleIndex--)
+	{
+		fromFace = slice[cycleIndex - 1].face;
+		toFace = slice[cycleIndex].face;
+
+		if (fromFace == RIGHT_FACE && toFace == BOTTOM_FACE)
+			moveReversedLine(this, slice[cycleIndex - 1], slice[cycleIndex]);
+		else if (fromFace == LEFT_FACE && toFace == TOP_FACE)
+			moveReversedLine(this, slice[cycleIndex - 1], slice[cycleIndex]);
+		else
+			moveLine(this, slice[cycleIndex - 1], slice[cycleIndex]);
+	}
+
+	fromFace = slice[3].face;
+	toFace = slice[0].face;
+	if (fromFace == LEFT_FACE && toFace == TOP_FACE)
+		reverseLine(lineBackup);
+
+	setLine(this, slice[0], lineBackup);
+}
+
+
 void Cube_rotateFrontSliceClockwise(Cube * this)
 {
 	Slice slice =
@@ -252,8 +371,41 @@ void Cube_rotateFrontSliceClockwise(Cube * this)
 		{ BOTTOM_FACE, TOP_ROW, -1 },
 		{ LEFT_FACE, -1, RIGHT_COLUMN }
 	};
-	rotateSlice(this, slice);
+	rotateSliceClockwise(this, slice);
 	Face_rotateClockwise(Cube_frontFace(this));
+}
+
+
+static void rotateSliceAnticlockwise(Cube * this, Slice slice)
+{
+	int cycleIndex;
+
+	FacePosition fromFace;
+	FacePosition toFace;
+
+	Color lineBackup[FACE_SIZE];
+
+	getLine(this, slice[3], lineBackup);
+
+	for (cycleIndex = 3; cycleIndex > 0; cycleIndex--)
+	{
+		fromFace = slice[cycleIndex - 1].face;
+		toFace = slice[cycleIndex].face;
+
+		if (fromFace == TOP_FACE && toFace == LEFT_FACE)
+			moveReversedLine(this, slice[cycleIndex - 1], slice[cycleIndex]);
+		else if (fromFace == BOTTOM_FACE && toFace == RIGHT_FACE)
+			moveReversedLine(this, slice[cycleIndex - 1], slice[cycleIndex]);
+		else
+			moveLine(this, slice[cycleIndex - 1], slice[cycleIndex]);
+	}
+
+	fromFace = slice[3].face;
+	toFace = slice[0].face;
+	if (fromFace == LEFT_FACE && toFace == TOP_FACE)
+		reverseLine(lineBackup);
+
+	setLine(this, slice[0], lineBackup);
 }
 
 
@@ -266,7 +418,7 @@ void Cube_rotateFrontSliceAnticlockwise(Cube * this)
 		{ BOTTOM_FACE, TOP_ROW, -1 },
 		{ RIGHT_FACE, -1, LEFT_COLUMN }
 	};
-	rotateSlice(this, slice);
+	rotateSliceAnticlockwise(this, slice);
 	Face_rotateAnticlockwise(Cube_frontFace(this));
 }
 
@@ -280,7 +432,7 @@ void Cube_rotateStandingSliceClockwise(Cube * this)
 		{ BOTTOM_FACE, EQUATOR_ROW, -1 },
 		{ LEFT_FACE, -1, MIDDLE_COLUMN }
 	};
-	rotateSlice(this, slice);
+	rotateSliceClockwise(this, slice);
 }
 
 
@@ -293,7 +445,7 @@ void Cube_rotateStandingSliceAnticlockwise(Cube * this)
 		{ BOTTOM_FACE, EQUATOR_ROW, -1 },
 		{ RIGHT_FACE, -1, MIDDLE_COLUMN }
 	};
-	rotateSlice(this, slice);
+	rotateSliceAnticlockwise(this, slice);
 }
 
 
@@ -306,7 +458,7 @@ void Cube_rotateBackSliceClockwise(Cube * this)
 		{ BOTTOM_FACE, BOTTOM_ROW, -1 },
 		{ LEFT_FACE, -1, LEFT_COLUMN }
 	};
-	rotateSlice(this, slice);
+	rotateSliceClockwise(this, slice);
 	Face_rotateAnticlockwise(Cube_backFace(this));
 }
 
@@ -320,6 +472,6 @@ void Cube_rotateBackSliceAnticlockwise(Cube * this)
 		{ BOTTOM_FACE, BOTTOM_ROW, -1 },
 		{ RIGHT_FACE, -1, RIGHT_COLUMN }
 	};
-	rotateSlice(this, slice);
+	rotateSliceAnticlockwise(this, slice);
 	Face_rotateClockwise(Cube_backFace(this));
 }
