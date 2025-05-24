@@ -6,7 +6,7 @@
 
 
 /**
- * Coords of a 2D line
+ * Coords of a 2D span
  *
  * One coord must be set to -1, i
  */
@@ -15,62 +15,62 @@ typedef struct
 	FacePosition face;
 
 	/**
-	 * -1 if the line is a column
+	 * -1 if the span is a column
 	 */
 	Row row;
 
 	/**
-	 * -1 if the line is a row
+	 * -1 if the span is a row
 	 */
 	Column column;
-} Line;
+} Span;
 
 
-/** A 3D Slice is made of 4 2D Lines */
-typedef Line Slice[4];
+/** A 3D Slice is made of 4 2D Spans */
+typedef Span Slice[4];
 
 
 
 
 /**
- * @param this - the cube to get a line from
+ * @param this - the cube to get a span from
  *
- * @param line - the coords of the line to read
+ * @param span - the coords of the span to read
  *
- * @param buffer - the buffer where to write the line
+ * @param buffer - the buffer where to write the span
  */
-static void getLine(Cube const * this, Line line, Color buffer[FACE_SIZE])
+static void getSpan(Cube const * this, Span span, Color buffer[FACE_SIZE])
 {
-	int isRow = (line.column == (Column) -1);
+	int isRow = (span.column == (Column) -1);
 	if (isRow)
-		Face_copyRow(this->faces[line.face], buffer, line.row);
+		Face_copyRow(this->faces[span.face], buffer, span.row);
 	else
-		Face_copyColumn(this->faces[line.face], buffer, line.column);
+		Face_copyColumn(this->faces[span.face], buffer, span.column);
 }
 
 
 /**
- * @param this - the cube to write a line to
+ * @param this - the cube to write a span to
  *
- * @param line - the coords of the line to write
+ * @param span - the coords of the span to write
  *
- * @param content - the content of the line to write
+ * @param content - the content of the span to write
  */
-static void setLine(Cube * this, Line line, Color content[FACE_SIZE])
+static void setSpan(Cube * this, Span span, Color content[FACE_SIZE])
 {
-	int isRow = (line.column == (Column) -1);
+	int isRow = (span.column == (Column) -1);
 	if (isRow)
-		Face_setRow(this->faces[line.face], content, line.row);
+		Face_setRow(this->faces[span.face], content, span.row);
 	else
-		Face_setColumn(this->faces[line.face], content, line.column);
+		Face_setColumn(this->faces[span.face], content, span.column);
 }
 
 
-static void moveLine(Cube * this, Line from, Line to)
+static void moveSpan(Cube * this, Span from, Span to)
 {
-	Color line[FACE_SIZE];
-	getLine(this, from, line);
-	setLine(this, to, line);
+	Color span[FACE_SIZE];
+	getSpan(this, from, span);
+	setSpan(this, to, span);
 }
 
 
@@ -83,31 +83,31 @@ static void rotateSlice(Cube * this, Slice slice)
 {
 	int cycleIndex;
 
-	Color lineBackup[FACE_SIZE];
+	Color spanBackup[FACE_SIZE];
 
-	getLine(this, slice[3], lineBackup);
+	getSpan(this, slice[3], spanBackup);
 
 	for (cycleIndex = 3; cycleIndex > 0; cycleIndex--)
-		moveLine(this, slice[cycleIndex - 1], slice[cycleIndex]);
+		moveSpan(this, slice[cycleIndex - 1], slice[cycleIndex]);
 
-	setLine(this, slice[0], lineBackup);
+	setSpan(this, slice[0], spanBackup);
 }
 
 
-static void reverseLine(Color line[FACE_SIZE])
+static void reverseSpan(Color span[FACE_SIZE])
 {
-	Color swap = line[0];
-	line[0] = line[2];
-	line[2] = swap;
+	Color swap = span[0];
+	span[0] = span[2];
+	span[2] = swap;
 }
 
 
-static void moveReversedLine(Cube * this, Line from, Line to)
+static void moveReversedSpan(Cube * this, Span from, Span to)
 {
-	Color line[FACE_SIZE];
-	getLine(this, from, line);
-	reverseLine(line);
-	setLine(this, to, line);
+	Color span[FACE_SIZE];
+	getSpan(this, from, span);
+	reverseSpan(span);
+	setSpan(this, to, span);
 }
 
 
@@ -118,9 +118,9 @@ static void rotateSliceLeft(Cube * this, Slice slice)
 	FacePosition fromFace;
 	FacePosition toFace;
 
-	Color lineBackup[FACE_SIZE];
+	Color spanBackup[FACE_SIZE];
 
-	getLine(this, slice[3], lineBackup);
+	getSpan(this, slice[3], spanBackup);
 
 	for (cycleIndex = 3; cycleIndex > 0; cycleIndex--)
 	{
@@ -128,19 +128,19 @@ static void rotateSliceLeft(Cube * this, Slice slice)
 		toFace = slice[cycleIndex].face;
 
 		if (fromFace == LEFT_FACE && toFace == BACK_FACE)
-			moveReversedLine(this, slice[cycleIndex - 1], slice[cycleIndex]);
+			moveReversedSpan(this, slice[cycleIndex - 1], slice[cycleIndex]);
 		else if (fromFace == BACK_FACE && toFace == RIGHT_FACE)
-			moveReversedLine(this, slice[cycleIndex - 1], slice[cycleIndex]);
+			moveReversedSpan(this, slice[cycleIndex - 1], slice[cycleIndex]);
 		else
-			moveLine(this, slice[cycleIndex - 1], slice[cycleIndex]);
+			moveSpan(this, slice[cycleIndex - 1], slice[cycleIndex]);
 	}
 
 	fromFace = slice[3].face;
 	toFace = slice[0].face;
 	if (fromFace == LEFT_FACE && toFace == TOP_FACE)
-		reverseLine(lineBackup);
+		reverseSpan(spanBackup);
 
-	setLine(this, slice[0], lineBackup);
+	setSpan(this, slice[0], spanBackup);
 }
 
 
@@ -151,9 +151,9 @@ static void rotateSliceRight(Cube * this, Slice slice)
 	FacePosition fromFace;
 	FacePosition toFace;
 
-	Color lineBackup[FACE_SIZE];
+	Color spanBackup[FACE_SIZE];
 
-	getLine(this, slice[3], lineBackup);
+	getSpan(this, slice[3], spanBackup);
 
 	for (cycleIndex = 3; cycleIndex > 0; cycleIndex--)
 	{
@@ -161,19 +161,19 @@ static void rotateSliceRight(Cube * this, Slice slice)
 		toFace = slice[cycleIndex].face;
 
 		if (fromFace == RIGHT_FACE && toFace == BACK_FACE)
-			moveReversedLine(this, slice[cycleIndex - 1], slice[cycleIndex]);
+			moveReversedSpan(this, slice[cycleIndex - 1], slice[cycleIndex]);
 		else if (fromFace == BACK_FACE && toFace == LEFT_FACE)
-			moveReversedLine(this, slice[cycleIndex - 1], slice[cycleIndex]);
+			moveReversedSpan(this, slice[cycleIndex - 1], slice[cycleIndex]);
 		else
-			moveLine(this, slice[cycleIndex - 1], slice[cycleIndex]);
+			moveSpan(this, slice[cycleIndex - 1], slice[cycleIndex]);
 	}
 
 	fromFace = slice[3].face;
 	toFace = slice[0].face;
 	if (fromFace == LEFT_FACE && toFace == TOP_FACE)
-		reverseLine(lineBackup);
+		reverseSpan(spanBackup);
 
-	setLine(this, slice[0], lineBackup);
+	setSpan(this, slice[0], spanBackup);
 }
 
 
@@ -336,9 +336,9 @@ static void rotateSliceClockwise(Cube * this, Slice slice)
 	FacePosition fromFace;
 	FacePosition toFace;
 
-	Color lineBackup[FACE_SIZE];
+	Color spanBackup[FACE_SIZE];
 
-	getLine(this, slice[3], lineBackup);
+	getSpan(this, slice[3], spanBackup);
 
 	for (cycleIndex = 3; cycleIndex > 0; cycleIndex--)
 	{
@@ -346,19 +346,19 @@ static void rotateSliceClockwise(Cube * this, Slice slice)
 		toFace = slice[cycleIndex].face;
 
 		if (fromFace == RIGHT_FACE && toFace == BOTTOM_FACE)
-			moveReversedLine(this, slice[cycleIndex - 1], slice[cycleIndex]);
+			moveReversedSpan(this, slice[cycleIndex - 1], slice[cycleIndex]);
 		else if (fromFace == LEFT_FACE && toFace == TOP_FACE)
-			moveReversedLine(this, slice[cycleIndex - 1], slice[cycleIndex]);
+			moveReversedSpan(this, slice[cycleIndex - 1], slice[cycleIndex]);
 		else
-			moveLine(this, slice[cycleIndex - 1], slice[cycleIndex]);
+			moveSpan(this, slice[cycleIndex - 1], slice[cycleIndex]);
 	}
 
 	fromFace = slice[3].face;
 	toFace = slice[0].face;
 	if (fromFace == LEFT_FACE && toFace == TOP_FACE)
-		reverseLine(lineBackup);
+		reverseSpan(spanBackup);
 
-	setLine(this, slice[0], lineBackup);
+	setSpan(this, slice[0], spanBackup);
 }
 
 
@@ -383,9 +383,9 @@ static void rotateSliceAnticlockwise(Cube * this, Slice slice)
 	FacePosition fromFace;
 	FacePosition toFace;
 
-	Color lineBackup[FACE_SIZE];
+	Color spanBackup[FACE_SIZE];
 
-	getLine(this, slice[3], lineBackup);
+	getSpan(this, slice[3], spanBackup);
 
 	for (cycleIndex = 3; cycleIndex > 0; cycleIndex--)
 	{
@@ -393,19 +393,19 @@ static void rotateSliceAnticlockwise(Cube * this, Slice slice)
 		toFace = slice[cycleIndex].face;
 
 		if (fromFace == TOP_FACE && toFace == LEFT_FACE)
-			moveReversedLine(this, slice[cycleIndex - 1], slice[cycleIndex]);
+			moveReversedSpan(this, slice[cycleIndex - 1], slice[cycleIndex]);
 		else if (fromFace == BOTTOM_FACE && toFace == RIGHT_FACE)
-			moveReversedLine(this, slice[cycleIndex - 1], slice[cycleIndex]);
+			moveReversedSpan(this, slice[cycleIndex - 1], slice[cycleIndex]);
 		else
-			moveLine(this, slice[cycleIndex - 1], slice[cycleIndex]);
+			moveSpan(this, slice[cycleIndex - 1], slice[cycleIndex]);
 	}
 
 	fromFace = slice[3].face;
 	toFace = slice[0].face;
 	if (fromFace == LEFT_FACE && toFace == TOP_FACE)
-		reverseLine(lineBackup);
+		reverseSpan(spanBackup);
 
-	setLine(this, slice[0], lineBackup);
+	setSpan(this, slice[0], spanBackup);
 }
 
 

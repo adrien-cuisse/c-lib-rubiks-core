@@ -1899,7 +1899,7 @@ Test(Cube, rotateBackSliceAnticlockwise_backFaceIsRotatedClockwise)
 }
 
 
-static void reverseLine(Color buffer[FACE_SIZE])
+static void reverseSpan(Color buffer[FACE_SIZE])
 {
 	Color swap = buffer[0];
 	buffer[0] = buffer[2];
@@ -1914,7 +1914,7 @@ Test(Cube, rotateFrontSliceClockwise_rightFaceLeftColumn_reversed_bottomFaceTopR
 	Face * rightFace = Cube_rightFace(cube);
 	Color oldRightFaceLeftColumn[FACE_SIZE];
 	leftColumn(rightFace, oldRightFaceLeftColumn);
-	reverseLine(oldRightFaceLeftColumn);
+	reverseSpan(oldRightFaceLeftColumn);
 
 	// when
 	Cube_rotateFrontSliceClockwise(cube);
@@ -1938,7 +1938,7 @@ Test(Cube, rotateFrontSliceClockwise_leftFaceRightColumn_reversed_topFaceBottomR
 	Face * leftFace = Cube_leftFace(cube);
 	Color oldLeftFaceRightColumn[FACE_SIZE];
 	rightColumn(leftFace, oldLeftFaceRightColumn);
-	reverseLine(oldLeftFaceRightColumn);
+	reverseSpan(oldLeftFaceRightColumn);
 
 	// when
 	Cube_rotateFrontSliceClockwise(cube);
@@ -1962,7 +1962,7 @@ Test(Cube, rotateFrontSliceAnticlockwise_topFaceBottomRow_reversed_leftFaceRight
 	Face * topFace = Cube_topFace(cube);
 	Color oldTopFaceBottomRow[FACE_SIZE];
 	bottomRow(topFace, oldTopFaceBottomRow);
-	reverseLine(oldTopFaceBottomRow);
+	reverseSpan(oldTopFaceBottomRow);
 
 	// when
 	Cube_rotateFrontSliceAnticlockwise(cube);
@@ -1986,7 +1986,7 @@ Test(Cube, rotateFrontSliceAnticlockwise_bottomFaceTopRow_reversed_rightFaceLeft
 	Face * bottomFace = Cube_bottomFace(cube);
 	Color oldBottomFaceTopRow[FACE_SIZE];
 	topRow(bottomFace, oldBottomFaceTopRow);
-	reverseLine(oldBottomFaceTopRow);
+	reverseSpan(oldBottomFaceTopRow);
 
 	// when
 	Cube_rotateFrontSliceAnticlockwise(cube);
@@ -2010,7 +2010,7 @@ Test(Cube, rotateStandingSliceClockwise_rightFaceMiddleColumn_reversed_bottomFac
 	Face * rightFace = Cube_rightFace(cube);
 	Color oldRightFaceMiddleColumn[FACE_SIZE];
 	middleColumn(rightFace, oldRightFaceMiddleColumn);
-	reverseLine(oldRightFaceMiddleColumn);
+	reverseSpan(oldRightFaceMiddleColumn);
 
 	// when
 	Cube_rotateStandingSliceClockwise(cube);
@@ -2034,7 +2034,7 @@ Test(Cube, rotateStandingSliceClockwise_leftFaceMiddleColumn_reversed_topFaceEqu
 	Face * leftFace = Cube_leftFace(cube);
 	Color oldLeftFaceMiddleColumn[FACE_SIZE];
 	middleColumn(leftFace, oldLeftFaceMiddleColumn);
-	reverseLine(oldLeftFaceMiddleColumn);
+	reverseSpan(oldLeftFaceMiddleColumn);
 
 	// when
 	Cube_rotateStandingSliceClockwise(cube);
@@ -2058,7 +2058,7 @@ Test(Cube, rotateStandingSliceAnticlockwise_topFaceEquatorRow_reversed_leftFaceM
 	Face * topFace = Cube_topFace(cube);
 	Color oldTopFaceEquatorRow[FACE_SIZE];
 	equatorRow(topFace, oldTopFaceEquatorRow);
-	reverseLine(oldTopFaceEquatorRow);
+	reverseSpan(oldTopFaceEquatorRow);
 
 	// when
 	Cube_rotateStandingSliceAnticlockwise(cube);
@@ -2082,7 +2082,7 @@ Test(Cube, rotateStandingSliceAnticlockwise_bottomFaceEquatorRow_reversed_rightF
 	Face * bottomFace = Cube_bottomFace(cube);
 	Color oldBottomFaceEquatorRow[FACE_SIZE];
 	equatorRow(bottomFace, oldBottomFaceEquatorRow);
-	reverseLine(oldBottomFaceEquatorRow);
+	reverseSpan(oldBottomFaceEquatorRow);
 
 	// when
 	Cube_rotateStandingSliceAnticlockwise(cube);
@@ -2106,7 +2106,7 @@ Test(Cube, rotateBackSliceClockwise_rightFaceRightColumn_reversed_bottomFaceBott
 	Face * rightFace = Cube_rightFace(cube);
 	Color oldRightFaceRightColumn[FACE_SIZE];
 	rightColumn(rightFace, oldRightFaceRightColumn);
-	reverseLine(oldRightFaceRightColumn);
+	reverseSpan(oldRightFaceRightColumn);
 
 	// when
 	Cube_rotateBackSliceClockwise(cube);
@@ -2130,7 +2130,7 @@ Test(Cube, rotateBackSliceClockwise_leftFaceLeftColumn_reversed_topFaceTopRow)
 	Face * leftFace = Cube_leftFace(cube);
 	Color oldLeftFaceLeftColumn[FACE_SIZE];
 	leftColumn(leftFace, oldLeftFaceLeftColumn);
-	reverseLine(oldLeftFaceLeftColumn);
+	reverseSpan(oldLeftFaceLeftColumn);
 
 	// when
 	Cube_rotateBackSliceClockwise(cube);
@@ -2154,7 +2154,7 @@ Test(Cube, rotateBackSliceAnticlockwise_bottomFaceBottomRow_reversed_rightFaceRi
 	Face * bottomFace = Cube_bottomFace(cube);
 	Color oldBottomFaceBottomRow[FACE_SIZE];
 	bottomRow(bottomFace, oldBottomFaceBottomRow);
-	reverseLine(oldBottomFaceBottomRow);
+	reverseSpan(oldBottomFaceBottomRow);
 
 	// when
 	Cube_rotateBackSliceAnticlockwise(cube);
@@ -2178,7 +2178,7 @@ Test(Cube, rotateBackSliceAnticlockwise_topFaceTopRow_reversed_leftFaceLeftColum
 	Face * topFace = Cube_topFace(cube);
 	Color oldTopFaceTopRow[FACE_SIZE];
 	topRow(topFace, oldTopFaceTopRow);
-	reverseLine(oldTopFaceTopRow);
+	reverseSpan(oldTopFaceTopRow);
 
 	// when
 	Cube_rotateBackSliceAnticlockwise(cube);
@@ -2202,7 +2202,7 @@ Test(Cube, rotateEquatorSliceLeft_leftFaceEquatorRow_reversed_backFaceEquatorRow
 	Face * leftFace = Cube_leftFace(cube);
 	Color oldLeftFaceEquatorRow[FACE_SIZE];
 	equatorRow(leftFace, oldLeftFaceEquatorRow);
-	reverseLine(oldLeftFaceEquatorRow);
+	reverseSpan(oldLeftFaceEquatorRow);
 
 	// when
 	Cube_rotateEquatorSliceLeft(cube);
@@ -2226,7 +2226,7 @@ Test(Cube, rotateEquatorSliceLeft_backFaceEquatorRow_reversed_rightFaceEquatorRo
 	Face * backFace = Cube_backFace(cube);
 	Color oldBackFaceEquatorRow[FACE_SIZE];
 	equatorRow(backFace, oldBackFaceEquatorRow);
-	reverseLine(oldBackFaceEquatorRow);
+	reverseSpan(oldBackFaceEquatorRow);
 
 	// when
 	Cube_rotateEquatorSliceLeft(cube);
@@ -2250,7 +2250,7 @@ Test(Cube, rotateTopSliceRight_rightFaceTopRow_reversed_backFaceBottomRow)
 	Face * rightFace = Cube_rightFace(cube);
 	Color oldRightFaceTopRow[FACE_SIZE];
 	topRow(rightFace, oldRightFaceTopRow);
-	reverseLine(oldRightFaceTopRow);
+	reverseSpan(oldRightFaceTopRow);
 
 	// when
 	Cube_rotateTopSliceRight(cube);
@@ -2274,7 +2274,7 @@ Test(Cube, rotateTopSliceRight_backFaceBottomRow_reversed_leftFaceTopRow)
 	Face * backFace = Cube_backFace(cube);
 	Color oldBackFaceBottomRow[FACE_SIZE];
 	bottomRow(backFace, oldBackFaceBottomRow);
-	reverseLine(oldBackFaceBottomRow);
+	reverseSpan(oldBackFaceBottomRow);
 
 	// when
 	Cube_rotateTopSliceRight(cube);
