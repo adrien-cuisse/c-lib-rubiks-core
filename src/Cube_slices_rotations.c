@@ -1,6 +1,17 @@
 
+#include <stdlib.h>
+
 #include "Face.h"
 #include "Cube.h"
+
+/**
+ * Some functions rely on how we unfold the 3D cube, switching to another
+ * 2D pattern will affect the marked functions
+ * On the current pattern, 4 faces are vertically aligned, and only 3 are
+ * horizontally aligned, so when doing horizontal slice rotations we are
+ * switching axis, and parallel slices are switching axis on every span
+ */
+#define PATTERN_DEPENDANT
 
 
 
@@ -66,31 +77,28 @@ static void setSpan(Cube * this, Span span, Color content[FACE_SIZE])
 }
 
 
+static int mustReverseSpan(
+	Span span,
+	FacePosition reversingFaces[],
+	int facesCount)
+{
+	int spanIndex = 0;
+
+	for (spanIndex = 0; spanIndex < facesCount; spanIndex++)
+	{
+		if (span.face == reversingFaces[spanIndex])
+			return 1;
+	}
+
+	return 0;
+}
+
+
 static void moveSpan(Cube * this, Span from, Span to)
 {
 	Color span[FACE_SIZE];
 	getSpan(this, from, span);
 	setSpan(this, to, span);
-}
-
-
-/**
- * @param this - the cube containing the slice to rotate
- *
- * @param slice - the slice to rotate
- */
-static void rotateSlice(Cube * this, Slice slice)
-{
-	int cycleIndex;
-
-	Color spanBackup[FACE_SIZE];
-
-	getSpan(this, slice[3], spanBackup);
-
-	for (cycleIndex = 3; cycleIndex > 0; cycleIndex--)
-		moveSpan(this, slice[cycleIndex - 1], slice[cycleIndex]);
-
-	setSpan(this, slice[0], spanBackup);
 }
 
 
@@ -111,69 +119,52 @@ static void moveReversedSpan(Cube * this, Span from, Span to)
 }
 
 
-static void rotateSliceLeft(Cube * this, Slice slice)
+/**
+ * @param this - the cube containing the slice to rotate
+ *
+ * @param slice - the slice to rotate
+ * @param reversingSpansFace - array of FacePosition, any span in the slice
+ * 	having its face in that array will be reversed
+ * @param reversingCount - the number of faces in reversingSpansFace
+ * 	(ie., the number of spans to reverse in the slice)
+ */
+static void rotateSlice(
+	Cube * this,
+	Slice slice,
+	FacePosition reversingSpansFace[],
+	int reversingCount)
 {
-	int cycleIndex;
-
-	FacePosition fromFace;
-	FacePosition toFace;
+	int spanIndex;
 
 	Color spanBackup[FACE_SIZE];
-
 	getSpan(this, slice[3], spanBackup);
 
-	for (cycleIndex = 3; cycleIndex > 0; cycleIndex--)
+	for (spanIndex = 3; spanIndex > 0; spanIndex--)
 	{
-		fromFace = slice[cycleIndex - 1].face;
-		toFace = slice[cycleIndex].face;
-
-		if (fromFace == LEFT_FACE && toFace == BACK_FACE)
-			moveReversedSpan(this, slice[cycleIndex - 1], slice[cycleIndex]);
-		else if (fromFace == BACK_FACE && toFace == RIGHT_FACE)
-			moveReversedSpan(this, slice[cycleIndex - 1], slice[cycleIndex]);
+		if (mustReverseSpan(slice[spanIndex - 1], reversingSpansFace, reversingCount))
+			moveReversedSpan(this, slice[spanIndex - 1], slice[spanIndex]);
 		else
-			moveSpan(this, slice[cycleIndex - 1], slice[cycleIndex]);
+			moveSpan(this, slice[spanIndex - 1], slice[spanIndex]);
 	}
 
-	fromFace = slice[3].face;
-	toFace = slice[0].face;
-	if (fromFace == LEFT_FACE && toFace == TOP_FACE)
+	if (mustReverseSpan(slice[3], reversingSpansFace, reversingCount))
 		reverseSpan(spanBackup);
 
 	setSpan(this, slice[0], spanBackup);
 }
 
 
-static void rotateSliceRight(Cube * this, Slice slice)
+PATTERN_DEPENDANT static void rotateSliceLeft(Cube * this, Slice slice)
 {
-	int cycleIndex;
+	FacePosition reversingSpansFace[2] = { LEFT_FACE, BACK_FACE };
+	rotateSlice(this, slice, reversingSpansFace, 2);
+}
 
-	FacePosition fromFace;
-	FacePosition toFace;
 
-	Color spanBackup[FACE_SIZE];
-
-	getSpan(this, slice[3], spanBackup);
-
-	for (cycleIndex = 3; cycleIndex > 0; cycleIndex--)
-	{
-		fromFace = slice[cycleIndex - 1].face;
-		toFace = slice[cycleIndex].face;
-
-		if (fromFace == RIGHT_FACE && toFace == BACK_FACE)
-			moveReversedSpan(this, slice[cycleIndex - 1], slice[cycleIndex]);
-		else if (fromFace == BACK_FACE && toFace == LEFT_FACE)
-			moveReversedSpan(this, slice[cycleIndex - 1], slice[cycleIndex]);
-		else
-			moveSpan(this, slice[cycleIndex - 1], slice[cycleIndex]);
-	}
-
-	fromFace = slice[3].face;
-	toFace = slice[0].face;
-	if (fromFace == LEFT_FACE && toFace == TOP_FACE)
-		reverseSpan(spanBackup);
-
-	setSpan(this, slice[0], spanBackup);
+PATTERN_DEPENDANT static void rotateSliceRight(Cube * this, Slice slice)
+{
+	FacePosition reversingSpansFace[2] = { RIGHT_FACE, BACK_FACE };
+	rotateSlice(this, slice, reversingSpansFace, 2);
 }
 
 
@@ -261,28 +252,28 @@ void Cube_rotateBottomSliceRight(Cube * this)
 
 static void rotateVerticalSlice(Cube * this, Column column, Rotation rotation)
 {
-	int cycleIndex;
+	int spanIndex;
 	Slice slice;
 
-	for (cycleIndex = 0; cycleIndex < 4; cycleIndex++)
+	for (spanIndex = 0; spanIndex < 4; spanIndex++)
 	{
-		slice[cycleIndex].face = rotation[cycleIndex];
-		slice[cycleIndex].row = -1;
-		slice[cycleIndex].column = column;
+		slice[spanIndex].face = rotation[spanIndex];
+		slice[spanIndex].row = -1;
+		slice[spanIndex].column = column;
 	}
 
-	rotateSlice(this, slice);
+	rotateSlice(this, slice, NULL, 0);
 }
 
 
-static void rotateSliceUp(Cube * this, Column column)
+PATTERN_DEPENDANT static void rotateSliceUp(Cube * this, Column column)
 {
 	Rotation rotation = { FRONT_FACE, TOP_FACE, BACK_FACE, BOTTOM_FACE };
 	rotateVerticalSlice(this, column, rotation);
 }
 
 
-static void rotateSliceDown(Cube * this, Column column)
+PATTERN_DEPENDANT static void rotateSliceDown(Cube * this, Column column)
 {
 	Rotation rotation = { FRONT_FACE, BOTTOM_FACE, BACK_FACE, TOP_FACE };
 	rotateVerticalSlice(this, column, rotation);
@@ -329,36 +320,10 @@ void Cube_rotateRightSliceDown(Cube * this)
 }
 
 
-static void rotateSliceClockwise(Cube * this, Slice slice)
+PATTERN_DEPENDANT static void rotateSliceClockwise(Cube * this, Slice slice)
 {
-	int cycleIndex;
-
-	FacePosition fromFace;
-	FacePosition toFace;
-
-	Color spanBackup[FACE_SIZE];
-
-	getSpan(this, slice[3], spanBackup);
-
-	for (cycleIndex = 3; cycleIndex > 0; cycleIndex--)
-	{
-		fromFace = slice[cycleIndex - 1].face;
-		toFace = slice[cycleIndex].face;
-
-		if (fromFace == RIGHT_FACE && toFace == BOTTOM_FACE)
-			moveReversedSpan(this, slice[cycleIndex - 1], slice[cycleIndex]);
-		else if (fromFace == LEFT_FACE && toFace == TOP_FACE)
-			moveReversedSpan(this, slice[cycleIndex - 1], slice[cycleIndex]);
-		else
-			moveSpan(this, slice[cycleIndex - 1], slice[cycleIndex]);
-	}
-
-	fromFace = slice[3].face;
-	toFace = slice[0].face;
-	if (fromFace == LEFT_FACE && toFace == TOP_FACE)
-		reverseSpan(spanBackup);
-
-	setSpan(this, slice[0], spanBackup);
+	FacePosition reversingSpansFace[2] = { RIGHT_FACE, LEFT_FACE };
+	rotateSlice(this, slice, reversingSpansFace, 2);
 }
 
 
@@ -376,36 +341,10 @@ void Cube_rotateFrontSliceClockwise(Cube * this)
 }
 
 
-static void rotateSliceAnticlockwise(Cube * this, Slice slice)
+PATTERN_DEPENDANT static void rotateSliceAnticlockwise(Cube * this, Slice slice)
 {
-	int cycleIndex;
-
-	FacePosition fromFace;
-	FacePosition toFace;
-
-	Color spanBackup[FACE_SIZE];
-
-	getSpan(this, slice[3], spanBackup);
-
-	for (cycleIndex = 3; cycleIndex > 0; cycleIndex--)
-	{
-		fromFace = slice[cycleIndex - 1].face;
-		toFace = slice[cycleIndex].face;
-
-		if (fromFace == TOP_FACE && toFace == LEFT_FACE)
-			moveReversedSpan(this, slice[cycleIndex - 1], slice[cycleIndex]);
-		else if (fromFace == BOTTOM_FACE && toFace == RIGHT_FACE)
-			moveReversedSpan(this, slice[cycleIndex - 1], slice[cycleIndex]);
-		else
-			moveSpan(this, slice[cycleIndex - 1], slice[cycleIndex]);
-	}
-
-	fromFace = slice[3].face;
-	toFace = slice[0].face;
-	if (fromFace == LEFT_FACE && toFace == TOP_FACE)
-		reverseSpan(spanBackup);
-
-	setSpan(this, slice[0], spanBackup);
+	FacePosition reversingSpansFace[2] = { TOP_FACE, BOTTOM_FACE };
+	rotateSlice(this, slice, reversingSpansFace, 2);
 }
 
 
