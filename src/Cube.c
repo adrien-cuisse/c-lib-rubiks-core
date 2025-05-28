@@ -12,13 +12,6 @@ static void createAndPositionFaces(Cube * this)
 {
 	int faceIndex;
 
-	/*
-	 * official disposition:
-	 * - blue opposes green,
-	 * - white opposes yellow,
-	 * - red opposes orange,
-	 * - blue, white & red are in anti-clockwise order around a corner
-	 */
 	this->faces[LEFT_FACE] = Face_create(RED);
 	this->faces[FRONT_FACE] = Face_create(BLUE);
 	this->faces[RIGHT_FACE] = Face_create(ORANGE);
