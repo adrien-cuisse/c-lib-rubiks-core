@@ -38,7 +38,9 @@ typedef struct
 } Span;
 
 
-/** A 3D Slice is made of 4 2D Spans */
+/**
+ * A 3D Slice is made of 4 2D Spans
+ */
 typedef Span Slice[4];
 
 
