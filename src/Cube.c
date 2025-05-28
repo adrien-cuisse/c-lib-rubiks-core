@@ -8,17 +8,15 @@
 
 
 
+/**
+ * Allocates faces and stores them in the cube
+ *
+ * @param this - the cube to store faces in
+ */
 static void createAndPositionFaces(Cube * this)
 {
 	int faceIndex;
 
-	/*
-	 * official disposition:
-	 * - blue opposes green,
-	 * - white opposes yellow,
-	 * - red opposes orange,
-	 * - blue, white & red are in anti-clockwise order around a corner
-	 */
 	this->faces[LEFT_FACE] = Face_create(RED);
 	this->faces[FRONT_FACE] = Face_create(BLUE);
 	this->faces[RIGHT_FACE] = Face_create(ORANGE);
@@ -65,6 +63,15 @@ void Cube_delete(Cube ** this)
 }
 
 
+/**
+ * Returns a face of the cube
+ *
+ * @param this - the cube to get a face from
+ *
+ * @param position - the face to get
+ *
+ * @return Face * - the requested face
+ */
 static Face * getFace(Cube const * this, FacePosition position)
 {
 	return this->faces[position];

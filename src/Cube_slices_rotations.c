@@ -1,5 +1,6 @@
 
 #include <stdlib.h>
+#include <string.h>
 
 #include "Face.h"
 #include "Cube.h"
@@ -8,8 +9,8 @@
  * Some functions rely on how we unfold the 3D cube, switching to another
  * 2D pattern will affect the marked functions
  * On the current pattern, 4 faces are vertically aligned, and only 3 are
- * horizontally aligned, so when doing horizontal slice rotations we are
- * switching axis, and parallel slices are switching axis on every span
+ * horizontally aligned, so when doing horizontal slice rotations back face is
+ * flipped, and parallel slices are switching axis on every span
  */
 #define PATTERN_DEPENDANT
 
@@ -17,7 +18,7 @@
 
 
 /**
- * Coords of a 2D span
+ * Coords of a 2D span, a row or a column on a face
  *
  * One coord must be set to -1, i
  */
@@ -44,6 +45,8 @@ typedef Span Slice[4];
 
 
 /**
+ * Reads a span on the cube
+ *
  * @param this - the cube to get a span from
  *
  * @param span - the coords of the span to read
@@ -61,6 +64,8 @@ static void getSpan(Cube const * this, Span span, Color buffer[FACE_SIZE])
 
 
 /**
+ * Writes a span on the cube
+ *
  * @param this - the cube to write a span to
  *
  * @param span - the coords of the span to write
@@ -77,23 +82,36 @@ static void setSpan(Cube * this, Span span, Color content[FACE_SIZE])
 }
 
 
+/**
+ * Checks if the span must be reversed, ie., if its face is in [reversingFaces]
+ *
+ * @param span - the span to check
+ *
+ * @param reversingFaces - the faces where spans should be reversed
+ *
+ * @param facesCount - the number of faces in [reversingFaces]
+ *
+ * @return int - 1 if span's face is in [reversingFaces], 0 otherwise
+ */
 static int mustReverseSpan(
 	Span span,
 	FacePosition reversingFaces[],
 	int facesCount)
 {
-	int spanIndex = 0;
-
-	for (spanIndex = 0; spanIndex < facesCount; spanIndex++)
-	{
-		if (span.face == reversingFaces[spanIndex])
-			return 1;
-	}
-
-	return 0;
+	size_t bytesCount = facesCount * sizeof(* reversingFaces);
+	return memchr(reversingFaces, span.face, bytesCount) != NULL;
 }
 
 
+/**
+ * Copies a span and pastes it on another location
+ *
+ * @param this - the cube to read/write spans from
+ *
+ * @param from - the span to copy
+ *
+ * @param to - where to write the copied span
+ */
 static void moveSpan(Cube * this, Span from, Span to)
 {
 	Color span[FACE_SIZE];
@@ -102,6 +120,11 @@ static void moveSpan(Cube * this, Span from, Span to)
 }
 
 
+/**
+ * Reverses a span
+ *
+ * @param span - the span to reverse
+ */
 static void reverseSpan(Color span[FACE_SIZE])
 {
 	Color swap = span[0];
@@ -110,6 +133,15 @@ static void reverseSpan(Color span[FACE_SIZE])
 }
 
 
+/**
+ * Copies, reverses and pastes a span
+ *
+ * @param this - the cube to read/write spans from
+ *
+ * @param from - the span to copy
+ *
+ * @param to - where to write the copied span
+ */
 static void moveReversedSpan(Cube * this, Span from, Span to)
 {
 	Color span[FACE_SIZE];
@@ -120,12 +152,16 @@ static void moveReversedSpan(Cube * this, Span from, Span to)
 
 
 /**
+ * Applies a slice rotation on the cube
+ *
  * @param this - the cube containing the slice to rotate
  *
  * @param slice - the slice to rotate
+ *
  * @param reversingSpansFace - array of FacePosition, any span in the slice
  * 	having its face in that array will be reversed
- * @param reversingCount - the number of faces in reversingSpansFace
+ *
+ * @param reversingCount - the number of faces in [reversingSpansFace]
  * 	(ie., the number of spans to reverse in the slice)
  */
 static void rotateSlice(
@@ -136,24 +172,38 @@ static void rotateSlice(
 {
 	int spanIndex;
 
+	Span sourceSpan, destinationSpan;
+
 	Color spanBackup[FACE_SIZE];
 	getSpan(this, slice[3], spanBackup);
 
 	for (spanIndex = 3; spanIndex > 0; spanIndex--)
 	{
-		if (mustReverseSpan(slice[spanIndex - 1], reversingSpansFace, reversingCount))
-			moveReversedSpan(this, slice[spanIndex - 1], slice[spanIndex]);
+		sourceSpan = slice[spanIndex - 1];
+		destinationSpan = slice[spanIndex];
+
+		if (mustReverseSpan(sourceSpan, reversingSpansFace, reversingCount))
+			moveReversedSpan(this, sourceSpan, destinationSpan);
 		else
-			moveSpan(this, slice[spanIndex - 1], slice[spanIndex]);
+			moveSpan(this, sourceSpan, destinationSpan);
 	}
 
-	if (mustReverseSpan(slice[3], reversingSpansFace, reversingCount))
+	sourceSpan = slice[3];
+	if (mustReverseSpan(sourceSpan, reversingSpansFace, reversingCount))
 		reverseSpan(spanBackup);
 
-	setSpan(this, slice[0], spanBackup);
+	destinationSpan = slice[0];
+	setSpan(this, destinationSpan, spanBackup);
 }
 
 
+/**
+ * Rotates an horizontal slice to the left
+ *
+ * @param this - the cube containing the slice
+ *
+ * @param slice - the slice to rotate
+ */
 PATTERN_DEPENDANT static void rotateSliceLeft(Cube * this, Slice slice)
 {
 	FacePosition reversingSpansFace[2] = { LEFT_FACE, BACK_FACE };
@@ -161,6 +211,13 @@ PATTERN_DEPENDANT static void rotateSliceLeft(Cube * this, Slice slice)
 }
 
 
+/**
+ * Rotates an horizontal slice to the right
+ *
+ * @param this - the cube containing the slice
+ *
+ * @param slice - the slice to rotate
+ */
 PATTERN_DEPENDANT static void rotateSliceRight(Cube * this, Slice slice)
 {
 	FacePosition reversingSpansFace[2] = { RIGHT_FACE, BACK_FACE };
@@ -250,6 +307,15 @@ void Cube_rotateBottomSliceRight(Cube * this)
 }
 
 
+/**
+ * Applies a vertical slice rotation on the cube
+ *
+ * @param this - the cube containing the slice
+ *
+ * @param column - the column of the slice to rotate
+ *
+ * @param rotation - the rotation to apply
+ */
 static void rotateVerticalSlice(Cube * this, Column column, Rotation rotation)
 {
 	int spanIndex;
@@ -266,6 +332,13 @@ static void rotateVerticalSlice(Cube * this, Column column, Rotation rotation)
 }
 
 
+/**
+ * Applies a vertical slice up rotation on the cube
+ *
+ * @param this - the cube containing the slice
+ *
+ * @param column - the column of the slice to rotate
+ */
 PATTERN_DEPENDANT static void rotateSliceUp(Cube * this, Column column)
 {
 	Rotation rotation = { FRONT_FACE, TOP_FACE, BACK_FACE, BOTTOM_FACE };
@@ -273,6 +346,13 @@ PATTERN_DEPENDANT static void rotateSliceUp(Cube * this, Column column)
 }
 
 
+/**
+ * Applies a vertical slice down rotation on the cube
+ *
+ * @param this - the cube containing the slice
+ *
+ * @param column - the column of the slice to rotate
+ */
 PATTERN_DEPENDANT static void rotateSliceDown(Cube * this, Column column)
 {
 	Rotation rotation = { FRONT_FACE, BOTTOM_FACE, BACK_FACE, TOP_FACE };
@@ -320,6 +400,13 @@ void Cube_rotateRightSliceDown(Cube * this)
 }
 
 
+/**
+ * Applies a parallel slice clockwise rotation on the cube
+ *
+ * @param this - the cube containing the slice
+ *
+ * @param slice - the slice to rotate
+ */
 PATTERN_DEPENDANT static void rotateSliceClockwise(Cube * this, Slice slice)
 {
 	FacePosition reversingSpansFace[2] = { RIGHT_FACE, LEFT_FACE };
@@ -341,6 +428,13 @@ void Cube_rotateFrontSliceClockwise(Cube * this)
 }
 
 
+/**
+ * Applies a parallel slice anticlockwise rotation on the cube
+ *
+ * @param this - the cube containing the slice
+ *
+ * @param slice - the slice to rotate
+ */
 PATTERN_DEPENDANT static void rotateSliceAnticlockwise(Cube * this, Slice slice)
 {
 	FacePosition reversingSpansFace[2] = { TOP_FACE, BOTTOM_FACE };

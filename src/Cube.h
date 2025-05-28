@@ -8,7 +8,9 @@
 
 
 
-/** The position of each Face in the T-shaped pattern of the unfolded cube */
+/**
+ * The position of each Face in the T-shaped 2D pattern of the unfolded 3D cube
+ */
 typedef enum
 {
 	LEFT_FACE,
@@ -19,12 +21,20 @@ typedef enum
 	TOP_FACE
 } FacePosition;
 
-
+/**
+ * A cycle of 4 faces
+ */
 typedef FacePosition Rotation[4];
 
 
+/**
+ * A 3D Cube made of 6 2D faces
+ */
 struct Cube
 {
+	/**
+	 * The 2D faces composing the cube
+	 */
 	Face * faces[6];
 };
 

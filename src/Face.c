@@ -7,8 +7,14 @@
 
 
 
+/**
+ * A 2D Face
+ */
 struct Face
 {
+	/**
+	 * A FACE_SIZE*FACE_SIZE arrays of cells, defined by their color
+	 */
 	Color cells[FACE_SIZE][FACE_SIZE];
 };
 
@@ -24,6 +30,17 @@ Color Face_color(Face const * this)
 }
 
 
+/**
+ * Returns the color of a cell
+ *
+ * @param this - the face to get a the cell from
+ *
+ * @param row - the row where the cell is
+ *
+ * @param column - the column where the cell is
+ *
+ * @return Color - the color of the requested cell
+ */
 static Color cell(Face const * this, Row row, Column column)
 {
 	return this->cells[row][column];
@@ -90,6 +107,15 @@ Color Face_bottomRightCell(Face const * this)
 
 /* --- Private API start --- */
 
+/**
+ * Paints a row
+ *
+ * @param this - the face containing the row to paint
+ *
+ * @param color - the color to apply
+ *
+ * @param row - the row to paint
+ */
 static void applyColorOnRow(Face * this, Color color, Row row)
 {
 	int columnIndex;
@@ -102,6 +128,13 @@ static void applyColorOnRow(Face * this, Color color, Row row)
 }
 
 
+/**
+ * Paints the face
+ *
+ * @param this - the face to paint
+ *
+ * @param color - the color to apply
+ */
 static void applyColor(Face * this, Color color)
 {
 	Row row;

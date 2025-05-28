@@ -6,6 +6,8 @@
 
 
 /**
+ * Applies a rotation on the cube, faces are simply moved on the 2D pattern
+ *
  * @param this - the cube to rotate
  *
  * @param rotation - the rotation to apply
