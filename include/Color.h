@@ -5,6 +5,9 @@
 
 
 
+/**
+ * Official colors
+ */
 typedef enum
 {
 	BLUE,
