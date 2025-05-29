@@ -74,7 +74,7 @@ static void getSpan(Cube const * this, Span span, Color buffer[FACE_SIZE])
  *
  * @param content - the content of the span to write
  */
-static void setSpan(Cube * this, Span span, Color content[FACE_SIZE])
+static void setSpan(Cube * this, Span span, Color const content[FACE_SIZE])
 {
 	int isRow = (span.column == (Column) -1);
 	if (isRow)
@@ -97,7 +97,7 @@ static void setSpan(Cube * this, Span span, Color content[FACE_SIZE])
  */
 static int mustReverseSpan(
 	Span span,
-	FacePosition reversingFaces[],
+	FacePosition const reversingFaces[],
 	int facesCount)
 {
 	size_t bytesCount = facesCount * sizeof(* reversingFaces);
@@ -169,7 +169,7 @@ static void moveReversedSpan(Cube * this, Span from, Span to)
 static void rotateSlice(
 	Cube * this,
 	Slice slice,
-	FacePosition reversingSpansFace[],
+	FacePosition const reversingSpansFace[],
 	int reversingCount)
 {
 	int spanIndex;

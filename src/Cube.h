@@ -21,6 +21,7 @@ typedef enum
 	TOP_FACE
 } FacePosition;
 
+
 /**
  * A cycle of 4 faces
  */
