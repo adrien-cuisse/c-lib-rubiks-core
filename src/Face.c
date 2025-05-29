@@ -116,7 +116,7 @@ Color Face_bottomRightCell(Face const * this)
  *
  * @param row - the row to paint
  */
-static void applyColorOnRow(Face * this, Color color, Row row)
+static void paintRow(Face * this, Color color, Row row)
 {
 	int columnIndex;
 	Color cells[FACE_SIZE];
@@ -135,11 +135,11 @@ static void applyColorOnRow(Face * this, Color color, Row row)
  *
  * @param color - the color to apply
  */
-static void applyColor(Face * this, Color color)
+static void paint(Face * this, Color color)
 {
 	Row row;
 	for (row = TOP_ROW; row <= BOTTOM_ROW; row++)
-		applyColorOnRow(this, color, row);
+		paintRow(this, color, row);
 }
 
 
@@ -147,7 +147,7 @@ Face * Face_create(Color color)
 {
 	Face * this = calloc(1, sizeof(* this));
 	if (this != NULL)
-		applyColor(this, color);
+		paint(this, color);
 
 	return this;
 }
