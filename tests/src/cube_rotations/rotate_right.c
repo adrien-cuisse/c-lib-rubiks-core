@@ -61,7 +61,7 @@ Test(Cube, rotateRight_leftFaceGoesFront)
 }
 
 
-Test(Cube, rotateCubeRight_rightFaceIsRotatedTwice)
+Test(Cube, rotateCubeRight_rightFaceIsFlipped)
 {
 	// given
 	Cube * cube = createScrambledCube();
@@ -93,7 +93,7 @@ Test(Cube, rotateCubeRight_bottomFaceIsRotatedAntiClockwise)
 }
 
 
-Test(Cube, rotateCubeRight_backFaceIsRotatedTwice)
+Test(Cube, rotateCubeRight_backFaceIsFlipped)
 {
 	// given
 	Cube * cube = createScrambledCube();
