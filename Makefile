@@ -25,6 +25,10 @@ TESTS_CFLAGS=$(subst -ansi,,$(RELEASE_CFLAGS)) # Criterion is not C89 compliant
 TESTS_LDFLAGS=-lcriterion
 TESTS_BINS=$(subst $(TESTS_SRC_DIR),$(TESTS_BIN_DIR),$(TESTS_SRC:.c=))
 
+# Test utils (assertions, helpers)
+TESTS_UTILS_SRC=$(addprefix $(TESTS_SRC_DIR)/,utils.c asserts.c)
+TESTS_UTIL_OBJ=$(subst $(TESTS_SRC_DIR),$(TESTS_OBJ_DIR),$(TESTS_UTILS_SRC:.c=.o))
+
 default: run-tests
 
 .PHONY: run-tests
@@ -39,16 +43,19 @@ run-tests: $(TESTS_BINS)
 
 # Release objects
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
 	$(CC) $(RELEASE_CFLAGS) -c $^ -o $@
 
 # Test objects
 $(TESTS_OBJ_DIR)/%.o: $(TESTS_SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
 	$(CC) $(TESTS_CFLAGS) -c $^ -o $@
 
 # Test binaries
 .PHONY: tests-binaries
 tests-binaries: $(TESTS_BINS)
-$(TESTS_BIN_DIR)/%: $(TESTS_OBJ_DIR)/%.o $(RELEASE_OBJ)
+$(TESTS_BIN_DIR)/%: $(TESTS_OBJ_DIR)/%.o $(RELEASE_OBJ) $(TESTS_UTIL_OBJ)
+	@mkdir -p $(dir $@)
 	$(CC) $(TESTS_LDFLAGS) $^ -o $@
 
 # Don't delete objects when binaries are made
@@ -56,7 +63,7 @@ $(TESTS_BIN_DIR)/%: $(TESTS_OBJ_DIR)/%.o $(RELEASE_OBJ)
 
 .PHONY: clean
 clean:
-	rm -rf $(RELEASE_OBJ) $(TESTS_OBJ)
+	rm -rf $(RELEASE_OBJ) $(TESTS_OBJ) $(TESTS_UTIL_OBJ)
 
 .PHONY: clean-all
 clean-all: clean

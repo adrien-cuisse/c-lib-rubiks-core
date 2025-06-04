@@ -357,6 +357,5 @@ void Cube_rotateBackSliceAnticlockwise(Cube * this);
 
 
 
-void Cube_debug(Cube const * this);
 
 #endif /* CUBE_HEADER */
