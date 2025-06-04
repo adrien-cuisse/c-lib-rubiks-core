@@ -73,17 +73,7 @@ Test(Cube, rotateCubeDown_leftFaceIsRotatedClockwise)
 	Cube_rotateDown(cube);
 
 	// then
-	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
-	readFace(leftFace, faceAfterRotation);
-	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
-	{
-		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
-		{
-			cr_assert_eq(
-				faceAfterRotation[rowIndex][columnIndex],
-				faceBeforeRotation[FACE_SIZE - 1 - columnIndex][rowIndex]);
-		}
-	}
+	assert_faceRotatedClockwise(faceBeforeRotation, leftFace, "left");
 }
 
 
@@ -99,15 +89,5 @@ Test(Cube, rotateCubeDown_rightFaceIsRotatedAnticlockwise)
 	Cube_rotateDown(cube);
 
 	// then
-	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
-	readFace(rightFace, faceAfterRotation);
-	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
-	{
-		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
-		{
-			cr_assert_eq(
-				faceAfterRotation[rowIndex][columnIndex],
-				faceBeforeRotation[columnIndex][FACE_SIZE - 1 - rowIndex]);
-		}
-	}
+	assert_faceRotatedAnticlockwise(faceBeforeRotation, rightFace, "right");
 }

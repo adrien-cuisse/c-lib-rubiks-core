@@ -74,17 +74,7 @@ Test(Cube, rotateCubeClockwise_leftFaceIsRotatedClockwise)
 	Cube_rotateClockwise(cube);
 
 	// then
-	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
-	readFace(leftFace, faceAfterRotation);
-	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
-	{
-		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
-		{
-			cr_assert_eq(
-				faceAfterRotation[rowIndex][columnIndex],
-				faceBeforeRotation[FACE_SIZE - 1 - columnIndex][rowIndex]);
-		}
-	}
+	assert_faceRotatedClockwise(faceBeforeRotation, leftFace, "left");
 }
 
 
@@ -100,17 +90,7 @@ Test(Cube, rotateCubeClockwise_frontFaceIsRotatedClockwise)
 	Cube_rotateClockwise(cube);
 
 	// then
-	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
-	readFace(frontFace, faceAfterRotation);
-	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
-	{
-		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
-		{
-			cr_assert_eq(
-				faceAfterRotation[rowIndex][columnIndex],
-				faceBeforeRotation[FACE_SIZE - 1 - columnIndex][rowIndex]);
-		}
-	}
+	assert_faceRotatedClockwise(faceBeforeRotation, frontFace, "front");
 }
 
 
@@ -126,17 +106,7 @@ Test(Cube, rotateCubeClockwise_rightFaceIsRotatedClockwise)
 	Cube_rotateClockwise(cube);
 
 	// then
-	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
-	readFace(rightFace, faceAfterRotation);
-	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
-	{
-		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
-		{
-			cr_assert_eq(
-				faceAfterRotation[rowIndex][columnIndex],
-				faceBeforeRotation[FACE_SIZE - 1 - columnIndex][rowIndex]);
-		}
-	}
+	assert_faceRotatedClockwise(faceBeforeRotation, rightFace, "right");
 }
 
 
@@ -152,17 +122,7 @@ Test(Cube, rotateCubeClockwise_bottomFaceIsRotatedClockwise)
 	Cube_rotateClockwise(cube);
 
 	// then
-	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
-	readFace(bottomFace, faceAfterRotation);
-	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
-	{
-		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
-		{
-			cr_assert_eq(
-				faceAfterRotation[rowIndex][columnIndex],
-				faceBeforeRotation[FACE_SIZE - 1 - columnIndex][rowIndex]);
-		}
-	}
+	assert_faceRotatedClockwise(faceBeforeRotation, bottomFace, "bottom");
 }
 
 
@@ -178,17 +138,7 @@ Test(Cube, rotateCubeClockwise_backFaceIsRotatedAntiClockwise)
 	Cube_rotateClockwise(cube);
 
 	// then
-	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
-	readFace(backFace, faceAfterRotation);
-	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
-	{
-		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
-		{
-			cr_assert_eq(
-				faceAfterRotation[rowIndex][columnIndex],
-				faceBeforeRotation[columnIndex][FACE_SIZE - 1 - rowIndex]);
-		}
-	}
+	assert_faceRotatedAnticlockwise(faceBeforeRotation, backFace, "back");
 }
 
 
@@ -204,15 +154,5 @@ Test(Cube, rotateCubeClockwise_topFaceIsRotatedClockwise)
 	Cube_rotateClockwise(cube);
 
 	// then
-	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
-	readFace(topFace, faceAfterRotation);
-	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
-	{
-		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
-		{
-			cr_assert_eq(
-				faceAfterRotation[rowIndex][columnIndex],
-				faceBeforeRotation[FACE_SIZE - 1 - columnIndex][rowIndex]);
-		}
-	}
+	assert_faceRotatedClockwise(faceBeforeRotation, topFace, "top");
 }

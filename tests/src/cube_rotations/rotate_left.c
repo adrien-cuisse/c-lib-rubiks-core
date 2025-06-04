@@ -73,17 +73,7 @@ Test(Cube, rotateCubeLeft_leftFaceIsRotatedTwice)
 	Cube_rotateLeft(cube);
 
 	// then
-	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
-	readFace(leftFace, faceAfterRotation);
-	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
-	{
-		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
-		{
-			cr_assert_eq(
-				faceBeforeRotation[FACE_SIZE - 1 - rowIndex][FACE_SIZE - 1 - columnIndex],
-				faceAfterRotation[rowIndex][columnIndex]);
-		}
-	}
+	assert_faceFlipped(faceBeforeRotation, leftFace, "left");
 }
 
 
@@ -99,17 +89,7 @@ Test(Cube, rotateCubeLeft_bottomFaceIsRotatedClockwise)
 	Cube_rotateLeft(cube);
 
 	// then
-	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
-	readFace(bottomFace, faceAfterRotation);
-	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
-	{
-		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
-		{
-			cr_assert_eq(
-				faceAfterRotation[rowIndex][columnIndex],
-				faceBeforeRotation[FACE_SIZE - 1 - columnIndex][rowIndex]);
-		}
-	}
+	assert_faceRotatedClockwise(faceBeforeRotation, bottomFace, "bottom");
 }
 
 
@@ -125,17 +105,7 @@ Test(Cube, rotateCubeLeft_backFaceIsRotatedTwice)
 	Cube_rotateLeft(cube);
 
 	// then
-	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
-	readFace(backFace, faceAfterRotation);
-	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
-	{
-		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
-		{
-			cr_assert_eq(
-				faceBeforeRotation[FACE_SIZE - 1 - rowIndex][FACE_SIZE - 1 - columnIndex],
-				faceAfterRotation[rowIndex][columnIndex]);
-		}
-	}
+	assert_faceFlipped(faceBeforeRotation, backFace, "back");
 }
 
 
@@ -151,15 +121,5 @@ Test(Cube, rotateCubeLeft_topFaceIsRotatedAntiClockwise)
 	Cube_rotateLeft(cube);
 
 	// then
-	Color faceAfterRotation[FACE_SIZE][FACE_SIZE];
-	readFace(topFace, faceAfterRotation);
-	for (int rowIndex = 0; rowIndex < FACE_SIZE; rowIndex++)
-	{
-		for (int columnIndex = 0; columnIndex < FACE_SIZE; columnIndex++)
-		{
-			cr_assert_eq(
-				faceAfterRotation[rowIndex][columnIndex],
-				faceBeforeRotation[columnIndex][FACE_SIZE - 1 - rowIndex]);
-		}
-	}
+	assert_faceRotatedAnticlockwise(faceBeforeRotation, topFace, "top");
 }

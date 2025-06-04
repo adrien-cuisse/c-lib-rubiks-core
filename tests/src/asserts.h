@@ -25,6 +25,15 @@ void _assert_faceRotatedAnticlockwise(
 	int line);
 
 
+#define assert_faceFlipped(a,b,c) _assert_faceFlipped((a), (b), (c), __FILE__, __LINE__)
+void _assert_faceFlipped(
+	Color before[FACE_SIZE][FACE_SIZE],
+	Face const * face,
+	char const * facePosition,
+	char const * file,
+	int line);
+
+
 
 
 #endif /* ASSERTS_HEADER */
