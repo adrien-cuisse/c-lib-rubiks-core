@@ -99,3 +99,51 @@ Test(Cube, rotateEquatorSliceRight_leftFaceEquatorRow_movesTo_frontFaceEquatorRo
 		FACE_SIZE,
 		"left face equator row wasn't moved to the front face equator row");
 }
+
+
+Test(Cube, rotateEquatorSliceRight_rightFaceEquatorRow_reversed_backFaceEquatorRow)
+{
+	// given
+	Cube * cube = createScrambledCube();
+	Face * rightFace = Cube_rightFace(cube);
+	Color oldRightFaceEquatorRow[FACE_SIZE];
+	equatorRow(rightFace, oldRightFaceEquatorRow);
+	reverseSpan(oldRightFaceEquatorRow);
+
+	// when
+	Cube_rotateEquatorSliceRight(cube);
+
+	// then
+	Face * backFace = Cube_backFace(cube);
+	Color newBackFaceEquatorRow[FACE_SIZE];
+	equatorRow(backFace, newBackFaceEquatorRow);
+	cr_assert_arr_eq(
+		oldRightFaceEquatorRow,
+		newBackFaceEquatorRow,
+		FACE_SIZE,
+		"right face equator row wasn't reversed");
+}
+
+
+Test(Cube, rotateEquatorSliceRight_backFaceEquatorRow_reversed_leftFaceEquatorRow)
+{
+	// given
+	Cube * cube = createScrambledCube();
+	Face * backFace = Cube_backFace(cube);
+	Color oldBackFaceEquatorRow[FACE_SIZE];
+	equatorRow(backFace, oldBackFaceEquatorRow);
+	reverseSpan(oldBackFaceEquatorRow);
+
+	// when
+	Cube_rotateEquatorSliceRight(cube);
+
+	// then
+	Face * leftFace = Cube_leftFace(cube);
+	Color newLeftFaceEquatorRow[FACE_SIZE];
+	equatorRow(leftFace, newLeftFaceEquatorRow);
+	cr_assert_arr_eq(
+		oldBackFaceEquatorRow,
+		newLeftFaceEquatorRow,
+		FACE_SIZE,
+		"left face equator row wasn't reversed");
+}
