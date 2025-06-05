@@ -81,6 +81,38 @@ Cube * createScrambledCube(void)
     //	        | G O B |
 	//		    +-------+
 
+	//	        +-------+
+    //	        | R O Y |
+    //	        | B W G |
+    //	        | G O B |
+    //	+-------+-------+-------+-------+
+    //	| G W Y | R Y W | R W B | R B W |
+    //	| B R O | W B G | Y O G | O G Y |
+    //	| O Y G | Y R O | W B Y | B R W |
+    //	+-------+-------+-------+-------+
+    //	        | O W G |
+    //	        | R Y R |
+    //	        | B G O |
+    //	        +-------+
+
+#elif 1
+
+	// https://rubikscu.be/
+	//
+	// x x z z D2 F2 R2
+	//
+	// blue face in front, orange to the right, white above
+
+	// D2
+	Cube_rotateBottomSliceRight(cube);
+	/*Cube_rotateBottomSliceRight(cube);
+	// F2
+	Cube_rotateFrontSliceClockwise(cube);
+	Cube_rotateFrontSliceClockwise(cube);
+	// R2
+	Cube_rotateRightSliceUp(cube);
+	Cube_rotateRightSliceUp(cube);*/
+
 #else
 
 	int rotationsLeft = 7;

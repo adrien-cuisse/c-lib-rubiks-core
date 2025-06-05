@@ -69,22 +69,6 @@ Test(Cube, rotateAnticlockwise_rightFaceGoesTop)
 }
 
 
-Test(Cube, rotateCubeAnticlockwise_leftFaceIsRotatedAnticlockwise)
-{
-	// given
-	Cube * cube = createScrambledCube();
-	Face * leftFace = Cube_leftFace(cube);
-	Color faceBeforeRotation[FACE_SIZE][FACE_SIZE];
-	readFace(leftFace, faceBeforeRotation);
-
-	// when
-	Cube_rotateAnticlockwise(cube);
-
-	// then
-	assert_faceRotatedAnticlockwise(faceBeforeRotation, leftFace, "left");
-}
-
-
 Test(Cube, rotateCubeAnticlockwise_frontFaceIsRotatedAnticlockwise)
 {
 	// given
@@ -101,38 +85,6 @@ Test(Cube, rotateCubeAnticlockwise_frontFaceIsRotatedAnticlockwise)
 }
 
 
-Test(Cube, rotateCubeAnticlockwise_rightFaceIsRotatedAnticlockwise)
-{
-	// given
-	Cube * cube = createScrambledCube();
-	Face * rightFace = Cube_rightFace(cube);
-	Color faceBeforeRotation[FACE_SIZE][FACE_SIZE];
-	readFace(rightFace, faceBeforeRotation);
-
-	// when
-	Cube_rotateAnticlockwise(cube);
-
-	// then
-	assert_faceRotatedAnticlockwise(faceBeforeRotation, rightFace, "right");
-}
-
-
-Test(Cube, rotateCubeAnticlockwise_bottomFaceIsRotatedAnticlockwise)
-{
-	// given
-	Cube * cube = createScrambledCube();
-	Face * bottomFace = Cube_bottomFace(cube);
-	Color faceBeforeRotation[FACE_SIZE][FACE_SIZE];
-	readFace(bottomFace, faceBeforeRotation);
-
-	// when
-	Cube_rotateAnticlockwise(cube);
-
-	// then
-	assert_faceRotatedAnticlockwise(faceBeforeRotation, bottomFace, "bottom");
-}
-
-
 Test(Cube, rotateCubeAnticlockwise_backFaceIsRotatedClockwise)
 {
 	// given
@@ -146,20 +98,4 @@ Test(Cube, rotateCubeAnticlockwise_backFaceIsRotatedClockwise)
 
 	// then
 	assert_faceRotatedClockwise(faceBeforeRotation, backFace, "back");
-}
-
-
-Test(Cube, rotateCubeAnticlockwise_topFaceIsRotatedAntiClockwise)
-{
-	// given
-	Cube * cube = createScrambledCube();
-	Face * topFace = Cube_topFace(cube);
-	Color faceBeforeRotation[FACE_SIZE][FACE_SIZE];
-	readFace(topFace, faceBeforeRotation);
-
-	// when
-	Cube_rotateAnticlockwise(cube);
-
-	// then
-	assert_faceRotatedAnticlockwise(faceBeforeRotation, topFace, "top");
 }

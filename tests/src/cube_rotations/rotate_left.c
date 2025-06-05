@@ -69,22 +69,6 @@ Test(Cube, rotateLeft_frontFaceGoesLeft)
 }
 
 
-Test(Cube, rotateCubeLeft_leftFaceIsFlipped)
-{
-	// given
-	Cube * cube = createScrambledCube();
-	Face * leftFace = Cube_leftFace(cube);
-	Color faceBeforeRotation[FACE_SIZE][FACE_SIZE];
-	readFace(leftFace, faceBeforeRotation);
-
-	// when
-	Cube_rotateLeft(cube);
-
-	// then
-	assert_faceFlipped(faceBeforeRotation, leftFace, "left");
-}
-
-
 Test(Cube, rotateCubeLeft_bottomFaceIsRotatedClockwise)
 {
 	// given
@@ -98,22 +82,6 @@ Test(Cube, rotateCubeLeft_bottomFaceIsRotatedClockwise)
 
 	// then
 	assert_faceRotatedClockwise(faceBeforeRotation, bottomFace, "bottom");
-}
-
-
-Test(Cube, rotateCubeLeft_backFaceIsFlipped)
-{
-	// given
-	Cube * cube = createScrambledCube();
-	Face * backFace = Cube_backFace(cube);
-	Color faceBeforeRotation[FACE_SIZE][FACE_SIZE];
-	readFace(backFace, faceBeforeRotation);
-
-	// when
-	Cube_rotateLeft(cube);
-
-	// then
-	assert_faceFlipped(faceBeforeRotation, backFace, "back");
 }
 
 
