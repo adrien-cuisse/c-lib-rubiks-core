@@ -153,10 +153,10 @@ static void reverseSpan(Color span[FACE_SIZE])
  */
 static void moveReversedSpan(Cube * this, Span from, Span to)
 {
-	Color span[FACE_SIZE];
-	getSpan(this, from, span);
-	reverseSpan(span);
-	setSpan(this, to, span);
+	Color spanContent[FACE_SIZE];
+	getSpan(this, from, spanContent);
+	reverseSpan(spanContent);
+	setSpan(this, to, spanContent);
 }
 
 
