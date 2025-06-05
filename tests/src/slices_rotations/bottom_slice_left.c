@@ -163,3 +163,49 @@ Test(Cube, rotateBottomSliceLeft_backFaceTopRow_reversed_rightFaceBottomRow)
 		FACE_SIZE,
 		"back face top row wasn't reversed");
 }
+
+
+Test(Cube, rotateBottomSliceLeft_rightFaceBottomRow_notReversed_frontFaceBottomRow)
+{
+	// given
+	Cube * cube = createScrambledCube();
+	Face * rightFace = Cube_rightFace(cube);
+	Color oldRightFaceBottomRow[FACE_SIZE];
+	bottomRow(rightFace, oldRightFaceBottomRow);
+
+	// when
+	Cube_rotateBottomSliceLeft(cube);
+
+	// then
+	Face * frontFace = Cube_frontFace(cube);
+	Color newFrontFaceBottomRow[FACE_SIZE];
+	bottomRow(frontFace, newFrontFaceBottomRow);
+	cr_assert_arr_eq(
+		oldRightFaceBottomRow,
+		newFrontFaceBottomRow,
+		FACE_SIZE,
+		"right face bottom row was reversed");
+}
+
+
+Test(Cube, rotateBottomSliceLeft_frontFaceBottomRow_notReversed_leftFaceBottomRow)
+{
+	// given
+	Cube * cube = createScrambledCube();
+	Face * frontFace = Cube_frontFace(cube);
+	Color oldFrontFaceBottomRow[FACE_SIZE];
+	bottomRow(frontFace, oldFrontFaceBottomRow);
+
+	// when
+	Cube_rotateBottomSliceLeft(cube);
+
+	// then
+	Face * leftFace = Cube_leftFace(cube);
+	Color newLeftFaceBottomRow[FACE_SIZE];
+	bottomRow(leftFace, newLeftFaceBottomRow);
+	cr_assert_arr_eq(
+		oldFrontFaceBottomRow,
+		newLeftFaceBottomRow,
+		FACE_SIZE,
+		"front face bottom row was reversed");
+}

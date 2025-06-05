@@ -100,8 +100,15 @@ static int mustReverseSpan(
 	FacePosition const reversingFaces[],
 	int facesCount)
 {
-	size_t bytesCount = facesCount * sizeof(* reversingFaces);
-	return memchr(reversingFaces, span.face, bytesCount) != NULL;
+	int index;
+
+	for (index = 0; index < facesCount; index++)
+	{
+		if (span.face == reversingFaces[index])
+			return 1;
+	}
+
+	return 0;
 }
 
 

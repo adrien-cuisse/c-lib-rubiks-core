@@ -163,3 +163,49 @@ Test(Cube, rotateFrontSliceAnticlockwise_topFaceBottomRow_reversed_leftFaceRight
 		FACE_SIZE,
 		"top face bottom row wasn't reversed");
 }
+
+
+Test(Cube, rotateFrontSliceAnticlockwise_rightFaceLeftColumn_notReversed_topFaceBottomRow)
+{
+	// given
+	Cube * cube = createScrambledCube();
+	Face * rightFace = Cube_rightFace(cube);
+	Color oldRightFaceLeftColumn[FACE_SIZE];
+	leftColumn(rightFace, oldRightFaceLeftColumn);
+
+	// when
+	Cube_rotateFrontSliceAnticlockwise(cube);
+
+	// then
+	Face * topFace = Cube_topFace(cube);
+	Color newTopFaceBottomRow[FACE_SIZE];
+	bottomRow(topFace, newTopFaceBottomRow);
+	cr_assert_arr_eq(
+		oldRightFaceLeftColumn,
+		newTopFaceBottomRow,
+		FACE_SIZE,
+		"right face left column was reversed");
+}
+
+
+Test(Cube, rotateFrontSliceAnticlockwise_leftFaceRightColumn_notReversed_bottomFaceTopRow)
+{
+	// given
+	Cube * cube = createScrambledCube();
+	Face * leftFace = Cube_leftFace(cube);
+	Color oldLeftFaceRightColumn[FACE_SIZE];
+	rightColumn(leftFace, oldLeftFaceRightColumn);
+
+	// when
+	Cube_rotateFrontSliceAnticlockwise(cube);
+
+	// then
+	Face * bottomFace = Cube_bottomFace(cube);
+	Color newBottomFaceTopRow[FACE_SIZE];
+	topRow(bottomFace, newBottomFaceTopRow);
+	cr_assert_arr_eq(
+		oldLeftFaceRightColumn,
+		newBottomFaceTopRow,
+		FACE_SIZE,
+		"left face right column was reversed");
+}
