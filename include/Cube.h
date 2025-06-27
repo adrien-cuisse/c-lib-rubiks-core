@@ -2,11 +2,15 @@
 #ifndef CUBE_HEADER
 #define CUBE_HEADER
 
-#include "Face.h"
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #ifndef RUBIKS_API
 #define RUBIKS_API
 #endif
+
+#include "Face.h"
 
 
 
@@ -43,9 +47,9 @@ RUBIKS_API Cube * Cube_create(void);
 /**
  * Deletes the cube and sets its memory to NULL
  *
- * @param this - the cube to delete
+ * @param self - the cube to delete
  */
-RUBIKS_API void Cube_delete(Cube ** this);
+RUBIKS_API void Cube_delete(Cube ** self);
 
 
 /**
@@ -53,11 +57,11 @@ RUBIKS_API void Cube_delete(Cube ** this);
  *
  * The caller is NOT in charge of the memory
  *
- * @param this - the cube to get the left face from
+ * @param self - the cube to get the left face from
  *
  * @return Face * - the left face
  */
-RUBIKS_API Face * Cube_leftFace(Cube const * this);
+RUBIKS_API Face * Cube_leftFace(Cube const * self);
 
 
 /**
@@ -65,11 +69,11 @@ RUBIKS_API Face * Cube_leftFace(Cube const * this);
  *
  * The caller is NOT in charge of the memory
  *
- * @param this - the cube to get the front face from
+ * @param self - the cube to get the front face from
  *
  * @return Face * - the front face
  */
-RUBIKS_API Face * Cube_frontFace(Cube const * this);
+RUBIKS_API Face * Cube_frontFace(Cube const * self);
 
 
 /**
@@ -77,11 +81,11 @@ RUBIKS_API Face * Cube_frontFace(Cube const * this);
  *
  * The caller is NOT in charge of the memory
  *
- * @param this - the cube to get the right face from
+ * @param self - the cube to get the right face from
  *
  * @return Face * - the right face
  */
-RUBIKS_API Face * Cube_rightFace(Cube const * this);
+RUBIKS_API Face * Cube_rightFace(Cube const * self);
 
 
 /**
@@ -89,11 +93,11 @@ RUBIKS_API Face * Cube_rightFace(Cube const * this);
  *
  * The caller is NOT in charge of the memory
  *
- * @param this - the cube to get the top face from
+ * @param self - the cube to get the top face from
  *
  * @return Face * - the top face
  */
-RUBIKS_API Face * Cube_topFace(Cube const * this);
+RUBIKS_API Face * Cube_topFace(Cube const * self);
 
 
 /**
@@ -101,11 +105,11 @@ RUBIKS_API Face * Cube_topFace(Cube const * this);
  *
  * The caller is NOT in charge of the memory
  *
- * @param this - the cube to get the bottom face from
+ * @param self - the cube to get the bottom face from
  *
  * @return Face * - the bottom face
  */
-RUBIKS_API Face * Cube_bottomFace(Cube const * this);
+RUBIKS_API Face * Cube_bottomFace(Cube const * self);
 
 
 /**
@@ -113,11 +117,11 @@ RUBIKS_API Face * Cube_bottomFace(Cube const * this);
  *
  * The caller is NOT in charge of the memory
  *
- * @param this - the cube to get the back face from
+ * @param self - the cube to get the back face from
  *
  * @return Face * - the back face
  */
-RUBIKS_API Face * Cube_backFace(Cube const * this);
+RUBIKS_API Face * Cube_backFace(Cube const * self);
 
 
 /**
@@ -125,9 +129,9 @@ RUBIKS_API Face * Cube_backFace(Cube const * this);
  *
  * Offical notation: y
  *
- * @param this - the cube to rotate
+ * @param self - the cube to rotate
  */
-RUBIKS_API void Cube_rotateLeft(Cube * this);
+RUBIKS_API void Cube_rotateLeft(Cube * self);
 
 
 /**
@@ -135,9 +139,9 @@ RUBIKS_API void Cube_rotateLeft(Cube * this);
  *
  * Offical notation: y'
  *
- * @param this - the cube to rotate
+ * @param self - the cube to rotate
  */
-RUBIKS_API void Cube_rotateRight(Cube * this);
+RUBIKS_API void Cube_rotateRight(Cube * self);
 
 
 /**
@@ -145,9 +149,9 @@ RUBIKS_API void Cube_rotateRight(Cube * this);
  *
  * Offical notation: x
  *
- * @param this - the cube to rotate
+ * @param self - the cube to rotate
  */
-RUBIKS_API void Cube_rotateUp(Cube * this);
+RUBIKS_API void Cube_rotateUp(Cube * self);
 
 
 /**
@@ -155,9 +159,9 @@ RUBIKS_API void Cube_rotateUp(Cube * this);
  *
  * Offical notation: x'
  *
- * @param this - the cube to rotate
+ * @param self - the cube to rotate
  */
-RUBIKS_API void Cube_rotateDown(Cube * this);
+RUBIKS_API void Cube_rotateDown(Cube * self);
 
 
 /**
@@ -165,9 +169,9 @@ RUBIKS_API void Cube_rotateDown(Cube * this);
  *
  * Offical notation: z
  *
- * @param this - the cube to rotate
+ * @param self - the cube to rotate
  */
-RUBIKS_API void Cube_rotateClockwise(Cube * this);
+RUBIKS_API void Cube_rotateClockwise(Cube * self);
 
 
 /**
@@ -175,9 +179,9 @@ RUBIKS_API void Cube_rotateClockwise(Cube * this);
  *
  * Offical notation: z'
  *
- * @param this - the cube to rotate
+ * @param self - the cube to rotate
  */
-RUBIKS_API void Cube_rotateAnticlockwise(Cube * this);
+RUBIKS_API void Cube_rotateAnticlockwise(Cube * self);
 
 
 /**
@@ -185,9 +189,9 @@ RUBIKS_API void Cube_rotateAnticlockwise(Cube * this);
  *
  * Official notation: U
  *
- * @param this - the cube to rotate the slice from
+ * @param self - the cube to rotate the slice from
  */
-RUBIKS_API void Cube_rotateTopSliceLeft(Cube * this);
+RUBIKS_API void Cube_rotateTopSliceLeft(Cube * self);
 
 
 /**
@@ -195,9 +199,9 @@ RUBIKS_API void Cube_rotateTopSliceLeft(Cube * this);
  *
  * Official notation: U'
  *
- * @param this - the cube to rotate the slice from
+ * @param self - the cube to rotate the slice from
  */
-RUBIKS_API void Cube_rotateTopSliceRight(Cube * this);
+RUBIKS_API void Cube_rotateTopSliceRight(Cube * self);
 
 
 /**
@@ -205,9 +209,9 @@ RUBIKS_API void Cube_rotateTopSliceRight(Cube * this);
  *
  * Official notation: E
  *
- * @param this - the cube to rotate the slice from
+ * @param self - the cube to rotate the slice from
  */
-RUBIKS_API void Cube_rotateEquatorSliceLeft(Cube * this);
+RUBIKS_API void Cube_rotateEquatorSliceLeft(Cube * self);
 
 
 /**
@@ -215,9 +219,9 @@ RUBIKS_API void Cube_rotateEquatorSliceLeft(Cube * this);
  *
  * Official notation: E'
  *
- * @param this - the cube to rotate the slice from
+ * @param self - the cube to rotate the slice from
  */
-RUBIKS_API void Cube_rotateEquatorSliceRight(Cube * this);
+RUBIKS_API void Cube_rotateEquatorSliceRight(Cube * self);
 
 
 /**
@@ -225,9 +229,9 @@ RUBIKS_API void Cube_rotateEquatorSliceRight(Cube * this);
  *
  * Official notation: D'
  *
- * @param this - the cube to rotate the slice from
+ * @param self - the cube to rotate the slice from
  */
-RUBIKS_API void Cube_rotateBottomSliceLeft(Cube * this);
+RUBIKS_API void Cube_rotateBottomSliceLeft(Cube * self);
 
 
 /**
@@ -235,9 +239,9 @@ RUBIKS_API void Cube_rotateBottomSliceLeft(Cube * this);
  *
  * Official notation: D
  *
- * @param this - the cube to rotate the slice from
+ * @param self - the cube to rotate the slice from
  */
-RUBIKS_API void Cube_rotateBottomSliceRight(Cube * this);
+RUBIKS_API void Cube_rotateBottomSliceRight(Cube * self);
 
 
 /**
@@ -245,9 +249,9 @@ RUBIKS_API void Cube_rotateBottomSliceRight(Cube * this);
  *
  * Official notation: L'
  *
- * @param this - the cube to rotate the slice from
+ * @param self - the cube to rotate the slice from
  */
-RUBIKS_API void Cube_rotateLeftSliceUp(Cube * this);
+RUBIKS_API void Cube_rotateLeftSliceUp(Cube * self);
 
 
 /**
@@ -255,9 +259,9 @@ RUBIKS_API void Cube_rotateLeftSliceUp(Cube * this);
  *
  * Official notation: L
  *
- * @param this - the cube to rotate the slice from
+ * @param self - the cube to rotate the slice from
  */
-RUBIKS_API void Cube_rotateLeftSliceDown(Cube * this);
+RUBIKS_API void Cube_rotateLeftSliceDown(Cube * self);
 
 
 /**
@@ -265,9 +269,9 @@ RUBIKS_API void Cube_rotateLeftSliceDown(Cube * this);
  *
  * Official notation: M'
  *
- * @param this - the cube to rotate the slice from
+ * @param self - the cube to rotate the slice from
  */
-RUBIKS_API void Cube_rotateMiddleSliceUp(Cube * this);
+RUBIKS_API void Cube_rotateMiddleSliceUp(Cube * self);
 
 
 /**
@@ -275,9 +279,9 @@ RUBIKS_API void Cube_rotateMiddleSliceUp(Cube * this);
  *
  * Official notation: M
  *
- * @param this - the cube to rotate the slice from
+ * @param self - the cube to rotate the slice from
  */
-RUBIKS_API void Cube_rotateMiddleSliceDown(Cube * this);
+RUBIKS_API void Cube_rotateMiddleSliceDown(Cube * self);
 
 
 /**
@@ -285,9 +289,9 @@ RUBIKS_API void Cube_rotateMiddleSliceDown(Cube * this);
  *
  * Official notation: R
  *
- * @param this - the cube to rotate the slice from
+ * @param self - the cube to rotate the slice from
  */
-RUBIKS_API void Cube_rotateRightSliceUp(Cube * this);
+RUBIKS_API void Cube_rotateRightSliceUp(Cube * self);
 
 
 /**
@@ -295,9 +299,9 @@ RUBIKS_API void Cube_rotateRightSliceUp(Cube * this);
  *
  * Official notation: R'
  *
- * @param this - the cube to rotate the slice from
+ * @param self - the cube to rotate the slice from
  */
-RUBIKS_API void Cube_rotateRightSliceDown(Cube * this);
+RUBIKS_API void Cube_rotateRightSliceDown(Cube * self);
 
 
 /**
@@ -305,9 +309,9 @@ RUBIKS_API void Cube_rotateRightSliceDown(Cube * this);
  *
  * Official notation: F
  *
- * @param this - the cube to rotate the slice from
+ * @param self - the cube to rotate the slice from
  */
-RUBIKS_API void Cube_rotateFrontSliceClockwise(Cube * this);
+RUBIKS_API void Cube_rotateFrontSliceClockwise(Cube * self);
 
 
 /**
@@ -315,9 +319,9 @@ RUBIKS_API void Cube_rotateFrontSliceClockwise(Cube * this);
  *
  * Official notation: F'
  *
- * @param this - the cube to rotate the slice from
+ * @param self - the cube to rotate the slice from
  */
-RUBIKS_API void Cube_rotateFrontSliceAnticlockwise(Cube * this);
+RUBIKS_API void Cube_rotateFrontSliceAnticlockwise(Cube * self);
 
 
 /**
@@ -325,9 +329,9 @@ RUBIKS_API void Cube_rotateFrontSliceAnticlockwise(Cube * this);
  *
  * Official notation: S
  *
- * @param this - the cube to rotate the slice from
+ * @param self - the cube to rotate the slice from
  */
-RUBIKS_API void Cube_rotateStandingSliceClockwise(Cube * this);
+RUBIKS_API void Cube_rotateStandingSliceClockwise(Cube * self);
 
 
 /**
@@ -335,9 +339,9 @@ RUBIKS_API void Cube_rotateStandingSliceClockwise(Cube * this);
  *
  * Official notation: S'
  *
- * @param this - the cube to rotate the slice from
+ * @param self - the cube to rotate the slice from
  */
-RUBIKS_API void Cube_rotateStandingSliceAnticlockwise(Cube * this);
+RUBIKS_API void Cube_rotateStandingSliceAnticlockwise(Cube * self);
 
 
 /**
@@ -345,9 +349,9 @@ RUBIKS_API void Cube_rotateStandingSliceAnticlockwise(Cube * this);
  *
  * Official notation: B'
  *
- * @param this - the cube to rotate the slice from
+ * @param self - the cube to rotate the slice from
  */
-RUBIKS_API void Cube_rotateBackSliceClockwise(Cube * this);
+RUBIKS_API void Cube_rotateBackSliceClockwise(Cube * self);
 
 
 /**
@@ -355,11 +359,15 @@ RUBIKS_API void Cube_rotateBackSliceClockwise(Cube * this);
  *
  * Official notation: B
  *
- * @param this - the cube to rotate the slice from
+ * @param self - the cube to rotate the slice from
  */
-RUBIKS_API void Cube_rotateBackSliceAnticlockwise(Cube * this);
+RUBIKS_API void Cube_rotateBackSliceAnticlockwise(Cube * self);
 
 
 
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* CUBE_HEADER */
