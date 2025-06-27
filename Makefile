@@ -10,7 +10,7 @@ TESTS_DIR=tests
 # Release sources compilation
 RELEASE_SRC=$(shell find $(SRC_DIR)/ -type f -name '*.c')
 RELEASE_OBJ=$(subst $(SRC_DIR),$(OBJ_DIR),$(RELEASE_SRC:.c=.o))
-RELEASE_CFLAGS=-Wall -Wextra -Werror -ansi -pedantic
+RELEASE_CFLAGS=-Wall -Wextra -Werror -ansi -pedantic -O3 -fvisibility=hidden -fpic
 RELEASE_LDFLAGS=
 
 # Tests only structure
@@ -30,6 +30,10 @@ TESTS_UTILS_SRC=$(addprefix $(TESTS_SRC_DIR)/,utils.c asserts.c)
 TESTS_UTIL_OBJ=$(subst $(TESTS_SRC_DIR),$(TESTS_OBJ_DIR),$(TESTS_UTILS_SRC:.c=.o))
 
 default: run-tests
+
+rebuild: clean-all run-tests
+
+libs: library-core
 
 .PHONY: run-tests
 run-tests: $(TESTS_BINS)
@@ -60,6 +64,15 @@ $(TESTS_BIN_DIR)/%: $(TESTS_OBJ_DIR)/%.o $(RELEASE_OBJ) $(TESTS_UTIL_OBJ)
 
 # Don't delete objects when binaries are made
 .PRECIOUS: $(OBJ_DIR)/%.o $(TESTS_OBJ_DIR)/%.o
+
+
+library-core: librubiks-core
+librubiks-core: $(RELEASE_OBJ)
+	@mkdir -p lib/
+#	ar rcs lib/$@.a $^
+#	strip --discard-all lib/$@.a
+	gcc -shared -o lib/$@.so $^
+	strip --discard-all lib/$@.so
 
 .PHONY: clean
 clean:

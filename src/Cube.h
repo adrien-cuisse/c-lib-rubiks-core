@@ -2,6 +2,8 @@
 #ifndef CUBE_INTERNAL_HEADER
 #define CUBE_INTERNAL_HEADER
 
+#include "visibility.h"
+
 #include "../include/Face.h"
 #include "../include/Cube.h"
 

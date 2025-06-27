@@ -5,5 +5,8 @@
 # Binaries
 */**/bin/*
 
+# Libraries
+lib/*
+
 # Local junk (IDE, stuff like that)
 .*/

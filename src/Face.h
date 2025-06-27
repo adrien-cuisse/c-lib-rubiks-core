@@ -2,6 +2,8 @@
 #ifndef FACE_INTERNAL_HEADER
 #define FACE_INTERNAL_HEADER
 
+#include "visibility.h"
+
 #include "../include/Face.h"
 
 
