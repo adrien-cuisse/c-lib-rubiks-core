@@ -40,13 +40,9 @@ lib: library-core
 
 .PHONY: run-tests
 run-tests: lib $(TESTS_BINS)
-#	@for TEST_BIN in $(TESTS_BINS) ; do   \
-#		./$$TEST_BIN --verbose; \
-#	done
 	@for TEST_BIN in $(TESTS_BINS) ; do   \
 		LD_LIBRARY_PATH=$(LIB_DIR)/ ./$$TEST_BIN; \
 	done
-#	$(foreach TEST_BIN,$^,./$(TEST_BIN) --verbose)
 
 # Release objects
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
@@ -71,8 +67,6 @@ $(TESTS_BIN_DIR)/%: $(TESTS_OBJ_DIR)/%.o $(TESTS_UTIL_OBJ)
 library-core: $(LIB_DIR)/lib$(LIBRARY).so
 $(LIB_DIR)/lib$(LIBRARY).so: $(RELEASE_OBJ)
 	@mkdir -p $(LIB_DIR)/
-#	ar rcs lib/$@.a $^
-#	strip --discard-all lib/$@.a
 	gcc -shared -o $@ $^
 	strip --discard-all $@
 
