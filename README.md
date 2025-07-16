@@ -149,8 +149,8 @@ gcc example.c -o example -Llib/ -lrubiks-core && LD_LIBRARY_PATH=lib/ ./example
 ## 🧐 Why not using official notation / Why using this functions naming ?
 
 Official terminology uses capital letters (first letter for Left, Front,
-Right, Up, Down, Back) which mean 'rotate that face clockwise as if it was the
-front one, resulting visually in a counter-intuitive move
+Right, Up, Down, Back) which mean "rotate that face clockwise as if it was the
+front one", resulting visually in a counter-intuitive move
 Here we are only using visual notation to keep code understandable,
 eg., B means 'rotate back face clockwise', and without rotating the cube to
 get the back face in front we get a visual anticlockwise rotation of the back
