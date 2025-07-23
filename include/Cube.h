@@ -364,6 +364,126 @@ RUBIKS_API void Cube_rotateBackSliceClockwise(Cube * self);
 RUBIKS_API void Cube_rotateBackSliceAnticlockwise(Cube * self);
 
 
+/**
+ * Rotates the (horizontal) top slices to the left (top and equator)
+ *
+ * Official notation: u
+ *
+ * @param self - the cube to rotate the slices from
+ */
+RUBIKS_API void Cube_rotateTopSlicesLeft(Cube * self);
+
+
+/**
+ * Rotates the (horizontal) top slices to the right (top and equator)
+ *
+ * Official notation: u'
+ *
+ * @param self - the cube to rotate the slices from
+ */
+RUBIKS_API void Cube_rotateTopSlicesRight(Cube * self);
+
+
+/**
+ * Rotates the (horizontal) bottom slices to the left (equator and bottom)
+ *
+ * Official notation: d'
+ *
+ * @param self - the cube to rotate the slices from
+ */
+RUBIKS_API void Cube_rotateBottomSlicesLeft(Cube * self);
+
+
+/**
+ * Rotates the (horizontal) bottom slices to the right (equator and bottom)
+ *
+ * Official notation: d
+ *
+ * @param self - the cube to rotate the slices from
+ */
+RUBIKS_API void Cube_rotateBottomSlicesRight(Cube * self);
+
+
+/**
+ * Rotates the (vertical) left slices up (left and middle)
+ *
+ * Official notation: l'
+ *
+ * @param self - the cube to rotate the slices from
+ */
+RUBIKS_API void Cube_rotateLeftSlicesUp(Cube * self);
+
+
+/**
+ * Rotates the (vertical) left slices down (left and middle)
+ *
+ * Official notation: l
+ *
+ * @param self - the cube to rotate the slices from
+ */
+RUBIKS_API void Cube_rotateLeftSlicesDown(Cube * self);
+
+
+/**
+ * Rotates the (vertical) right slices up (middle and right)
+ *
+ * Official notation: r
+ *
+ * @param self - the cube to rotate the slices from
+ */
+RUBIKS_API void Cube_rotateRightSlicesUp(Cube * self);
+
+
+/**
+ * Rotates the (vertical) right slices down (middle and right)
+ *
+ * Official notation: r'
+ *
+ * @param self - the cube to rotate the slices from
+ */
+RUBIKS_API void Cube_rotateRightSlicesDown(Cube * self);
+
+
+/**
+ * Rotates the (parallel) front slices clockwise (front and standing)
+ *
+ * Official notation: f
+ *
+ * @param self - the cube to rotate the slices from
+ */
+RUBIKS_API void Cube_rotateFrontSlicesClockwise(Cube * self);
+
+
+/**
+ * Rotates the (parallel) front slices anticlockwise (front and standing)
+ *
+ * Official notation: f'
+ *
+ * @param self - the cube to rotate the slices from
+ */
+RUBIKS_API void Cube_rotateFrontSlicesAnticlockwise(Cube * self);
+
+
+/**
+ * Rotates the (parallel) back slices clockwise (standing and back)
+ *
+ * Official notation: b'
+ *
+ * @param self - the cube to rotate the slices from
+ */
+RUBIKS_API void Cube_rotateBackSlicesClockwise(Cube * self);
+
+
+/**
+ * Rotates the (parallel) back slices anticlockwise (standing and back)
+ *
+ * Official notation: b
+ *
+ * @param self - the cube to rotate the slices from
+ */
+RUBIKS_API void Cube_rotateBackSlicesAnticlockwise(Cube * self);
+
+
 
 
 #ifdef __cplusplus

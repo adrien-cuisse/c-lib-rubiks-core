@@ -5,6 +5,13 @@
 A rubik's cube shared library writen in **C** and made in **TDD**
 
 
+## Features
+
+- slices rotations
+- camera rotations
+- wide moves (2 slices at a time)
+
+
 ## 🫨 Why ?
 
 This library is intended to be the foundation of a 3D rubik's cube solver (GUI),
@@ -157,11 +164,6 @@ get the back face in front we get a visual anticlockwise rotation of the back
 slice
 
 
-## 🔮 Features to come
-
-- wide moves (2 slices at a time)
-
-
 ## 🤓 How can I port this to another language ?
 Just grab tests (specs) and follow the 3 TDD rules:
 - Do not write any production code without a failing test first
@@ -173,6 +175,14 @@ One test a time: red, green, refactor
 include/ directory contains public functions/method, everything in src/ is
 implementation detail (might change in the future), you may want to do
 things different
+
+
+## Known issues
+
+- Tests are repetitive: it's hard to refactor macro-based tests, providing function
+pointers doesn't really help readability, plus we have to `#define`the call to our functions
+to keep track of `__FILE__` and `__LINE__`
+- There are maaaany tests: yes, every spec is tested
 
 
 ## 😨 Found a bug ?
