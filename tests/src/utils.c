@@ -77,7 +77,7 @@ Cube * createScrambledCube(void)
     //	        | R O Y |
     //	        | B W G |
     //	        | G O B |
-    //		    +-------+
+    //	        +-------+
 
     //	        +-------+
     //	        | R O Y |
