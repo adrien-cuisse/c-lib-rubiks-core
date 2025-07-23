@@ -27,7 +27,7 @@ Test(Cube, rotateTopSliceRight_frontFaceTopRow_movesTo_rightFaceTopRow)
 	cr_assert_arr_eq(
 		newRightFaceTopRow,
 		oldFrontFaceTopRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"front face top row wasn't moved to the right face top row");
 }
 
@@ -50,7 +50,7 @@ Test(Cube, rotateTopSliceRight_rightFaceTopRow_movesTo_backFaceBottomRow)
 	cr_assert_arr_eq(
 		newBackFaceBottomRow,
 		oldRightFaceTopRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"right face top row wasn't moved to the back face bottom row");
 }
 
@@ -73,7 +73,7 @@ Test(Cube, rotateTopSliceRight_backFaceBottomRow_movesTo_leftFaceTopRow)
 	cr_assert_arr_eq(
 		newLeftFaceTopRow,
 		oldBackFaceBottomRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"back face bottom row wasn't moved to the left face top row");
 }
 
@@ -96,7 +96,7 @@ Test(Cube, rotateTopSliceRight_leftFaceTopRow_movesTo_frontFaceTopRow)
 	cr_assert_arr_eq(
 		newFrontFaceTopRow,
 		oldLeftFaceTopRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"left face top row wasn't moved to the front face top row");
 }
 
@@ -136,7 +136,7 @@ Test(Cube, rotateTopSliceRight_rightFaceTopRow_reversed_backFaceBottomRow)
 	cr_assert_arr_eq(
 		oldRightFaceTopRow,
 		newBackFaceBottomRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"right face top row wasn't reversed");
 }
 
@@ -160,7 +160,7 @@ Test(Cube, rotateTopSliceRight_backFaceBottomRow_reversed_leftFaceTopRow)
 	cr_assert_arr_eq(
 		oldBackFaceBottomRow,
 		newLeftFaceTopRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"back face bottom row wasn't reversed");
 }
 
@@ -183,7 +183,7 @@ Test(Cube, rotateTopSliceRight_leftFaceTopRow_notReversed_frontFaceTopRow)
 	cr_assert_arr_eq(
 		oldLeftFaceTopRow,
 		newFrontFaceTopRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"left face top row was reversed");
 }
 
@@ -206,6 +206,6 @@ Test(Cube, rotateTopSliceRight_frontFaceTopRow_notReversed_rightFaceTopRow)
 	cr_assert_arr_eq(
 		oldFrontFaceTopRow,
 		newRightFaceTopRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"front face top row was reversed");
 }

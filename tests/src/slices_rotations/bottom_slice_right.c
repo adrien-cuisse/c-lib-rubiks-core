@@ -27,7 +27,7 @@ Test(Cube, rotateBottomSliceRight_frontFaceBottomRow_movesTo_rightFaceBottomRow)
 	cr_assert_arr_eq(
 		newRightFaceBottomRow,
 		oldFrontFaceBottomRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"front face bottom row wasn't moved to the right face bottom row");
 }
 
@@ -50,7 +50,7 @@ Test(Cube, rotateBottomSliceRight_rightFaceBottomRow_movesTo_backFaceTopRow)
 	cr_assert_arr_eq(
 		newBackFaceTopRow,
 		oldRightFaceBottomRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"right face bottom row wasn't moved to the back face top row");
 }
 
@@ -73,7 +73,7 @@ Test(Cube, rotateBottomSliceRight_backFaceTopRow_movesTo_leftFaceBottomRow)
 	cr_assert_arr_eq(
 		newLeftFaceBottomRow,
 		oldBackFaceTopRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"back face top row wasn't moved to the left face bottom row");
 }
 
@@ -96,7 +96,7 @@ Test(Cube, rotateBottomSliceRight_leftFaceBottomRow_movesTo_frontFaceBottomRow)
 	cr_assert_arr_eq(
 		newFrontFaceBottomRow,
 		oldLeftFaceBottomRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"left face bottom row wasn't moved to the front face bottom row");
 }
 
@@ -136,7 +136,7 @@ Test(Cube, rotateBottomSliceRight_rightFaceBottomRow_reversed_backFaceTopRow)
 	cr_assert_arr_eq(
 		oldRightFaceBottomRow,
 		newBackFaceTopRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"right face bottom row wasn't reversed");
 }
 
@@ -160,7 +160,7 @@ Test(Cube, rotateBottomSliceRight_backFaceTopRow_reversed_leftFaceBottomRow)
 	cr_assert_arr_eq(
 		oldBackFaceTopRow,
 		newLeftFaceBottomRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"back face top row wasn't reversed");
 }
 
@@ -183,7 +183,7 @@ Test(Cube, rotateBottomSliceRight_leftFaceBottomRow_notReversed_frontFaceBottomR
 	cr_assert_arr_eq(
 		oldLeftFaceBottomRow,
 		newFrontFaceBottomRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"left face bottom row was reversed");
 }
 
@@ -206,6 +206,6 @@ Test(Cube, rotateBottomSliceRight_frontFaceBottomRow_notReversed_rightFaceBottom
 	cr_assert_arr_eq(
 		oldFrontFaceBottomRow,
 		newRightFaceBottomRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"front face bottom row was reversed");
 }

@@ -27,7 +27,7 @@ Test(Cube, rotateStandingSliceClockwise_topFaceEquatorRow_movesTo_rightFaceMiddl
 	cr_assert_arr_eq(
 		newRightFaceMiddleColumn,
 		oldTopFaceEquatorRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"top face equator row wasn't moved to the right face middle column");
 }
 
@@ -50,7 +50,7 @@ Test(Cube, rotateStandingSliceClockwise_rightFaceMiddleColumn_movesTo_bottomFace
 	cr_assert_arr_eq(
 		newBottomFaceEquatorRow,
 		oldRightFaceMiddleColumn,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"right face middle column wasn't moved to the bottom face equator row");
 }
 
@@ -73,7 +73,7 @@ Test(Cube, rotateStandingSliceClockwise_bottomFaceEquatorRow_movesTo_leftFaceMid
 	cr_assert_arr_eq(
 		newLeftFaceMiddleColumn,
 		oldBottomFaceEquatorRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"bottom face equator row wasn't moved to the left face middle column");
 }
 
@@ -96,7 +96,7 @@ Test(Cube, rotateStandingSliceClockwise_leftFaceMiddleColumn_movesTo_topFaceEqua
 	cr_assert_arr_eq(
 		newTopFaceEquatorRow,
 		oldLeftFaceMiddleColumn,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"left face middle column wasn't moved to the top face equator row");
 }
 
@@ -120,7 +120,7 @@ Test(Cube, rotateStandingSliceClockwise_rightFaceMiddleColumn_reversed_bottomFac
 	cr_assert_arr_eq(
 		oldRightFaceMiddleColumn,
 		newBottomFaceEquatorRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"right face middle column wasn't reversed");
 }
 
@@ -144,7 +144,7 @@ Test(Cube, rotateStandingSliceClockwise_leftFaceMiddleColumn_reversed_topFaceEqu
 	cr_assert_arr_eq(
 		oldLeftFaceMiddleColumn,
 		newTopFaceEquatorRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"left face middle column wasn't reversed");
 }
 
@@ -167,7 +167,7 @@ Test(Cube, rotateStandingSliceClockwise_bottomFaceEquatorRow_notReversed_leftFac
 	cr_assert_arr_eq(
 		oldBottomFaceEquatorRow,
 		newLeftFaceMiddleColumn,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"bottom face equator row was reversed");
 }
 
@@ -190,6 +190,6 @@ Test(Cube, rotateStandingSliceClockwise_topFaceEquatorRow_notReversed_rightFaceM
 	cr_assert_arr_eq(
 		oldTopFaceEquatorRow,
 		newRightFaceMiddleColumn,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"top face equator row was reversed");
 }

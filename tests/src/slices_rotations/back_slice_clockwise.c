@@ -27,7 +27,7 @@ Test(Cube, rotateBackSliceClockwise_topFaceTopRow_movesTo_rightFaceRightColumn)
 	cr_assert_arr_eq(
 		newRightFaceRightColumn,
 		oldTopFaceTopRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"top face top row wasn't moved to the right face right column");
 }
 
@@ -50,7 +50,7 @@ Test(Cube, rotateBackSliceClockwise_rightFaceRightColumn_movesTo_bottomFaceBotto
 	cr_assert_arr_eq(
 		newBottomFaceBottomRow,
 		oldRightFaceRightColumn,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"right face right column wasn't moved to the bottom face bottom row");
 }
 
@@ -73,7 +73,7 @@ Test(Cube, rotateBackSliceClockwise_bottomFaceBottomRow_movesTo_leftFaceLeftColu
 	cr_assert_arr_eq(
 		newLeftFaceLeftColumn,
 		oldBottomFaceBottomRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"bottom face bottom row wasn't moved to the left face left column");
 }
 
@@ -96,7 +96,7 @@ Test(Cube, rotateBackSliceClockwise_leftFaceLeftColumn_movesTo_topFaceTopRow)
 	cr_assert_arr_eq(
 		newTopFaceTopRow,
 		oldLeftFaceLeftColumn,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"left face left column wasn't moved to the top face top row");
 }
 
@@ -136,7 +136,7 @@ Test(Cube, rotateBackSliceClockwise_rightFaceRightColumn_reversed_bottomFaceBott
 	cr_assert_arr_eq(
 		oldRightFaceRightColumn,
 		newBottomFaceBottomRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"right face right column wasn't reversed");
 }
 
@@ -160,7 +160,7 @@ Test(Cube, rotateBackSliceClockwise_leftFaceLeftColumn_reversed_topFaceTopRow)
 	cr_assert_arr_eq(
 		oldLeftFaceLeftColumn,
 		newTopFaceTopRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"left face left column wasn't reversed");
 }
 
@@ -183,7 +183,7 @@ Test(Cube, rotateBackSliceClockwise_bottomFaceBottomRow_notReversed_leftFaceLeft
 	cr_assert_arr_eq(
 		oldBottomFaceBottomRow,
 		newLeftFaceLeftColumn,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"bottom face bottom row was reversed");
 }
 
@@ -206,6 +206,6 @@ Test(Cube, rotateBackSliceClockwise_topFaceTopRow_notReversed_rightFaceRightColu
 	cr_assert_arr_eq(
 		oldTopFaceTopRow,
 		newRightFaceRightColumn,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"top face top row was reversed");
 }

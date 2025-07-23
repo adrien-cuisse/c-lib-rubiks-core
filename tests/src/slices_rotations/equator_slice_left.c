@@ -27,7 +27,7 @@ Test(Cube, rotateEquatorSliceLeft_frontFaceEquatorRow_movesTo_leftFaceEquatorRow
 	cr_assert_arr_eq(
 		newLeftFaceEquatorRow,
 		oldFrontFaceEquatorRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"front face equator row wasn't moved to the left face equator row");
 }
 
@@ -50,7 +50,7 @@ Test(Cube, rotateEquatorSliceLeft_leftFaceEquatorRow_movesTo_backFaceEquatorRow)
 	cr_assert_arr_eq(
 		newBackFaceEquatorRow,
 		oldLeftFaceEquatorRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"left face equator row wasn't moved to the back face equator row");
 }
 
@@ -73,7 +73,7 @@ Test(Cube, rotateEquatorSliceLeft_backFaceEquatorRow_movesTo_rightFaceEquatorRow
 	cr_assert_arr_eq(
 		newRightFaceEquatorRow,
 		oldBackFaceEquatorRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"back face equator row wasn't moved to the right face equator row");
 }
 
@@ -96,7 +96,7 @@ Test(Cube, rotateEquatorSliceLeft_rightFaceEquatorRow_movesTo_frontFaceEquatorRo
 	cr_assert_arr_eq(
 		newFrontFaceEquatorRow,
 		oldRightFaceEquatorRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"right face equator row wasn't moved to the front face equator row");
 }
 
@@ -120,7 +120,7 @@ Test(Cube, rotateEquatorSliceLeft_leftFaceEquatorRow_reversed_backFaceEquatorRow
 	cr_assert_arr_eq(
 		oldLeftFaceEquatorRow,
 		newBackFaceEquatorRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"left face equator row wasn't reversed");
 }
 
@@ -144,7 +144,7 @@ Test(Cube, rotateEquatorSliceLeft_backFaceEquatorRow_reversed_rightFaceEquatorRo
 	cr_assert_arr_eq(
 		oldBackFaceEquatorRow,
 		newRightFaceEquatorRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"back face equator row wasn't reversed");
 }
 
@@ -167,7 +167,7 @@ Test(Cube, rotateEquatorSliceLeft_rightFaceEquatorRow_notReversed_frontFaceEquat
 	cr_assert_arr_eq(
 		oldRightFaceEquatorRow,
 		newFrontFaceEquatorRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"right face equator row was reversed");
 }
 
@@ -190,6 +190,6 @@ Test(Cube, rotateEquatorSliceLeft_frontFaceEquatorRow_notReversed_leftFaceEquato
 	cr_assert_arr_eq(
 		oldFrontFaceEquatorRow,
 		newLeftFaceEquatorRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"front face equator row was reversed");
 }

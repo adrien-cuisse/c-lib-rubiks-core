@@ -27,7 +27,7 @@ Test(Cube, rotateMiddleSliceUp_frontFaceMiddleColumn_movesTo_topFaceMiddleColumn
 	cr_assert_arr_eq(
 		newTopFaceMiddleColumn,
 		oldFrontFaceMiddleColumn,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"front face middle column wasn't moved to the top face middle column");
 }
 
@@ -50,7 +50,7 @@ Test(Cube, rotateMiddleSliceUp_topFaceMiddleColumn_movesTo_backFaceMiddleColumn)
 	cr_assert_arr_eq(
 		newBackFaceMiddleColumn,
 		oldTopFaceMiddleColumn,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"top face middle column wasn't moved to the back face middle column");
 }
 
@@ -73,7 +73,7 @@ Test(Cube, rotateMiddleSliceUp_backFaceMiddleColumn_movesTo_bottomFaceMiddleColu
 	cr_assert_arr_eq(
 		newBottomFaceMiddleColumn,
 		oldBackFaceMiddleColumn,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"back face middle column wasn't moved to the bottom face middle column");
 }
 
@@ -96,6 +96,6 @@ Test(Cube, rotateMiddleSliceUp_bottomFaceMiddleColumn_movesTo_frontFaceMiddleCol
 	cr_assert_arr_eq(
 		newFrontFaceMiddleColumn,
 		oldBottomFaceMiddleColumn,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"bottom face middle column wasn't moved to the front face middle column");
 }

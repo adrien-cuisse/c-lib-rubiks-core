@@ -28,7 +28,7 @@ Test(Cube, rotateFrontSlicesAnticlockwise_topFaceBottomRow_movesTo_leftFaceRight
 	cr_assert_arr_eq(
 		oldTopFaceBottomRow,
 		newLeftFaceRightColumn,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"top face bottom row wasn't moved to the left face right column (reversed)");
 }
 
@@ -52,7 +52,7 @@ Test(Cube, rotateFrontSlicesAnticlockwise_topFaceEquatorRow_movesTo_leftFaceMidd
 	cr_assert_arr_eq(
 		oldTopFaceEquatorRow,
 		newLeftFaceMiddleColumn,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"top face equator row wasn't moved to the left face middle column (reversed)");
 }
 
@@ -75,7 +75,7 @@ Test(Cube, rotateFrontSlicesAnticlockwise_leftFaceRightColumn_movesTo_bottomFace
 	cr_assert_arr_eq(
 		oldLeftFaceRightColumn,
 		newBottomFaceTopRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"left face right column wasn't moved to the bottom face top row");
 }
 
@@ -98,7 +98,7 @@ Test(Cube, rotateFrontSlicesAnticlockwise_leftFaceMiddleColumn_movesTo_bottomFac
 	cr_assert_arr_eq(
 		oldLeftFaceMiddleColumn,
 		newBottomFaceEquatorRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"left face middle column wasn't moved to the bottom face equator row");
 }
 
@@ -122,7 +122,7 @@ Test(Cube, rotateFrontSlicesAnticlockwise_bottomFaceTopRow_movesTo_rightFaceLeft
 	cr_assert_arr_eq(
 		oldBottomFaceTopRow,
 		newRightFaceLeftColumn,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"bottom face top row wasn't moved to the right face left column (reversed)");
 }
 
@@ -146,7 +146,7 @@ Test(Cube, rotateFrontSlicesAnticlockwise_bottomFaceEquatorRow_movesTo_rightFace
 	cr_assert_arr_eq(
 		oldBottomFaceEquatorRow,
 		newRightFaceMiddleColumn,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"bottom face equator row wasn't moved to the right face middle column (reversed)");
 }
 
@@ -169,7 +169,7 @@ Test(Cube, rotateFrontSlicesAnticlockwise_rightFaceLeftColumn_movesTo_topFaceBot
 	cr_assert_arr_eq(
 		oldRightFaceLeftColumn,
 		newTopFaceBottomRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"right face left column was moved to the top face bottom row");
 }
 
@@ -192,6 +192,6 @@ Test(Cube, rotateFrontSlicesAnticlockwise_rightFaceMiddleColumn_movesTo_topFaceE
 	cr_assert_arr_eq(
 		oldRightFaceMiddleColumn,
 		newTopFaceEquatorRow,
-		FACE_SIZE,
+		FACE_SIZE * sizeof(Color),
 		"right face middle column was moved to the top face equator row");
 }
