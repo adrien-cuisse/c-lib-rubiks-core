@@ -8,8 +8,6 @@ Cube * createScrambledCube(void)
 {
 	Cube * cube = Cube_create();
 
-#if 1
-
 	// official terminology:
 	// D2 F2 R2 D2 L2 U F2 U' F' U F2 U' R2 B' F R' D2 F' D' L
 	//
@@ -79,9 +77,9 @@ Cube * createScrambledCube(void)
     //	        | R O Y |
     //	        | B W G |
     //	        | G O B |
-	//		    +-------+
+    //		    +-------+
 
-	//	        +-------+
+    //	        +-------+
     //	        | R O Y |
     //	        | B W G |
     //	        | G O B |
@@ -94,40 +92,6 @@ Cube * createScrambledCube(void)
     //	        | R Y R |
     //	        | B G O |
     //	        +-------+
-
-#elif 1
-
-	// https://rubikscu.be/
-	//
-	// x x z z D2 F2 R2
-	//
-	// blue face in front, orange to the right, white above
-
-	// D2
-	Cube_rotateBottomSliceRight(cube);
-	/*Cube_rotateBottomSliceRight(cube);
-	// F2
-	Cube_rotateFrontSliceClockwise(cube);
-	Cube_rotateFrontSliceClockwise(cube);
-	// R2
-	Cube_rotateRightSliceUp(cube);
-	Cube_rotateRightSliceUp(cube);*/
-
-#else
-
-	int rotationsLeft = 7;
-	while (rotationsLeft--)
-	{
-		Cube_rotateTopSliceLeft(cube);
-		Cube_rotateLeftSliceUp(cube);
-		Cube_rotateFrontSliceClockwise(cube);
-
-		Cube_rotateBottomSliceRight(cube);
-		Cube_rotateRightSliceDown(cube);
-		Cube_rotateBackSliceAnticlockwise(cube);
-	}
-
-#endif
 
 	return cube;
 }
