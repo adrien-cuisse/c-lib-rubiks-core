@@ -21,16 +21,18 @@ TESTS_SRC_DIR=$(addprefix $(TESTS_DIR)/,$(SRC_DIR))
 TESTS_OBJ_DIR=$(addprefix $(TESTS_DIR)/,$(OBJ_DIR))
 TESTS_BIN_DIR=$(addprefix $(TESTS_DIR)/,$(BIN_DIR))
 
+# Test utils (assertions, helpers), which won't generate binaries
+TESTS_UTILS_SRC=$(addprefix $(TESTS_SRC_DIR)/,utils.c asserts.c)
+TESTS_UTILS_OBJ=$(subst $(TESTS_SRC_DIR),$(TESTS_OBJ_DIR),$(TESTS_UTILS_SRC:.c=.o))
+
 # Test sources compilation
 TESTS_SRC=$(shell find $(TESTS_SRC_DIR) -type f -name '*.c')
+TESTS_SRC:=$(filter-out $(TESTS_UTILS_SRC),$(TESTS_SRC))
 TESTS_OBJ=$(subst $(TESTS_SRC_DIR),$(TESTS_OBJ_DIR),$(TESTS_SRC:.c=.o))
 TESTS_CFLAGS=$(subst -ansi,,$(RELEASE_CFLAGS)) # Criterion is not C89 compliant
 TESTS_LDFLAGS=-lcriterion -L$(LIB_DIR)/ -l$(LIBRARY)
 TESTS_BINS=$(subst $(TESTS_SRC_DIR),$(TESTS_BIN_DIR),$(TESTS_SRC:.c=))
 
-# Test utils (assertions, helpers)
-TESTS_UTILS_SRC=$(addprefix $(TESTS_SRC_DIR)/,utils.c asserts.c)
-TESTS_UTIL_OBJ=$(subst $(TESTS_SRC_DIR),$(TESTS_OBJ_DIR),$(TESTS_UTILS_SRC:.c=.o))
 
 default: run-tests
 
@@ -57,7 +59,7 @@ $(TESTS_OBJ_DIR)/%.o: $(TESTS_SRC_DIR)/%.c
 # Test binaries
 .PHONY: tests-binaries
 tests-binaries: $(TESTS_BINS)
-$(TESTS_BIN_DIR)/%: $(TESTS_OBJ_DIR)/%.o $(TESTS_UTIL_OBJ)
+$(TESTS_BIN_DIR)/%: $(TESTS_OBJ_DIR)/%.o $(TESTS_UTILS_OBJ)
 	@mkdir -p $(dir $@)
 	$(CC) $(TESTS_LDFLAGS) $^ -o $@
 
@@ -72,7 +74,7 @@ $(LIB_DIR)/lib$(LIBRARY).so: $(RELEASE_OBJ)
 
 .PHONY: clean
 clean:
-	rm -rf $(RELEASE_OBJ) $(TESTS_OBJ) $(TESTS_UTIL_OBJ)
+	rm -rf $(RELEASE_OBJ) $(TESTS_OBJ) $(TESTS_UTILS_OBJ)
 
 .PHONY: clean-all
 clean-all: clean
