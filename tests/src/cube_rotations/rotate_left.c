@@ -20,7 +20,10 @@ Test(Cube, rotateLeft_rightFaceGoesFront)
 
 	// then
 	Face * newFrontFace = Cube_frontFace(cube);
-	cr_assert_eq(newFrontFace, oldRightFace, "right face wasn't moved to the front");
+	cr_assert_eq(
+		newFrontFace,
+		oldRightFace,
+		"right face wasn't moved to the front");
 }
 
 
@@ -35,7 +38,10 @@ Test(Cube, rotateLeft_backFaceGoesRight)
 
 	// then
 	Face * newRightFace = Cube_rightFace(cube);
-	cr_assert_eq(newRightFace, oldBackFace, "back face wasn't moved to the right");
+	cr_assert_eq(
+		newRightFace,
+		oldBackFace,
+		"back face wasn't moved to the right");
 }
 
 
@@ -50,7 +56,10 @@ Test(Cube, rotateLeft_leftFaceGoesBack)
 
 	// then
 	Face * newBackFace = Cube_backFace(cube);
-	cr_assert_eq(newBackFace, oldLeftFace, "left face wasn't moved to the back");
+	cr_assert_eq(
+		newBackFace,
+		oldLeftFace,
+		"left face wasn't moved to the back");
 }
 
 
@@ -65,7 +74,10 @@ Test(Cube, rotateLeft_frontFaceGoesLeft)
 
 	// then
 	Face * newLeftFace = Cube_leftFace(cube);
-	cr_assert_eq(newLeftFace, oldFrontFace, "front face wasn't moved to the left");
+	cr_assert_eq(
+		newLeftFace,
+		oldFrontFace,
+		"front face wasn't moved to the left");
 }
 
 
