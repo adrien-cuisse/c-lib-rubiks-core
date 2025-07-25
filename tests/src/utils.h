@@ -1,6 +1,6 @@
 
-#ifndef TEMP_HEADER
-#define TEMP_HEADER
+#ifndef TESTS_UTILS_HEADER
+#define TESTS_UTILS_HEADER
 
 #include "../../include/Cube.h"
 
@@ -28,4 +28,4 @@ void reverseSpan(Color buffer[FACE_SIZE]);
 
 
 
-#endif /* TEMP_HEADER */
+#endif /* TESTS_UTILS_HEADER */
