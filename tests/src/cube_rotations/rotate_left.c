@@ -71,31 +71,17 @@ Test(Cube, rotateLeft_frontFaceGoesLeft)
 
 Test(Cube, rotateCubeLeft_bottomFaceIsRotatedClockwise)
 {
-	// given
-	Cube * cube = createScrambledCube();
-	Face * bottomFace = Cube_bottomFace(cube);
-	Color faceBeforeRotation[FACE_SIZE][FACE_SIZE];
-	readFace(bottomFace, faceBeforeRotation);
-
-	// when
-	Cube_rotateLeft(cube);
-
-	// then
-	assert_faceRotatedClockwise(faceBeforeRotation, bottomFace, "bottom");
+	test_face_rotated_clockwise(
+        Cube_bottomFace,
+        Cube_rotateLeft,
+        "bottom face wasn't rotated");
 }
 
 
 Test(Cube, rotateCubeLeft_topFaceIsRotatedAntiClockwise)
 {
-	// given
-	Cube * cube = createScrambledCube();
-	Face * topFace = Cube_topFace(cube);
-	Color faceBeforeRotation[FACE_SIZE][FACE_SIZE];
-	readFace(topFace, faceBeforeRotation);
-
-	// when
-	Cube_rotateLeft(cube);
-
-	// then
-	assert_faceRotatedAnticlockwise(faceBeforeRotation, topFace, "top");
+	test_face_rotated_anticlockwise(
+        Cube_topFace,
+        Cube_rotateLeft,
+        "top face wasn't rotated");
 }

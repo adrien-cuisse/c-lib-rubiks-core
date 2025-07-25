@@ -6,53 +6,145 @@
 
 
 
+
 /**
- * Asserts that the [face] has been rotated clockwise
- *
- * @param faceBeforeRotation - the 2D array of cells, before rotation
- *
- * @param face - the actual face object
- *
- * @param faceLabel - either "top", "front", "bottom", "back", "left" or "right"
- *
+ * The label of each color
  */
-#define assert_faceRotatedClockwise(faceBeforeRotation, face, faceLabel) \
-	_assert_faceRotatedClockwise( \
-		(faceBeforeRotation), \
-		(face), \
-		(faceLabel), \
-		__FILE__, \
-		__LINE__)
-void _assert_faceRotatedClockwise(
-	Color before[FACE_SIZE][FACE_SIZE],
-	Face const * face,
-	char const * facePosition,
-	char const * file,
-	int line);
+#define COLORS_LABEL "BGORWY"
 
 
 /**
- * Asserts that the [face] has been rotated anticlockwise
+ * Tests if a face is rotated clockwise
  *
- * @param faceBeforeRotation - the 2D array of cells, before rotation
+ * @param get_face - Face * (* get_face)(Cube const *) -
+ * 	function pointer taking the cube and returning the face to check
  *
- * @param face - the actual face object
+ * @param apply_rotation - void (* apply_rotation)(Cube *) -
+ * 	function pointer to the rotation to apply, taking the cube as
+ * 	argument and returning nothing
  *
- * @param faceLabel - either "top", "front", "bottom", "back", "left" or "right"
+ * @param failure_message - char const * failure_message -
+ * 	the error message to print on failure, expected/actual face content
+ * 	will be added
  */
-#define assert_faceRotatedAnticlockwise(faceBeforeRotation, face, faceLabel) \
-	_assert_faceRotatedAnticlockwise( \
-		(faceBeforeRotation), \
-		(face), \
-		(faceLabel), \
-		__FILE__, \
-		__LINE__)
-void _assert_faceRotatedAnticlockwise(
-	Color before[FACE_SIZE][FACE_SIZE],
-	Face const * face,
-	char const * facePosition,
-	char const * file,
-	int line);
+#define test_face_rotated_clockwise( \
+		get_face, \
+		apply_rotation, \
+		failure_message) \
+	do { \
+		/* given */ \
+		Cube * cube = createScrambledCube(); \
+		Face * face = get_face(cube); \
+		Color before_rotation[FACE_SIZE][FACE_SIZE]; \
+		readFace(face, before_rotation); \
+		\
+		/* when */ \
+		apply_rotation(cube); \
+		\
+		/* then */ \
+		Color expected_after_rotation[FACE_SIZE][FACE_SIZE] = \
+		{ \
+			{ before_rotation[2][0], before_rotation[1][0], before_rotation[0][0] }, \
+			{ before_rotation[2][1], before_rotation[1][1], before_rotation[0][1] }, \
+			{ before_rotation[2][2], before_rotation[1][2], before_rotation[0][2] } \
+		}; \
+		Color actual_after_rotation[FACE_SIZE][FACE_SIZE]; \
+		readFace(face, actual_after_rotation); \
+		cr_assert_arr_eq( \
+			expected_after_rotation, \
+			actual_after_rotation, \
+			FACE_SIZE * FACE_SIZE * sizeof(Color), \
+			"%s clockwise\n" \
+			"          [%c,%c,%c]          [%c,%c,%c]\n" \
+			"expected: [%c,%c,%c], actual: [%c,%c,%c]\n" \
+			"          [%c,%c,%c]          [%c,%c,%c]", \
+			failure_message, \
+			COLORS_LABEL[ expected_after_rotation[0][0] ], \
+			COLORS_LABEL[ expected_after_rotation[0][1] ], \
+			COLORS_LABEL[ expected_after_rotation[0][2] ], \
+			COLORS_LABEL[ actual_after_rotation[0][0] ], \
+			COLORS_LABEL[ actual_after_rotation[0][1] ], \
+			COLORS_LABEL[ actual_after_rotation[0][2] ], \
+			COLORS_LABEL[ expected_after_rotation[1][0] ], \
+			COLORS_LABEL[ expected_after_rotation[1][1] ], \
+			COLORS_LABEL[ expected_after_rotation[1][2] ], \
+			COLORS_LABEL[ actual_after_rotation[1][0] ], \
+			COLORS_LABEL[ actual_after_rotation[1][1] ], \
+			COLORS_LABEL[ actual_after_rotation[1][2] ], \
+			COLORS_LABEL[ expected_after_rotation[2][0] ], \
+			COLORS_LABEL[ expected_after_rotation[2][1] ], \
+			COLORS_LABEL[ expected_after_rotation[2][2] ], \
+			COLORS_LABEL[ actual_after_rotation[2][0] ], \
+			COLORS_LABEL[ actual_after_rotation[2][1] ], \
+			COLORS_LABEL[ actual_after_rotation[2][2] ]); \
+	} while (0)
+
+
+/**
+ * Tests if a face is rotated anticlockwise
+ *
+ * @param get_face - Face * (* get_face)(Cube const *) -
+ * 	function pointer taking the cube and returning the face to check
+ *
+ * @param apply_rotation - void (* apply_rotation)(Cube *) -
+ * 	function pointer to the rotation to apply, taking the cube as
+ * 	argument and returning nothing
+ *
+ * @param failure_message - char const * failure_message -
+ * 	the error message to print on failure, expected/actual face content
+ * 	will be added
+ */
+#define test_face_rotated_anticlockwise( \
+		get_face, \
+		apply_rotation, \
+		failure_message) \
+	do { \
+		/* given */ \
+		Cube * cube = createScrambledCube(); \
+		Face * face = get_face(cube); \
+		Color before_rotation[FACE_SIZE][FACE_SIZE]; \
+		readFace(face, before_rotation); \
+		\
+		/* when */ \
+		apply_rotation(cube); \
+		\
+		/* then */ \
+		Color expected_after_rotation[FACE_SIZE][FACE_SIZE] = \
+		{ \
+			{ before_rotation[0][2], before_rotation[1][2], before_rotation[2][2] }, \
+			{ before_rotation[0][1], before_rotation[1][1], before_rotation[2][1] }, \
+			{ before_rotation[0][0], before_rotation[1][0], before_rotation[2][0] } \
+		}; \
+		Color actual_after_rotation[FACE_SIZE][FACE_SIZE]; \
+		readFace(face, actual_after_rotation); \
+		cr_assert_arr_eq( \
+			expected_after_rotation, \
+			actual_after_rotation, \
+			FACE_SIZE * FACE_SIZE * sizeof(Color), \
+			"%s clockwise\n" \
+			"          [%c,%c,%c]          [%c,%c,%c]\n" \
+			"expected: [%c,%c,%c], actual: [%c,%c,%c]\n" \
+			"          [%c,%c,%c]          [%c,%c,%c]", \
+			failure_message, \
+			COLORS_LABEL[ expected_after_rotation[0][0] ], \
+			COLORS_LABEL[ expected_after_rotation[0][1] ], \
+			COLORS_LABEL[ expected_after_rotation[0][2] ], \
+			COLORS_LABEL[ actual_after_rotation[0][0] ], \
+			COLORS_LABEL[ actual_after_rotation[0][1] ], \
+			COLORS_LABEL[ actual_after_rotation[0][2] ], \
+			COLORS_LABEL[ expected_after_rotation[1][0] ], \
+			COLORS_LABEL[ expected_after_rotation[1][1] ], \
+			COLORS_LABEL[ expected_after_rotation[1][2] ], \
+			COLORS_LABEL[ actual_after_rotation[1][0] ], \
+			COLORS_LABEL[ actual_after_rotation[1][1] ], \
+			COLORS_LABEL[ actual_after_rotation[1][2] ], \
+			COLORS_LABEL[ expected_after_rotation[2][0] ], \
+			COLORS_LABEL[ expected_after_rotation[2][1] ], \
+			COLORS_LABEL[ expected_after_rotation[2][2] ], \
+			COLORS_LABEL[ actual_after_rotation[2][0] ], \
+			COLORS_LABEL[ actual_after_rotation[2][1] ], \
+			COLORS_LABEL[ actual_after_rotation[2][2] ]); \
+	} while (0)
 
 
 /**
@@ -151,20 +243,6 @@ void _assert_faceFlipped(
 			COLORS_NAME[source_span[0]], \
 			COLORS_NAME[destination_span[0]]); \
 	} while (0)
-
-
-/**
- * The label of each color
- */
-#define COLORS_LABEL \
-	(Color[]) { \
-		[BLUE] = 'B', \
-		[GREEN] = 'G', \
-		[ORANGE] = 'O', \
-		[RED] = 'R', \
-		[WHITE] = 'W', \
-		[YELLOW] = 'Y', \
-	}
 
 
 /**

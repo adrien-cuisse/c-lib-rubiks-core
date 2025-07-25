@@ -51,17 +51,10 @@ Test(Cube, rotateLeftSliceDown_topFaceLeftColumn_movesTo_frontFaceLeftColumn)
 
 Test(Cube, rotateLeftSliceDown_leftFaceIsRotatedClockwise)
 {
-	// given
-	Cube * cube = createScrambledCube();
-	Face * leftFace = Cube_leftFace(cube);
-	Color beforeRotation[FACE_SIZE][FACE_SIZE];
-	readFace(leftFace, beforeRotation);
-
-	// when
-	Cube_rotateLeftSliceDown(cube);
-
-	// then
-	assert_faceRotatedClockwise(beforeRotation, leftFace, "left");
+    test_face_rotated_clockwise(
+        Cube_leftFace,
+        Cube_rotateLeftSliceDown,
+        "left face wasn't rotated");
 }
 
 
