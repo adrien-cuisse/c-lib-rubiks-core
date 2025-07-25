@@ -1,10 +1,10 @@
 
 #include <criterion/criterion.h>
 
-#include "../../../include/Cube.h"
+#include "../../../../include/Cube.h"
 
-#include "../asserts.h"
-#include "../utils.h"
+#include "../../asserts.h"
+#include "../../utils.h"
 
 
 
