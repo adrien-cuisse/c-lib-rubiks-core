@@ -79,6 +79,80 @@ void _assert_faceFlipped(
 	int line);
 
 
+
+
+/**
+ * The name of each color
+ */
+#define COLORS_NAME \
+	(char const * []) { \
+		[BLUE] = "BLUE", \
+		[GREEN] = "GREEN", \
+		[ORANGE] = "ORANGE", \
+		[RED] = "RED", \
+		[WHITE] = "WHITE", \
+		[YELLOW] = "YELLOW", \
+	}
+
+
+/**
+ * Tests if a span has been moved to the correct position
+ *
+ * @param get_source_face - Face * (* get_source_face)(Cube const *) -
+ * 	function pointer taking the cube and returning the face where the span is
+ * 	before applying the rotation
+ *
+ * @param read_source_span - void (* read_source_span)(Face const *, Color[FACE_SIZE]) -
+ * 	function pointer taking the face where the span is before applying the
+ * 	rotation, and the buffer to write the span content in, and returning nothing
+ *
+ * @param apply_slice_rotation - void (* apply_slice_rotation)(Cube *) -
+ * 	function pointer to the slice rotation to apply, taking the cube as
+ * 	argument and returning nothing
+ *
+ * @param get_destination_face - Face * (* get_destination_face)(Cube const *) -
+ * 	function pointer taking the cube and returning the face where the span
+ * 	should be after applying the rotation
+ *
+ * @param read_destination_span - void (* read_destination_span)(Face const *, Color[FACE_SIZE]) -
+ * 	function pointer taking the face where the span is after applying the
+ * 	rotation, and the buffer to write the span content in, and returning nothing
+ *
+ * @param failure_message - char const * failure_message -
+ * 	the error message to print on failure, spans content will be added
+ */
+#define test_span_moved( \
+		get_source_face, \
+		read_source_span, \
+		apply_slice_rotation, \
+		get_destination_face, \
+		read_destination_span, \
+		failure_message) \
+	do { \
+		/* given */ \
+		Cube * cube = Cube_create(); \
+		Face * source_face = get_source_face(cube); \
+		Color source_span[FACE_SIZE]; \
+		read_source_span(source_face, source_span); \
+		\
+		/* when */ \
+		apply_slice_rotation(cube); \
+		\
+		/* then */ \
+		Face * destination_face = get_destination_face(cube); \
+		Color destination_span[FACE_SIZE]; \
+		read_destination_span(destination_face, destination_span); \
+		cr_assert_arr_eq( \
+			source_span, \
+			destination_span, \
+			FACE_SIZE * sizeof(Color), \
+			"%s, expected %s span on dest but got %s span", \
+			failure_message, \
+			COLORS_NAME[source_span[0]], \
+			COLORS_NAME[destination_span[0]]); \
+	} while (0)
+
+
 /**
  * The labels of each color
  */

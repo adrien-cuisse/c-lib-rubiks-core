@@ -11,93 +11,41 @@
 
 Test(Cube, rotateFrontSliceAnticlockwise_topFaceBottomRow_movesTo_leftFaceRightColumn)
 {
-	// given
-	Cube * cube = Cube_create();
-	Face * topFace = Cube_topFace(cube);
-	Color oldTopFaceBottomRow[FACE_SIZE];
-	bottomRow(topFace, oldTopFaceBottomRow);
-
-	// when
-	Cube_rotateFrontSliceAnticlockwise(cube);
-
-	// then
-	Face * leftFace = Cube_leftFace(cube);
-	Color newLeftFaceRightColumn[FACE_SIZE];
-	rightColumn(leftFace, newLeftFaceRightColumn);
-	cr_assert_arr_eq(
-		newLeftFaceRightColumn,
-		oldTopFaceBottomRow,
-		FACE_SIZE * sizeof(Color),
-		"top face bottom row wasn't moved to the left face right column");
+    test_span_moved(
+        Cube_topFace, bottomRow,
+        Cube_rotateFrontSliceAnticlockwise,
+        Cube_leftFace, rightColumn,
+        "top face bottom row wasn't moved to the left face right column");
 }
 
 
 Test(Cube, rotateFrontSliceAnticlockwise_leftFaceRightColumn_movesTo_bottomFaceTopRow)
 {
-	// given
-	Cube * cube = Cube_create();
-	Face * leftFace = Cube_leftFace(cube);
-	Color oldLeftFaceRightColumn[FACE_SIZE];
-	rightColumn(leftFace, oldLeftFaceRightColumn);
-
-	// when
-	Cube_rotateFrontSliceAnticlockwise(cube);
-
-	// then
-	Face * bottomFace = Cube_bottomFace(cube);
-	Color newBottomFaceTopRow[FACE_SIZE];
-	topRow(bottomFace, newBottomFaceTopRow);
-	cr_assert_arr_eq(
-		newBottomFaceTopRow,
-		oldLeftFaceRightColumn,
-		FACE_SIZE * sizeof(Color),
-		"left face right column wasn't moved to the bottom face top row");
+    test_span_moved(
+        Cube_leftFace, rightColumn,
+        Cube_rotateFrontSliceAnticlockwise,
+        Cube_bottomFace, topRow,
+        "left face right column wasn't moved to the bottom face top row");
 }
 
 
 Test(Cube, rotateFrontSliceAnticlockwise_bottomFaceTopRow_movesTo_rightFaceLeftColumn)
 {
-	// given
-	Cube * cube = Cube_create();
-	Face * bottomFace = Cube_bottomFace(cube);
-	Color oldBottomFaceTopRow[FACE_SIZE];
-	topRow(bottomFace, oldBottomFaceTopRow);
-
-	// when
-	Cube_rotateFrontSliceAnticlockwise(cube);
-
-	// then
-	Face * rightFace = Cube_rightFace(cube);
-	Color newRightFaceLeftColumn[FACE_SIZE];
-	leftColumn(rightFace, newRightFaceLeftColumn);
-	cr_assert_arr_eq(
-		newRightFaceLeftColumn,
-		oldBottomFaceTopRow,
-		FACE_SIZE * sizeof(Color),
-		"bottom face top row wasn't moved to the right face left column");
+    test_span_moved(
+        Cube_bottomFace, topRow,
+        Cube_rotateFrontSliceAnticlockwise,
+        Cube_rightFace, leftColumn,
+        "bottom face top row wasn't moved to the right face left column");
 }
 
 
 Test(Cube, rotateFrontSliceAnticlockwise_rightFaceLeftColumn_movesTo_topFaceBottomRow)
 {
-	// given
-	Cube * cube = Cube_create();
-	Face * rightFace = Cube_rightFace(cube);
-	Color oldRightFaceLeftColumn[FACE_SIZE];
-	leftColumn(rightFace, oldRightFaceLeftColumn);
-
-	// when
-	Cube_rotateFrontSliceAnticlockwise(cube);
-
-	// then
-	Face * topFace = Cube_topFace(cube);
-	Color newTopFaceBottomRow[FACE_SIZE];
-	bottomRow(topFace, newTopFaceBottomRow);
-	cr_assert_arr_eq(
-		newTopFaceBottomRow,
-		oldRightFaceLeftColumn,
-		FACE_SIZE * sizeof(Color),
-		"right face left column wasn't moved to the top face bottom row");
+    test_span_moved(
+        Cube_rightFace, leftColumn,
+        Cube_rotateFrontSliceAnticlockwise,
+        Cube_topFace, bottomRow,
+        "right face left column wasn't moved to the top face bottom row");
 }
 
 
@@ -117,95 +65,41 @@ Test(Cube, rotateFrontSliceAnticlockwise_frontFaceIsRotatedAnticlockwise)
 }
 
 
-Test(Cube, rotateFrontSliceAnticlockwise_bottomFaceTopRow_reversed_rightFaceLeftColumn)
+Test(Cube, rotateFrontSliceAnticlockwise_bottomFaceTopRow_movesTo_rightFaceLeftColumn_reversed)
 {
-	// given
-	Cube * cube = createScrambledCube();
-	Face * bottomFace = Cube_bottomFace(cube);
-	Color oldBottomFaceTopRow[FACE_SIZE];
-	topRow(bottomFace, oldBottomFaceTopRow);
-	reverseSpan(oldBottomFaceTopRow);
-
-	// when
-	Cube_rotateFrontSliceAnticlockwise(cube);
-
-	// then
-	Face * rightFace = Cube_rightFace(cube);
-	Color newRightFaceLeftColumn[FACE_SIZE];
-	leftColumn(rightFace, newRightFaceLeftColumn);
-	cr_assert_arr_eq(
-		oldBottomFaceTopRow,
-		newRightFaceLeftColumn,
-		FACE_SIZE * sizeof(Color),
-		"bottom face top row wasn't reversed");
+    test_span_moved_and_reversed(
+        Cube_bottomFace, topRow,
+        Cube_rotateFrontSliceAnticlockwise,
+        Cube_rightFace, leftColumn,
+        "source span (bottom face top row) wasn't reversed");
 }
 
 
-Test(Cube, rotateFrontSliceAnticlockwise_topFaceBottomRow_reversed_leftFaceRightColumn)
+Test(Cube, rotateFrontSliceAnticlockwise_topFaceBottomRow_movesTo_leftFaceRightColumn_reversed)
 {
-	// given
-	Cube * cube = createScrambledCube();
-	Face * topFace = Cube_topFace(cube);
-	Color oldTopFaceBottomRow[FACE_SIZE];
-	bottomRow(topFace, oldTopFaceBottomRow);
-	reverseSpan(oldTopFaceBottomRow);
-
-	// when
-	Cube_rotateFrontSliceAnticlockwise(cube);
-
-	// then
-	Face * leftFace = Cube_leftFace(cube);
-	Color newLeftFaceRightColumn[FACE_SIZE];
-	rightColumn(leftFace, newLeftFaceRightColumn);
-	cr_assert_arr_eq(
-		oldTopFaceBottomRow,
-		newLeftFaceRightColumn,
-		FACE_SIZE * sizeof(Color),
-		"top face bottom row wasn't reversed");
+    test_span_moved_and_reversed(
+        Cube_topFace, bottomRow,
+        Cube_rotateFrontSliceAnticlockwise,
+        Cube_leftFace, rightColumn,
+        "source span (top face bottom row) wasn't reversed");
 }
 
 
-Test(Cube, rotateFrontSliceAnticlockwise_rightFaceLeftColumn_notReversed_topFaceBottomRow)
+Test(Cube, rotateFrontSliceAnticlockwise_rightFaceLeftColumn_movesTo_topFaceBottomRow_notReversed)
 {
-	// given
-	Cube * cube = createScrambledCube();
-	Face * rightFace = Cube_rightFace(cube);
-	Color oldRightFaceLeftColumn[FACE_SIZE];
-	leftColumn(rightFace, oldRightFaceLeftColumn);
-
-	// when
-	Cube_rotateFrontSliceAnticlockwise(cube);
-
-	// then
-	Face * topFace = Cube_topFace(cube);
-	Color newTopFaceBottomRow[FACE_SIZE];
-	bottomRow(topFace, newTopFaceBottomRow);
-	cr_assert_arr_eq(
-		oldRightFaceLeftColumn,
-		newTopFaceBottomRow,
-		FACE_SIZE * sizeof(Color),
-		"right face left column was reversed");
+    test_span_moved_and_not_reversed(
+        Cube_rightFace, leftColumn,
+        Cube_rotateFrontSliceAnticlockwise,
+        Cube_topFace, bottomRow,
+        "source span (right face left column) was reversed");
 }
 
 
-Test(Cube, rotateFrontSliceAnticlockwise_leftFaceRightColumn_notReversed_bottomFaceTopRow)
+Test(Cube, rotateFrontSliceAnticlockwise_leftFaceRightColumn_movesTo_bottomFaceTopRow_notReversed)
 {
-	// given
-	Cube * cube = createScrambledCube();
-	Face * leftFace = Cube_leftFace(cube);
-	Color oldLeftFaceRightColumn[FACE_SIZE];
-	rightColumn(leftFace, oldLeftFaceRightColumn);
-
-	// when
-	Cube_rotateFrontSliceAnticlockwise(cube);
-
-	// then
-	Face * bottomFace = Cube_bottomFace(cube);
-	Color newBottomFaceTopRow[FACE_SIZE];
-	topRow(bottomFace, newBottomFaceTopRow);
-	cr_assert_arr_eq(
-		oldLeftFaceRightColumn,
-		newBottomFaceTopRow,
-		FACE_SIZE * sizeof(Color),
-		"left face right column was reversed");
+    test_span_moved_and_not_reversed(
+        Cube_leftFace, rightColumn,
+        Cube_rotateFrontSliceAnticlockwise,
+        Cube_bottomFace, topRow,
+        "source span (left face right column) was reversed");
 }
