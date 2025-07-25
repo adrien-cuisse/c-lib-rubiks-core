@@ -96,7 +96,7 @@ void _assert_faceFlipped(
 
 
 /**
- * Tests if a span has been moved to the correct position
+ * Tests if a span moves to the correct position
  *
  * @param get_source_face - Face * (* get_source_face)(Cube const *) -
  * 	function pointer taking the cube and returning the face where the span is
@@ -154,7 +154,7 @@ void _assert_faceFlipped(
 
 
 /**
- * The labels of each color
+ * The label of each color
  */
 #define COLORS_LABEL \
 	(Color[]) { \
@@ -168,7 +168,7 @@ void _assert_faceFlipped(
 
 
 /**
- * Tests if a span has been moved to the correct position with the same cells
+ * Tests if a span moves to the correct position with the same cells
  * 	order (rows are from left to right, columns are from top to bottom)
  *
  * @param get_source_face - Face * (* get_source_face)(Cube const *) -
@@ -231,8 +231,8 @@ void _assert_faceFlipped(
 
 
 /**
- * Tests if a span has been moved to the correct position with the reverse
- * 	cells order (rows are from left to right, columns are from top to bottom)
+ * Tests if a span moves to the correct position with the reverse cells
+ * 	order (rows are from left to right, columns are from top to bottom)
  *
  * @param get_source_face - Face * (* get_source_face)(Cube const *) -
  * 	function pointer taking the cube and returning the face where the span is
