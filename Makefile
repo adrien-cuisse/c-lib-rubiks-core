@@ -22,7 +22,7 @@ TESTS_OBJ_DIR=$(addprefix $(TESTS_DIR)/,$(OBJ_DIR))
 TESTS_BIN_DIR=$(addprefix $(TESTS_DIR)/,$(BIN_DIR))
 
 # Test utils (assertions, helpers), which won't generate binaries
-TESTS_UTILS_SRC=$(addprefix $(TESTS_SRC_DIR)/,utils.c asserts.c)
+TESTS_UTILS_SRC=$(addprefix $(TESTS_SRC_DIR)/,utils.c)
 TESTS_UTILS_OBJ=$(subst $(TESTS_SRC_DIR),$(TESTS_OBJ_DIR),$(TESTS_UTILS_SRC:.c=.o))
 
 # Test sources compilation
