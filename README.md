@@ -30,7 +30,7 @@ make run-tests
 
 Include headers located in the `include/` directory in your project and link the library
 ```
-gcc [your sources].c -Llib/ -lrubiks-core.so -o [your program]
+gcc [your sources].c -Llib/ -lrubiks-core -o [your program]
 LD_LIBRARY_PATH=lib/ ./[your program]
 ```
 
