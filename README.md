@@ -13,7 +13,7 @@ A rubik's cube shared library writen in **C** and made in **TDD**
 
 ## Features to come
 
-- slices rotations: include lowercase center slices (\<m\> \<e\> \<s\> and reverse)
+- slices rotations: include lowercase center slices ([m] [e] [s] and reverse)
 
 
 ## 🫨 Why ?
