@@ -533,6 +533,20 @@ void Cube_rotateTopSlicesRight(Cube * self)
 }
 
 
+void Cube_rotateOuterSlicesLeft(Cube * self)
+{
+	Cube_rotateTopSliceLeft(self);
+	Cube_rotateBottomSliceLeft(self);
+}
+
+
+void Cube_rotateOuterSlicesRight(Cube * self)
+{
+	Cube_rotateTopSliceRight(self);
+	Cube_rotateBottomSliceRight(self);
+}
+
+
 void Cube_rotateBottomSlicesLeft(Cube * self)
 {
 	Cube_rotateEquatorSliceLeft(self);
@@ -561,6 +575,20 @@ void Cube_rotateLeftSlicesDown(Cube * self)
 }
 
 
+void Cube_rotateOuterSlicesUp(Cube * self)
+{
+	Cube_rotateLeftSliceUp(self);
+	Cube_rotateRightSliceUp(self);
+}
+
+
+void Cube_rotateOuterSlicesDown(Cube * self)
+{
+	Cube_rotateLeftSliceDown(self);
+	Cube_rotateRightSliceDown(self);
+}
+
+
 void Cube_rotateRightSlicesUp(Cube * self)
 {
 	Cube_rotateMiddleSliceUp(self);
@@ -586,6 +614,20 @@ void Cube_rotateFrontSlicesAnticlockwise(Cube * self)
 {
 	Cube_rotateFrontSliceAnticlockwise(self);
 	Cube_rotateStandingSliceAnticlockwise(self);
+}
+
+
+void Cube_rotateOuterSlicesClockwise(Cube * self)
+{
+	Cube_rotateFrontSliceClockwise(self);
+	Cube_rotateBackSliceClockwise(self);
+}
+
+
+void Cube_rotateOuterSlicesAnticlockwise(Cube * self)
+{
+	Cube_rotateFrontSliceAnticlockwise(self);
+	Cube_rotateBackSliceAnticlockwise(self);
 }
 
 
