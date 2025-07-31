@@ -5,15 +5,11 @@
 A rubik's cube shared library writen in **C** and made in **TDD**
 
 
-## Features
+## 🧰 Features
 
 - slices rotations
 - camera rotations
 - wide moves (2 slices at a time)
-
-## Features to come
-
-- slices rotations: include lowercase center slices ([m] [e] [s] and reverse)
 
 
 ## 🫨 Why ?
