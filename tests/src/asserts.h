@@ -335,7 +335,7 @@
 			source_span, \
 			destination_span, \
 			FACE_SIZE * sizeof(Color), \
-			"%s (reversed), expected dest=[%c,%c,%c] but got dest=[%c,%c,%c]", \
+			"%s, expected dest=[%c,%c,%c] but got dest=[%c,%c,%c]", \
 			failure_message, \
 			COLORS_LABEL[source_span[0]], \
 			COLORS_LABEL[source_span[1]], \
