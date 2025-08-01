@@ -519,127 +519,127 @@ void Cube_rotateBackSliceAnticlockwise(Cube * this)
 }
 
 
-void Cube_rotateTopSlicesLeft(Cube * self)
+void Cube_rotateTopSlicesLeft(Cube * this)
 {
-	Cube_rotateTopSliceLeft(self);
-	Cube_rotateEquatorSliceLeft(self);
+	Cube_rotateTopSliceLeft(this);
+	Cube_rotateEquatorSliceLeft(this);
 }
 
 
-void Cube_rotateTopSlicesRight(Cube * self)
+void Cube_rotateTopSlicesRight(Cube * this)
 {
-	Cube_rotateTopSliceRight(self);
-	Cube_rotateEquatorSliceRight(self);
+	Cube_rotateTopSliceRight(this);
+	Cube_rotateEquatorSliceRight(this);
 }
 
 
-void Cube_rotateOuterSlicesLeft(Cube * self)
+void Cube_rotateOuterSlicesLeft(Cube * this)
 {
-	Cube_rotateTopSliceLeft(self);
-	Cube_rotateBottomSliceLeft(self);
+	Cube_rotateTopSliceLeft(this);
+	Cube_rotateBottomSliceLeft(this);
 }
 
 
-void Cube_rotateOuterSlicesRight(Cube * self)
+void Cube_rotateOuterSlicesRight(Cube * this)
 {
-	Cube_rotateTopSliceRight(self);
-	Cube_rotateBottomSliceRight(self);
+	Cube_rotateTopSliceRight(this);
+	Cube_rotateBottomSliceRight(this);
 }
 
 
-void Cube_rotateBottomSlicesLeft(Cube * self)
+void Cube_rotateBottomSlicesLeft(Cube * this)
 {
-	Cube_rotateEquatorSliceLeft(self);
-	Cube_rotateBottomSliceLeft(self);
+	Cube_rotateEquatorSliceLeft(this);
+	Cube_rotateBottomSliceLeft(this);
 }
 
 
-void Cube_rotateBottomSlicesRight(Cube * self)
+void Cube_rotateBottomSlicesRight(Cube * this)
 {
-	Cube_rotateEquatorSliceRight(self);
-	Cube_rotateBottomSliceRight(self);
+	Cube_rotateEquatorSliceRight(this);
+	Cube_rotateBottomSliceRight(this);
 }
 
 
-void Cube_rotateLeftSlicesUp(Cube * self)
+void Cube_rotateLeftSlicesUp(Cube * this)
 {
-	Cube_rotateLeftSliceUp(self);
-	Cube_rotateMiddleSliceUp(self);
+	Cube_rotateLeftSliceUp(this);
+	Cube_rotateMiddleSliceUp(this);
 }
 
 
-void Cube_rotateLeftSlicesDown(Cube * self)
+void Cube_rotateLeftSlicesDown(Cube * this)
 {
-	Cube_rotateLeftSliceDown(self);
-	Cube_rotateMiddleSliceDown(self);
+	Cube_rotateLeftSliceDown(this);
+	Cube_rotateMiddleSliceDown(this);
 }
 
 
-void Cube_rotateOuterSlicesUp(Cube * self)
+void Cube_rotateOuterSlicesUp(Cube * this)
 {
-	Cube_rotateLeftSliceUp(self);
-	Cube_rotateRightSliceUp(self);
+	Cube_rotateLeftSliceUp(this);
+	Cube_rotateRightSliceUp(this);
 }
 
 
-void Cube_rotateOuterSlicesDown(Cube * self)
+void Cube_rotateOuterSlicesDown(Cube * this)
 {
-	Cube_rotateLeftSliceDown(self);
-	Cube_rotateRightSliceDown(self);
+	Cube_rotateLeftSliceDown(this);
+	Cube_rotateRightSliceDown(this);
 }
 
 
-void Cube_rotateRightSlicesUp(Cube * self)
+void Cube_rotateRightSlicesUp(Cube * this)
 {
-	Cube_rotateMiddleSliceUp(self);
-	Cube_rotateRightSliceUp(self);
+	Cube_rotateMiddleSliceUp(this);
+	Cube_rotateRightSliceUp(this);
 }
 
 
-void Cube_rotateRightSlicesDown(Cube * self)
+void Cube_rotateRightSlicesDown(Cube * this)
 {
-	Cube_rotateMiddleSliceDown(self);
-	Cube_rotateRightSliceDown(self);
+	Cube_rotateMiddleSliceDown(this);
+	Cube_rotateRightSliceDown(this);
 }
 
 
-void Cube_rotateFrontSlicesClockwise(Cube * self)
+void Cube_rotateFrontSlicesClockwise(Cube * this)
 {
-	Cube_rotateFrontSliceClockwise(self);
-	Cube_rotateStandingSliceClockwise(self);
+	Cube_rotateFrontSliceClockwise(this);
+	Cube_rotateStandingSliceClockwise(this);
 }
 
 
-void Cube_rotateFrontSlicesAnticlockwise(Cube * self)
+void Cube_rotateFrontSlicesAnticlockwise(Cube * this)
 {
-	Cube_rotateFrontSliceAnticlockwise(self);
-	Cube_rotateStandingSliceAnticlockwise(self);
+	Cube_rotateFrontSliceAnticlockwise(this);
+	Cube_rotateStandingSliceAnticlockwise(this);
 }
 
 
-void Cube_rotateOuterSlicesClockwise(Cube * self)
+void Cube_rotateOuterSlicesClockwise(Cube * this)
 {
-	Cube_rotateFrontSliceClockwise(self);
-	Cube_rotateBackSliceClockwise(self);
+	Cube_rotateFrontSliceClockwise(this);
+	Cube_rotateBackSliceClockwise(this);
 }
 
 
-void Cube_rotateOuterSlicesAnticlockwise(Cube * self)
+void Cube_rotateOuterSlicesAnticlockwise(Cube * this)
 {
-	Cube_rotateFrontSliceAnticlockwise(self);
-	Cube_rotateBackSliceAnticlockwise(self);
+	Cube_rotateFrontSliceAnticlockwise(this);
+	Cube_rotateBackSliceAnticlockwise(this);
 }
 
 
-void Cube_rotateBackSlicesClockwise(Cube * self)
+void Cube_rotateBackSlicesClockwise(Cube * this)
 {
-	Cube_rotateStandingSliceClockwise(self);
-	Cube_rotateBackSliceClockwise(self);
+	Cube_rotateStandingSliceClockwise(this);
+	Cube_rotateBackSliceClockwise(this);
 }
 
 
-void Cube_rotateBackSlicesAnticlockwise(Cube * self)
+void Cube_rotateBackSlicesAnticlockwise(Cube * this)
 {
-	Cube_rotateStandingSliceAnticlockwise(self);
-	Cube_rotateBackSliceAnticlockwise(self);
+	Cube_rotateStandingSliceAnticlockwise(this);
+	Cube_rotateBackSliceAnticlockwise(this);
 }
