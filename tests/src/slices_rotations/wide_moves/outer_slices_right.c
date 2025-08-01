@@ -87,3 +87,21 @@ Test(Cube, rotateOuterSlicesRight_leftFaceBottomRow_movesTo_frontFaceBottomRow)
         Cube_frontFace, bottomRow,
         "left face bottom row wasn't moved to the front face bottom row");
 }
+
+
+Test(Cube, rotateOuterSlicesRight_topFaceIsRotatedAnticlockwise)
+{
+    test_face_rotated_anticlockwise(
+        Cube_topFace,
+        Cube_rotateOuterSlicesRight,
+        "top face wasn't rotated");
+}
+
+
+Test(Cube, rotateOuterSlicesRight_bottomFaceIsRotatedClockwise)
+{
+    test_face_rotated_clockwise(
+        Cube_bottomFace,
+        Cube_rotateOuterSlicesRight,
+        "bottom face wasn't rotated");
+}

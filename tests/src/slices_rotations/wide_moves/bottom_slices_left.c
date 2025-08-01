@@ -87,3 +87,12 @@ Test(Cube, rotateBottomSlicesLeft_rightFaceEquatorRow_movesTo_frontFaceEquatorRo
         Cube_frontFace, equatorRow,
         "right face equator row wasn't moved to the front face equator row");
 }
+
+
+Test(Cube, rotateBottomSlicesLeft_bottomFaceIsRotatedAnticlockwise)
+{
+    test_face_rotated_anticlockwise(
+        Cube_bottomFace,
+        Cube_rotateBottomSlicesLeft,
+        "bottom face wasn't rotated");
+}

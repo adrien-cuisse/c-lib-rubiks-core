@@ -87,3 +87,12 @@ Test(Cube, rotateLeftSlicesUp_bottomFaceMiddleColumn_movesTo_frontFaceMiddleColu
         Cube_frontFace, middleColumn,
         "bottom face middle column wasn't moved to the front face middle column");
 }
+
+
+Test(Cube, rotateLeftSlicesUp_leftFaceIsRotatedAnticlockwise)
+{
+	test_face_rotated_anticlockwise(
+        Cube_leftFace,
+        Cube_rotateLeftSlicesUp,
+        "left face wasn't rotated");
+}
