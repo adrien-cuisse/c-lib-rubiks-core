@@ -121,7 +121,7 @@
 			expected_after_rotation, \
 			actual_after_rotation, \
 			FACE_SIZE * FACE_SIZE * sizeof(Color), \
-			"%s clockwise\n" \
+			"%s anticlockwise\n" \
 			"          [%c,%c,%c]          [%c,%c,%c]\n" \
 			"expected: [%c,%c,%c], actual: [%c,%c,%c]\n" \
 			"          [%c,%c,%c]          [%c,%c,%c]", \
