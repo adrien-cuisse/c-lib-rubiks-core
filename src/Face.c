@@ -23,10 +23,10 @@ struct Face
 
 /* --- Public API start --- */
 
-Color Face_color(Face const * this)
+Color rubiks_face_color(Face const * this)
 {
 	/* center cells are fixed */
-	return Face_equatorCenterCell(this);
+	return rubiks_face_equator_center_cell(this);
 }
 
 
@@ -47,55 +47,55 @@ static Color cell(Face const * this, Row row, Column column)
 }
 
 
-Color Face_topLeftCell(Face const * this)
+Color rubiks_face_top_left_cell(Face const * this)
 {
 	return cell(this, TOP_ROW, LEFT_COLUMN);
 }
 
 
-Color Face_topCenterCell(Face const * this)
+Color rubiks_face_top_center_cell(Face const * this)
 {
 	return cell(this, TOP_ROW, MIDDLE_COLUMN);
 }
 
 
-Color Face_topRightCell(Face const * this)
+Color rubiks_face_top_right_cell(Face const * this)
 {
 	return cell(this, TOP_ROW, RIGHT_COLUMN);
 }
 
 
-Color Face_equatorLeftCell(Face const * this)
+Color rubiks_face_equator_left_cell(Face const * this)
 {
 	return cell(this, EQUATOR_ROW, LEFT_COLUMN);
 }
 
 
-Color Face_equatorCenterCell(Face const * this)
+Color rubiks_face_equator_center_cell(Face const * this)
 {
 	return cell(this, EQUATOR_ROW, MIDDLE_COLUMN);
 }
 
 
-Color Face_equatorRightCell(Face const * this)
+Color rubiks_face_equator_right_cell(Face const * this)
 {
 	return cell(this, EQUATOR_ROW, RIGHT_COLUMN);
 }
 
 
-Color Face_bottomLeftCell(Face const * this)
+Color rubiks_face_bottom_left_cell(Face const * this)
 {
 	return cell(this, BOTTOM_ROW, LEFT_COLUMN);
 }
 
 
-Color Face_bottomCenterCell(Face const * this)
+Color rubiks_face_bottom_center_cell(Face const * this)
 {
 	return cell(this, BOTTOM_ROW, MIDDLE_COLUMN);
 }
 
 
-Color Face_bottomRightCell(Face const * this)
+Color rubiks_face_bottom_right_cell(Face const * this)
 {
 	return cell(this, BOTTOM_ROW, RIGHT_COLUMN);
 }
@@ -116,15 +116,15 @@ Color Face_bottomRightCell(Face const * this)
  *
  * @param row - the row to paint
  */
-static void paintRow(Face * this, Color color, Row row)
+static void paint_row(Face * this, Color color, Row row)
 {
-	int columnIndex;
+	int column_index;
 	Color cells[FACE_SIZE];
 
-	for (columnIndex = LEFT_COLUMN; columnIndex <= RIGHT_COLUMN; columnIndex++)
-		cells[columnIndex] = color;
+	for (column_index = LEFT_COLUMN; column_index <= RIGHT_COLUMN; column_index++)
+		cells[column_index] = color;
 
-	Face_setRow(this, cells, row);
+	set_face_row(this, cells, row);
 }
 
 
@@ -139,11 +139,11 @@ static void paint(Face * this, Color color)
 {
 	Row row;
 	for (row = TOP_ROW; row <= BOTTOM_ROW; row++)
-		paintRow(this, color, row);
+		paint_row(this, color, row);
 }
 
 
-Face * Face_create(Color color)
+Face * create_face(Color color)
 {
 	Face * this = calloc(1, sizeof(* this));
 	if (this != NULL)
@@ -153,7 +153,7 @@ Face * Face_create(Color color)
 }
 
 
-void Face_delete(Face ** this)
+void delete_face(Face ** this)
 {
 	if ((this == NULL) || (* this == NULL))
 		return;
@@ -163,21 +163,21 @@ void Face_delete(Face ** this)
 }
 
 
-void Face_copyRow(Face const * this, Color buffer[FACE_SIZE], Row row)
+void copy_face_row(Face const * this, Color buffer[FACE_SIZE], Row row)
 {
-	size_t rowSizeInBytes = FACE_SIZE * sizeof(this->cells[row][0]);
-	memcpy(buffer, this->cells[row], rowSizeInBytes);
+	size_t row_size_in_bytes = FACE_SIZE * sizeof(this->cells[row][0]);
+	memcpy(buffer, this->cells[row], row_size_in_bytes);
 }
 
 
-void Face_setRow(Face * face, Color const cells[FACE_SIZE], Row row)
+void set_face_row(Face * face, Color const cells[FACE_SIZE], Row row)
 {
-	size_t rowSizeInBytes = FACE_SIZE * sizeof(cells[0]);
-	memcpy(face->cells[row], cells, rowSizeInBytes);
+	size_t row_size_in_bytes = FACE_SIZE * sizeof(cells[0]);
+	memcpy(face->cells[row], cells, row_size_in_bytes);
 }
 
 
-void Face_copyColumn(Face const * this, Color buffer[FACE_SIZE], Column column)
+void copy_face_column(Face const * this, Color buffer[FACE_SIZE], Column column)
 {
 	Row row;
 	for (row = TOP_ROW; row <= BOTTOM_ROW; row++)
@@ -185,7 +185,7 @@ void Face_copyColumn(Face const * this, Color buffer[FACE_SIZE], Column column)
 }
 
 
-void Face_setColumn(Face * face, Color const cells[FACE_SIZE], Column column)
+void set_face_column(Face * face, Color const cells[FACE_SIZE], Column column)
 {
 	Row row;
 	for (row = TOP_ROW; row <= BOTTOM_ROW; row++)
@@ -193,35 +193,35 @@ void Face_setColumn(Face * face, Color const cells[FACE_SIZE], Column column)
 }
 
 
-void Face_rotateClockwise(Face * this)
+void rotate_face_clockwise(Face * this)
 {
-	Color newRightColumn[FACE_SIZE];
-	Color newMiddleColumn[FACE_SIZE];
-	Color newLeftColumn[FACE_SIZE];
+	Color new_right_column[FACE_SIZE];
+	Color new_middle_column[FACE_SIZE];
+	Color new_left_column[FACE_SIZE];
 
-	Face_copyRow(this, newRightColumn, TOP_ROW);
-	Face_copyRow(this, newMiddleColumn, EQUATOR_ROW);
-	Face_copyRow(this, newLeftColumn, BOTTOM_ROW);
+	copy_face_row(this, new_right_column, TOP_ROW);
+	copy_face_row(this, new_middle_column, EQUATOR_ROW);
+	copy_face_row(this, new_left_column, BOTTOM_ROW);
 
-	Face_setColumn(this, newRightColumn, RIGHT_COLUMN);
-	Face_setColumn(this, newMiddleColumn, MIDDLE_COLUMN);
-	Face_setColumn(this, newLeftColumn, LEFT_COLUMN);
+	set_face_column(this, new_right_column, RIGHT_COLUMN);
+	set_face_column(this, new_middle_column, MIDDLE_COLUMN);
+	set_face_column(this, new_left_column, LEFT_COLUMN);
 }
 
 
-void Face_rotateAnticlockwise(Face * this)
+void rotate_face_anticlockwise(Face * this)
 {
-	Color newTopRow[FACE_SIZE];
-	Color newEquatorRow[FACE_SIZE];
-	Color newBottomRow[FACE_SIZE];
+	Color new_top_row[FACE_SIZE];
+	Color new_equator_row[FACE_SIZE];
+	Color new_bottom_row[FACE_SIZE];
 
-	Face_copyColumn(this, newTopRow, RIGHT_COLUMN);
-	Face_copyColumn(this, newEquatorRow, MIDDLE_COLUMN);
-	Face_copyColumn(this, newBottomRow, LEFT_COLUMN);
+	copy_face_column(this, new_top_row, RIGHT_COLUMN);
+	copy_face_column(this, new_equator_row, MIDDLE_COLUMN);
+	copy_face_column(this, new_bottom_row, LEFT_COLUMN);
 
-	Face_setRow(this, newTopRow, TOP_ROW);
-	Face_setRow(this, newEquatorRow, EQUATOR_ROW);
-	Face_setRow(this, newBottomRow, BOTTOM_ROW);
+	set_face_row(this, new_top_row, TOP_ROW);
+	set_face_row(this, new_equator_row, EQUATOR_ROW);
+	set_face_row(this, new_bottom_row, BOTTOM_ROW);
 }
 
 /* --- Private API end --- */

@@ -9,70 +9,70 @@
 Test(Cube, isInitializedWithBlueFaceInFront)
 {
 	// given
-	Cube * cube = Cube_create();
+	Cube * cube = rubiks_cube_create();
 	// when
-	Face * frontFace = Cube_frontFace(cube);
+	Face * front_face = rubiks_cube_front_face(cube);
 	// then
-	Color frontFaceColor = Face_color(frontFace);
-	cr_assert_eq(frontFaceColor, BLUE, "front face is not blue");
+	Color front_face_color = rubiks_face_color(front_face);
+	cr_assert_eq(front_face_color, BLUE, "front face is not blue");
 }
 
 
 Test(Cube, isInitializedWithRedFaceOnTheLeft)
 {
 	// given
-	Cube * cube = Cube_create();
+	Cube * cube = rubiks_cube_create();
 	// when
-	Face * leftFace = Cube_leftFace(cube);
+	Face * left_face = rubiks_cube_left_face(cube);
 	// then
-	Color leftFaceColor = Face_color(leftFace);
-	cr_assert_eq(leftFaceColor, RED, "left face is not red");
+	Color left_face_color = rubiks_face_color(left_face);
+	cr_assert_eq(left_face_color, RED, "left face is not red");
 }
 
 
 Test(Cube, isInitializedWithOrangeFaceOnTheRight)
 {
 	// given
-	Cube * cube = Cube_create();
+	Cube * cube = rubiks_cube_create();
 	// when
-	Face * rightFace = Cube_rightFace(cube);
+	Face * right_face = rubiks_cube_right_face(cube);
 	// then
-	Color rightFaceColor = Face_color(rightFace);
-	cr_assert_eq(rightFaceColor, ORANGE, "right face is not orange");
+	Color right_face_color = rubiks_face_color(right_face);
+	cr_assert_eq(right_face_color, ORANGE, "right face is not orange");
 }
 
 
 Test(Cube, isInitializedWithWhiteFaceOnTop)
 {
 	// given
-	Cube * cube = Cube_create();
+	Cube * cube = rubiks_cube_create();
 	// when
-	Face * topFace = Cube_topFace(cube);
+	Face * top_face = rubiks_cube_top_face(cube);
 	// then
-	Color topFaceColor = Face_color(topFace);
-	cr_assert_eq(topFaceColor, WHITE, "top face is not white");
+	Color top_face_color = rubiks_face_color(top_face);
+	cr_assert_eq(top_face_color, WHITE, "top face is not white");
 }
 
 
 Test(Cube, isInitializedWithYellowFaceAtBottom)
 {
 	// given
-	Cube * cube = Cube_create();
+	Cube * cube = rubiks_cube_create();
 	// when
-	Face * bottomFace = Cube_bottomFace(cube);
+	Face * bottom_face = rubiks_cube_bottom_face(cube);
 	// then
-	Color bottomFaceColor = Face_color(bottomFace);
-	cr_assert_eq(bottomFaceColor, YELLOW, "bottom face is not yellow");
+	Color bottom_face_color = rubiks_face_color(bottom_face);
+	cr_assert_eq(bottom_face_color, YELLOW, "bottom face is not yellow");
 }
 
 
 Test(Cube, isInitializedWithGreenFaceOnTheBack)
 {
 	// given
-	Cube * cube = Cube_create();
+	Cube * cube = rubiks_cube_create();
 	// when
-	Face * backFace = Cube_backFace(cube);
+	Face * back_face = rubiks_cube_back_face(cube);
 	// then
-	Color backFaceColor = Face_color(backFace);
-	cr_assert_eq(backFaceColor, GREEN, "back face is not green");
+	Color back_face_color = rubiks_face_color(back_face);
+	cr_assert_eq(back_face_color, GREEN, "back face is not green");
 }

@@ -4,156 +4,156 @@
 
 
 
-Cube * createScrambledCube(void)
+Cube * create_scrambled_cube(void)
 {
-	Cube * cube = Cube_create();
+	Cube * cube = rubiks_cube_create();
 
 	// official terminology:
 	// D2 F2 R2 D2 L2 U F2 U' F' U F2 U' R2 B' F R' D2 F' D' L
 	//
 	// D2
-	Cube_rotateBottomSliceRight(cube);
-	Cube_rotateBottomSliceRight(cube);
+	rubiks_cube_rotate_bottom_slice_right(cube);
+	rubiks_cube_rotate_bottom_slice_right(cube);
 	// F2
-	Cube_rotateFrontSliceClockwise(cube);
-	Cube_rotateFrontSliceClockwise(cube);
+	rubiks_cube_rotate_front_slice_clockwise(cube);
+	rubiks_cube_rotate_front_slice_clockwise(cube);
 	// R2
-	Cube_rotateRightSliceUp(cube);
-	Cube_rotateRightSliceUp(cube);
+	rubiks_cube_rotate_right_slice_up(cube);
+	rubiks_cube_rotate_right_slice_up(cube);
 	// D2
-	Cube_rotateBottomSliceRight(cube);
-	Cube_rotateBottomSliceRight(cube);
+	rubiks_cube_rotate_bottom_slice_right(cube);
+	rubiks_cube_rotate_bottom_slice_right(cube);
 	// L2
-	Cube_rotateLeftSliceDown(cube);
-	Cube_rotateLeftSliceDown(cube);
+	rubiks_cube_rotate_left_slice_down(cube);
+	rubiks_cube_rotate_left_slice_down(cube);
 	// U
-	Cube_rotateTopSliceLeft(cube);
+	rubiks_cube_rotate_top_slice_left(cube);
 	// F2
-	Cube_rotateFrontSliceClockwise(cube);
-	Cube_rotateFrontSliceClockwise(cube);
+	rubiks_cube_rotate_front_slice_clockwise(cube);
+	rubiks_cube_rotate_front_slice_clockwise(cube);
 	// U'
-	Cube_rotateTopSliceRight(cube);
+	rubiks_cube_rotate_top_slice_right(cube);
 	// F'
-	Cube_rotateFrontSliceAnticlockwise(cube);
+	rubiks_cube_rotate_front_slice_anticlockwise(cube);
 	// U
-	Cube_rotateTopSliceLeft(cube);
+	rubiks_cube_rotate_top_slice_left(cube);
 	// F2
-	Cube_rotateFrontSliceClockwise(cube);
-	Cube_rotateFrontSliceClockwise(cube);
+	rubiks_cube_rotate_front_slice_clockwise(cube);
+	rubiks_cube_rotate_front_slice_clockwise(cube);
 	// U'
-	Cube_rotateTopSliceRight(cube);
+	rubiks_cube_rotate_top_slice_right(cube);
 	// R2
-	Cube_rotateRightSliceUp(cube);
-	Cube_rotateRightSliceUp(cube);
+	rubiks_cube_rotate_right_slice_up(cube);
+	rubiks_cube_rotate_right_slice_up(cube);
 	// B'
-	Cube_rotateBackSliceClockwise(cube);
+	rubiks_cube_rotate_back_slice_clockwise(cube);
 	// F
-	Cube_rotateFrontSliceClockwise(cube);
+	rubiks_cube_rotate_front_slice_clockwise(cube);
 	// R'
-	Cube_rotateRightSliceDown(cube);
+	rubiks_cube_rotate_right_slice_down(cube);
 	// D2
-	Cube_rotateBottomSliceRight(cube);
-	Cube_rotateBottomSliceRight(cube);
+	rubiks_cube_rotate_bottom_slice_right(cube);
+	rubiks_cube_rotate_bottom_slice_right(cube);
 	// F'
-	Cube_rotateFrontSliceAnticlockwise(cube);
+	rubiks_cube_rotate_front_slice_anticlockwise(cube);
 	// D'
-	Cube_rotateBottomSliceLeft(cube);
+	rubiks_cube_rotate_bottom_slice_left(cube);
 	// L
-	Cube_rotateLeftSliceDown(cube);
+	rubiks_cube_rotate_left_slice_down(cube);
 
-    //	+-------+-------+-------+
-    //	| G W Y | R Y W | R W B |
-    //	| B R O | W B G | Y O G |
-    //	| O Y G | Y R O | W B Y |
-    //	+-------+-------+-------+
-    //	        | O W G |
-    //	        | R Y R |
-    //	        | B G O |
-    //	        +-------+
-    //	        | W R B |
-    //	        | Y G O |
-    //	        | W B R |
-    //	        +-------+
-    //	        | R O Y |
-    //	        | B W G |
-    //	        | G O B |
-    //	        +-------+
+	//	+-------+-------+-------+
+	//	| G W Y | R Y W | R W B |
+	//	| B R O | W B G | Y O G |
+	//	| O Y G | Y R O | W B Y |
+	//	+-------+-------+-------+
+	//			| O W G |
+	//			| R Y R |
+	//			| B G O |
+	//			+-------+
+	//			| W R B |
+	//			| Y G O |
+	//			| W B R |
+	//			+-------+
+	//			| R O Y |
+	//			| B W G |
+	//			| G O B |
+	//			+-------+
 
-    //	        +-------+
-    //	        | R O Y |
-    //	        | B W G |
-    //	        | G O B |
-    //	+-------+-------+-------+-------+
-    //	| G W Y | R Y W | R W B | R B W |
-    //	| B R O | W B G | Y O G | O G Y |
-    //	| O Y G | Y R O | W B Y | B R W |
-    //	+-------+-------+-------+-------+
-    //	        | O W G |
-    //	        | R Y R |
-    //	        | B G O |
-    //	        +-------+
+	//			+-------+
+	//			| R O Y |
+	//			| B W G |
+	//			| G O B |
+	//	+-------+-------+-------+-------+
+	//	| G W Y | R Y W | R W B | R B W |
+	//	| B R O | W B G | Y O G | O G Y |
+	//	| O Y G | Y R O | W B Y | B R W |
+	//	+-------+-------+-------+-------+
+	//			| O W G |
+	//			| R Y R |
+	//			| B G O |
+	//			+-------+
 
 	return cube;
 }
 
 
-void topRow(Face const * face, Color buffer[FACE_SIZE])
+void top_row(Face const * face, Color buffer[FACE_SIZE])
 {
-	buffer[0] = Face_topLeftCell(face);
-	buffer[1] = Face_topCenterCell(face);
-	buffer[2] = Face_topRightCell(face);
+	buffer[0] = rubiks_face_top_left_cell(face);
+	buffer[1] = rubiks_face_top_center_cell(face);
+	buffer[2] = rubiks_face_top_right_cell(face);
 }
 
 
-void equatorRow(Face const * face, Color buffer[FACE_SIZE])
+void equator_row(Face const * face, Color buffer[FACE_SIZE])
 {
-	buffer[0] = Face_equatorLeftCell(face);
-	buffer[1] = Face_equatorCenterCell(face);
-	buffer[2] = Face_equatorRightCell(face);
+	buffer[0] = rubiks_face_equator_left_cell(face);
+	buffer[1] = rubiks_face_equator_center_cell(face);
+	buffer[2] = rubiks_face_equator_right_cell(face);
 }
 
 
-void bottomRow(Face const * face, Color buffer[FACE_SIZE])
+void bottom_row(Face const * face, Color buffer[FACE_SIZE])
 {
-	buffer[0] = Face_bottomLeftCell(face);
-	buffer[1] = Face_bottomCenterCell(face);
-	buffer[2] = Face_bottomRightCell(face);
+	buffer[0] = rubiks_face_bottom_left_cell(face);
+	buffer[1] = rubiks_face_bottom_center_cell(face);
+	buffer[2] = rubiks_face_bottom_right_cell(face);
 }
 
 
-void leftColumn(Face const * face, Color buffer[FACE_SIZE])
+void left_column(Face const * face, Color buffer[FACE_SIZE])
 {
-	buffer[0] = Face_topLeftCell(face);
-	buffer[1] = Face_equatorLeftCell(face);
-	buffer[2] = Face_bottomLeftCell(face);
+	buffer[0] = rubiks_face_top_left_cell(face);
+	buffer[1] = rubiks_face_equator_left_cell(face);
+	buffer[2] = rubiks_face_bottom_left_cell(face);
 }
 
 
-void middleColumn(Face const * face, Color buffer[FACE_SIZE])
+void middle_column(Face const * face, Color buffer[FACE_SIZE])
 {
-	buffer[0] = Face_topCenterCell(face);
-	buffer[1] = Face_equatorCenterCell(face);
-	buffer[2] = Face_bottomCenterCell(face);
+	buffer[0] = rubiks_face_top_center_cell(face);
+	buffer[1] = rubiks_face_equator_center_cell(face);
+	buffer[2] = rubiks_face_bottom_center_cell(face);
 }
 
 
-void rightColumn(Face const * face, Color buffer[FACE_SIZE])
+void right_column(Face const * face, Color buffer[FACE_SIZE])
 {
-	buffer[0] = Face_topRightCell(face);
-	buffer[1] = Face_equatorRightCell(face);
-	buffer[2] = Face_bottomRightCell(face);
+	buffer[0] = rubiks_face_top_right_cell(face);
+	buffer[1] = rubiks_face_equator_right_cell(face);
+	buffer[2] = rubiks_face_bottom_right_cell(face);
 }
 
 
-void readFace(Face const * face, Color buffer[FACE_SIZE][FACE_SIZE])
+void read_face(Face const * face, Color buffer[FACE_SIZE][FACE_SIZE])
 {
-	topRow(face, buffer[0]);
-	equatorRow(face, buffer[1]);
-	bottomRow(face, buffer[2]);
+	top_row(face, buffer[0]);
+	equator_row(face, buffer[1]);
+	bottom_row(face, buffer[2]);
 }
 
 
-void reverseSpan(Color buffer[FACE_SIZE])
+void reverse_span(Color buffer[FACE_SIZE])
 {
 	Color swap = buffer[0];
 	buffer[0] = buffer[2];

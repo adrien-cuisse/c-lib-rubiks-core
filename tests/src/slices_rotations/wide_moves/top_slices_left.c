@@ -12,9 +12,9 @@
 Test(Cube, rotateTopSlicesLeft_frontFaceTopRow_movesTo_leftFaceTopRow)
 {
 	test_span_moved_and_not_reversed(
-		Cube_frontFace, topRow,
-		Cube_rotateTopSlicesLeft,
-		Cube_leftFace, topRow,
+		rubiks_cube_front_face, top_row,
+		rubiks_cube_rotate_top_slices_left,
+		rubiks_cube_left_face, top_row,
 		"front face top row wasn't moved to the left face top row");
 }
 
@@ -22,9 +22,9 @@ Test(Cube, rotateTopSlicesLeft_frontFaceTopRow_movesTo_leftFaceTopRow)
 Test(Cube, rotateTopSlicesLeft_frontFaceEquatorRow_movesTo_leftFaceEquatorRow)
 {
 	test_span_moved_and_not_reversed(
-		Cube_frontFace, equatorRow,
-		Cube_rotateTopSlicesLeft,
-		Cube_leftFace, equatorRow,
+		rubiks_cube_front_face, equator_row,
+		rubiks_cube_rotate_top_slices_left,
+		rubiks_cube_left_face, equator_row,
 		"front face equator row wasn't moved to the left face equator row");
 }
 
@@ -32,9 +32,9 @@ Test(Cube, rotateTopSlicesLeft_frontFaceEquatorRow_movesTo_leftFaceEquatorRow)
 Test(Cube, rotateTopSlicesLeft_leftFaceTopRow_movesTo_backFaceBottomRow_reversed)
 {
 	test_span_moved_and_reversed(
-		Cube_leftFace, topRow,
-		Cube_rotateTopSlicesLeft,
-		Cube_backFace, bottomRow,
+		rubiks_cube_left_face, top_row,
+		rubiks_cube_rotate_top_slices_left,
+		rubiks_cube_back_face, bottom_row,
 		"left face top row wasn't moved to the back face bottom row");
 }
 
@@ -42,9 +42,9 @@ Test(Cube, rotateTopSlicesLeft_leftFaceTopRow_movesTo_backFaceBottomRow_reversed
 Test(Cube, rotateTopSlicesLeft_leftFaceEquatorRow_movesTo_backFaceEquatorRow_reversed)
 {
 	test_span_moved_and_reversed(
-		Cube_leftFace, equatorRow,
-		Cube_rotateTopSlicesLeft,
-		Cube_backFace, equatorRow,
+		rubiks_cube_left_face, equator_row,
+		rubiks_cube_rotate_top_slices_left,
+		rubiks_cube_back_face, equator_row,
 		"left face equator row wasn't moved to the back face equator row");
 }
 
@@ -52,9 +52,9 @@ Test(Cube, rotateTopSlicesLeft_leftFaceEquatorRow_movesTo_backFaceEquatorRow_rev
 Test(Cube, rotateTopSlicesLeft_backFaceBottomRow_movesTo_rightFaceTopRow_reversed)
 {
 	test_span_moved_and_reversed(
-		Cube_backFace, bottomRow,
-		Cube_rotateTopSlicesLeft,
-		Cube_rightFace, topRow,
+		rubiks_cube_back_face, bottom_row,
+		rubiks_cube_rotate_top_slices_left,
+		rubiks_cube_right_face, top_row,
 		"back face bottom row wasn't moved to the right face top row");
 }
 
@@ -62,9 +62,9 @@ Test(Cube, rotateTopSlicesLeft_backFaceBottomRow_movesTo_rightFaceTopRow_reverse
 Test(Cube, rotateTopSlicesLeft_backFaceEquatorRow_movesTo_rightFaceEquatorRow_reversed)
 {
 	test_span_moved_and_reversed(
-		Cube_backFace, equatorRow,
-		Cube_rotateTopSlicesLeft,
-		Cube_rightFace, equatorRow,
+		rubiks_cube_back_face, equator_row,
+		rubiks_cube_rotate_top_slices_left,
+		rubiks_cube_right_face, equator_row,
 		"back face equator row wasn't moved to the right face equator row");
 }
 
@@ -72,9 +72,9 @@ Test(Cube, rotateTopSlicesLeft_backFaceEquatorRow_movesTo_rightFaceEquatorRow_re
 Test(Cube, rotateTopSlicesLeft_rightFaceTopRow_movesTo_frontFaceTopRow)
 {
 	test_span_moved_and_not_reversed(
-		Cube_rightFace, topRow,
-		Cube_rotateTopSlicesLeft,
-		Cube_frontFace, topRow,
+		rubiks_cube_right_face, top_row,
+		rubiks_cube_rotate_top_slices_left,
+		rubiks_cube_front_face, top_row,
 		"right face top row wasn't moved to the front face top row");
 }
 
@@ -82,17 +82,17 @@ Test(Cube, rotateTopSlicesLeft_rightFaceTopRow_movesTo_frontFaceTopRow)
 Test(Cube, rotateTopSlicesLeft_rightFaceEquatorRow_movesTo_frontFaceEquatorRow)
 {
 	test_span_moved_and_not_reversed(
-		Cube_rightFace, equatorRow,
-		Cube_rotateTopSlicesLeft,
-		Cube_frontFace, equatorRow,
+		rubiks_cube_right_face, equator_row,
+		rubiks_cube_rotate_top_slices_left,
+		rubiks_cube_front_face, equator_row,
 		"right face equator row wasn't moved to the front face equator row");
 }
 
 
 Test(Cube, rotateTopSlicesLeft_topFaceIsRotatedClockwise)
 {
-    test_face_rotated_clockwise(
-        Cube_topFace,
-        Cube_rotateTopSlicesLeft,
-        "top face wasn't rotated");
+	test_face_rotated_clockwise(
+		rubiks_cube_top_face,
+		rubiks_cube_rotate_top_slices_left,
+		"top face wasn't rotated");
 }

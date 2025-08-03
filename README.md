@@ -47,24 +47,24 @@ LD_LIBRARY_PATH=lib/ ./[your program]
 /* Array of function pointers, every possible move */
 void (* scramblings[])(Cube *) =
 {
-	Cube_rotateTopSliceLeft,
-	Cube_rotateTopSliceRight,
-	Cube_rotateEquatorSliceLeft,
-	Cube_rotateEquatorSliceRight,
-	Cube_rotateBottomSliceLeft,
-	Cube_rotateBottomSliceRight,
-	Cube_rotateLeftSliceUp,
-	Cube_rotateLeftSliceDown,
-	Cube_rotateMiddleSliceUp,
-	Cube_rotateMiddleSliceDown,
-	Cube_rotateRightSliceUp,
-	Cube_rotateRightSliceDown,
-	Cube_rotateFrontSliceClockwise,
-	Cube_rotateFrontSliceAnticlockwise,
-	Cube_rotateStandingSliceClockwise,
-	Cube_rotateStandingSliceAnticlockwise,
-	Cube_rotateBackSliceClockwise,
-	Cube_rotateBackSliceAnticlockwise,
+	rubiks_cube_rotate_top_slice_left,
+	rubiks_cube_rotate_top_slice_right,
+	rubiks_cube_rotate_equator_slice_left,
+	rubiks_cube_rotate_equator_slice_right,
+	rubiks_cube_rotate_bottom_slice_left,
+	rubiks_cube_rotate_bottom_slice_right,
+	rubiks_cube_rotate_left_slice_up,
+	rubiks_cube_rotate_left_slice_down,
+	rubiks_cube_rotate_middle_slice_up,
+	rubiks_cube_rotate_middle_slice_down,
+	rubiks_cube_rotate_right_slice_up,
+	rubiks_cube_rotate_right_slice_down,
+	rubiks_cube_rotate_front_slice_clockwise,
+	rubiks_cube_rotate_front_slice_anticlockwise,
+	rubiks_cube_rotate_standing_slice_clockwise,
+	rubiks_cube_rotate_standing_slice_anticlockwise,
+	rubiks_cube_rotate_back_slice_clockwise,
+	rubiks_cube_rotate_back_slice_anticlockwise,
 };
 
 /* Display labels */
@@ -73,48 +73,48 @@ char const colors[] = { 'R', 'B', 'O', 'Y', 'G', 'W' };
 static void print_face(Face const * face)
 {
 	printf("          | %c %c %c |\n",
-		colors[Face_topLeftCell(face)],
-		colors[Face_topCenterCell(face)],
-		colors[Face_topRightCell(face)]);
+		colors[rubiks_face_top_left_cell(face)],
+		colors[rubiks_face_top_center_cell(face)],
+		colors[rubiks_face_top_right_cell(face)]);
 	printf("          | %c %c %c |\n",
-		colors[Face_equatorLeftCell(face)],
-		colors[Face_color(face)],
-		colors[Face_equatorRightCell(face)]);
+		colors[rubiks_face_equator_left_cell(face)],
+		colors[rubiks_face_color(face)],
+		colors[rubiks_face_equator_right_cell(face)]);
 	printf("          | %c %c %c |\n",
-		colors[Face_bottomLeftCell(face)],
-		colors[Face_bottomCenterCell(face)],
-		colors[Face_bottomRightCell(face)]);
+		colors[rubiks_face_bottom_left_cell(face)],
+		colors[rubiks_face_bottom_center_cell(face)],
+		colors[rubiks_face_bottom_right_cell(face)]);
 }
 
 static void print_cube(Cube const * cube)
 {
-	Face * left = Cube_leftFace(cube);
-	Face * front = Cube_frontFace(cube);
-	Face * right = Cube_rightFace(cube);
+	Face * left = rubiks_cube_left_face(cube);
+	Face * front = rubiks_cube_front_face(cube);
+	Face * right = rubiks_cube_right_face(cube);
 	printf("   +------+--------+-----+\n");
 	printf("    %c %c %c | %c %c %c | %c %c %c\n",
-		colors[Face_topLeftCell(left)], colors[Face_topCenterCell(left)], colors[Face_topRightCell(left)],
-		colors[Face_topLeftCell(front)], colors[Face_topCenterCell(front)], colors[Face_topRightCell(front)],
-		colors[Face_topLeftCell(right)], colors[Face_topCenterCell(right)], colors[Face_topRightCell(right)]);
+		colors[rubiks_face_top_left_cell(left)], colors[rubiks_face_top_center_cell(left)], colors[rubiks_face_top_right_cell(left)],
+		colors[rubiks_face_top_left_cell(front)], colors[rubiks_face_top_center_cell(front)], colors[rubiks_face_top_right_cell(front)],
+		colors[rubiks_face_top_left_cell(right)], colors[rubiks_face_top_center_cell(right)], colors[rubiks_face_top_right_cell(right)]);
 	printf("    %c %c %c | %c %c %c | %c %c %c\n",
-		colors[Face_equatorLeftCell(left)], colors[Face_color(left)], colors[Face_equatorRightCell(left)],
-		colors[Face_equatorLeftCell(front)], colors[Face_color(front)], colors[Face_equatorRightCell(front)],
-		colors[Face_equatorLeftCell(right)], colors[Face_color(right)], colors[Face_equatorRightCell(right)]);
+		colors[rubiks_face_equator_left_cell(left)], colors[rubiks_face_color(left)], colors[rubiks_face_equator_right_cell(left)],
+		colors[rubiks_face_equator_left_cell(front)], colors[rubiks_face_color(front)], colors[rubiks_face_equator_right_cell(front)],
+		colors[rubiks_face_equator_left_cell(right)], colors[rubiks_face_color(right)], colors[rubiks_face_equator_right_cell(right)]);
 	printf("    %c %c %c | %c %c %c | %c %c %c\n",
-		colors[Face_bottomLeftCell(left)], colors[Face_bottomCenterCell(left)], colors[Face_bottomRightCell(left)],
-		colors[Face_bottomLeftCell(front)], colors[Face_bottomCenterCell(front)], colors[Face_bottomRightCell(front)],
-		colors[Face_bottomLeftCell(right)], colors[Face_bottomCenterCell(right)], colors[Face_bottomRightCell(right)]);
+		colors[rubiks_face_bottom_left_cell(left)], colors[rubiks_face_bottom_center_cell(left)], colors[rubiks_face_bottom_right_cell(left)],
+		colors[rubiks_face_bottom_left_cell(front)], colors[rubiks_face_bottom_center_cell(front)], colors[rubiks_face_bottom_right_cell(front)],
+		colors[rubiks_face_bottom_left_cell(right)], colors[rubiks_face_bottom_center_cell(right)], colors[rubiks_face_bottom_right_cell(right)]);
 	printf("   +------+--------+-----+\n");
 
-	Face * bottom = Cube_bottomFace(cube);
+	Face * bottom = rubiks_cube_bottom_face(cube);
 	print_face(bottom);
 	printf("          +-------+\n");
 
-	Face * back = Cube_backFace(cube);
+	Face * back = rubiks_cube_back_face(cube);
 	print_face(back);
 	printf("          +-------+\n");
 
-	Face * top = Cube_topFace(cube);
+	Face * top = rubiks_cube_top_face(cube);
 	print_face(top);
 	printf("          +-------+\n");
 }
@@ -123,7 +123,7 @@ void * create_scrambled_cube(size_t scramble_length)
 {
 	int function_index;
 
-	Cube * cube = Cube_create();
+	Cube * cube = rubiks_cube_create();
 
 	while (scramble_length--)
 	{
@@ -143,7 +143,7 @@ int main(void)
 
 	cube = create_scrambled_cube(42);
 	print_cube(cube);
-	Cube_delete(& cube);
+	rubiks_cube_delete(& cube);
 
 	return EXIT_SUCCESS;
 }

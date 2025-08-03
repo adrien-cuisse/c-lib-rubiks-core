@@ -12,17 +12,17 @@
 Test(Cube, rotateRight_frontFaceGoesRight)
 {
 	// given
-	Cube * cube = Cube_create();
-	Face * oldFrontFace = Cube_frontFace(cube);
+	Cube * cube = rubiks_cube_create();
+	Face * old_front_face = rubiks_cube_front_face(cube);
 
 	// when
-	Cube_rotateRight(cube);
+	rubiks_cube_rotate_right(cube);
 
 	// then
-	Face * newRightFace = Cube_rightFace(cube);
+	Face * new_right_face = rubiks_cube_right_face(cube);
 	cr_assert_eq(
-		newRightFace,
-		oldFrontFace,
+		new_right_face,
+		old_front_face,
 		"front face wasn't moved to the right");
 }
 
@@ -30,17 +30,17 @@ Test(Cube, rotateRight_frontFaceGoesRight)
 Test(Cube, rotateRight_rightFaceGoesBack)
 {
 	// given
-	Cube * cube = Cube_create();
-	Face * oldRightFace = Cube_rightFace(cube);
+	Cube * cube = rubiks_cube_create();
+	Face * old_right_face = rubiks_cube_right_face(cube);
 
 	// when
-	Cube_rotateRight(cube);
+	rubiks_cube_rotate_right(cube);
 
 	// then
-	Face * newBackFace = Cube_backFace(cube);
+	Face * new_back_face = rubiks_cube_back_face(cube);
 	cr_assert_eq(
-		newBackFace,
-		oldRightFace,
+		new_back_face,
+		old_right_face,
 		"right face wasn't moved to the back");
 }
 
@@ -48,17 +48,17 @@ Test(Cube, rotateRight_rightFaceGoesBack)
 Test(Cube, rotateRight_backFaceGoesLeft)
 {
 	// given
-	Cube * cube = Cube_create();
-	Face * oldBackFace = Cube_backFace(cube);
+	Cube * cube = rubiks_cube_create();
+	Face * old_back_face = rubiks_cube_back_face(cube);
 
 	// when
-	Cube_rotateRight(cube);
+	rubiks_cube_rotate_right(cube);
 
 	// then
-	Face * newLeftFace = Cube_leftFace(cube);
+	Face * new_left_face = rubiks_cube_left_face(cube);
 	cr_assert_eq(
-		newLeftFace,
-		oldBackFace,
+		new_left_face,
+		old_back_face,
 		"back face wasn't moved to the left");
 }
 
@@ -66,34 +66,34 @@ Test(Cube, rotateRight_backFaceGoesLeft)
 Test(Cube, rotateRight_leftFaceGoesFront)
 {
 	// given
-	Cube * cube = Cube_create();
-	Face * oldLeftFace = Cube_leftFace(cube);
+	Cube * cube = rubiks_cube_create();
+	Face * old_left_face = rubiks_cube_left_face(cube);
 
 	// when
-	Cube_rotateRight(cube);
+	rubiks_cube_rotate_right(cube);
 
 	// then
-	Face * newFrontFace = Cube_frontFace(cube);
+	Face * new_front_face = rubiks_cube_front_face(cube);
 	cr_assert_eq(
-		newFrontFace,
-		oldLeftFace,
+		new_front_face,
+		old_left_face,
 		"left face wasn't moved to the front");
 }
 
 
-Test(Cube, rotateCubeRight_bottomFaceIsRotatedAntiClockwise)
+Test(Cube, rotateRight_bottomFaceIsRotatedAntiClockwise)
 {
 	test_face_rotated_anticlockwise(
-        Cube_bottomFace,
-        Cube_rotateRight,
-        "bottom face wasn't rotated");
+		rubiks_cube_bottom_face,
+		rubiks_cube_rotate_right,
+		"bottom face wasn't rotated");
 }
 
 
-Test(Cube, rotateCubeRight_topFaceIsRotatedClockwise)
+Test(Cube, rotateRight_topFaceIsRotatedClockwise)
 {
 	test_face_rotated_clockwise(
-        Cube_topFace,
-        Cube_rotateRight,
-        "top face wasn't rotated");
+		rubiks_cube_top_face,
+		rubiks_cube_rotate_right,
+		"top face wasn't rotated");
 }

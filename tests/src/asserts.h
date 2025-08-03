@@ -33,10 +33,10 @@
 		failure_message) \
 	do { \
 		/* given */ \
-		Cube * cube = createScrambledCube(); \
+		Cube * cube = create_scrambled_cube(); \
 		Face * face = get_face(cube); \
 		Color before_rotation[FACE_SIZE][FACE_SIZE]; \
-		readFace(face, before_rotation); \
+		read_face(face, before_rotation); \
 		\
 		/* when */ \
 		apply_rotation(cube); \
@@ -49,7 +49,7 @@
 			{ before_rotation[2][2], before_rotation[1][2], before_rotation[0][2] } \
 		}; \
 		Color actual_after_rotation[FACE_SIZE][FACE_SIZE]; \
-		readFace(face, actual_after_rotation); \
+		read_face(face, actual_after_rotation); \
 		cr_assert_arr_eq( \
 			expected_after_rotation, \
 			actual_after_rotation, \
@@ -100,10 +100,10 @@
 		failure_message) \
 	do { \
 		/* given */ \
-		Cube * cube = createScrambledCube(); \
+		Cube * cube = create_scrambled_cube(); \
 		Face * face = get_face(cube); \
 		Color before_rotation[FACE_SIZE][FACE_SIZE]; \
-		readFace(face, before_rotation); \
+		read_face(face, before_rotation); \
 		\
 		/* when */ \
 		apply_rotation(cube); \
@@ -116,7 +116,7 @@
 			{ before_rotation[0][0], before_rotation[1][0], before_rotation[2][0] } \
 		}; \
 		Color actual_after_rotation[FACE_SIZE][FACE_SIZE]; \
-		readFace(face, actual_after_rotation); \
+		read_face(face, actual_after_rotation); \
 		cr_assert_arr_eq( \
 			expected_after_rotation, \
 			actual_after_rotation, \
@@ -196,7 +196,7 @@
 		failure_message) \
 	do { \
 		/* given */ \
-		Cube * cube = Cube_create(); \
+		Cube * cube = rubiks_cube_create(); \
 		Face * source_face = get_source_face(cube); \
 		Color source_span[FACE_SIZE]; \
 		read_source_span(source_face, source_span); \
@@ -255,7 +255,7 @@
 		failure_message) \
 	do { \
 		/* given */ \
-		Cube * cube = createScrambledCube(); \
+		Cube * cube = create_scrambled_cube(); \
 		Face * source_face = get_source_face(cube); \
 		Color source_span[FACE_SIZE]; \
 		read_source_span(source_face, source_span); \
@@ -318,11 +318,11 @@
 		failure_message) \
 	do { \
 		/* given */ \
-		Cube * cube = createScrambledCube(); \
+		Cube * cube = create_scrambled_cube(); \
 		Face * source_face = get_source_face(cube); \
 		Color source_span[FACE_SIZE]; \
 		read_source_span(source_face, source_span); \
-		reverseSpan(source_span); \
+		reverse_span(source_span); \
 		\
 		/* when */ \
 		apply_slice_rotation(cube); \

@@ -7,23 +7,23 @@
 
 
 
-Cube * createScrambledCube(void);
+Cube * create_scrambled_cube(void);
 
 
-void topRow(Face const * face, Color buffer[FACE_SIZE]);
-void equatorRow(Face const * face, Color buffer[FACE_SIZE]);
-void bottomRow(Face const * face, Color buffer[FACE_SIZE]);
+void top_row(Face const * face, Color buffer[FACE_SIZE]);
+void equator_row(Face const * face, Color buffer[FACE_SIZE]);
+void bottom_row(Face const * face, Color buffer[FACE_SIZE]);
 
 
-void leftColumn(Face const * face, Color buffer[FACE_SIZE]);
-void middleColumn(Face const * face, Color buffer[FACE_SIZE]);
-void rightColumn(Face const * face, Color buffer[FACE_SIZE]);
+void left_column(Face const * face, Color buffer[FACE_SIZE]);
+void middle_column(Face const * face, Color buffer[FACE_SIZE]);
+void right_column(Face const * face, Color buffer[FACE_SIZE]);
 
 
-void readFace(Face const * face, Color buffer[FACE_SIZE][FACE_SIZE]);
+void read_face(Face const * face, Color buffer[FACE_SIZE][FACE_SIZE]);
 
 
-void reverseSpan(Color buffer[FACE_SIZE]);
+void reverse_span(Color buffer[FACE_SIZE]);
 
 
 

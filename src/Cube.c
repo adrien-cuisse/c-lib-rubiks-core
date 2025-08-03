@@ -13,39 +13,39 @@
  *
  * @param this - the cube to store faces in
  */
-static void createAndPositionFaces(Cube * this)
+static void create_and_position_faces(Cube * this)
 {
-	int faceIndex;
+	int face_index;
 
-	this->faces[LEFT_FACE] = Face_create(RED);
-	this->faces[FRONT_FACE] = Face_create(BLUE);
-	this->faces[RIGHT_FACE] = Face_create(ORANGE);
-	this->faces[TOP_FACE] = Face_create(WHITE);
-	this->faces[BOTTOM_FACE] = Face_create(YELLOW);
-	this->faces[BACK_FACE] = Face_create(GREEN);
+	this->faces[LEFT_FACE] = create_face(RED);
+	this->faces[FRONT_FACE] = create_face(BLUE);
+	this->faces[RIGHT_FACE] = create_face(ORANGE);
+	this->faces[TOP_FACE] = create_face(WHITE);
+	this->faces[BOTTOM_FACE] = create_face(YELLOW);
+	this->faces[BACK_FACE] = create_face(GREEN);
 
-	for (faceIndex = 0; faceIndex < 6; faceIndex++)
+	for (face_index = 0; face_index < 6; face_index++)
 	{
-		if (this->faces[faceIndex] == NULL)
+		if (this->faces[face_index] == NULL)
 		{
-			Cube_delete(& this);
+			rubiks_cube_delete(& this);
 			return;
 		}
 	}
 }
 
 
-Cube * Cube_create(void)
+Cube * rubiks_cube_create(void)
 {
 	Cube * this = calloc(1, sizeof(* this));
 	if (this != NULL)
-		createAndPositionFaces(this);
+		create_and_position_faces(this);
 
 	return this;
 }
 
 
-void Cube_delete(Cube ** this)
+void rubiks_cube_delete(Cube ** this)
 {
 	FacePosition position;
 
@@ -54,7 +54,7 @@ void Cube_delete(Cube ** this)
 
 	for (position = 0; position < 6; position++)
 	{
-		Face_delete(& (* this)->faces[position]);
+		delete_face(& (* this)->faces[position]);
 		(* this)->faces[position] = NULL;
 	}
 
@@ -72,43 +72,43 @@ void Cube_delete(Cube ** this)
  *
  * @return Face * - the requested face
  */
-static Face * getFace(Cube const * this, FacePosition position)
+static Face * get_face(Cube const * this, FacePosition position)
 {
 	return this->faces[position];
 }
 
 
-Face * Cube_leftFace(Cube const * this)
+Face * rubiks_cube_left_face(Cube const * this)
 {
-	return getFace(this, LEFT_FACE);
+	return get_face(this, LEFT_FACE);
 }
 
 
-Face * Cube_frontFace(Cube const * this)
+Face * rubiks_cube_front_face(Cube const * this)
 {
-	return getFace(this, FRONT_FACE);
+	return get_face(this, FRONT_FACE);
 }
 
 
-Face * Cube_rightFace(Cube const * this)
+Face * rubiks_cube_right_face(Cube const * this)
 {
-	return getFace(this, RIGHT_FACE);
+	return get_face(this, RIGHT_FACE);
 }
 
 
-Face * Cube_topFace(Cube const * this)
+Face * rubiks_cube_top_face(Cube const * this)
 {
-	return getFace(this, TOP_FACE);
+	return get_face(this, TOP_FACE);
 }
 
 
-Face * Cube_bottomFace(Cube const * this)
+Face * rubiks_cube_bottom_face(Cube const * this)
 {
-	return getFace(this, BOTTOM_FACE);
+	return get_face(this, BOTTOM_FACE);
 }
 
 
-Face * Cube_backFace(Cube const * this)
+Face * rubiks_cube_back_face(Cube const * this)
 {
-	return getFace(this, BACK_FACE);
+	return get_face(this, BACK_FACE);
 }

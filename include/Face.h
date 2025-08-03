@@ -32,7 +32,7 @@ typedef struct Face Face;
  *
  * @return Color - the color of the face
  */
-RUBIKS_API Color Face_color(Face const * self);
+RUBIKS_API Color rubiks_face_color(Face const * self);
 
 
 /**
@@ -42,7 +42,7 @@ RUBIKS_API Color Face_color(Face const * self);
  *
  * @return Color - the color of the cell
  */
-RUBIKS_API Color Face_topLeftCell(Face const * self);
+RUBIKS_API Color rubiks_face_top_left_cell(Face const * self);
 
 
 /**
@@ -52,7 +52,7 @@ RUBIKS_API Color Face_topLeftCell(Face const * self);
  *
  * @return Color - the color of the cell
  */
-RUBIKS_API Color Face_topCenterCell(Face const * self);
+RUBIKS_API Color rubiks_face_top_center_cell(Face const * self);
 
 
 /**
@@ -62,7 +62,7 @@ RUBIKS_API Color Face_topCenterCell(Face const * self);
  *
  * @return Color - the color of the cell
  */
-RUBIKS_API Color Face_topRightCell(Face const * self);
+RUBIKS_API Color rubiks_face_top_right_cell(Face const * self);
 
 
 /**
@@ -72,7 +72,7 @@ RUBIKS_API Color Face_topRightCell(Face const * self);
  *
  * @return Color - the color of the cell
  */
-RUBIKS_API Color Face_equatorLeftCell(Face const * self);
+RUBIKS_API Color rubiks_face_equator_left_cell(Face const * self);
 
 
 /**
@@ -82,7 +82,7 @@ RUBIKS_API Color Face_equatorLeftCell(Face const * self);
  *
  * @return Color - the color of the cell
  */
-RUBIKS_API Color Face_equatorCenterCell(Face const * self);
+RUBIKS_API Color rubiks_face_equator_center_cell(Face const * self);
 
 
 /**
@@ -92,7 +92,7 @@ RUBIKS_API Color Face_equatorCenterCell(Face const * self);
  *
  * @return Color - the color of the cell
  */
-RUBIKS_API Color Face_equatorRightCell(Face const * self);
+RUBIKS_API Color rubiks_face_equator_right_cell(Face const * self);
 
 
 /**
@@ -102,7 +102,7 @@ RUBIKS_API Color Face_equatorRightCell(Face const * self);
  *
  * @return Color - the color of the cell
  */
-RUBIKS_API Color Face_bottomLeftCell(Face const * self);
+RUBIKS_API Color rubiks_face_bottom_left_cell(Face const * self);
 
 
 /**
@@ -112,7 +112,7 @@ RUBIKS_API Color Face_bottomLeftCell(Face const * self);
  *
  * @return Color - the color of the cell
  */
-RUBIKS_API Color Face_bottomCenterCell(Face const * self);
+RUBIKS_API Color rubiks_face_bottom_center_cell(Face const * self);
 
 
 /**
@@ -122,7 +122,7 @@ RUBIKS_API Color Face_bottomCenterCell(Face const * self);
  *
  * @return Color - the color of the cell
  */
-RUBIKS_API Color Face_bottomRightCell(Face const * self);
+RUBIKS_API Color rubiks_face_bottom_right_cell(Face const * self);
 
 
 

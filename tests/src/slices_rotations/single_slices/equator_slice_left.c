@@ -11,79 +11,79 @@
 
 Test(Cube, rotateEquatorSliceLeft_frontFaceEquatorRow_movesTo_leftFaceEquatorRow)
 {
-    test_span_moved(
-        Cube_frontFace, equatorRow,
-        Cube_rotateEquatorSliceLeft,
-        Cube_leftFace, equatorRow,
-        "front face equator row wasn't moved to the left face equator row");
+	test_span_moved(
+		rubiks_cube_front_face, equator_row,
+		rubiks_cube_rotate_equator_slice_left,
+		rubiks_cube_left_face, equator_row,
+		"front face equator row wasn't moved to the left face equator row");
 }
 
 
 Test(Cube, rotateEquatorSliceLeft_leftFaceEquatorRow_movesTo_backFaceEquatorRow)
 {
-    test_span_moved(
-        Cube_leftFace, equatorRow,
-        Cube_rotateEquatorSliceLeft,
-        Cube_backFace, equatorRow,
-        "left face equator row wasn't moved to the back face equator row");
+	test_span_moved(
+		rubiks_cube_left_face, equator_row,
+		rubiks_cube_rotate_equator_slice_left,
+		rubiks_cube_back_face, equator_row,
+		"left face equator row wasn't moved to the back face equator row");
 }
 
 
 Test(Cube, rotateEquatorSliceLeft_backFaceEquatorRow_movesTo_rightFaceEquatorRow)
 {
-    test_span_moved(
-        Cube_backFace, equatorRow,
-        Cube_rotateEquatorSliceLeft,
-        Cube_rightFace, equatorRow,
-        "back face equator row wasn't moved to the right face equator row");
+	test_span_moved(
+		rubiks_cube_back_face, equator_row,
+		rubiks_cube_rotate_equator_slice_left,
+		rubiks_cube_right_face, equator_row,
+		"back face equator row wasn't moved to the right face equator row");
 }
 
 
 Test(Cube, rotateEquatorSliceLeft_rightFaceEquatorRow_movesTo_frontFaceEquatorRow)
 {
-    test_span_moved(
-        Cube_rightFace, equatorRow,
-        Cube_rotateEquatorSliceLeft,
-        Cube_frontFace, equatorRow,
-        "right face equator row wasn't moved to the front face equator row");
+	test_span_moved(
+		rubiks_cube_right_face, equator_row,
+		rubiks_cube_rotate_equator_slice_left,
+		rubiks_cube_front_face, equator_row,
+		"right face equator row wasn't moved to the front face equator row");
 }
 
 
 Test(Cube, rotateEquatorSliceLeft_leftFaceEquatorRow_movesTo_backFaceEquatorRow_reversed)
 {
-    test_span_moved_and_reversed(
-        Cube_leftFace, equatorRow,
-        Cube_rotateEquatorSliceLeft,
-        Cube_backFace, equatorRow,
-        "source span (left face equator row) wasn't reversed");
+	test_span_moved_and_reversed(
+		rubiks_cube_left_face, equator_row,
+		rubiks_cube_rotate_equator_slice_left,
+		rubiks_cube_back_face, equator_row,
+		"source span (left face equator row) wasn't reversed");
 }
 
 
 Test(Cube, rotateEquatorSliceLeft_backFaceEquatorRow_movesTo_rightFaceEquatorRow_reversed)
 {
-    test_span_moved_and_reversed(
-        Cube_backFace, equatorRow,
-        Cube_rotateEquatorSliceLeft,
-        Cube_rightFace, equatorRow,
-        "source span (back face equator row) wasn't reversed");
+	test_span_moved_and_reversed(
+		rubiks_cube_back_face, equator_row,
+		rubiks_cube_rotate_equator_slice_left,
+		rubiks_cube_right_face, equator_row,
+		"source span (back face equator row) wasn't reversed");
 }
 
 
 Test(Cube, rotateEquatorSliceLeft_rightFaceEquatorRow_movesTo_frontFaceEquatorRow_notReversed)
 {
-    test_span_moved_and_not_reversed(
-        Cube_rightFace, equatorRow,
-        Cube_rotateEquatorSliceLeft,
-        Cube_frontFace, equatorRow,
-        "source span (right face equator row) was reversed");
+	test_span_moved_and_not_reversed(
+		rubiks_cube_right_face, equator_row,
+		rubiks_cube_rotate_equator_slice_left,
+		rubiks_cube_front_face, equator_row,
+		"source span (right face equator row) was reversed");
 }
 
 
 Test(Cube, rotateEquatorSliceLeft_frontFaceEquatorRow_movesTo_leftFaceEquatorRow_notReversed)
 {
-    test_span_moved_and_not_reversed(
-        Cube_frontFace, equatorRow,
-        Cube_rotateEquatorSliceLeft,
-        Cube_leftFace, equatorRow,
-        "source span (front face equator row) was reversed");
+	test_span_moved_and_not_reversed(
+		rubiks_cube_front_face, equator_row,
+		rubiks_cube_rotate_equator_slice_left,
+		rubiks_cube_left_face, equator_row,
+		"source span (front face equator row) was reversed");
 }

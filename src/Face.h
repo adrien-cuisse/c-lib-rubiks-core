@@ -42,7 +42,7 @@ typedef enum
  *
  * @return Face * - the created face
  */
-Face * Face_create(Color color);
+Face * create_face(Color color);
 
 
 /**
@@ -50,7 +50,7 @@ Face * Face_create(Color color);
  *
  * @param this - the face to delete
  */
-void Face_delete(Face ** this);
+void delete_face(Face ** this);
 
 
 /**
@@ -58,7 +58,7 @@ void Face_delete(Face ** this);
  *
  * @param this - the face to rotate
  */
-void Face_rotateClockwise(Face * this);
+void rotate_face_clockwise(Face * this);
 
 
 /**
@@ -66,7 +66,7 @@ void Face_rotateClockwise(Face * this);
  *
  * @param this - the face to rotate
  */
-void Face_rotateAnticlockwise(Face * this);
+void rotate_face_anticlockwise(Face * this);
 
 
 /**
@@ -78,7 +78,7 @@ void Face_rotateAnticlockwise(Face * this);
  *
  * @param row - the row to read
  */
-void Face_copyRow(Face const * this, Color buffer[FACE_SIZE], Row row);
+void copy_face_row(Face const * this, Color buffer[FACE_SIZE], Row row);
 
 
 /**
@@ -90,7 +90,7 @@ void Face_copyRow(Face const * this, Color buffer[FACE_SIZE], Row row);
  *
  * @param row - the row where to write the cells
  */
-void Face_setRow(Face * this, Color const cells[FACE_SIZE], Row row);
+void set_face_row(Face * this, Color const cells[FACE_SIZE], Row row);
 
 
 /**
@@ -102,7 +102,7 @@ void Face_setRow(Face * this, Color const cells[FACE_SIZE], Row row);
  *
  * @param column - the column to read
  */
-void Face_copyColumn(Face const * this, Color buffer[FACE_SIZE], Column column);
+void copy_face_column(Face const * this, Color buffer[FACE_SIZE], Column column);
 
 
 /**
@@ -114,7 +114,7 @@ void Face_copyColumn(Face const * this, Color buffer[FACE_SIZE], Column column);
  *
  * @param column - the column where to write the cells
  */
-void Face_setColumn(Face * face, Color const cells[FACE_SIZE], Column column);
+void set_face_column(Face * face, Color const cells[FACE_SIZE], Column column);
 
 
 

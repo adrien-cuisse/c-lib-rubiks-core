@@ -12,78 +12,78 @@
  *
  * @param rotation - the rotation to apply
  */
-static void rotateCube(Cube * this, Rotation rotation)
+static void rotate_cube(Cube * this, Rotation rotation)
 {
-	Face * backupFace = this->faces[rotation[3]];
+	Face * backup = this->faces[rotation[3]];
 
 	this->faces[rotation[3]] = this->faces[rotation[2]];
 	this->faces[rotation[2]] = this->faces[rotation[1]];
 	this->faces[rotation[1]] = this->faces[rotation[0]];
-	this->faces[rotation[0]] = backupFace;
+	this->faces[rotation[0]] = backup;
 }
 
 
-void Cube_rotateLeft(Cube * this)
+void rubiks_cube_rotate_left(Cube * this)
 {
 	Rotation rotation = { FRONT_FACE, LEFT_FACE, BACK_FACE, RIGHT_FACE };
 
-	Face_rotateClockwise(Cube_bottomFace(this));
-	Face_rotateAnticlockwise(Cube_topFace(this));
+	rotate_face_clockwise(rubiks_cube_bottom_face(this));
+	rotate_face_anticlockwise(rubiks_cube_top_face(this));
 
-	rotateCube(this, rotation);
+	rotate_cube(this, rotation);
 }
 
 
-void Cube_rotateRight(Cube * this)
+void rubiks_cube_rotate_right(Cube * this)
 {
 	Rotation rotation = { FRONT_FACE, RIGHT_FACE, BACK_FACE, LEFT_FACE };
 
-	Face_rotateAnticlockwise(Cube_bottomFace(this));
-	Face_rotateClockwise(Cube_topFace(this));
+	rotate_face_anticlockwise(rubiks_cube_bottom_face(this));
+	rotate_face_clockwise(rubiks_cube_top_face(this));
 
-	rotateCube(this, rotation);
+	rotate_cube(this, rotation);
 }
 
 
-void Cube_rotateUp(Cube * this)
+void rubiks_cube_rotate_up(Cube * this)
 {
 	Rotation rotation = { FRONT_FACE, TOP_FACE, BACK_FACE, BOTTOM_FACE };
 
-	Face_rotateAnticlockwise(Cube_leftFace(this));
-	Face_rotateClockwise(Cube_rightFace(this));
+	rotate_face_anticlockwise(rubiks_cube_left_face(this));
+	rotate_face_clockwise(rubiks_cube_right_face(this));
 
-	rotateCube(this, rotation);
+	rotate_cube(this, rotation);
 }
 
 
-void Cube_rotateDown(Cube * this)
+void rubiks_cube_rotate_down(Cube * this)
 {
 	Rotation rotation = { FRONT_FACE, BOTTOM_FACE, BACK_FACE, TOP_FACE };
 
-	Face_rotateClockwise(Cube_leftFace(this));
-	Face_rotateAnticlockwise(Cube_rightFace(this));
+	rotate_face_clockwise(rubiks_cube_left_face(this));
+	rotate_face_anticlockwise(rubiks_cube_right_face(this));
 
-	rotateCube(this, rotation);
+	rotate_cube(this, rotation);
 }
 
 
-void Cube_rotateClockwise(Cube * this)
+void rubiks_cube_rotate_clockwise(Cube * this)
 {
 	Rotation rotation = { TOP_FACE, RIGHT_FACE, BOTTOM_FACE, LEFT_FACE };
 
-	Face_rotateClockwise(Cube_frontFace(this));
-	Face_rotateAnticlockwise(Cube_backFace(this));
+	rotate_face_clockwise(rubiks_cube_front_face(this));
+	rotate_face_anticlockwise(rubiks_cube_back_face(this));
 
-	rotateCube(this, rotation);
+	rotate_cube(this, rotation);
 }
 
 
-void Cube_rotateAnticlockwise(Cube * this)
+void rubiks_cube_rotate_anticlockwise(Cube * this)
 {
 	Rotation rotation = { TOP_FACE, LEFT_FACE, BOTTOM_FACE, RIGHT_FACE };
 
-	Face_rotateAnticlockwise(Cube_frontFace(this));
-	Face_rotateClockwise(Cube_backFace(this));
+	rotate_face_anticlockwise(rubiks_cube_front_face(this));
+	rotate_face_clockwise(rubiks_cube_back_face(this));
 
-	rotateCube(this, rotation);
+	rotate_cube(this, rotation);
 }

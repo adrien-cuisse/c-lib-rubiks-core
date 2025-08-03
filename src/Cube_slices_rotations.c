@@ -55,13 +55,13 @@ typedef Span Slice[4];
  *
  * @param buffer - the buffer where to write the span
  */
-static void getSpan(Cube const * this, Span span, Color buffer[FACE_SIZE])
+static void get_span(Cube const * this, Span span, Color buffer[FACE_SIZE])
 {
-	int isRow = (span.column == (Column) -1);
-	if (isRow)
-		Face_copyRow(this->faces[span.face], buffer, span.row);
+	int is_row = (span.column == (Column) -1);
+	if (is_row)
+		copy_face_row(this->faces[span.face], buffer, span.row);
 	else
-		Face_copyColumn(this->faces[span.face], buffer, span.column);
+		copy_face_column(this->faces[span.face], buffer, span.column);
 }
 
 
@@ -74,37 +74,37 @@ static void getSpan(Cube const * this, Span span, Color buffer[FACE_SIZE])
  *
  * @param content - the content of the span to write
  */
-static void setSpan(Cube * this, Span span, Color const content[FACE_SIZE])
+static void set_span(Cube * this, Span span, Color const content[FACE_SIZE])
 {
-	int isRow = (span.column == (Column) -1);
-	if (isRow)
-		Face_setRow(this->faces[span.face], content, span.row);
+	int is_row = (span.column == (Column) -1);
+	if (is_row)
+		set_face_row(this->faces[span.face], content, span.row);
 	else
-		Face_setColumn(this->faces[span.face], content, span.column);
+		set_face_column(this->faces[span.face], content, span.column);
 }
 
 
 /**
- * Checks if the span must be reversed, ie., if its face is in [reversingFaces]
+ * Checks if the span must be reversed, ie., if its face is in [reversing_faces]
  *
  * @param span - the span to check
  *
- * @param reversingFaces - the faces where spans should be reversed
+ * @param reversing_faces - the faces where spans should be reversed
  *
- * @param facesCount - the number of faces in [reversingFaces]
+ * @param faces_count - the number of faces in [reversing_faces]
  *
- * @return int - 1 if span's face is in [reversingFaces], 0 otherwise
+ * @return int - 1 if span's face is in [reversing_faces], 0 otherwise
  */
-static int mustReverseSpan(
+static int must_reverse_span(
 	Span span,
-	FacePosition const reversingFaces[],
-	int facesCount)
+	FacePosition const reversing_faces[],
+	int faces_count)
 {
 	int index;
 
-	for (index = 0; index < facesCount; index++)
+	for (index = 0; index < faces_count; index++)
 	{
-		if (span.face == reversingFaces[index])
+		if (span.face == reversing_faces[index])
 			return 1;
 	}
 
@@ -121,11 +121,11 @@ static int mustReverseSpan(
  *
  * @param to - where to write the copied span
  */
-static void moveSpan(Cube * this, Span from, Span to)
+static void move_span(Cube * this, Span from, Span to)
 {
 	Color span[FACE_SIZE];
-	getSpan(this, from, span);
-	setSpan(this, to, span);
+	get_span(this, from, span);
+	set_span(this, to, span);
 }
 
 
@@ -134,7 +134,7 @@ static void moveSpan(Cube * this, Span from, Span to)
  *
  * @param span - the span to reverse
  */
-static void reverseSpan(Color span[FACE_SIZE])
+static void reverse_span(Color span[FACE_SIZE])
 {
 	Color swap = span[0];
 	span[0] = span[2];
@@ -151,12 +151,12 @@ static void reverseSpan(Color span[FACE_SIZE])
  *
  * @param to - where to write the copied span
  */
-static void moveReversedSpan(Cube * this, Span from, Span to)
+static void move_reversed_span(Cube * this, Span from, Span to)
 {
-	Color spanContent[FACE_SIZE];
-	getSpan(this, from, spanContent);
-	reverseSpan(spanContent);
-	setSpan(this, to, spanContent);
+	Color span_content[FACE_SIZE];
+	get_span(this, from, span_content);
+	reverse_span(span_content);
+	set_span(this, to, span_content);
 }
 
 
@@ -167,42 +167,42 @@ static void moveReversedSpan(Cube * this, Span from, Span to)
  *
  * @param slice - the slice to rotate
  *
- * @param reversingSpansFace - array of FacePosition, any span in the slice
+ * @param reversing_spans_face - array of FacePosition, any span in the slice
  * 	having its face in that array will be reversed
  *
- * @param reversingCount - the number of faces in [reversingSpansFace]
+ * @param reversing_count - the number of faces in [reversing_spans_face]
  * 	(ie., the number of spans to reverse in the slice)
  */
-static void rotateSlice(
+static void rotate_slice(
 	Cube * this,
 	Slice slice,
-	FacePosition const reversingSpansFace[],
-	int reversingCount)
+	FacePosition const reversing_spans_face[],
+	int reversing_count)
 {
-	int spanIndex;
+	int span_index;
 
-	Span sourceSpan, destinationSpan;
+	Span source_span, destination_span;
 
-	Color spanBackup[FACE_SIZE];
-	getSpan(this, slice[3], spanBackup);
+	Color span_backup[FACE_SIZE];
+	get_span(this, slice[3], span_backup);
 
-	for (spanIndex = 3; spanIndex > 0; spanIndex--)
+	for (span_index = 3; span_index > 0; span_index--)
 	{
-		sourceSpan = slice[spanIndex - 1];
-		destinationSpan = slice[spanIndex];
+		source_span = slice[span_index - 1];
+		destination_span = slice[span_index];
 
-		if (mustReverseSpan(sourceSpan, reversingSpansFace, reversingCount))
-			moveReversedSpan(this, sourceSpan, destinationSpan);
+		if (must_reverse_span(source_span, reversing_spans_face, reversing_count))
+			move_reversed_span(this, source_span, destination_span);
 		else
-			moveSpan(this, sourceSpan, destinationSpan);
+			move_span(this, source_span, destination_span);
 	}
 
-	sourceSpan = slice[3];
-	if (mustReverseSpan(sourceSpan, reversingSpansFace, reversingCount))
-		reverseSpan(spanBackup);
+	source_span = slice[3];
+	if (must_reverse_span(source_span, reversing_spans_face, reversing_count))
+		reverse_span(span_backup);
 
-	destinationSpan = slice[0];
-	setSpan(this, destinationSpan, spanBackup);
+	destination_span = slice[0];
+	set_span(this, destination_span, span_backup);
 }
 
 
@@ -213,10 +213,10 @@ static void rotateSlice(
  *
  * @param slice - the slice to rotate
  */
-PATTERN_DEPENDANT static void rotateSliceLeft(Cube * this, Slice slice)
+PATTERN_DEPENDANT static void rotate_slice_left(Cube * this, Slice slice)
 {
-	FacePosition reversingSpansFace[2] = { LEFT_FACE, BACK_FACE };
-	rotateSlice(this, slice, reversingSpansFace, 2);
+	FacePosition reversing_spans_face[2] = { LEFT_FACE, BACK_FACE };
+	rotate_slice(this, slice, reversing_spans_face, 2);
 }
 
 
@@ -227,14 +227,14 @@ PATTERN_DEPENDANT static void rotateSliceLeft(Cube * this, Slice slice)
  *
  * @param slice - the slice to rotate
  */
-PATTERN_DEPENDANT static void rotateSliceRight(Cube * this, Slice slice)
+PATTERN_DEPENDANT static void rotate_slice_right(Cube * this, Slice slice)
 {
-	FacePosition reversingSpansFace[2] = { RIGHT_FACE, BACK_FACE };
-	rotateSlice(this, slice, reversingSpansFace, 2);
+	FacePosition reversing_spans_face[2] = { RIGHT_FACE, BACK_FACE };
+	rotate_slice(this, slice, reversing_spans_face, 2);
 }
 
 
-void Cube_rotateTopSliceLeft(Cube * this)
+void rubiks_cube_rotate_top_slice_left(Cube * this)
 {
 	Slice slice =
 	{
@@ -243,12 +243,12 @@ void Cube_rotateTopSliceLeft(Cube * this)
 		{ BACK_FACE, BOTTOM_ROW, -1 },
 		{ RIGHT_FACE, TOP_ROW, -1 }
 	};
-	rotateSliceLeft(this, slice);
-	Face_rotateClockwise(Cube_topFace(this));
+	rotate_slice_left(this, slice);
+	rotate_face_clockwise(rubiks_cube_top_face(this));
 }
 
 
-void Cube_rotateTopSliceRight(Cube * this)
+void rubiks_cube_rotate_top_slice_right(Cube * this)
 {
 	Slice slice =
 	{
@@ -257,12 +257,12 @@ void Cube_rotateTopSliceRight(Cube * this)
 		{ BACK_FACE, BOTTOM_ROW, -1 },
 		{ LEFT_FACE, TOP_ROW, -1 }
 	};
-	rotateSliceRight(this, slice);
-	Face_rotateAnticlockwise(Cube_topFace(this));
+	rotate_slice_right(this, slice);
+	rotate_face_anticlockwise(rubiks_cube_top_face(this));
 }
 
 
-void Cube_rotateEquatorSliceLeft(Cube * this)
+void rubiks_cube_rotate_equator_slice_left(Cube * this)
 {
 	Slice slice =
 	{
@@ -271,11 +271,11 @@ void Cube_rotateEquatorSliceLeft(Cube * this)
 		{ BACK_FACE, EQUATOR_ROW, -1 },
 		{ RIGHT_FACE, EQUATOR_ROW, -1 }
 	};
-	rotateSliceLeft(this, slice);
+	rotate_slice_left(this, slice);
 }
 
 
-void Cube_rotateEquatorSliceRight(Cube * this)
+void rubiks_cube_rotate_equator_slice_right(Cube * this)
 {
 	Slice slice =
 	{
@@ -284,11 +284,11 @@ void Cube_rotateEquatorSliceRight(Cube * this)
 		{ BACK_FACE, EQUATOR_ROW, -1 },
 		{ LEFT_FACE, EQUATOR_ROW, -1 }
 	};
-	rotateSliceRight(this, slice);
+	rotate_slice_right(this, slice);
 }
 
 
-void Cube_rotateBottomSliceLeft(Cube * this)
+void rubiks_cube_rotate_bottom_slice_left(Cube * this)
 {
 	Slice slice =
 	{
@@ -297,12 +297,12 @@ void Cube_rotateBottomSliceLeft(Cube * this)
 		{ BACK_FACE, TOP_ROW, -1},
 		{ RIGHT_FACE, BOTTOM_ROW, -1 }
 	};
-	rotateSliceLeft(this, slice);
-	Face_rotateAnticlockwise(Cube_bottomFace(this));
+	rotate_slice_left(this, slice);
+	rotate_face_anticlockwise(rubiks_cube_bottom_face(this));
 }
 
 
-void Cube_rotateBottomSliceRight(Cube * this)
+void rubiks_cube_rotate_bottom_slice_right(Cube * this)
 {
 	Slice slice =
 	{
@@ -311,8 +311,8 @@ void Cube_rotateBottomSliceRight(Cube * this)
 		{ BACK_FACE, TOP_ROW, -1 },
 		{ LEFT_FACE, BOTTOM_ROW, -1 }
 	};
-	rotateSliceRight(this, slice);
-	Face_rotateClockwise(Cube_bottomFace(this));
+	rotate_slice_right(this, slice);
+	rotate_face_clockwise(rubiks_cube_bottom_face(this));
 }
 
 
@@ -325,19 +325,19 @@ void Cube_rotateBottomSliceRight(Cube * this)
  *
  * @param rotation - the rotation to apply
  */
-static void rotateVerticalSlice(Cube * this, Column column, Rotation rotation)
+static void rotate_vertical_slice(Cube * this, Column column, Rotation rotation)
 {
-	int spanIndex;
+	int span_index;
 	Slice slice;
 
-	for (spanIndex = 0; spanIndex < 4; spanIndex++)
+	for (span_index = 0; span_index < 4; span_index++)
 	{
-		slice[spanIndex].face = rotation[spanIndex];
-		slice[spanIndex].row = -1;
-		slice[spanIndex].column = column;
+		slice[span_index].face = rotation[span_index];
+		slice[span_index].row = -1;
+		slice[span_index].column = column;
 	}
 
-	rotateSlice(this, slice, NULL, 0);
+	rotate_slice(this, slice, NULL, 0);
 }
 
 
@@ -348,10 +348,10 @@ static void rotateVerticalSlice(Cube * this, Column column, Rotation rotation)
  *
  * @param column - the column of the slice to rotate
  */
-PATTERN_DEPENDANT static void rotateSliceUp(Cube * this, Column column)
+PATTERN_DEPENDANT static void rotate_slice_up(Cube * this, Column column)
 {
 	Rotation rotation = { FRONT_FACE, TOP_FACE, BACK_FACE, BOTTOM_FACE };
-	rotateVerticalSlice(this, column, rotation);
+	rotate_vertical_slice(this, column, rotation);
 }
 
 
@@ -362,50 +362,50 @@ PATTERN_DEPENDANT static void rotateSliceUp(Cube * this, Column column)
  *
  * @param column - the column of the slice to rotate
  */
-PATTERN_DEPENDANT static void rotateSliceDown(Cube * this, Column column)
+PATTERN_DEPENDANT static void rotate_slice_down(Cube * this, Column column)
 {
 	Rotation rotation = { FRONT_FACE, BOTTOM_FACE, BACK_FACE, TOP_FACE };
-	rotateVerticalSlice(this, column, rotation);
+	rotate_vertical_slice(this, column, rotation);
 }
 
 
-void Cube_rotateLeftSliceUp(Cube * this)
+void rubiks_cube_rotate_left_slice_up(Cube * this)
 {
-	rotateSliceUp(this, LEFT_COLUMN);
-	Face_rotateAnticlockwise(Cube_leftFace(this));
+	rotate_slice_up(this, LEFT_COLUMN);
+	rotate_face_anticlockwise(rubiks_cube_left_face(this));
 }
 
 
-void Cube_rotateLeftSliceDown(Cube * this)
+void rubiks_cube_rotate_left_slice_down(Cube * this)
 {
-	rotateSliceDown(this, LEFT_COLUMN);
-	Face_rotateClockwise(Cube_leftFace(this));
+	rotate_slice_down(this, LEFT_COLUMN);
+	rotate_face_clockwise(rubiks_cube_left_face(this));
 }
 
 
-void Cube_rotateMiddleSliceUp(Cube * this)
+void rubiks_cube_rotate_middle_slice_up(Cube * this)
 {
-	rotateSliceUp(this, MIDDLE_COLUMN);
+	rotate_slice_up(this, MIDDLE_COLUMN);
 }
 
 
-void Cube_rotateMiddleSliceDown(Cube * this)
+void rubiks_cube_rotate_middle_slice_down(Cube * this)
 {
-	rotateSliceDown(this, MIDDLE_COLUMN);
+	rotate_slice_down(this, MIDDLE_COLUMN);
 }
 
 
-void Cube_rotateRightSliceUp(Cube * this)
+void rubiks_cube_rotate_right_slice_up(Cube * this)
 {
-	rotateSliceUp(this, RIGHT_COLUMN);
-	Face_rotateClockwise(Cube_rightFace(this));
+	rotate_slice_up(this, RIGHT_COLUMN);
+	rotate_face_clockwise(rubiks_cube_right_face(this));
 }
 
 
-void Cube_rotateRightSliceDown(Cube * this)
+void rubiks_cube_rotate_right_slice_down(Cube * this)
 {
-	rotateSliceDown(this, RIGHT_COLUMN);
-	Face_rotateAnticlockwise(Cube_rightFace(this));
+	rotate_slice_down(this, RIGHT_COLUMN);
+	rotate_face_anticlockwise(rubiks_cube_right_face(this));
 }
 
 
@@ -416,14 +416,14 @@ void Cube_rotateRightSliceDown(Cube * this)
  *
  * @param slice - the slice to rotate
  */
-PATTERN_DEPENDANT static void rotateSliceClockwise(Cube * this, Slice slice)
+PATTERN_DEPENDANT static void rotate_slice_clockwise(Cube * this, Slice slice)
 {
-	FacePosition reversingSpansFace[2] = { RIGHT_FACE, LEFT_FACE };
-	rotateSlice(this, slice, reversingSpansFace, 2);
+	FacePosition reversing_spans_face[2] = { RIGHT_FACE, LEFT_FACE };
+	rotate_slice(this, slice, reversing_spans_face, 2);
 }
 
 
-void Cube_rotateFrontSliceClockwise(Cube * this)
+void rubiks_cube_rotate_front_slice_clockwise(Cube * this)
 {
 	Slice slice =
 	{
@@ -432,8 +432,8 @@ void Cube_rotateFrontSliceClockwise(Cube * this)
 		{ BOTTOM_FACE, TOP_ROW, -1 },
 		{ LEFT_FACE, -1, RIGHT_COLUMN }
 	};
-	rotateSliceClockwise(this, slice);
-	Face_rotateClockwise(Cube_frontFace(this));
+	rotate_slice_clockwise(this, slice);
+	rotate_face_clockwise(rubiks_cube_front_face(this));
 }
 
 
@@ -444,14 +444,14 @@ void Cube_rotateFrontSliceClockwise(Cube * this)
  *
  * @param slice - the slice to rotate
  */
-PATTERN_DEPENDANT static void rotateSliceAnticlockwise(Cube * this, Slice slice)
+PATTERN_DEPENDANT static void rotate_slice_anticlockwise(Cube * this, Slice slice)
 {
-	FacePosition reversingSpansFace[2] = { TOP_FACE, BOTTOM_FACE };
-	rotateSlice(this, slice, reversingSpansFace, 2);
+	FacePosition reversing_spans_face[2] = { TOP_FACE, BOTTOM_FACE };
+	rotate_slice(this, slice, reversing_spans_face, 2);
 }
 
 
-void Cube_rotateFrontSliceAnticlockwise(Cube * this)
+void rubiks_cube_rotate_front_slice_anticlockwise(Cube * this)
 {
 	Slice slice =
 	{
@@ -460,12 +460,12 @@ void Cube_rotateFrontSliceAnticlockwise(Cube * this)
 		{ BOTTOM_FACE, TOP_ROW, -1 },
 		{ RIGHT_FACE, -1, LEFT_COLUMN }
 	};
-	rotateSliceAnticlockwise(this, slice);
-	Face_rotateAnticlockwise(Cube_frontFace(this));
+	rotate_slice_anticlockwise(this, slice);
+	rotate_face_anticlockwise(rubiks_cube_front_face(this));
 }
 
 
-void Cube_rotateStandingSliceClockwise(Cube * this)
+void rubiks_cube_rotate_standing_slice_clockwise(Cube * this)
 {
 	Slice slice =
 	{
@@ -474,11 +474,11 @@ void Cube_rotateStandingSliceClockwise(Cube * this)
 		{ BOTTOM_FACE, EQUATOR_ROW, -1 },
 		{ LEFT_FACE, -1, MIDDLE_COLUMN }
 	};
-	rotateSliceClockwise(this, slice);
+	rotate_slice_clockwise(this, slice);
 }
 
 
-void Cube_rotateStandingSliceAnticlockwise(Cube * this)
+void rubiks_cube_rotate_standing_slice_anticlockwise(Cube * this)
 {
 	Slice slice =
 	{
@@ -487,11 +487,11 @@ void Cube_rotateStandingSliceAnticlockwise(Cube * this)
 		{ BOTTOM_FACE, EQUATOR_ROW, -1 },
 		{ RIGHT_FACE, -1, MIDDLE_COLUMN }
 	};
-	rotateSliceAnticlockwise(this, slice);
+	rotate_slice_anticlockwise(this, slice);
 }
 
 
-void Cube_rotateBackSliceClockwise(Cube * this)
+void rubiks_cube_rotate_back_slice_clockwise(Cube * this)
 {
 	Slice slice =
 	{
@@ -500,12 +500,12 @@ void Cube_rotateBackSliceClockwise(Cube * this)
 		{ BOTTOM_FACE, BOTTOM_ROW, -1 },
 		{ LEFT_FACE, -1, LEFT_COLUMN }
 	};
-	rotateSliceClockwise(this, slice);
-	Face_rotateAnticlockwise(Cube_backFace(this));
+	rotate_slice_clockwise(this, slice);
+	rotate_face_anticlockwise(rubiks_cube_back_face(this));
 }
 
 
-void Cube_rotateBackSliceAnticlockwise(Cube * this)
+void rubiks_cube_rotate_back_slice_anticlockwise(Cube * this)
 {
 	Slice slice =
 	{
@@ -514,132 +514,132 @@ void Cube_rotateBackSliceAnticlockwise(Cube * this)
 		{ BOTTOM_FACE, BOTTOM_ROW, -1 },
 		{ RIGHT_FACE, -1, RIGHT_COLUMN }
 	};
-	rotateSliceAnticlockwise(this, slice);
-	Face_rotateClockwise(Cube_backFace(this));
+	rotate_slice_anticlockwise(this, slice);
+	rotate_face_clockwise(rubiks_cube_back_face(this));
 }
 
 
-void Cube_rotateTopSlicesLeft(Cube * this)
+void rubiks_cube_rotate_top_slices_left(Cube * this)
 {
-	Cube_rotateTopSliceLeft(this);
-	Cube_rotateEquatorSliceLeft(this);
+	rubiks_cube_rotate_top_slice_left(this);
+	rubiks_cube_rotate_equator_slice_left(this);
 }
 
 
-void Cube_rotateTopSlicesRight(Cube * this)
+void rubiks_cube_rotate_top_slices_right(Cube * this)
 {
-	Cube_rotateTopSliceRight(this);
-	Cube_rotateEquatorSliceRight(this);
+	rubiks_cube_rotate_top_slice_right(this);
+	rubiks_cube_rotate_equator_slice_right(this);
 }
 
 
-void Cube_rotateOuterSlicesLeft(Cube * this)
+void rubiks_cube_rotate_outer_slices_left(Cube * this)
 {
-	Cube_rotateTopSliceLeft(this);
-	Cube_rotateBottomSliceLeft(this);
+	rubiks_cube_rotate_top_slice_left(this);
+	rubiks_cube_rotate_bottom_slice_left(this);
 }
 
 
-void Cube_rotateOuterSlicesRight(Cube * this)
+void rubiks_cube_rotate_outer_slices_right(Cube * this)
 {
-	Cube_rotateTopSliceRight(this);
-	Cube_rotateBottomSliceRight(this);
+	rubiks_cube_rotate_top_slice_right(this);
+	rubiks_cube_rotate_bottom_slice_right(this);
 }
 
 
-void Cube_rotateBottomSlicesLeft(Cube * this)
+void rubiks_cube_rotate_bottom_slices_left(Cube * this)
 {
-	Cube_rotateEquatorSliceLeft(this);
-	Cube_rotateBottomSliceLeft(this);
+	rubiks_cube_rotate_equator_slice_left(this);
+	rubiks_cube_rotate_bottom_slice_left(this);
 }
 
 
-void Cube_rotateBottomSlicesRight(Cube * this)
+void rubiks_cube_rotate_bottom_slices_right(Cube * this)
 {
-	Cube_rotateEquatorSliceRight(this);
-	Cube_rotateBottomSliceRight(this);
+	rubiks_cube_rotate_equator_slice_right(this);
+	rubiks_cube_rotate_bottom_slice_right(this);
 }
 
 
-void Cube_rotateLeftSlicesUp(Cube * this)
+void rubiks_cube_rotate_left_slices_up(Cube * this)
 {
-	Cube_rotateLeftSliceUp(this);
-	Cube_rotateMiddleSliceUp(this);
+	rubiks_cube_rotate_left_slice_up(this);
+	rubiks_cube_rotate_middle_slice_up(this);
 }
 
 
-void Cube_rotateLeftSlicesDown(Cube * this)
+void rubiks_cube_rotate_left_slices_down(Cube * this)
 {
-	Cube_rotateLeftSliceDown(this);
-	Cube_rotateMiddleSliceDown(this);
+	rubiks_cube_rotate_left_slice_down(this);
+	rubiks_cube_rotate_middle_slice_down(this);
 }
 
 
-void Cube_rotateOuterSlicesUp(Cube * this)
+void rubiks_cube_rotate_outer_slices_up(Cube * this)
 {
-	Cube_rotateLeftSliceUp(this);
-	Cube_rotateRightSliceUp(this);
+	rubiks_cube_rotate_left_slice_up(this);
+	rubiks_cube_rotate_right_slice_up(this);
 }
 
 
-void Cube_rotateOuterSlicesDown(Cube * this)
+void rubiks_cube_rotate_outer_slices_down(Cube * this)
 {
-	Cube_rotateLeftSliceDown(this);
-	Cube_rotateRightSliceDown(this);
+	rubiks_cube_rotate_left_slice_down(this);
+	rubiks_cube_rotate_right_slice_down(this);
 }
 
 
-void Cube_rotateRightSlicesUp(Cube * this)
+void rubiks_cube_rotate_right_slices_up(Cube * this)
 {
-	Cube_rotateMiddleSliceUp(this);
-	Cube_rotateRightSliceUp(this);
+	rubiks_cube_rotate_middle_slice_up(this);
+	rubiks_cube_rotate_right_slice_up(this);
 }
 
 
-void Cube_rotateRightSlicesDown(Cube * this)
+void rubiks_cube_rotate_right_slices_down(Cube * this)
 {
-	Cube_rotateMiddleSliceDown(this);
-	Cube_rotateRightSliceDown(this);
+	rubiks_cube_rotate_middle_slice_down(this);
+	rubiks_cube_rotate_right_slice_down(this);
 }
 
 
-void Cube_rotateFrontSlicesClockwise(Cube * this)
+void rubiks_cube_rotate_front_slices_clockwise(Cube * this)
 {
-	Cube_rotateFrontSliceClockwise(this);
-	Cube_rotateStandingSliceClockwise(this);
+	rubiks_cube_rotate_front_slice_clockwise(this);
+	rubiks_cube_rotate_standing_slice_clockwise(this);
 }
 
 
-void Cube_rotateFrontSlicesAnticlockwise(Cube * this)
+void rubiks_cube_rotate_front_slices_anticlockwise(Cube * this)
 {
-	Cube_rotateFrontSliceAnticlockwise(this);
-	Cube_rotateStandingSliceAnticlockwise(this);
+	rubiks_cube_rotate_front_slice_anticlockwise(this);
+	rubiks_cube_rotate_standing_slice_anticlockwise(this);
 }
 
 
-void Cube_rotateOuterSlicesClockwise(Cube * this)
+void rubiks_cube_rotate_outer_slices_clockwise(Cube * this)
 {
-	Cube_rotateFrontSliceClockwise(this);
-	Cube_rotateBackSliceClockwise(this);
+	rubiks_cube_rotate_front_slice_clockwise(this);
+	rubiks_cube_rotate_back_slice_clockwise(this);
 }
 
 
-void Cube_rotateOuterSlicesAnticlockwise(Cube * this)
+void rubiks_cube_rotate_outer_slices_anticlockwise(Cube * this)
 {
-	Cube_rotateFrontSliceAnticlockwise(this);
-	Cube_rotateBackSliceAnticlockwise(this);
+	rubiks_cube_rotate_front_slice_anticlockwise(this);
+	rubiks_cube_rotate_back_slice_anticlockwise(this);
 }
 
 
-void Cube_rotateBackSlicesClockwise(Cube * this)
+void rubiks_cube_rotate_back_slices_clockwise(Cube * this)
 {
-	Cube_rotateStandingSliceClockwise(this);
-	Cube_rotateBackSliceClockwise(this);
+	rubiks_cube_rotate_standing_slice_clockwise(this);
+	rubiks_cube_rotate_back_slice_clockwise(this);
 }
 
 
-void Cube_rotateBackSlicesAnticlockwise(Cube * this)
+void rubiks_cube_rotate_back_slices_anticlockwise(Cube * this)
 {
-	Cube_rotateStandingSliceAnticlockwise(this);
-	Cube_rotateBackSliceAnticlockwise(this);
+	rubiks_cube_rotate_standing_slice_anticlockwise(this);
+	rubiks_cube_rotate_back_slice_anticlockwise(this);
 }
