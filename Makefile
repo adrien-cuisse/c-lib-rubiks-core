@@ -8,13 +8,20 @@ BIN_DIR=bin
 LIB_DIR=lib
 TESTS_DIR=tests
 
-LIBRARY=rubiks-core
+# Target and versioning
+LIB_NAME=rubiks-core
+LIB_MAJOR_VERSION=0
+LIB_MINOR_VERSION=1
+LIB_PATCH_VERSION=0
+LIB_LINKER_NAME=lib$(LIB_NAME).so
+LIB_SONAME=$(LIB_LINKER_NAME).$(LIB_MAJOR_VERSION)
+LIB_REALNAME=$(LIB_SONAME).$(LIB_MINOR_VERSION).$(LIB_PATCH_VERSION)
 
 # Release sources compilation
 RELEASE_SRC=$(shell find $(SRC_DIR)/ -type f -name '*.c')
 RELEASE_OBJ=$(subst $(SRC_DIR),$(OBJ_DIR),$(RELEASE_SRC:.c=.o))
-RELEASE_CFLAGS=-Wall -Wextra -Werror -ansi -pedantic -O3 -fvisibility=hidden -fpic
-RELEASE_LDFLAGS=
+RELEASE_CFLAGS=-fpic -O3 -Wall -Wextra -Werror -ansi -pedantic -fvisibility=hidden
+RELEASE_LDFLAGS=-fpic -shared -Wl,-soname,$(LIB_SONAME)
 
 # Tests only structure
 TESTS_SRC_DIR=$(addprefix $(TESTS_DIR)/,$(SRC_DIR))
@@ -30,7 +37,7 @@ TESTS_SRC=$(shell find $(TESTS_SRC_DIR) -type f -name '*.c')
 TESTS_SRC:=$(filter-out $(TESTS_UTILS_SRC),$(TESTS_SRC))
 TESTS_OBJ=$(subst $(TESTS_SRC_DIR),$(TESTS_OBJ_DIR),$(TESTS_SRC:.c=.o))
 TESTS_CFLAGS=$(subst -ansi,,$(RELEASE_CFLAGS)) # Criterion is not C89 compliant
-TESTS_LDFLAGS=-lcriterion -L$(LIB_DIR)/ -l$(LIBRARY)
+TESTS_LDFLAGS=-lcriterion -L$(LIB_DIR)/ -l$(LIB_NAME)
 TESTS_BINS=$(subst $(TESTS_SRC_DIR),$(TESTS_BIN_DIR),$(TESTS_SRC:.c=))
 
 
@@ -40,6 +47,7 @@ rebuild: clean-all run-tests lib
 
 lib: library-core
 
+# Tests are run with local build
 .PHONY: run-tests
 run-tests: lib $(TESTS_BINS)
 	@for TEST_BIN in $(TESTS_BINS) ; do   \
@@ -66,11 +74,14 @@ $(TESTS_BIN_DIR)/%: $(TESTS_OBJ_DIR)/%.o $(TESTS_UTILS_OBJ)
 # Don't delete objects when binaries are made
 .PRECIOUS: $(OBJ_DIR)/%.o $(TESTS_OBJ_DIR)/%.o
 
-library-core: $(LIB_DIR)/lib$(LIBRARY).so
-$(LIB_DIR)/lib$(LIBRARY).so: $(RELEASE_OBJ)
+# Local build
+library-core: $(LIB_DIR)/$(LIB_REALNAME)
+$(LIB_DIR)/$(LIB_REALNAME): $(RELEASE_OBJ)
 	@mkdir -p $(LIB_DIR)/
-	gcc -shared -o $@ $^
-	strip --discard-all $@
+	gcc $(RELEASE_LDFLAGS) -o $@ $^
+	strip --discard-all $(LIB_DIR)/$(LIB_REALNAME)
+	ln -s $@ $(LIB_DIR)/$(LIB_SONAME)
+	ln -s $(LIB_DIR)/$(LIB_SONAME) $(LIB_DIR)/$(LIB_LINKER_NAME)
 
 .PHONY: clean
 clean:
@@ -78,4 +89,4 @@ clean:
 
 .PHONY: clean-all
 clean-all: clean
-	rm -rf $(TESTS_BINS) $(LIB_DIR)/lib$(LIBRARY).so
+	rm -rf $(TESTS_BINS) $(LIB_DIR)/*
