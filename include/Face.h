@@ -1,6 +1,6 @@
 
-#ifndef FACE_HEADER
-#define FACE_HEADER
+#ifndef RUBIKS_CORE_FACE_HEADER
+#define RUBIKS_CORE_FACE_HEADER
 
 #ifdef __cplusplus
 extern "C" {
@@ -131,4 +131,4 @@ RUBIKS_API Color rubiks_face_bottom_right_cell(Face const * self);
 }
 #endif
 
-#endif /* FACE_HEADER */
+#endif /* RUBIKS_CORE_FACE_HEADER */

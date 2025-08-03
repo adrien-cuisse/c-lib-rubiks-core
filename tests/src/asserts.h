@@ -1,6 +1,6 @@
 
-#ifndef ASSERTS_HEADER
-#define ASSERTS_HEADER
+#ifndef RUBIKS_CORE_ASSERTS_HEADER
+#define RUBIKS_CORE_ASSERTS_HEADER
 
 #include "../../include/Cube.h"
 
@@ -348,4 +348,4 @@
 
 
 
-#endif /* ASSERTS_HEADER */
+#endif /* RUBIKS_CORE_ASSERTS_HEADER */

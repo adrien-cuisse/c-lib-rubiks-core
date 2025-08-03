@@ -1,6 +1,6 @@
 
-#ifndef COLOR_HEADER
-#define COLOR_HEADER
+#ifndef RUBIKS_CORE_COLOR_HEADER
+#define RUBIKS_CORE_COLOR_HEADER
 
 
 
@@ -21,4 +21,4 @@ typedef enum
 
 
 
-#endif /* COLOR_HEADER */
+#endif /* RUBIKS_CORE_COLOR_HEADER */

@@ -1,6 +1,6 @@
 
-#ifndef CUBE_INTERNAL_HEADER
-#define CUBE_INTERNAL_HEADER
+#ifndef RUBIKS_CORE_CUBE_INTERNAL_HEADER
+#define RUBIKS_CORE_CUBE_INTERNAL_HEADER
 
 #include "attributes.h"
 
@@ -44,5 +44,5 @@ struct Cube
 
 
 
-#endif /* CUBE_INTERNAL_HEADER */
+#endif /* RUBIKS_CORE_CUBE_INTERNAL_HEADER */
 

@@ -1,6 +1,6 @@
 
-#ifndef FACE_INTERNAL_HEADER
-#define FACE_INTERNAL_HEADER
+#ifndef RUBIKS_CORE_FACE_INTERNAL_HEADER
+#define RUBIKS_CORE_FACE_INTERNAL_HEADER
 
 #include "attributes.h"
 
@@ -119,4 +119,4 @@ void set_face_column(Face * face, Color const cells[FACE_SIZE], Column column);
 
 
 
-#endif /* FACE_INTERNAL_HEADER */
+#endif /* RUBIKS_CORE_FACE_INTERNAL_HEADER */

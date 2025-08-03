@@ -1,6 +1,6 @@
 
-#ifndef CUBE_HEADER
-#define CUBE_HEADER
+#ifndef RUBIKS_CORE_CUBE_HEADER
+#define RUBIKS_CORE_CUBE_HEADER
 
 #ifdef __cplusplus
 extern "C" {
@@ -550,4 +550,4 @@ RUBIKS_API void rubiks_cube_rotate_back_slices_anticlockwise(Cube * self);
 }
 #endif
 
-#endif /* CUBE_HEADER */
+#endif /* RUBIKS_CORE_CUBE_HEADER */

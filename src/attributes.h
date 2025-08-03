@@ -1,6 +1,6 @@
 
-#ifndef VISIBILITY_HEADER
-#define VISIBILITY_HEADER
+#ifndef RUBIKS_CORE_VISIBILITY_HEADER
+#define RUBIKS_CORE_VISIBILITY_HEADER
 
 #if defined(__clang__) /* CLANG */
 #	define RUBIKS_API __attribute__((visibility("default")))
@@ -12,4 +12,4 @@
 #	error "Visibility not implemented for MinGW"
 #endif
 
-#endif /* VISIBILITY_HEADER */
+#endif /* RUBIKS_CORE_VISIBILITY_HEADER */
