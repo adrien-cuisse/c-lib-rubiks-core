@@ -457,7 +457,7 @@ RUBIKS_API void rubiks_cube_rotate_outer_slices_up(Cube * self);
 /**
  * Rotates the vertical slices down, except the middle one
  *
- * Official notation:
+ * Official notation: m
  *
  * @param self - the cube to rotate the slices from
  */
