@@ -78,7 +78,7 @@ $(TESTS_BIN_DIR)/%: $(TESTS_OBJ_DIR)/%.o $(TESTS_UTILS_OBJ)
 library-core: $(LIB_DIR)/$(LIB_REALNAME)
 $(LIB_DIR)/$(LIB_REALNAME): $(RELEASE_OBJ)
 	@mkdir -p $(LIB_DIR)/
-	gcc $(RELEASE_LDFLAGS) -o $@ $^
+	$(CC) $(RELEASE_LDFLAGS) -o $@ $^
 	strip --discard-all $(LIB_DIR)/$(LIB_REALNAME)
 	ln -s $@ $(LIB_DIR)/$(LIB_SONAME)
 	ln -s $(LIB_DIR)/$(LIB_SONAME) $(LIB_DIR)/$(LIB_LINKER_NAME)
