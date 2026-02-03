@@ -80,8 +80,8 @@ $(LIB_DIR)/$(LIB_REALNAME): $(RELEASE_OBJ)
 	@mkdir -p $(LIB_DIR)/
 	$(CC) $(RELEASE_LDFLAGS) -o $@ $^
 	strip --discard-all $(LIB_DIR)/$(LIB_REALNAME)
-	ln -s $@ $(LIB_DIR)/$(LIB_SONAME)
-	ln -s $(LIB_DIR)/$(LIB_SONAME) $(LIB_DIR)/$(LIB_LINKER_NAME)
+	cd $(LIB_DIR) && ln -s $(LIB_REALNAME) $(LIB_SONAME)
+	cd $(LIB_DIR) && ln -s $(LIB_SONAME) $(LIB_LINKER_NAME)
 
 .PHONY: clean
 clean:
