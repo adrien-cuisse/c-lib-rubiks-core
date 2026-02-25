@@ -578,12 +578,12 @@ struct rbc_span
 	/**
 	 * -1 if the span is a column
 	 */
-	Row row;
+	enum rbc_row row;
 
 	/**
 	 * -1 if the span is a row
 	 */
-	Column column;
+	enum rbc_column column;
 };
 
 

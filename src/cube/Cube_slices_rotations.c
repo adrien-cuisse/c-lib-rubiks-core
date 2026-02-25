@@ -135,7 +135,7 @@ void rbc_rotate_cube_bottom_slice_right(struct rbc_cube * this)
  *
  * @param rotation - the rotation to apply
  */
-static void rotate_vertical_slice(struct rbc_cube * this, Column column, struct rbc_faces_cycle const * rotation)
+static void rotate_vertical_slice(struct rbc_cube * this, enum rbc_column column, struct rbc_faces_cycle const * rotation)
 {
 	int span_index;
 	struct rbc_slice slice;
@@ -158,7 +158,7 @@ static void rotate_vertical_slice(struct rbc_cube * this, Column column, struct 
  *
  * @param column - the column of the slice to rotate
  */
-PATTERN_DEPENDANT static void rotate_slice_up(struct rbc_cube * this, Column column)
+PATTERN_DEPENDANT static void rotate_slice_up(struct rbc_cube * this, enum rbc_column column)
 {
 	struct rbc_faces_cycle rotation = {{ FRONT_FACE, TOP_FACE, BACK_FACE, BOTTOM_FACE }};
 	rotate_vertical_slice(this, column, & rotation);
@@ -172,7 +172,7 @@ PATTERN_DEPENDANT static void rotate_slice_up(struct rbc_cube * this, Column col
  *
  * @param column - the column of the slice to rotate
  */
-PATTERN_DEPENDANT static void rotate_slice_down(struct rbc_cube * this, Column column)
+PATTERN_DEPENDANT static void rotate_slice_down(struct rbc_cube * this, enum rbc_column column)
 {
 	struct rbc_faces_cycle rotation = {{ FRONT_FACE, BOTTOM_FACE, BACK_FACE, TOP_FACE }};
 	rotate_vertical_slice(this, column, & rotation);

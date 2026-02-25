@@ -39,7 +39,7 @@ enum rbc_color rbc_face_color(struct rbc_face const * this)
  *
  * @return enum rbc_color - the color of the requested cell
  */
-static enum rbc_color cell(struct rbc_face const * this, Row row, Column column)
+static enum rbc_color cell(struct rbc_face const * this, enum rbc_row row, enum rbc_column column)
 {
 	return this->cells[row][column];
 }
@@ -110,7 +110,7 @@ enum rbc_color rbc_face_bottom_right_cell(struct rbc_face const * this)
  *
  * @param row - the row to paint
  */
-static void paint_row(struct rbc_face * this, enum rbc_color color, Row row)
+static void paint_row(struct rbc_face * this, enum rbc_color color, enum rbc_row row)
 {
 	int column_index;
 	enum rbc_color cells[FACE_SIZE];
@@ -131,7 +131,7 @@ static void paint_row(struct rbc_face * this, enum rbc_color color, Row row)
  */
 static void paint(struct rbc_face * this, enum rbc_color color)
 {
-	Row row;
+	enum rbc_row row;
 	for (row = TOP_ROW; row <= BOTTOM_ROW; row++)
 		paint_row(this, color, row);
 }
@@ -157,31 +157,31 @@ void delete_face(struct rbc_face ** this)
 }
 
 
-void copy_face_row(struct rbc_face const * this, enum rbc_color buffer[FACE_SIZE], Row row)
+void copy_face_row(struct rbc_face const * this, enum rbc_color buffer[FACE_SIZE], enum rbc_row row)
 {
 	size_t row_size_in_bytes = FACE_SIZE * sizeof(this->cells[row][0]);
 	memcpy(buffer, this->cells[row], row_size_in_bytes);
 }
 
 
-void set_face_row(struct rbc_face * face, enum rbc_color const cells[FACE_SIZE], Row row)
+void set_face_row(struct rbc_face * face, enum rbc_color const cells[FACE_SIZE], enum rbc_row row)
 {
 	size_t row_size_in_bytes = FACE_SIZE * sizeof(cells[0]);
 	memcpy(face->cells[row], cells, row_size_in_bytes);
 }
 
 
-void copy_face_column(struct rbc_face const * this, enum rbc_color buffer[FACE_SIZE], Column column)
+void copy_face_column(struct rbc_face const * this, enum rbc_color buffer[FACE_SIZE], enum rbc_column column)
 {
-	Row row;
+	enum rbc_row row;
 	for (row = TOP_ROW; row <= BOTTOM_ROW; row++)
 		buffer[row] = this->cells[row][column];
 }
 
 
-void set_face_column(struct rbc_face * face, enum rbc_color const cells[FACE_SIZE], Column column)
+void set_face_column(struct rbc_face * face, enum rbc_color const cells[FACE_SIZE], enum rbc_column column)
 {
-	Row row;
+	enum rbc_row row;
 	for (row = TOP_ROW; row <= BOTTOM_ROW; row++)
 		face->cells[row][column] = cells[row];
 }

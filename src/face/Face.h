@@ -127,23 +127,23 @@ RUBIKS_API enum rbc_color rbc_face_bottom_right_cell(struct rbc_face const * sel
 /**
  * The rows composing the 2D Face (Y axis), based on FACE_SIZE
  */
-typedef enum
+enum rbc_row
 {
 	TOP_ROW,
 	EQUATOR_ROW,
 	BOTTOM_ROW
-} Row;
+};
 
 
 /**
  * The columns composing the 2D Face (X axis), based on FACE_SIZE
  */
-typedef enum
+enum rbc_column
 {
 	LEFT_COLUMN,
 	MIDDLE_COLUMN,
 	RIGHT_COLUMN
-} Column;
+};
 
 
 
@@ -193,7 +193,7 @@ void rotate_face_anticlockwise(struct rbc_face * this);
  *
  * @param row - the row to read
  */
-void copy_face_row(struct rbc_face const * this, enum rbc_color buffer[FACE_SIZE], Row row);
+void copy_face_row(struct rbc_face const * this, enum rbc_color buffer[FACE_SIZE], enum rbc_row row);
 
 
 /**
@@ -205,7 +205,7 @@ void copy_face_row(struct rbc_face const * this, enum rbc_color buffer[FACE_SIZE
  *
  * @param row - the row where to write the cells
  */
-void set_face_row(struct rbc_face * this, enum rbc_color const cells[FACE_SIZE], Row row);
+void set_face_row(struct rbc_face * this, enum rbc_color const cells[FACE_SIZE], enum rbc_row row);
 
 
 /**
@@ -217,7 +217,7 @@ void set_face_row(struct rbc_face * this, enum rbc_color const cells[FACE_SIZE],
  *
  * @param column - the column to read
  */
-void copy_face_column(struct rbc_face const * this, enum rbc_color buffer[FACE_SIZE], Column column);
+void copy_face_column(struct rbc_face const * this, enum rbc_color buffer[FACE_SIZE], enum rbc_column column);
 
 
 /**
@@ -229,7 +229,7 @@ void copy_face_column(struct rbc_face const * this, enum rbc_color buffer[FACE_S
  *
  * @param column - the column where to write the cells
  */
-void set_face_column(struct rbc_face * face, enum rbc_color const cells[FACE_SIZE], Column column);
+void set_face_column(struct rbc_face * face, enum rbc_color const cells[FACE_SIZE], enum rbc_column column);
 
 
 
