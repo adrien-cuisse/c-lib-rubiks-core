@@ -21,8 +21,6 @@ struct Face
 
 
 
-/* --- Public API start --- */
-
 Color rubiks_face_color(Face const * this)
 {
 	/* center cells are fixed */
@@ -100,12 +98,8 @@ Color rubiks_face_bottom_right_cell(Face const * this)
 	return cell(this, BOTTOM_ROW, RIGHT_COLUMN);
 }
 
-/* --- Public API end --- */
 
 
-
-
-/* --- Private API start --- */
 
 /**
  * Paints a row
@@ -223,5 +217,3 @@ void rotate_face_anticlockwise(Face * this)
 	set_face_row(this, new_equator_row, EQUATOR_ROW);
 	set_face_row(this, new_bottom_row, BOTTOM_ROW);
 }
-
-/* --- Private API end --- */

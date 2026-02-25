@@ -1,0 +1,24 @@
+
+#ifndef LIB_RUBIKS_CORE_INTERNAL_COLOR_HEADER
+#define LIB_RUBIKS_CORE_INTERNAL_COLOR_HEADER
+
+
+
+
+/**
+ * Official colors
+ */
+typedef enum
+{
+	BLUE,
+	GREEN,
+	ORANGE,
+	RED,
+	WHITE,
+	YELLOW
+} Color;
+
+
+
+
+#endif /* LIB_RUBIKS_CORE_INTERNAL_COLOR_HEADER */

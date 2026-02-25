@@ -6,13 +6,9 @@
 extern "C" {
 #endif
 
-#ifndef RUBIKS_API
-#define RUBIKS_API
-#endif
+#include "../include/Color.h"
 
 #define FACE_SIZE 3
-
-#include "../include/Color.h"
 
 
 
@@ -32,7 +28,7 @@ typedef struct Face Face;
  *
  * @return Color - the color of the face
  */
-RUBIKS_API Color rubiks_face_color(Face const * self);
+Color rubiks_face_color(Face const * self);
 
 
 /**
@@ -42,7 +38,7 @@ RUBIKS_API Color rubiks_face_color(Face const * self);
  *
  * @return Color - the color of the cell
  */
-RUBIKS_API Color rubiks_face_top_left_cell(Face const * self);
+Color rubiks_face_top_left_cell(Face const * self);
 
 
 /**
@@ -52,7 +48,7 @@ RUBIKS_API Color rubiks_face_top_left_cell(Face const * self);
  *
  * @return Color - the color of the cell
  */
-RUBIKS_API Color rubiks_face_top_center_cell(Face const * self);
+Color rubiks_face_top_center_cell(Face const * self);
 
 
 /**
@@ -62,7 +58,7 @@ RUBIKS_API Color rubiks_face_top_center_cell(Face const * self);
  *
  * @return Color - the color of the cell
  */
-RUBIKS_API Color rubiks_face_top_right_cell(Face const * self);
+Color rubiks_face_top_right_cell(Face const * self);
 
 
 /**
@@ -72,7 +68,7 @@ RUBIKS_API Color rubiks_face_top_right_cell(Face const * self);
  *
  * @return Color - the color of the cell
  */
-RUBIKS_API Color rubiks_face_equator_left_cell(Face const * self);
+Color rubiks_face_equator_left_cell(Face const * self);
 
 
 /**
@@ -82,7 +78,7 @@ RUBIKS_API Color rubiks_face_equator_left_cell(Face const * self);
  *
  * @return Color - the color of the cell
  */
-RUBIKS_API Color rubiks_face_equator_center_cell(Face const * self);
+Color rubiks_face_equator_center_cell(Face const * self);
 
 
 /**
@@ -92,7 +88,7 @@ RUBIKS_API Color rubiks_face_equator_center_cell(Face const * self);
  *
  * @return Color - the color of the cell
  */
-RUBIKS_API Color rubiks_face_equator_right_cell(Face const * self);
+Color rubiks_face_equator_right_cell(Face const * self);
 
 
 /**
@@ -102,7 +98,7 @@ RUBIKS_API Color rubiks_face_equator_right_cell(Face const * self);
  *
  * @return Color - the color of the cell
  */
-RUBIKS_API Color rubiks_face_bottom_left_cell(Face const * self);
+Color rubiks_face_bottom_left_cell(Face const * self);
 
 
 /**
@@ -112,7 +108,7 @@ RUBIKS_API Color rubiks_face_bottom_left_cell(Face const * self);
  *
  * @return Color - the color of the cell
  */
-RUBIKS_API Color rubiks_face_bottom_center_cell(Face const * self);
+Color rubiks_face_bottom_center_cell(Face const * self);
 
 
 /**
@@ -122,7 +118,7 @@ RUBIKS_API Color rubiks_face_bottom_center_cell(Face const * self);
  *
  * @return Color - the color of the cell
  */
-RUBIKS_API Color rubiks_face_bottom_right_cell(Face const * self);
+Color rubiks_face_bottom_right_cell(Face const * self);
 
 
 

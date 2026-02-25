@@ -1,26 +1,8 @@
 
-#include "Face.h"
+#include "../face/Face.h"
 #include "Cube.h"
 
 
-
-
-/**
- * Applies a rotation on the cube, faces are simply moved on the 2D pattern
- *
- * @param this - the cube to rotate
- *
- * @param rotation - the rotation to apply
- */
-static void rotate_cube(Cube * this, Rotation rotation)
-{
-	Face * backup = this->faces[rotation[3]];
-
-	this->faces[rotation[3]] = this->faces[rotation[2]];
-	this->faces[rotation[2]] = this->faces[rotation[1]];
-	this->faces[rotation[1]] = this->faces[rotation[0]];
-	this->faces[rotation[0]] = backup;
-}
 
 
 void rubiks_cube_rotate_left(Cube * this)
