@@ -60,7 +60,7 @@ struct rbc_cube * rbc_create_cube(void)
 
 void rbc_delete_cube(struct rbc_cube ** this)
 {
-	FacePosition position;
+	enum rbc_face_location position;
 
 	if ((this == NULL) || (* this == NULL))
 		return;
@@ -85,7 +85,7 @@ void rbc_delete_cube(struct rbc_cube ** this)
  *
  * @return struct rbc_face * - the requested face
  */
-static struct rbc_face * get_face(struct rbc_cube const * this, FacePosition position)
+static struct rbc_face * get_face(struct rbc_cube const * this, enum rbc_face_location position)
 {
 	return this->faces[position];
 }
@@ -149,13 +149,13 @@ void rotate_cube(struct rbc_cube * this, Rotation rotation)
  *
  * @param buffer - the buffer where to write the span
  */
-static void get_span(struct rbc_cube const * this, Span span, enum rbc_color buffer[FACE_SIZE])
+static void get_span(struct rbc_cube const * this, struct rbc_span span, enum rbc_color buffer[FACE_SIZE])
 {
 	int is_row = (span.column == (Column) -1);
 	if (is_row)
-		copy_face_row(this->faces[span.face], buffer, span.row);
+		copy_face_row(this->faces[span.face_location], buffer, span.row);
 	else
-		copy_face_column(this->faces[span.face], buffer, span.column);
+		copy_face_column(this->faces[span.face_location], buffer, span.column);
 }
 
 
@@ -168,13 +168,13 @@ static void get_span(struct rbc_cube const * this, Span span, enum rbc_color buf
  *
  * @param content - the content of the span to write
  */
-static void set_span(struct rbc_cube * this, Span span, enum rbc_color const content[FACE_SIZE])
+static void set_span(struct rbc_cube * this, struct rbc_span span, enum rbc_color const content[FACE_SIZE])
 {
 	int is_row = (span.column == (Column) -1);
 	if (is_row)
-		set_face_row(this->faces[span.face], content, span.row);
+		set_face_row(this->faces[span.face_location], content, span.row);
 	else
-		set_face_column(this->faces[span.face], content, span.column);
+		set_face_column(this->faces[span.face_location], content, span.column);
 }
 
 
@@ -190,15 +190,15 @@ static void set_span(struct rbc_cube * this, Span span, enum rbc_color const con
  * @return int - 1 if span's face is in [reversing_faces], 0 otherwise
  */
 static int must_reverse_span(
-	Span span,
-	FacePosition const reversing_faces[],
+	struct rbc_span span,
+	enum rbc_face_location const reversing_faces[],
 	int faces_count)
 {
 	int index;
 
 	for (index = 0; index < faces_count; index++)
 	{
-		if (span.face == reversing_faces[index])
+		if (span.face_location == reversing_faces[index])
 			return 1;
 	}
 
@@ -215,7 +215,7 @@ static int must_reverse_span(
  *
  * @param to - where to write the copied span
  */
-static void move_span(struct rbc_cube * this, Span from, Span to)
+static void move_span(struct rbc_cube * this, struct rbc_span from, struct rbc_span to)
 {
 	enum rbc_color span[FACE_SIZE];
 	get_span(this, from, span);
@@ -245,7 +245,7 @@ static void reverse_span(enum rbc_color span[FACE_SIZE])
  *
  * @param to - where to write the copied span
  */
-static void move_reversed_span(struct rbc_cube * this, Span from, Span to)
+static void move_reversed_span(struct rbc_cube * this, struct rbc_span from, struct rbc_span to)
 {
 	enum rbc_color span_content[FACE_SIZE];
 	get_span(this, from, span_content);
@@ -261,7 +261,7 @@ static void move_reversed_span(struct rbc_cube * this, Span from, Span to)
  *
  * @param slice - the slice to rotate
  *
- * @param reversing_spans_face - array of FacePosition, any span in the slice
+ * @param reversing_spans_face - array of enum rbc_face_location, any span in the slice
  * 	having its face in that array will be reversed
  *
  * @param reversing_count - the number of faces in [reversing_spans_face]
@@ -270,12 +270,12 @@ static void move_reversed_span(struct rbc_cube * this, Span from, Span to)
 void rotate_slice(
 	struct rbc_cube * this,
 	Slice slice,
-	FacePosition const reversing_spans_face[],
+	enum rbc_face_location const reversing_spans_face[],
 	int reversing_count)
 {
 	int span_index;
 
-	Span source_span, destination_span;
+	struct rbc_span source_span, destination_span;
 
 	enum rbc_color span_backup[FACE_SIZE];
 	get_span(this, slice[3], span_backup);

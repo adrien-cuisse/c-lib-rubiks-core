@@ -546,7 +546,7 @@ RUBIKS_API void rbc_rotate_cube_back_slices_anticlockwise(struct rbc_cube * self
 /**
  * The position of each Face in the T-shaped 2D pattern of the unfolded 3D cube
  */
-typedef enum
+enum rbc_face_location
 {
 	LEFT_FACE,
 	FRONT_FACE,
@@ -554,13 +554,13 @@ typedef enum
 	BOTTOM_FACE,
 	BACK_FACE,
 	TOP_FACE
-} FacePosition;
+};
 
 
 /**
  * A cycle of 4 faces
  */
-typedef FacePosition Rotation[4];
+typedef enum rbc_face_location Rotation[4];
 
 
 /**
@@ -568,9 +568,9 @@ typedef FacePosition Rotation[4];
  *
  * One coord must be set to -1, i
  */
-typedef struct
+struct rbc_span
 {
-	FacePosition face;
+	enum rbc_face_location face_location;
 
 	/**
 	 * -1 if the span is a column
@@ -581,13 +581,13 @@ typedef struct
 	 * -1 if the span is a row
 	 */
 	Column column;
-} Span;
+};
 
 
 /**
  * A 3D Slice is made of 4 2D Spans
  */
-typedef Span Slice[4];
+typedef struct rbc_span Slice[4];
 
 
 
@@ -609,7 +609,7 @@ void rotate_cube(struct rbc_cube * this, Rotation rotation);
  *
  * @param slice - the slice to rotate
  *
- * @param reversing_spans_face - array of FacePosition, any span in the slice
+ * @param reversing_spans_face - array of enum rbc_face_location, any span in the slice
  * 	having its face in that array will be reversed
  *
  * @param reversing_count - the number of faces in [reversing_spans_face]
@@ -618,7 +618,7 @@ void rotate_cube(struct rbc_cube * this, Rotation rotation);
 void rotate_slice(
 	struct rbc_cube * this,
 	Slice slice,
-	FacePosition const reversing_spans_face[],
+	enum rbc_face_location const reversing_spans_face[],
 	int reversing_count);
 
 
