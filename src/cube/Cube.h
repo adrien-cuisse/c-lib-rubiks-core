@@ -560,7 +560,10 @@ enum rbc_face_location
 /**
  * A cycle of 4 faces
  */
-typedef enum rbc_face_location Rotation[4];
+struct rbc_faces_cycle
+{
+	enum rbc_face_location const faces_location[4];
+};
 
 
 /**
@@ -587,7 +590,10 @@ struct rbc_span
 /**
  * A 3D Slice is made of 4 2D Spans
  */
-typedef struct rbc_span Slice[4];
+struct rbc_slice
+{
+	struct rbc_span spans[4];
+};
 
 
 
@@ -599,7 +605,7 @@ typedef struct rbc_span Slice[4];
  *
  * @param rotation - the rotation to apply
  */
-void rotate_cube(struct rbc_cube * this, Rotation rotation);
+void rotate_cube(struct rbc_cube * this, struct rbc_faces_cycle const * rotation);
 
 
 /**
@@ -609,7 +615,7 @@ void rotate_cube(struct rbc_cube * this, Rotation rotation);
  *
  * @param slice - the slice to rotate
  *
- * @param reversing_spans_face - array of enum rbc_face_location, any span in the slice
+ * @param reversing_spans_face - array of rbc_face_location, any span in the slice
  * 	having its face in that array will be reversed
  *
  * @param reversing_count - the number of faces in [reversing_spans_face]
@@ -617,7 +623,7 @@ void rotate_cube(struct rbc_cube * this, Rotation rotation);
  */
 void rotate_slice(
 	struct rbc_cube * this,
-	Slice slice,
+	struct rbc_slice const * slice,
 	enum rbc_face_location const reversing_spans_face[],
 	int reversing_count);
 

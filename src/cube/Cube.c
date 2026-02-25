@@ -129,14 +129,14 @@ struct rbc_face * rbc_cube_back_face(struct rbc_cube const * this)
 
 
 
-void rotate_cube(struct rbc_cube * this, Rotation rotation)
+void rotate_cube(struct rbc_cube * this, struct rbc_faces_cycle const * rotation)
 {
-	struct rbc_face * backup = this->faces[rotation[3]];
+	struct rbc_face * backup = this->faces[rotation->faces_location[3]];
 
-	this->faces[rotation[3]] = this->faces[rotation[2]];
-	this->faces[rotation[2]] = this->faces[rotation[1]];
-	this->faces[rotation[1]] = this->faces[rotation[0]];
-	this->faces[rotation[0]] = backup;
+	this->faces[rotation->faces_location[3]] = this->faces[rotation->faces_location[2]];
+	this->faces[rotation->faces_location[2]] = this->faces[rotation->faces_location[1]];
+	this->faces[rotation->faces_location[1]] = this->faces[rotation->faces_location[0]];
+	this->faces[rotation->faces_location[0]] = backup;
 }
 
 
@@ -269,7 +269,7 @@ static void move_reversed_span(struct rbc_cube * this, struct rbc_span from, str
  */
 void rotate_slice(
 	struct rbc_cube * this,
-	Slice slice,
+	struct rbc_slice const * slice,
 	enum rbc_face_location const reversing_spans_face[],
 	int reversing_count)
 {
@@ -278,12 +278,12 @@ void rotate_slice(
 	struct rbc_span source_span, destination_span;
 
 	enum rbc_color span_backup[FACE_SIZE];
-	get_span(this, slice[3], span_backup);
+	get_span(this, slice->spans[3], span_backup);
 
 	for (span_index = 3; span_index > 0; span_index--)
 	{
-		source_span = slice[span_index - 1];
-		destination_span = slice[span_index];
+		source_span = slice->spans[span_index - 1];
+		destination_span = slice->spans[span_index];
 
 		if (must_reverse_span(source_span, reversing_spans_face, reversing_count))
 			move_reversed_span(this, source_span, destination_span);
@@ -291,10 +291,10 @@ void rotate_slice(
 			move_span(this, source_span, destination_span);
 	}
 
-	source_span = slice[3];
+	source_span = slice->spans[3];
 	if (must_reverse_span(source_span, reversing_spans_face, reversing_count))
 		reverse_span(span_backup);
 
-	destination_span = slice[0];
+	destination_span = slice->spans[0];
 	set_span(this, destination_span, span_backup);
 }

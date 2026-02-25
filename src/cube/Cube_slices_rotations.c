@@ -23,7 +23,7 @@
  *
  * @param slice - the slice to rotate
  */
-PATTERN_DEPENDANT static void rotate_slice_left(struct rbc_cube * this, Slice slice)
+PATTERN_DEPENDANT static void rotate_slice_left(struct rbc_cube * this, struct rbc_slice const * slice)
 {
 	enum rbc_face_location reversing_spans_face[2] = { LEFT_FACE, BACK_FACE };
 	rotate_slice(this, slice, reversing_spans_face, 2);
@@ -37,7 +37,7 @@ PATTERN_DEPENDANT static void rotate_slice_left(struct rbc_cube * this, Slice sl
  *
  * @param slice - the slice to rotate
  */
-PATTERN_DEPENDANT static void rotate_slice_right(struct rbc_cube * this, Slice slice)
+PATTERN_DEPENDANT static void rotate_slice_right(struct rbc_cube * this, struct rbc_slice const * slice)
 {
 	enum rbc_face_location reversing_spans_face[2] = { RIGHT_FACE, BACK_FACE };
 	rotate_slice(this, slice, reversing_spans_face, 2);
@@ -46,82 +46,82 @@ PATTERN_DEPENDANT static void rotate_slice_right(struct rbc_cube * this, Slice s
 
 void rbc_rotate_cube_top_slice_left(struct rbc_cube * this)
 {
-	Slice slice =
-	{
+	struct rbc_slice slice =
+	{{
 		{ FRONT_FACE, TOP_ROW, -1 },
 		{ LEFT_FACE, TOP_ROW, -1 },
 		{ BACK_FACE, BOTTOM_ROW, -1 },
 		{ RIGHT_FACE, TOP_ROW, -1 }
-	};
-	rotate_slice_left(this, slice);
+	}};
+	rotate_slice_left(this, & slice);
 	rotate_face_clockwise(rbc_cube_top_face(this));
 }
 
 
 void rbc_rotate_cube_top_slice_right(struct rbc_cube * this)
 {
-	Slice slice =
-	{
+	struct rbc_slice slice =
+	{{
 		{ FRONT_FACE, TOP_ROW, -1 },
 		{ RIGHT_FACE, TOP_ROW, -1 },
 		{ BACK_FACE, BOTTOM_ROW, -1 },
 		{ LEFT_FACE, TOP_ROW, -1 }
-	};
-	rotate_slice_right(this, slice);
+	}};
+	rotate_slice_right(this, & slice);
 	rotate_face_anticlockwise(rbc_cube_top_face(this));
 }
 
 
 void rbc_rotate_cube_equator_slice_left(struct rbc_cube * this)
 {
-	Slice slice =
-	{
+	struct rbc_slice slice =
+	{{
 		{ FRONT_FACE, EQUATOR_ROW, -1 },
 		{ LEFT_FACE, EQUATOR_ROW, -1 },
 		{ BACK_FACE, EQUATOR_ROW, -1 },
 		{ RIGHT_FACE, EQUATOR_ROW, -1 }
-	};
-	rotate_slice_left(this, slice);
+	}};
+	rotate_slice_left(this, & slice);
 }
 
 
 void rbc_rotate_cube_equator_slice_right(struct rbc_cube * this)
 {
-	Slice slice =
-	{
+	struct rbc_slice slice =
+	{{
 		{ FRONT_FACE, EQUATOR_ROW, -1 },
 		{ RIGHT_FACE, EQUATOR_ROW, -1 },
 		{ BACK_FACE, EQUATOR_ROW, -1 },
 		{ LEFT_FACE, EQUATOR_ROW, -1 }
-	};
-	rotate_slice_right(this, slice);
+	}};
+	rotate_slice_right(this, & slice);
 }
 
 
 void rbc_rotate_cube_bottom_slice_left(struct rbc_cube * this)
 {
-	Slice slice =
-	{
+	struct rbc_slice slice =
+	{{
 		{ FRONT_FACE, BOTTOM_ROW, -1 },
 		{ LEFT_FACE, BOTTOM_ROW, -1 },
 		{ BACK_FACE, TOP_ROW, -1},
 		{ RIGHT_FACE, BOTTOM_ROW, -1 }
-	};
-	rotate_slice_left(this, slice);
+	}};
+	rotate_slice_left(this, & slice);
 	rotate_face_anticlockwise(rbc_cube_bottom_face(this));
 }
 
 
 void rbc_rotate_cube_bottom_slice_right(struct rbc_cube * this)
 {
-	Slice slice =
-	{
+	struct rbc_slice slice =
+	{{
 		{ FRONT_FACE, BOTTOM_ROW, -1 },
 		{ RIGHT_FACE, BOTTOM_ROW, -1 },
 		{ BACK_FACE, TOP_ROW, -1 },
 		{ LEFT_FACE, BOTTOM_ROW, -1 }
-	};
-	rotate_slice_right(this, slice);
+	}};
+	rotate_slice_right(this, & slice);
 	rotate_face_clockwise(rbc_cube_bottom_face(this));
 }
 
@@ -135,19 +135,19 @@ void rbc_rotate_cube_bottom_slice_right(struct rbc_cube * this)
  *
  * @param rotation - the rotation to apply
  */
-static void rotate_vertical_slice(struct rbc_cube * this, Column column, Rotation rotation)
+static void rotate_vertical_slice(struct rbc_cube * this, Column column, struct rbc_faces_cycle const * rotation)
 {
 	int span_index;
-	Slice slice;
+	struct rbc_slice slice;
 
 	for (span_index = 0; span_index < 4; span_index++)
 	{
-		slice[span_index].face_location = rotation[span_index];
-		slice[span_index].row = -1;
-		slice[span_index].column = column;
+		slice.spans[span_index].face_location = rotation->faces_location[span_index];
+		slice.spans[span_index].row = -1;
+		slice.spans[span_index].column = column;
 	}
 
-	rotate_slice(this, slice, NULL, 0);
+	rotate_slice(this, & slice, NULL, 0);
 }
 
 
@@ -160,8 +160,8 @@ static void rotate_vertical_slice(struct rbc_cube * this, Column column, Rotatio
  */
 PATTERN_DEPENDANT static void rotate_slice_up(struct rbc_cube * this, Column column)
 {
-	Rotation rotation = { FRONT_FACE, TOP_FACE, BACK_FACE, BOTTOM_FACE };
-	rotate_vertical_slice(this, column, rotation);
+	struct rbc_faces_cycle rotation = {{ FRONT_FACE, TOP_FACE, BACK_FACE, BOTTOM_FACE }};
+	rotate_vertical_slice(this, column, & rotation);
 }
 
 
@@ -174,8 +174,8 @@ PATTERN_DEPENDANT static void rotate_slice_up(struct rbc_cube * this, Column col
  */
 PATTERN_DEPENDANT static void rotate_slice_down(struct rbc_cube * this, Column column)
 {
-	Rotation rotation = { FRONT_FACE, BOTTOM_FACE, BACK_FACE, TOP_FACE };
-	rotate_vertical_slice(this, column, rotation);
+	struct rbc_faces_cycle rotation = {{ FRONT_FACE, BOTTOM_FACE, BACK_FACE, TOP_FACE }};
+	rotate_vertical_slice(this, column, & rotation);
 }
 
 
@@ -226,7 +226,7 @@ void rbc_rotate_cube_right_slice_down(struct rbc_cube * this)
  *
  * @param slice - the slice to rotate
  */
-PATTERN_DEPENDANT static void rotate_slice_clockwise(struct rbc_cube * this, Slice slice)
+PATTERN_DEPENDANT static void rotate_slice_clockwise(struct rbc_cube * this, struct rbc_slice const * slice)
 {
 	enum rbc_face_location reversing_spans_face[2] = { RIGHT_FACE, LEFT_FACE };
 	rotate_slice(this, slice, reversing_spans_face, 2);
@@ -235,14 +235,14 @@ PATTERN_DEPENDANT static void rotate_slice_clockwise(struct rbc_cube * this, Sli
 
 void rbc_rotate_cube_front_slice_clockwise(struct rbc_cube * this)
 {
-	Slice slice =
-	{
+	struct rbc_slice slice =
+	{{
 		{ TOP_FACE, BOTTOM_ROW, -1 },
 		{ RIGHT_FACE, -1, LEFT_COLUMN },
 		{ BOTTOM_FACE, TOP_ROW, -1 },
 		{ LEFT_FACE, -1, RIGHT_COLUMN }
-	};
-	rotate_slice_clockwise(this, slice);
+	}};
+	rotate_slice_clockwise(this, & slice);
 	rotate_face_clockwise(rbc_cube_front_face(this));
 }
 
@@ -254,7 +254,7 @@ void rbc_rotate_cube_front_slice_clockwise(struct rbc_cube * this)
  *
  * @param slice - the slice to rotate
  */
-PATTERN_DEPENDANT static void rotate_slice_anticlockwise(struct rbc_cube * this, Slice slice)
+PATTERN_DEPENDANT static void rotate_slice_anticlockwise(struct rbc_cube * this, struct rbc_slice const * slice)
 {
 	enum rbc_face_location reversing_spans_face[2] = { TOP_FACE, BOTTOM_FACE };
 	rotate_slice(this, slice, reversing_spans_face, 2);
@@ -263,68 +263,68 @@ PATTERN_DEPENDANT static void rotate_slice_anticlockwise(struct rbc_cube * this,
 
 void rbc_rotate_cube_front_slice_anticlockwise(struct rbc_cube * this)
 {
-	Slice slice =
-	{
+	struct rbc_slice slice =
+	{{
 		{ TOP_FACE, BOTTOM_ROW, -1 },
 		{ LEFT_FACE, -1, RIGHT_COLUMN },
 		{ BOTTOM_FACE, TOP_ROW, -1 },
 		{ RIGHT_FACE, -1, LEFT_COLUMN }
-	};
-	rotate_slice_anticlockwise(this, slice);
+	}};
+	rotate_slice_anticlockwise(this, & slice);
 	rotate_face_anticlockwise(rbc_cube_front_face(this));
 }
 
 
 void rbc_rotate_cube_standing_slice_clockwise(struct rbc_cube * this)
 {
-	Slice slice =
-	{
+	struct rbc_slice slice =
+	{{
 		{ TOP_FACE, EQUATOR_ROW, -1 },
 		{ RIGHT_FACE, -1, MIDDLE_COLUMN },
 		{ BOTTOM_FACE, EQUATOR_ROW, -1 },
 		{ LEFT_FACE, -1, MIDDLE_COLUMN }
-	};
-	rotate_slice_clockwise(this, slice);
+	}};
+	rotate_slice_clockwise(this, & slice);
 }
 
 
 void rbc_rotate_cube_standing_slice_anticlockwise(struct rbc_cube * this)
 {
-	Slice slice =
-	{
+	struct rbc_slice slice =
+	{{
 		{ TOP_FACE, EQUATOR_ROW, -1 },
 		{ LEFT_FACE, -1, MIDDLE_COLUMN },
 		{ BOTTOM_FACE, EQUATOR_ROW, -1 },
 		{ RIGHT_FACE, -1, MIDDLE_COLUMN }
-	};
-	rotate_slice_anticlockwise(this, slice);
+	}};
+	rotate_slice_anticlockwise(this, & slice);
 }
 
 
 void rbc_rotate_cube_back_slice_clockwise(struct rbc_cube * this)
 {
-	Slice slice =
-	{
+	struct rbc_slice slice =
+	{{
 		{ TOP_FACE, TOP_ROW, -1 },
 		{ RIGHT_FACE, -1, RIGHT_COLUMN },
 		{ BOTTOM_FACE, BOTTOM_ROW, -1 },
 		{ LEFT_FACE, -1, LEFT_COLUMN }
-	};
-	rotate_slice_clockwise(this, slice);
+	}};
+	rotate_slice_clockwise(this, & slice);
 	rotate_face_anticlockwise(rbc_cube_back_face(this));
 }
 
 
 void rbc_rotate_cube_back_slice_anticlockwise(struct rbc_cube * this)
 {
-	Slice slice =
-	{
+	struct rbc_slice slice =
+	{{
 		{ TOP_FACE, TOP_ROW, -1 },
 		{ LEFT_FACE, -1, LEFT_COLUMN },
 		{ BOTTOM_FACE, BOTTOM_ROW, -1 },
 		{ RIGHT_FACE, -1, RIGHT_COLUMN }
-	};
-	rotate_slice_anticlockwise(this, slice);
+	}};
+	rotate_slice_anticlockwise(this, & slice);
 	rotate_face_clockwise(rbc_cube_back_face(this));
 }
 
