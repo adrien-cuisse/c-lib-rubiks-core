@@ -4,9 +4,9 @@
 
 
 
-Cube * create_scrambled_cube(void)
+struct rbc_cube * create_scrambled_cube(void)
 {
-	Cube * cube = rubiks_cube_create();
+	struct rbc_cube * cube = rubiks_cube_create();
 
 	// official terminology:
 	// D2 F2 R2 D2 L2 U F2 U' F' U F2 U' R2 B' F R' D2 F' D' L

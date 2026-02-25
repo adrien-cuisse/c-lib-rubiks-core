@@ -23,7 +23,7 @@
  *
  * @param slice - the slice to rotate
  */
-PATTERN_DEPENDANT static void rotate_slice_left(Cube * this, Slice slice)
+PATTERN_DEPENDANT static void rotate_slice_left(struct rbc_cube * this, Slice slice)
 {
 	FacePosition reversing_spans_face[2] = { LEFT_FACE, BACK_FACE };
 	rotate_slice(this, slice, reversing_spans_face, 2);
@@ -37,14 +37,14 @@ PATTERN_DEPENDANT static void rotate_slice_left(Cube * this, Slice slice)
  *
  * @param slice - the slice to rotate
  */
-PATTERN_DEPENDANT static void rotate_slice_right(Cube * this, Slice slice)
+PATTERN_DEPENDANT static void rotate_slice_right(struct rbc_cube * this, Slice slice)
 {
 	FacePosition reversing_spans_face[2] = { RIGHT_FACE, BACK_FACE };
 	rotate_slice(this, slice, reversing_spans_face, 2);
 }
 
 
-void rubiks_cube_rotate_top_slice_left(Cube * this)
+void rubiks_cube_rotate_top_slice_left(struct rbc_cube * this)
 {
 	Slice slice =
 	{
@@ -58,7 +58,7 @@ void rubiks_cube_rotate_top_slice_left(Cube * this)
 }
 
 
-void rubiks_cube_rotate_top_slice_right(Cube * this)
+void rubiks_cube_rotate_top_slice_right(struct rbc_cube * this)
 {
 	Slice slice =
 	{
@@ -72,7 +72,7 @@ void rubiks_cube_rotate_top_slice_right(Cube * this)
 }
 
 
-void rubiks_cube_rotate_equator_slice_left(Cube * this)
+void rubiks_cube_rotate_equator_slice_left(struct rbc_cube * this)
 {
 	Slice slice =
 	{
@@ -85,7 +85,7 @@ void rubiks_cube_rotate_equator_slice_left(Cube * this)
 }
 
 
-void rubiks_cube_rotate_equator_slice_right(Cube * this)
+void rubiks_cube_rotate_equator_slice_right(struct rbc_cube * this)
 {
 	Slice slice =
 	{
@@ -98,7 +98,7 @@ void rubiks_cube_rotate_equator_slice_right(Cube * this)
 }
 
 
-void rubiks_cube_rotate_bottom_slice_left(Cube * this)
+void rubiks_cube_rotate_bottom_slice_left(struct rbc_cube * this)
 {
 	Slice slice =
 	{
@@ -112,7 +112,7 @@ void rubiks_cube_rotate_bottom_slice_left(Cube * this)
 }
 
 
-void rubiks_cube_rotate_bottom_slice_right(Cube * this)
+void rubiks_cube_rotate_bottom_slice_right(struct rbc_cube * this)
 {
 	Slice slice =
 	{
@@ -135,7 +135,7 @@ void rubiks_cube_rotate_bottom_slice_right(Cube * this)
  *
  * @param rotation - the rotation to apply
  */
-static void rotate_vertical_slice(Cube * this, Column column, Rotation rotation)
+static void rotate_vertical_slice(struct rbc_cube * this, Column column, Rotation rotation)
 {
 	int span_index;
 	Slice slice;
@@ -158,7 +158,7 @@ static void rotate_vertical_slice(Cube * this, Column column, Rotation rotation)
  *
  * @param column - the column of the slice to rotate
  */
-PATTERN_DEPENDANT static void rotate_slice_up(Cube * this, Column column)
+PATTERN_DEPENDANT static void rotate_slice_up(struct rbc_cube * this, Column column)
 {
 	Rotation rotation = { FRONT_FACE, TOP_FACE, BACK_FACE, BOTTOM_FACE };
 	rotate_vertical_slice(this, column, rotation);
@@ -172,47 +172,47 @@ PATTERN_DEPENDANT static void rotate_slice_up(Cube * this, Column column)
  *
  * @param column - the column of the slice to rotate
  */
-PATTERN_DEPENDANT static void rotate_slice_down(Cube * this, Column column)
+PATTERN_DEPENDANT static void rotate_slice_down(struct rbc_cube * this, Column column)
 {
 	Rotation rotation = { FRONT_FACE, BOTTOM_FACE, BACK_FACE, TOP_FACE };
 	rotate_vertical_slice(this, column, rotation);
 }
 
 
-void rubiks_cube_rotate_left_slice_up(Cube * this)
+void rubiks_cube_rotate_left_slice_up(struct rbc_cube * this)
 {
 	rotate_slice_up(this, LEFT_COLUMN);
 	rotate_face_anticlockwise(rubiks_cube_left_face(this));
 }
 
 
-void rubiks_cube_rotate_left_slice_down(Cube * this)
+void rubiks_cube_rotate_left_slice_down(struct rbc_cube * this)
 {
 	rotate_slice_down(this, LEFT_COLUMN);
 	rotate_face_clockwise(rubiks_cube_left_face(this));
 }
 
 
-void rubiks_cube_rotate_middle_slice_up(Cube * this)
+void rubiks_cube_rotate_middle_slice_up(struct rbc_cube * this)
 {
 	rotate_slice_up(this, MIDDLE_COLUMN);
 }
 
 
-void rubiks_cube_rotate_middle_slice_down(Cube * this)
+void rubiks_cube_rotate_middle_slice_down(struct rbc_cube * this)
 {
 	rotate_slice_down(this, MIDDLE_COLUMN);
 }
 
 
-void rubiks_cube_rotate_right_slice_up(Cube * this)
+void rubiks_cube_rotate_right_slice_up(struct rbc_cube * this)
 {
 	rotate_slice_up(this, RIGHT_COLUMN);
 	rotate_face_clockwise(rubiks_cube_right_face(this));
 }
 
 
-void rubiks_cube_rotate_right_slice_down(Cube * this)
+void rubiks_cube_rotate_right_slice_down(struct rbc_cube * this)
 {
 	rotate_slice_down(this, RIGHT_COLUMN);
 	rotate_face_anticlockwise(rubiks_cube_right_face(this));
@@ -226,14 +226,14 @@ void rubiks_cube_rotate_right_slice_down(Cube * this)
  *
  * @param slice - the slice to rotate
  */
-PATTERN_DEPENDANT static void rotate_slice_clockwise(Cube * this, Slice slice)
+PATTERN_DEPENDANT static void rotate_slice_clockwise(struct rbc_cube * this, Slice slice)
 {
 	FacePosition reversing_spans_face[2] = { RIGHT_FACE, LEFT_FACE };
 	rotate_slice(this, slice, reversing_spans_face, 2);
 }
 
 
-void rubiks_cube_rotate_front_slice_clockwise(Cube * this)
+void rubiks_cube_rotate_front_slice_clockwise(struct rbc_cube * this)
 {
 	Slice slice =
 	{
@@ -254,14 +254,14 @@ void rubiks_cube_rotate_front_slice_clockwise(Cube * this)
  *
  * @param slice - the slice to rotate
  */
-PATTERN_DEPENDANT static void rotate_slice_anticlockwise(Cube * this, Slice slice)
+PATTERN_DEPENDANT static void rotate_slice_anticlockwise(struct rbc_cube * this, Slice slice)
 {
 	FacePosition reversing_spans_face[2] = { TOP_FACE, BOTTOM_FACE };
 	rotate_slice(this, slice, reversing_spans_face, 2);
 }
 
 
-void rubiks_cube_rotate_front_slice_anticlockwise(Cube * this)
+void rubiks_cube_rotate_front_slice_anticlockwise(struct rbc_cube * this)
 {
 	Slice slice =
 	{
@@ -275,7 +275,7 @@ void rubiks_cube_rotate_front_slice_anticlockwise(Cube * this)
 }
 
 
-void rubiks_cube_rotate_standing_slice_clockwise(Cube * this)
+void rubiks_cube_rotate_standing_slice_clockwise(struct rbc_cube * this)
 {
 	Slice slice =
 	{
@@ -288,7 +288,7 @@ void rubiks_cube_rotate_standing_slice_clockwise(Cube * this)
 }
 
 
-void rubiks_cube_rotate_standing_slice_anticlockwise(Cube * this)
+void rubiks_cube_rotate_standing_slice_anticlockwise(struct rbc_cube * this)
 {
 	Slice slice =
 	{
@@ -301,7 +301,7 @@ void rubiks_cube_rotate_standing_slice_anticlockwise(Cube * this)
 }
 
 
-void rubiks_cube_rotate_back_slice_clockwise(Cube * this)
+void rubiks_cube_rotate_back_slice_clockwise(struct rbc_cube * this)
 {
 	Slice slice =
 	{
@@ -315,7 +315,7 @@ void rubiks_cube_rotate_back_slice_clockwise(Cube * this)
 }
 
 
-void rubiks_cube_rotate_back_slice_anticlockwise(Cube * this)
+void rubiks_cube_rotate_back_slice_anticlockwise(struct rbc_cube * this)
 {
 	Slice slice =
 	{
@@ -329,126 +329,126 @@ void rubiks_cube_rotate_back_slice_anticlockwise(Cube * this)
 }
 
 
-void rubiks_cube_rotate_top_slices_left(Cube * this)
+void rubiks_cube_rotate_top_slices_left(struct rbc_cube * this)
 {
 	rubiks_cube_rotate_top_slice_left(this);
 	rubiks_cube_rotate_equator_slice_left(this);
 }
 
 
-void rubiks_cube_rotate_top_slices_right(Cube * this)
+void rubiks_cube_rotate_top_slices_right(struct rbc_cube * this)
 {
 	rubiks_cube_rotate_top_slice_right(this);
 	rubiks_cube_rotate_equator_slice_right(this);
 }
 
 
-void rubiks_cube_rotate_outer_slices_left(Cube * this)
+void rubiks_cube_rotate_outer_slices_left(struct rbc_cube * this)
 {
 	rubiks_cube_rotate_top_slice_left(this);
 	rubiks_cube_rotate_bottom_slice_left(this);
 }
 
 
-void rubiks_cube_rotate_outer_slices_right(Cube * this)
+void rubiks_cube_rotate_outer_slices_right(struct rbc_cube * this)
 {
 	rubiks_cube_rotate_top_slice_right(this);
 	rubiks_cube_rotate_bottom_slice_right(this);
 }
 
 
-void rubiks_cube_rotate_bottom_slices_left(Cube * this)
+void rubiks_cube_rotate_bottom_slices_left(struct rbc_cube * this)
 {
 	rubiks_cube_rotate_equator_slice_left(this);
 	rubiks_cube_rotate_bottom_slice_left(this);
 }
 
 
-void rubiks_cube_rotate_bottom_slices_right(Cube * this)
+void rubiks_cube_rotate_bottom_slices_right(struct rbc_cube * this)
 {
 	rubiks_cube_rotate_equator_slice_right(this);
 	rubiks_cube_rotate_bottom_slice_right(this);
 }
 
 
-void rubiks_cube_rotate_left_slices_up(Cube * this)
+void rubiks_cube_rotate_left_slices_up(struct rbc_cube * this)
 {
 	rubiks_cube_rotate_left_slice_up(this);
 	rubiks_cube_rotate_middle_slice_up(this);
 }
 
 
-void rubiks_cube_rotate_left_slices_down(Cube * this)
+void rubiks_cube_rotate_left_slices_down(struct rbc_cube * this)
 {
 	rubiks_cube_rotate_left_slice_down(this);
 	rubiks_cube_rotate_middle_slice_down(this);
 }
 
 
-void rubiks_cube_rotate_outer_slices_up(Cube * this)
+void rubiks_cube_rotate_outer_slices_up(struct rbc_cube * this)
 {
 	rubiks_cube_rotate_left_slice_up(this);
 	rubiks_cube_rotate_right_slice_up(this);
 }
 
 
-void rubiks_cube_rotate_outer_slices_down(Cube * this)
+void rubiks_cube_rotate_outer_slices_down(struct rbc_cube * this)
 {
 	rubiks_cube_rotate_left_slice_down(this);
 	rubiks_cube_rotate_right_slice_down(this);
 }
 
 
-void rubiks_cube_rotate_right_slices_up(Cube * this)
+void rubiks_cube_rotate_right_slices_up(struct rbc_cube * this)
 {
 	rubiks_cube_rotate_middle_slice_up(this);
 	rubiks_cube_rotate_right_slice_up(this);
 }
 
 
-void rubiks_cube_rotate_right_slices_down(Cube * this)
+void rubiks_cube_rotate_right_slices_down(struct rbc_cube * this)
 {
 	rubiks_cube_rotate_middle_slice_down(this);
 	rubiks_cube_rotate_right_slice_down(this);
 }
 
 
-void rubiks_cube_rotate_front_slices_clockwise(Cube * this)
+void rubiks_cube_rotate_front_slices_clockwise(struct rbc_cube * this)
 {
 	rubiks_cube_rotate_front_slice_clockwise(this);
 	rubiks_cube_rotate_standing_slice_clockwise(this);
 }
 
 
-void rubiks_cube_rotate_front_slices_anticlockwise(Cube * this)
+void rubiks_cube_rotate_front_slices_anticlockwise(struct rbc_cube * this)
 {
 	rubiks_cube_rotate_front_slice_anticlockwise(this);
 	rubiks_cube_rotate_standing_slice_anticlockwise(this);
 }
 
 
-void rubiks_cube_rotate_outer_slices_clockwise(Cube * this)
+void rubiks_cube_rotate_outer_slices_clockwise(struct rbc_cube * this)
 {
 	rubiks_cube_rotate_front_slice_clockwise(this);
 	rubiks_cube_rotate_back_slice_clockwise(this);
 }
 
 
-void rubiks_cube_rotate_outer_slices_anticlockwise(Cube * this)
+void rubiks_cube_rotate_outer_slices_anticlockwise(struct rbc_cube * this)
 {
 	rubiks_cube_rotate_front_slice_anticlockwise(this);
 	rubiks_cube_rotate_back_slice_anticlockwise(this);
 }
 
 
-void rubiks_cube_rotate_back_slices_clockwise(Cube * this)
+void rubiks_cube_rotate_back_slices_clockwise(struct rbc_cube * this)
 {
 	rubiks_cube_rotate_standing_slice_clockwise(this);
 	rubiks_cube_rotate_back_slice_clockwise(this);
 }
 
 
-void rubiks_cube_rotate_back_slices_anticlockwise(Cube * this)
+void rubiks_cube_rotate_back_slices_anticlockwise(struct rbc_cube * this)
 {
 	rubiks_cube_rotate_standing_slice_anticlockwise(this);
 	rubiks_cube_rotate_back_slice_anticlockwise(this);

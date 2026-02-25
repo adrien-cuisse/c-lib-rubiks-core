@@ -16,10 +16,10 @@
 /**
  * Tests if a face is rotated clockwise
  *
- * @param get_face - Face * (* get_face)(Cube const *) -
+ * @param get_face - Face * (* get_face)(struct rbc_cube const *) -
  * 	function pointer taking the cube and returning the face to check
  *
- * @param apply_rotation - void (* apply_rotation)(Cube *) -
+ * @param apply_rotation - void (* apply_rotation)(struct rbc_cube *) -
  * 	function pointer to the rotation to apply, taking the cube as
  * 	argument and returning nothing
  *
@@ -33,7 +33,7 @@
 		failure_message) \
 	do { \
 		/* given */ \
-		Cube * cube = create_scrambled_cube(); \
+		struct rbc_cube * cube = create_scrambled_cube(); \
 		Face * face = get_face(cube); \
 		Color before_rotation[FACE_SIZE][FACE_SIZE]; \
 		read_face(face, before_rotation); \
@@ -83,10 +83,10 @@
 /**
  * Tests if a face is rotated anticlockwise
  *
- * @param get_face - Face * (* get_face)(Cube const *) -
+ * @param get_face - Face * (* get_face)(struct rbc_cube const *) -
  * 	function pointer taking the cube and returning the face to check
  *
- * @param apply_rotation - void (* apply_rotation)(Cube *) -
+ * @param apply_rotation - void (* apply_rotation)(struct rbc_cube *) -
  * 	function pointer to the rotation to apply, taking the cube as
  * 	argument and returning nothing
  *
@@ -100,7 +100,7 @@
 		failure_message) \
 	do { \
 		/* given */ \
-		Cube * cube = create_scrambled_cube(); \
+		struct rbc_cube * cube = create_scrambled_cube(); \
 		Face * face = get_face(cube); \
 		Color before_rotation[FACE_SIZE][FACE_SIZE]; \
 		read_face(face, before_rotation); \
@@ -164,7 +164,7 @@
 /**
  * Tests if a span moves to the correct position
  *
- * @param get_source_face - Face * (* get_source_face)(Cube const *) -
+ * @param get_source_face - Face * (* get_source_face)(struct rbc_cube const *) -
  * 	function pointer taking the cube and returning the face where the span is
  * 	before applying the rotation
  *
@@ -172,11 +172,11 @@
  * 	function pointer taking the face where the span is before applying the
  * 	rotation, and the buffer to write the span content in, and returning nothing
  *
- * @param apply_slice_rotation - void (* apply_slice_rotation)(Cube *) -
+ * @param apply_slice_rotation - void (* apply_slice_rotation)(struct rbc_cube *) -
  * 	function pointer to the slice rotation to apply, taking the cube as
  * 	argument and returning nothing
  *
- * @param get_destination_face - Face * (* get_destination_face)(Cube const *) -
+ * @param get_destination_face - Face * (* get_destination_face)(struct rbc_cube const *) -
  * 	function pointer taking the cube and returning the face where the span
  * 	should be after applying the rotation
  *
@@ -196,7 +196,7 @@
 		failure_message) \
 	do { \
 		/* given */ \
-		Cube * cube = rubiks_cube_create(); \
+		struct rbc_cube * cube = rubiks_cube_create(); \
 		Face * source_face = get_source_face(cube); \
 		Color source_span[FACE_SIZE]; \
 		read_source_span(source_face, source_span); \
@@ -223,7 +223,7 @@
  * Tests if a span moves to the correct position with the same cells
  * 	order (rows are from left to right, columns are from top to bottom)
  *
- * @param get_source_face - Face * (* get_source_face)(Cube const *) -
+ * @param get_source_face - Face * (* get_source_face)(struct rbc_cube const *) -
  * 	function pointer taking the cube and returning the face where the span is
  * 	before applying the rotation
  *
@@ -231,11 +231,11 @@
  * 	function pointer taking the face where the span is before applying the
  * 	rotation, and the buffer to write the span content in, and returning nothing
  *
- * @param apply_slice_rotation - void (* apply_slice_rotation)(Cube *) -
+ * @param apply_slice_rotation - void (* apply_slice_rotation)(struct rbc_cube *) -
  * 	function pointer to the slice rotation to apply, taking the cube as
  * 	argument and returning nothing
  *
- * @param get_destination_face - Face * (* get_destination_face)(Cube const *) -
+ * @param get_destination_face - Face * (* get_destination_face)(struct rbc_cube const *) -
  * 	function pointer taking the cube and returning the face where the span
  * 	should be after applying the rotation
  *
@@ -255,7 +255,7 @@
 		failure_message) \
 	do { \
 		/* given */ \
-		Cube * cube = create_scrambled_cube(); \
+		struct rbc_cube * cube = create_scrambled_cube(); \
 		Face * source_face = get_source_face(cube); \
 		Color source_span[FACE_SIZE]; \
 		read_source_span(source_face, source_span); \
@@ -286,7 +286,7 @@
  * Tests if a span moves to the correct position with the reverse cells
  * 	order (rows are from left to right, columns are from top to bottom)
  *
- * @param get_source_face - Face * (* get_source_face)(Cube const *) -
+ * @param get_source_face - Face * (* get_source_face)(struct rbc_cube const *) -
  * 	function pointer taking the cube and returning the face where the span is
  * 	before applying the rotation
  *
@@ -294,11 +294,11 @@
  * 	function pointer taking the face where the span is before applying the
  * 	rotation, and the buffer to write the span content in, and returning nothing
  *
- * @param apply_slice_rotation - void (* apply_slice_rotation)(Cube *) -
+ * @param apply_slice_rotation - void (* apply_slice_rotation)(struct rbc_cube *) -
  * 	function pointer to the slice rotation to apply, taking the cube as
  * 	argument and returning nothing
  *
- * @param get_destination_face - Face * (* get_destination_face)(Cube const *) -
+ * @param get_destination_face - Face * (* get_destination_face)(struct rbc_cube const *) -
  * 	function pointer taking the cube and returning the face where the span
  * 	should be after applying the rotation
  *
@@ -318,7 +318,7 @@
 		failure_message) \
 	do { \
 		/* given */ \
-		Cube * cube = create_scrambled_cube(); \
+		struct rbc_cube * cube = create_scrambled_cube(); \
 		Face * source_face = get_source_face(cube); \
 		Color source_span[FACE_SIZE]; \
 		read_source_span(source_face, source_span); \

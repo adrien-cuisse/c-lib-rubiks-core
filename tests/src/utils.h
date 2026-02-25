@@ -7,7 +7,7 @@
 
 
 
-Cube * create_scrambled_cube(void);
+struct rbc_cube * create_scrambled_cube(void);
 
 
 void top_row(Face const * face, Color buffer[FACE_SIZE]);

@@ -8,9 +8,9 @@
 
 
 /**
- * A 3D Cube made of 6 2D faces
+ * A 3D cube made of 6 2D faces
  */
-struct Cube
+struct rbc_cube
 {
 	/**
 	 * The 2D faces composing the cube
@@ -26,7 +26,7 @@ struct Cube
  *
  * @param this - the cube to store faces in
  */
-static void create_and_position_faces(Cube * this)
+static void create_and_position_faces(struct rbc_cube * this)
 {
 	int face_index;
 
@@ -48,9 +48,9 @@ static void create_and_position_faces(Cube * this)
 }
 
 
-Cube * rubiks_cube_create(void)
+struct rbc_cube * rubiks_cube_create(void)
 {
-	Cube * this = calloc(1, sizeof(* this));
+	struct rbc_cube * this = calloc(1, sizeof(* this));
 	if (this != NULL)
 		create_and_position_faces(this);
 
@@ -58,7 +58,7 @@ Cube * rubiks_cube_create(void)
 }
 
 
-void rubiks_cube_delete(Cube ** this)
+void rubiks_cube_delete(struct rbc_cube ** this)
 {
 	FacePosition position;
 
@@ -85,43 +85,43 @@ void rubiks_cube_delete(Cube ** this)
  *
  * @return Face * - the requested face
  */
-static Face * get_face(Cube const * this, FacePosition position)
+static Face * get_face(struct rbc_cube const * this, FacePosition position)
 {
 	return this->faces[position];
 }
 
 
-Face * rubiks_cube_left_face(Cube const * this)
+Face * rubiks_cube_left_face(struct rbc_cube const * this)
 {
 	return get_face(this, LEFT_FACE);
 }
 
 
-Face * rubiks_cube_front_face(Cube const * this)
+Face * rubiks_cube_front_face(struct rbc_cube const * this)
 {
 	return get_face(this, FRONT_FACE);
 }
 
 
-Face * rubiks_cube_right_face(Cube const * this)
+Face * rubiks_cube_right_face(struct rbc_cube const * this)
 {
 	return get_face(this, RIGHT_FACE);
 }
 
 
-Face * rubiks_cube_top_face(Cube const * this)
+Face * rubiks_cube_top_face(struct rbc_cube const * this)
 {
 	return get_face(this, TOP_FACE);
 }
 
 
-Face * rubiks_cube_bottom_face(Cube const * this)
+Face * rubiks_cube_bottom_face(struct rbc_cube const * this)
 {
 	return get_face(this, BOTTOM_FACE);
 }
 
 
-Face * rubiks_cube_back_face(Cube const * this)
+Face * rubiks_cube_back_face(struct rbc_cube const * this)
 {
 	return get_face(this, BACK_FACE);
 }
@@ -129,7 +129,7 @@ Face * rubiks_cube_back_face(Cube const * this)
 
 
 
-void rotate_cube(Cube * this, Rotation rotation)
+void rotate_cube(struct rbc_cube * this, Rotation rotation)
 {
 	Face * backup = this->faces[rotation[3]];
 
@@ -149,7 +149,7 @@ void rotate_cube(Cube * this, Rotation rotation)
  *
  * @param buffer - the buffer where to write the span
  */
-static void get_span(Cube const * this, Span span, Color buffer[FACE_SIZE])
+static void get_span(struct rbc_cube const * this, Span span, Color buffer[FACE_SIZE])
 {
 	int is_row = (span.column == (Column) -1);
 	if (is_row)
@@ -168,7 +168,7 @@ static void get_span(Cube const * this, Span span, Color buffer[FACE_SIZE])
  *
  * @param content - the content of the span to write
  */
-static void set_span(Cube * this, Span span, Color const content[FACE_SIZE])
+static void set_span(struct rbc_cube * this, Span span, Color const content[FACE_SIZE])
 {
 	int is_row = (span.column == (Column) -1);
 	if (is_row)
@@ -215,7 +215,7 @@ static int must_reverse_span(
  *
  * @param to - where to write the copied span
  */
-static void move_span(Cube * this, Span from, Span to)
+static void move_span(struct rbc_cube * this, Span from, Span to)
 {
 	Color span[FACE_SIZE];
 	get_span(this, from, span);
@@ -245,7 +245,7 @@ static void reverse_span(Color span[FACE_SIZE])
  *
  * @param to - where to write the copied span
  */
-static void move_reversed_span(Cube * this, Span from, Span to)
+static void move_reversed_span(struct rbc_cube * this, Span from, Span to)
 {
 	Color span_content[FACE_SIZE];
 	get_span(this, from, span_content);
@@ -268,7 +268,7 @@ static void move_reversed_span(Cube * this, Span from, Span to)
  * 	(ie., the number of spans to reverse in the slice)
  */
 void rotate_slice(
-	Cube * this,
+	struct rbc_cube * this,
 	Slice slice,
 	FacePosition const reversing_spans_face[],
 	int reversing_count)

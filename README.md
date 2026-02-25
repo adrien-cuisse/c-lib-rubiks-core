@@ -45,7 +45,7 @@ LD_LIBRARY_PATH=lib/ ./[your program]
 #include "include/Cube.h"
 
 /* Array of function pointers, every possible move */
-void (* scramblings[])(Cube *) =
+void (* scramblings[])(struct rbc_cube *) =
 {
 	rubiks_cube_rotate_top_slice_left,
 	rubiks_cube_rotate_top_slice_right,
@@ -86,7 +86,7 @@ static void print_face(Face const * face)
 		colors[rubiks_face_bottom_right_cell(face)]);
 }
 
-static void print_cube(Cube const * cube)
+static void print_cube(struct rbc_cube const * cube)
 {
 	Face * left = rubiks_cube_left_face(cube);
 	Face * front = rubiks_cube_front_face(cube);
@@ -123,7 +123,7 @@ void * create_scrambled_cube(size_t scramble_length)
 {
 	int function_index;
 
-	Cube * cube = rubiks_cube_create();
+	struct rbc_cube * cube = rubiks_cube_create();
 
 	while (scramble_length--)
 	{
@@ -137,7 +137,7 @@ void * create_scrambled_cube(size_t scramble_length)
 
 int main(void)
 {
-	Cube * cube;
+	struct rbc_cube * cube;
 
 	srand(time(NULL));
 
@@ -180,7 +180,7 @@ things different
 ## Known issues
 
 - Tests are repetitive: it's hard to refactor macro-based tests, providing function
-pointers doesn't really help readability, plus we have to `#define`the call to our functions
+pointers doesn't really help readability, plus we have to `#define` the call to our functions
 to keep track of `__FILE__` and `__LINE__`
 - There are maaaany tests: yes, every spec is tested
 

@@ -19,7 +19,7 @@ extern "C" {
  * anticlockwise rotation, here we are only using visual notation (relative to
  * front face) to keep it understandable
  */
-typedef struct Cube Cube;
+struct rbc_cube;
 
 
 
@@ -35,9 +35,9 @@ typedef struct Cube Cube;
  *
  * The caller is in charge of the memory
  *
- * @return Cube * - the allocated cube
+ * @return struct rbc_cube * - the allocated cube
  */
-Cube * rubiks_cube_create(void);
+struct rbc_cube * rubiks_cube_create(void);
 
 
 /**
@@ -45,7 +45,7 @@ Cube * rubiks_cube_create(void);
  *
  * @param self - the cube to delete
  */
-void rubiks_cube_delete(Cube ** self);
+void rubiks_cube_delete(struct rbc_cube ** self);
 
 
 /**
@@ -57,7 +57,7 @@ void rubiks_cube_delete(Cube ** self);
  *
  * @return Face * - the left face
  */
-Face * rubiks_cube_left_face(Cube const * self);
+Face * rubiks_cube_left_face(struct rbc_cube const * self);
 
 
 /**
@@ -69,7 +69,7 @@ Face * rubiks_cube_left_face(Cube const * self);
  *
  * @return Face * - the front face
  */
-Face * rubiks_cube_front_face(Cube const * self);
+Face * rubiks_cube_front_face(struct rbc_cube const * self);
 
 
 /**
@@ -81,7 +81,7 @@ Face * rubiks_cube_front_face(Cube const * self);
  *
  * @return Face * - the right face
  */
-Face * rubiks_cube_right_face(Cube const * self);
+Face * rubiks_cube_right_face(struct rbc_cube const * self);
 
 
 /**
@@ -93,7 +93,7 @@ Face * rubiks_cube_right_face(Cube const * self);
  *
  * @return Face * - the top face
  */
-Face * rubiks_cube_top_face(Cube const * self);
+Face * rubiks_cube_top_face(struct rbc_cube const * self);
 
 
 /**
@@ -105,7 +105,7 @@ Face * rubiks_cube_top_face(Cube const * self);
  *
  * @return Face * - the bottom face
  */
-Face * rubiks_cube_bottom_face(Cube const * self);
+Face * rubiks_cube_bottom_face(struct rbc_cube const * self);
 
 
 /**
@@ -117,7 +117,7 @@ Face * rubiks_cube_bottom_face(Cube const * self);
  *
  * @return Face * - the back face
  */
-Face * rubiks_cube_back_face(Cube const * self);
+Face * rubiks_cube_back_face(struct rbc_cube const * self);
 
 
 /**
@@ -127,7 +127,7 @@ Face * rubiks_cube_back_face(Cube const * self);
  *
  * @param self - the cube to rotate
  */
-void rubiks_cube_rotate_left(Cube * self);
+void rubiks_cube_rotate_left(struct rbc_cube * self);
 
 
 /**
@@ -137,7 +137,7 @@ void rubiks_cube_rotate_left(Cube * self);
  *
  * @param self - the cube to rotate
  */
-void rubiks_cube_rotate_right(Cube * self);
+void rubiks_cube_rotate_right(struct rbc_cube * self);
 
 
 /**
@@ -147,7 +147,7 @@ void rubiks_cube_rotate_right(Cube * self);
  *
  * @param self - the cube to rotate
  */
-void rubiks_cube_rotate_up(Cube * self);
+void rubiks_cube_rotate_up(struct rbc_cube * self);
 
 
 /**
@@ -157,7 +157,7 @@ void rubiks_cube_rotate_up(Cube * self);
  *
  * @param self - the cube to rotate
  */
-void rubiks_cube_rotate_down(Cube * self);
+void rubiks_cube_rotate_down(struct rbc_cube * self);
 
 
 /**
@@ -167,7 +167,7 @@ void rubiks_cube_rotate_down(Cube * self);
  *
  * @param self - the cube to rotate
  */
-void rubiks_cube_rotate_clockwise(Cube * self);
+void rubiks_cube_rotate_clockwise(struct rbc_cube * self);
 
 
 /**
@@ -177,7 +177,7 @@ void rubiks_cube_rotate_clockwise(Cube * self);
  *
  * @param self - the cube to rotate
  */
-void rubiks_cube_rotate_anticlockwise(Cube * self);
+void rubiks_cube_rotate_anticlockwise(struct rbc_cube * self);
 
 
 /**
@@ -187,7 +187,7 @@ void rubiks_cube_rotate_anticlockwise(Cube * self);
  *
  * @param self - the cube to rotate the slice from
  */
-void rubiks_cube_rotate_top_slice_left(Cube * self);
+void rubiks_cube_rotate_top_slice_left(struct rbc_cube * self);
 
 
 /**
@@ -197,7 +197,7 @@ void rubiks_cube_rotate_top_slice_left(Cube * self);
  *
  * @param self - the cube to rotate the slice from
  */
-void rubiks_cube_rotate_top_slice_right(Cube * self);
+void rubiks_cube_rotate_top_slice_right(struct rbc_cube * self);
 
 
 /**
@@ -207,7 +207,7 @@ void rubiks_cube_rotate_top_slice_right(Cube * self);
  *
  * @param self - the cube to rotate the slice from
  */
-void rubiks_cube_rotate_equator_slice_left(Cube * self);
+void rubiks_cube_rotate_equator_slice_left(struct rbc_cube * self);
 
 
 /**
@@ -217,7 +217,7 @@ void rubiks_cube_rotate_equator_slice_left(Cube * self);
  *
  * @param self - the cube to rotate the slice from
  */
-void rubiks_cube_rotate_equator_slice_right(Cube * self);
+void rubiks_cube_rotate_equator_slice_right(struct rbc_cube * self);
 
 
 /**
@@ -227,7 +227,7 @@ void rubiks_cube_rotate_equator_slice_right(Cube * self);
  *
  * @param self - the cube to rotate the slice from
  */
-void rubiks_cube_rotate_bottom_slice_left(Cube * self);
+void rubiks_cube_rotate_bottom_slice_left(struct rbc_cube * self);
 
 
 /**
@@ -237,7 +237,7 @@ void rubiks_cube_rotate_bottom_slice_left(Cube * self);
  *
  * @param self - the cube to rotate the slice from
  */
-void rubiks_cube_rotate_bottom_slice_right(Cube * self);
+void rubiks_cube_rotate_bottom_slice_right(struct rbc_cube * self);
 
 
 /**
@@ -247,7 +247,7 @@ void rubiks_cube_rotate_bottom_slice_right(Cube * self);
  *
  * @param self - the cube to rotate the slice from
  */
-void rubiks_cube_rotate_left_slice_up(Cube * self);
+void rubiks_cube_rotate_left_slice_up(struct rbc_cube * self);
 
 
 /**
@@ -257,7 +257,7 @@ void rubiks_cube_rotate_left_slice_up(Cube * self);
  *
  * @param self - the cube to rotate the slice from
  */
-void rubiks_cube_rotate_left_slice_down(Cube * self);
+void rubiks_cube_rotate_left_slice_down(struct rbc_cube * self);
 
 
 /**
@@ -267,7 +267,7 @@ void rubiks_cube_rotate_left_slice_down(Cube * self);
  *
  * @param self - the cube to rotate the slice from
  */
-void rubiks_cube_rotate_middle_slice_up(Cube * self);
+void rubiks_cube_rotate_middle_slice_up(struct rbc_cube * self);
 
 
 /**
@@ -277,7 +277,7 @@ void rubiks_cube_rotate_middle_slice_up(Cube * self);
  *
  * @param self - the cube to rotate the slice from
  */
-void rubiks_cube_rotate_middle_slice_down(Cube * self);
+void rubiks_cube_rotate_middle_slice_down(struct rbc_cube * self);
 
 
 /**
@@ -287,7 +287,7 @@ void rubiks_cube_rotate_middle_slice_down(Cube * self);
  *
  * @param self - the cube to rotate the slice from
  */
-void rubiks_cube_rotate_right_slice_up(Cube * self);
+void rubiks_cube_rotate_right_slice_up(struct rbc_cube * self);
 
 
 /**
@@ -297,7 +297,7 @@ void rubiks_cube_rotate_right_slice_up(Cube * self);
  *
  * @param self - the cube to rotate the slice from
  */
-void rubiks_cube_rotate_right_slice_down(Cube * self);
+void rubiks_cube_rotate_right_slice_down(struct rbc_cube * self);
 
 
 /**
@@ -307,7 +307,7 @@ void rubiks_cube_rotate_right_slice_down(Cube * self);
  *
  * @param self - the cube to rotate the slice from
  */
-void rubiks_cube_rotate_front_slice_clockwise(Cube * self);
+void rubiks_cube_rotate_front_slice_clockwise(struct rbc_cube * self);
 
 
 /**
@@ -317,7 +317,7 @@ void rubiks_cube_rotate_front_slice_clockwise(Cube * self);
  *
  * @param self - the cube to rotate the slice from
  */
-void rubiks_cube_rotate_front_slice_anticlockwise(Cube * self);
+void rubiks_cube_rotate_front_slice_anticlockwise(struct rbc_cube * self);
 
 
 /**
@@ -327,7 +327,7 @@ void rubiks_cube_rotate_front_slice_anticlockwise(Cube * self);
  *
  * @param self - the cube to rotate the slice from
  */
-void rubiks_cube_rotate_standing_slice_clockwise(Cube * self);
+void rubiks_cube_rotate_standing_slice_clockwise(struct rbc_cube * self);
 
 
 /**
@@ -337,7 +337,7 @@ void rubiks_cube_rotate_standing_slice_clockwise(Cube * self);
  *
  * @param self - the cube to rotate the slice from
  */
-void rubiks_cube_rotate_standing_slice_anticlockwise(Cube * self);
+void rubiks_cube_rotate_standing_slice_anticlockwise(struct rbc_cube * self);
 
 
 /**
@@ -347,7 +347,7 @@ void rubiks_cube_rotate_standing_slice_anticlockwise(Cube * self);
  *
  * @param self - the cube to rotate the slice from
  */
-void rubiks_cube_rotate_back_slice_clockwise(Cube * self);
+void rubiks_cube_rotate_back_slice_clockwise(struct rbc_cube * self);
 
 
 /**
@@ -357,7 +357,7 @@ void rubiks_cube_rotate_back_slice_clockwise(Cube * self);
  *
  * @param self - the cube to rotate the slice from
  */
-void rubiks_cube_rotate_back_slice_anticlockwise(Cube * self);
+void rubiks_cube_rotate_back_slice_anticlockwise(struct rbc_cube * self);
 
 
 /**
@@ -367,7 +367,7 @@ void rubiks_cube_rotate_back_slice_anticlockwise(Cube * self);
  *
  * @param self - the cube to rotate the slices from
  */
-void rubiks_cube_rotate_top_slices_left(Cube * self);
+void rubiks_cube_rotate_top_slices_left(struct rbc_cube * self);
 
 
 /**
@@ -377,7 +377,7 @@ void rubiks_cube_rotate_top_slices_left(Cube * self);
  *
  * @param self - the cube to rotate the slices from
  */
-void rubiks_cube_rotate_top_slices_right(Cube * self);
+void rubiks_cube_rotate_top_slices_right(struct rbc_cube * self);
 
 
 /**
@@ -387,7 +387,7 @@ void rubiks_cube_rotate_top_slices_right(Cube * self);
  *
  * @param self - the cube to rotate the slices from
  */
-void rubiks_cube_rotate_outer_slices_left(Cube * self);
+void rubiks_cube_rotate_outer_slices_left(struct rbc_cube * self);
 
 
 /**
@@ -397,7 +397,7 @@ void rubiks_cube_rotate_outer_slices_left(Cube * self);
  *
  * @param self - the cube to rotate the slices from
  */
-void rubiks_cube_rotate_outer_slices_right(Cube * self);
+void rubiks_cube_rotate_outer_slices_right(struct rbc_cube * self);
 
 
 /**
@@ -407,7 +407,7 @@ void rubiks_cube_rotate_outer_slices_right(Cube * self);
  *
  * @param self - the cube to rotate the slices from
  */
-void rubiks_cube_rotate_bottom_slices_left(Cube * self);
+void rubiks_cube_rotate_bottom_slices_left(struct rbc_cube * self);
 
 
 /**
@@ -417,7 +417,7 @@ void rubiks_cube_rotate_bottom_slices_left(Cube * self);
  *
  * @param self - the cube to rotate the slices from
  */
-void rubiks_cube_rotate_bottom_slices_right(Cube * self);
+void rubiks_cube_rotate_bottom_slices_right(struct rbc_cube * self);
 
 
 /**
@@ -427,7 +427,7 @@ void rubiks_cube_rotate_bottom_slices_right(Cube * self);
  *
  * @param self - the cube to rotate the slices from
  */
-void rubiks_cube_rotate_left_slices_up(Cube * self);
+void rubiks_cube_rotate_left_slices_up(struct rbc_cube * self);
 
 
 /**
@@ -437,7 +437,7 @@ void rubiks_cube_rotate_left_slices_up(Cube * self);
  *
  * @param self - the cube to rotate the slices from
  */
-void rubiks_cube_rotate_left_slices_down(Cube * self);
+void rubiks_cube_rotate_left_slices_down(struct rbc_cube * self);
 
 
 /**
@@ -447,7 +447,7 @@ void rubiks_cube_rotate_left_slices_down(Cube * self);
  *
  * @param self - the cube to rotate the slices from
  */
-void rubiks_cube_rotate_outer_slices_up(Cube * self);
+void rubiks_cube_rotate_outer_slices_up(struct rbc_cube * self);
 
 
 /**
@@ -457,7 +457,7 @@ void rubiks_cube_rotate_outer_slices_up(Cube * self);
  *
  * @param self - the cube to rotate the slices from
  */
-void rubiks_cube_rotate_outer_slices_down(Cube * self);
+void rubiks_cube_rotate_outer_slices_down(struct rbc_cube * self);
 
 
 /**
@@ -467,7 +467,7 @@ void rubiks_cube_rotate_outer_slices_down(Cube * self);
  *
  * @param self - the cube to rotate the slices from
  */
-void rubiks_cube_rotate_right_slices_up(Cube * self);
+void rubiks_cube_rotate_right_slices_up(struct rbc_cube * self);
 
 
 /**
@@ -477,7 +477,7 @@ void rubiks_cube_rotate_right_slices_up(Cube * self);
  *
  * @param self - the cube to rotate the slices from
  */
-void rubiks_cube_rotate_right_slices_down(Cube * self);
+void rubiks_cube_rotate_right_slices_down(struct rbc_cube * self);
 
 
 /**
@@ -487,7 +487,7 @@ void rubiks_cube_rotate_right_slices_down(Cube * self);
  *
  * @param self - the cube to rotate the slices from
  */
-void rubiks_cube_rotate_front_slices_clockwise(Cube * self);
+void rubiks_cube_rotate_front_slices_clockwise(struct rbc_cube * self);
 
 
 /**
@@ -497,7 +497,7 @@ void rubiks_cube_rotate_front_slices_clockwise(Cube * self);
  *
  * @param self - the cube to rotate the slices from
  */
-void rubiks_cube_rotate_front_slices_anticlockwise(Cube * self);
+void rubiks_cube_rotate_front_slices_anticlockwise(struct rbc_cube * self);
 
 
 /**
@@ -507,7 +507,7 @@ void rubiks_cube_rotate_front_slices_anticlockwise(Cube * self);
  *
  * @param self - the cube to rotate the slices from
  */
-void rubiks_cube_rotate_outer_slices_clockwise(Cube * self);
+void rubiks_cube_rotate_outer_slices_clockwise(struct rbc_cube * self);
 
 
 /**
@@ -517,7 +517,7 @@ void rubiks_cube_rotate_outer_slices_clockwise(Cube * self);
  *
  * @param self - the cube to rotate the slices from
  */
-void rubiks_cube_rotate_outer_slices_anticlockwise(Cube * self);
+void rubiks_cube_rotate_outer_slices_anticlockwise(struct rbc_cube * self);
 
 
 /**
@@ -527,7 +527,7 @@ void rubiks_cube_rotate_outer_slices_anticlockwise(Cube * self);
  *
  * @param self - the cube to rotate the slices from
  */
-void rubiks_cube_rotate_back_slices_clockwise(Cube * self);
+void rubiks_cube_rotate_back_slices_clockwise(struct rbc_cube * self);
 
 
 /**
@@ -537,7 +537,7 @@ void rubiks_cube_rotate_back_slices_clockwise(Cube * self);
  *
  * @param self - the cube to rotate the slices from
  */
-void rubiks_cube_rotate_back_slices_anticlockwise(Cube * self);
+void rubiks_cube_rotate_back_slices_anticlockwise(struct rbc_cube * self);
 
 
 

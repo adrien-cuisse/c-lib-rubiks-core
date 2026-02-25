@@ -9,7 +9,7 @@
 Test(Cube, isInitializedWithBlueFaceInFront)
 {
 	// given
-	Cube * cube = rubiks_cube_create();
+	struct rbc_cube * cube = rubiks_cube_create();
 	// when
 	Face * front_face = rubiks_cube_front_face(cube);
 	// then
@@ -21,7 +21,7 @@ Test(Cube, isInitializedWithBlueFaceInFront)
 Test(Cube, isInitializedWithRedFaceOnTheLeft)
 {
 	// given
-	Cube * cube = rubiks_cube_create();
+	struct rbc_cube * cube = rubiks_cube_create();
 	// when
 	Face * left_face = rubiks_cube_left_face(cube);
 	// then
@@ -33,7 +33,7 @@ Test(Cube, isInitializedWithRedFaceOnTheLeft)
 Test(Cube, isInitializedWithOrangeFaceOnTheRight)
 {
 	// given
-	Cube * cube = rubiks_cube_create();
+	struct rbc_cube * cube = rubiks_cube_create();
 	// when
 	Face * right_face = rubiks_cube_right_face(cube);
 	// then
@@ -45,7 +45,7 @@ Test(Cube, isInitializedWithOrangeFaceOnTheRight)
 Test(Cube, isInitializedWithWhiteFaceOnTop)
 {
 	// given
-	Cube * cube = rubiks_cube_create();
+	struct rbc_cube * cube = rubiks_cube_create();
 	// when
 	Face * top_face = rubiks_cube_top_face(cube);
 	// then
@@ -57,7 +57,7 @@ Test(Cube, isInitializedWithWhiteFaceOnTop)
 Test(Cube, isInitializedWithYellowFaceAtBottom)
 {
 	// given
-	Cube * cube = rubiks_cube_create();
+	struct rbc_cube * cube = rubiks_cube_create();
 	// when
 	Face * bottom_face = rubiks_cube_bottom_face(cube);
 	// then
@@ -69,7 +69,7 @@ Test(Cube, isInitializedWithYellowFaceAtBottom)
 Test(Cube, isInitializedWithGreenFaceOnTheBack)
 {
 	// given
-	Cube * cube = rubiks_cube_create();
+	struct rbc_cube * cube = rubiks_cube_create();
 	// when
 	Face * back_face = rubiks_cube_back_face(cube);
 	// then

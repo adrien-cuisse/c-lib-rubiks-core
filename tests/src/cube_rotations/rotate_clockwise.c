@@ -12,7 +12,7 @@
 Test(Cube, rotateClockwise_topFaceGoesRight)
 {
 	// given
-	Cube * cube = rubiks_cube_create();
+	struct rbc_cube * cube = rubiks_cube_create();
 	Face * old_top_face = rubiks_cube_top_face(cube);
 
 	// when
@@ -30,7 +30,7 @@ Test(Cube, rotateClockwise_topFaceGoesRight)
 Test(Cube, rotateClockwise_rightFaceGoesBottom)
 {
 	// given
-	Cube * cube = rubiks_cube_create();
+	struct rbc_cube * cube = rubiks_cube_create();
 	Face * old_right_face = rubiks_cube_right_face(cube);
 
 	// when
@@ -48,7 +48,7 @@ Test(Cube, rotateClockwise_rightFaceGoesBottom)
 Test(Cube, rotateClockwise_bottomFaceGoesLeft)
 {
 	// given
-	Cube * cube = rubiks_cube_create();
+	struct rbc_cube * cube = rubiks_cube_create();
 	Face * old_bottom_face = rubiks_cube_bottom_face(cube);
 
 	// when
@@ -66,7 +66,7 @@ Test(Cube, rotateClockwise_bottomFaceGoesLeft)
 Test(Cube, rotateClockwise_leftFaceGoesTop)
 {
 	// given
-	Cube * cube = rubiks_cube_create();
+	struct rbc_cube * cube = rubiks_cube_create();
 	Face * old_left_face = rubiks_cube_left_face(cube);
 
 	// when
