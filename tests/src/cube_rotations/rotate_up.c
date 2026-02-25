@@ -13,13 +13,13 @@ Test(Cube, rotateUp_frontFaceGoesTop)
 {
 	// given
 	struct rbc_cube * cube = rubiks_cube_create();
-	Face * old_front_face = rubiks_cube_front_face(cube);
+	struct rbc_face * old_front_face = rubiks_cube_front_face(cube);
 
 	// when
 	rubiks_cube_rotate_up(cube);
 
 	// then
-	Face * new_top_face = rubiks_cube_top_face(cube);
+	struct rbc_face * new_top_face = rubiks_cube_top_face(cube);
 	cr_assert_eq(
 		new_top_face,
 		old_front_face,
@@ -31,13 +31,13 @@ Test(Cube, rotateUp_topFaceGoesBack)
 {
 	// given
 	struct rbc_cube * cube = rubiks_cube_create();
-	Face * old_top_face = rubiks_cube_top_face(cube);
+	struct rbc_face * old_top_face = rubiks_cube_top_face(cube);
 
 	// when
 	rubiks_cube_rotate_up(cube);
 
 	// then
-	Face * new_back_face = rubiks_cube_back_face(cube);
+	struct rbc_face * new_back_face = rubiks_cube_back_face(cube);
 	cr_assert_eq(
 		new_back_face,
 		old_top_face,
@@ -49,13 +49,13 @@ Test(Cube, rotateUp_backFaceGoesBottom)
 {
 	// given
 	struct rbc_cube * cube = rubiks_cube_create();
-	Face * old_back_face = rubiks_cube_back_face(cube);
+	struct rbc_face * old_back_face = rubiks_cube_back_face(cube);
 
 	// when
 	rubiks_cube_rotate_up(cube);
 
 	// then
-	Face * new_bottom_face = rubiks_cube_bottom_face(cube);
+	struct rbc_face * new_bottom_face = rubiks_cube_bottom_face(cube);
 	cr_assert_eq(
 		new_bottom_face,
 		old_back_face,
@@ -67,13 +67,13 @@ Test(Cube, rotateUp_bottomFaceGoesFront)
 {
 	// given
 	struct rbc_cube * cube = rubiks_cube_create();
-	Face * old_bottom_face = rubiks_cube_bottom_face(cube);
+	struct rbc_face * old_bottom_face = rubiks_cube_bottom_face(cube);
 
 	// when
 	rubiks_cube_rotate_up(cube);
 
 	// then
-	Face * new_front_face = rubiks_cube_front_face(cube);
+	struct rbc_face * new_front_face = rubiks_cube_front_face(cube);
 	cr_assert_eq(
 		new_front_face,
 		old_bottom_face,

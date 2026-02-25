@@ -10,7 +10,7 @@
 /**
  * A 2D Face
  */
-struct Face
+struct rbc_face
 {
 	/**
 	 * A FACE_SIZE*FACE_SIZE arrays of cells, defined by their color
@@ -21,7 +21,7 @@ struct Face
 
 
 
-Color rubiks_face_color(Face const * this)
+Color rubiks_face_color(struct rbc_face const * this)
 {
 	/* center cells are fixed */
 	return rubiks_face_equator_center_cell(this);
@@ -39,61 +39,61 @@ Color rubiks_face_color(Face const * this)
  *
  * @return Color - the color of the requested cell
  */
-static Color cell(Face const * this, Row row, Column column)
+static Color cell(struct rbc_face const * this, Row row, Column column)
 {
 	return this->cells[row][column];
 }
 
 
-Color rubiks_face_top_left_cell(Face const * this)
+Color rubiks_face_top_left_cell(struct rbc_face const * this)
 {
 	return cell(this, TOP_ROW, LEFT_COLUMN);
 }
 
 
-Color rubiks_face_top_center_cell(Face const * this)
+Color rubiks_face_top_center_cell(struct rbc_face const * this)
 {
 	return cell(this, TOP_ROW, MIDDLE_COLUMN);
 }
 
 
-Color rubiks_face_top_right_cell(Face const * this)
+Color rubiks_face_top_right_cell(struct rbc_face const * this)
 {
 	return cell(this, TOP_ROW, RIGHT_COLUMN);
 }
 
 
-Color rubiks_face_equator_left_cell(Face const * this)
+Color rubiks_face_equator_left_cell(struct rbc_face const * this)
 {
 	return cell(this, EQUATOR_ROW, LEFT_COLUMN);
 }
 
 
-Color rubiks_face_equator_center_cell(Face const * this)
+Color rubiks_face_equator_center_cell(struct rbc_face const * this)
 {
 	return cell(this, EQUATOR_ROW, MIDDLE_COLUMN);
 }
 
 
-Color rubiks_face_equator_right_cell(Face const * this)
+Color rubiks_face_equator_right_cell(struct rbc_face const * this)
 {
 	return cell(this, EQUATOR_ROW, RIGHT_COLUMN);
 }
 
 
-Color rubiks_face_bottom_left_cell(Face const * this)
+Color rubiks_face_bottom_left_cell(struct rbc_face const * this)
 {
 	return cell(this, BOTTOM_ROW, LEFT_COLUMN);
 }
 
 
-Color rubiks_face_bottom_center_cell(Face const * this)
+Color rubiks_face_bottom_center_cell(struct rbc_face const * this)
 {
 	return cell(this, BOTTOM_ROW, MIDDLE_COLUMN);
 }
 
 
-Color rubiks_face_bottom_right_cell(Face const * this)
+Color rubiks_face_bottom_right_cell(struct rbc_face const * this)
 {
 	return cell(this, BOTTOM_ROW, RIGHT_COLUMN);
 }
@@ -110,7 +110,7 @@ Color rubiks_face_bottom_right_cell(Face const * this)
  *
  * @param row - the row to paint
  */
-static void paint_row(Face * this, Color color, Row row)
+static void paint_row(struct rbc_face * this, Color color, Row row)
 {
 	int column_index;
 	Color cells[FACE_SIZE];
@@ -129,7 +129,7 @@ static void paint_row(Face * this, Color color, Row row)
  *
  * @param color - the color to apply
  */
-static void paint(Face * this, Color color)
+static void paint(struct rbc_face * this, Color color)
 {
 	Row row;
 	for (row = TOP_ROW; row <= BOTTOM_ROW; row++)
@@ -137,9 +137,9 @@ static void paint(Face * this, Color color)
 }
 
 
-Face * create_face(Color color)
+struct rbc_face * create_face(Color color)
 {
-	Face * this = calloc(1, sizeof(* this));
+	struct rbc_face * this = calloc(1, sizeof(* this));
 	if (this != NULL)
 		paint(this, color);
 
@@ -147,7 +147,7 @@ Face * create_face(Color color)
 }
 
 
-void delete_face(Face ** this)
+void delete_face(struct rbc_face ** this)
 {
 	if ((this == NULL) || (* this == NULL))
 		return;
@@ -157,21 +157,21 @@ void delete_face(Face ** this)
 }
 
 
-void copy_face_row(Face const * this, Color buffer[FACE_SIZE], Row row)
+void copy_face_row(struct rbc_face const * this, Color buffer[FACE_SIZE], Row row)
 {
 	size_t row_size_in_bytes = FACE_SIZE * sizeof(this->cells[row][0]);
 	memcpy(buffer, this->cells[row], row_size_in_bytes);
 }
 
 
-void set_face_row(Face * face, Color const cells[FACE_SIZE], Row row)
+void set_face_row(struct rbc_face * face, Color const cells[FACE_SIZE], Row row)
 {
 	size_t row_size_in_bytes = FACE_SIZE * sizeof(cells[0]);
 	memcpy(face->cells[row], cells, row_size_in_bytes);
 }
 
 
-void copy_face_column(Face const * this, Color buffer[FACE_SIZE], Column column)
+void copy_face_column(struct rbc_face const * this, Color buffer[FACE_SIZE], Column column)
 {
 	Row row;
 	for (row = TOP_ROW; row <= BOTTOM_ROW; row++)
@@ -179,7 +179,7 @@ void copy_face_column(Face const * this, Color buffer[FACE_SIZE], Column column)
 }
 
 
-void set_face_column(Face * face, Color const cells[FACE_SIZE], Column column)
+void set_face_column(struct rbc_face * face, Color const cells[FACE_SIZE], Column column)
 {
 	Row row;
 	for (row = TOP_ROW; row <= BOTTOM_ROW; row++)
@@ -187,7 +187,7 @@ void set_face_column(Face * face, Color const cells[FACE_SIZE], Column column)
 }
 
 
-void rotate_face_clockwise(Face * this)
+void rotate_face_clockwise(struct rbc_face * this)
 {
 	Color new_right_column[FACE_SIZE];
 	Color new_middle_column[FACE_SIZE];
@@ -203,7 +203,7 @@ void rotate_face_clockwise(Face * this)
 }
 
 
-void rotate_face_anticlockwise(Face * this)
+void rotate_face_anticlockwise(struct rbc_face * this)
 {
 	Color new_top_row[FACE_SIZE];
 	Color new_equator_row[FACE_SIZE];

@@ -16,7 +16,7 @@ extern "C" {
 /**
  * A face of the 3D cube
  */
-typedef struct Face Face;
+struct rbc_face;
 
 
 
@@ -28,7 +28,7 @@ typedef struct Face Face;
  *
  * @return Color - the color of the face
  */
-Color rubiks_face_color(Face const * self);
+Color rubiks_face_color(struct rbc_face const * self);
 
 
 /**
@@ -38,7 +38,7 @@ Color rubiks_face_color(Face const * self);
  *
  * @return Color - the color of the cell
  */
-Color rubiks_face_top_left_cell(Face const * self);
+Color rubiks_face_top_left_cell(struct rbc_face const * self);
 
 
 /**
@@ -48,7 +48,7 @@ Color rubiks_face_top_left_cell(Face const * self);
  *
  * @return Color - the color of the cell
  */
-Color rubiks_face_top_center_cell(Face const * self);
+Color rubiks_face_top_center_cell(struct rbc_face const * self);
 
 
 /**
@@ -58,7 +58,7 @@ Color rubiks_face_top_center_cell(Face const * self);
  *
  * @return Color - the color of the cell
  */
-Color rubiks_face_top_right_cell(Face const * self);
+Color rubiks_face_top_right_cell(struct rbc_face const * self);
 
 
 /**
@@ -68,7 +68,7 @@ Color rubiks_face_top_right_cell(Face const * self);
  *
  * @return Color - the color of the cell
  */
-Color rubiks_face_equator_left_cell(Face const * self);
+Color rubiks_face_equator_left_cell(struct rbc_face const * self);
 
 
 /**
@@ -78,7 +78,7 @@ Color rubiks_face_equator_left_cell(Face const * self);
  *
  * @return Color - the color of the cell
  */
-Color rubiks_face_equator_center_cell(Face const * self);
+Color rubiks_face_equator_center_cell(struct rbc_face const * self);
 
 
 /**
@@ -88,7 +88,7 @@ Color rubiks_face_equator_center_cell(Face const * self);
  *
  * @return Color - the color of the cell
  */
-Color rubiks_face_equator_right_cell(Face const * self);
+Color rubiks_face_equator_right_cell(struct rbc_face const * self);
 
 
 /**
@@ -98,7 +98,7 @@ Color rubiks_face_equator_right_cell(Face const * self);
  *
  * @return Color - the color of the cell
  */
-Color rubiks_face_bottom_left_cell(Face const * self);
+Color rubiks_face_bottom_left_cell(struct rbc_face const * self);
 
 
 /**
@@ -108,7 +108,7 @@ Color rubiks_face_bottom_left_cell(Face const * self);
  *
  * @return Color - the color of the cell
  */
-Color rubiks_face_bottom_center_cell(Face const * self);
+Color rubiks_face_bottom_center_cell(struct rbc_face const * self);
 
 
 /**
@@ -118,7 +118,7 @@ Color rubiks_face_bottom_center_cell(Face const * self);
  *
  * @return Color - the color of the cell
  */
-Color rubiks_face_bottom_right_cell(Face const * self);
+Color rubiks_face_bottom_right_cell(struct rbc_face const * self);
 
 
 

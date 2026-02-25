@@ -15,7 +15,7 @@ struct rbc_cube
 	/**
 	 * The 2D faces composing the cube
 	 */
-	Face * faces[6];
+	struct rbc_face * faces[6];
 };
 
 
@@ -83,45 +83,45 @@ void rubiks_cube_delete(struct rbc_cube ** this)
  *
  * @param position - the face to get
  *
- * @return Face * - the requested face
+ * @return struct rbc_face * - the requested face
  */
-static Face * get_face(struct rbc_cube const * this, FacePosition position)
+static struct rbc_face * get_face(struct rbc_cube const * this, FacePosition position)
 {
 	return this->faces[position];
 }
 
 
-Face * rubiks_cube_left_face(struct rbc_cube const * this)
+struct rbc_face * rubiks_cube_left_face(struct rbc_cube const * this)
 {
 	return get_face(this, LEFT_FACE);
 }
 
 
-Face * rubiks_cube_front_face(struct rbc_cube const * this)
+struct rbc_face * rubiks_cube_front_face(struct rbc_cube const * this)
 {
 	return get_face(this, FRONT_FACE);
 }
 
 
-Face * rubiks_cube_right_face(struct rbc_cube const * this)
+struct rbc_face * rubiks_cube_right_face(struct rbc_cube const * this)
 {
 	return get_face(this, RIGHT_FACE);
 }
 
 
-Face * rubiks_cube_top_face(struct rbc_cube const * this)
+struct rbc_face * rubiks_cube_top_face(struct rbc_cube const * this)
 {
 	return get_face(this, TOP_FACE);
 }
 
 
-Face * rubiks_cube_bottom_face(struct rbc_cube const * this)
+struct rbc_face * rubiks_cube_bottom_face(struct rbc_cube const * this)
 {
 	return get_face(this, BOTTOM_FACE);
 }
 
 
-Face * rubiks_cube_back_face(struct rbc_cube const * this)
+struct rbc_face * rubiks_cube_back_face(struct rbc_cube const * this)
 {
 	return get_face(this, BACK_FACE);
 }
@@ -131,7 +131,7 @@ Face * rubiks_cube_back_face(struct rbc_cube const * this)
 
 void rotate_cube(struct rbc_cube * this, Rotation rotation)
 {
-	Face * backup = this->faces[rotation[3]];
+	struct rbc_face * backup = this->faces[rotation[3]];
 
 	this->faces[rotation[3]] = this->faces[rotation[2]];
 	this->faces[rotation[2]] = this->faces[rotation[1]];

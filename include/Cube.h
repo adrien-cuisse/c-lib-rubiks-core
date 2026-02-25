@@ -55,9 +55,9 @@ void rubiks_cube_delete(struct rbc_cube ** self);
  *
  * @param self - the cube to get the left face from
  *
- * @return Face * - the left face
+ * @return struct rbc_face * - the left face
  */
-Face * rubiks_cube_left_face(struct rbc_cube const * self);
+struct rbc_face * rubiks_cube_left_face(struct rbc_cube const * self);
 
 
 /**
@@ -67,9 +67,9 @@ Face * rubiks_cube_left_face(struct rbc_cube const * self);
  *
  * @param self - the cube to get the front face from
  *
- * @return Face * - the front face
+ * @return struct rbc_face * - the front face
  */
-Face * rubiks_cube_front_face(struct rbc_cube const * self);
+struct rbc_face * rubiks_cube_front_face(struct rbc_cube const * self);
 
 
 /**
@@ -79,9 +79,9 @@ Face * rubiks_cube_front_face(struct rbc_cube const * self);
  *
  * @param self - the cube to get the right face from
  *
- * @return Face * - the right face
+ * @return struct rbc_face * - the right face
  */
-Face * rubiks_cube_right_face(struct rbc_cube const * self);
+struct rbc_face * rubiks_cube_right_face(struct rbc_cube const * self);
 
 
 /**
@@ -91,9 +91,9 @@ Face * rubiks_cube_right_face(struct rbc_cube const * self);
  *
  * @param self - the cube to get the top face from
  *
- * @return Face * - the top face
+ * @return struct rbc_face * - the top face
  */
-Face * rubiks_cube_top_face(struct rbc_cube const * self);
+struct rbc_face * rubiks_cube_top_face(struct rbc_cube const * self);
 
 
 /**
@@ -103,9 +103,9 @@ Face * rubiks_cube_top_face(struct rbc_cube const * self);
  *
  * @param self - the cube to get the bottom face from
  *
- * @return Face * - the bottom face
+ * @return struct rbc_face * - the bottom face
  */
-Face * rubiks_cube_bottom_face(struct rbc_cube const * self);
+struct rbc_face * rubiks_cube_bottom_face(struct rbc_cube const * self);
 
 
 /**
@@ -115,9 +115,9 @@ Face * rubiks_cube_bottom_face(struct rbc_cube const * self);
  *
  * @param self - the cube to get the back face from
  *
- * @return Face * - the back face
+ * @return struct rbc_face * - the back face
  */
-Face * rubiks_cube_back_face(struct rbc_cube const * self);
+struct rbc_face * rubiks_cube_back_face(struct rbc_cube const * self);
 
 
 /**

@@ -17,7 +17,7 @@ extern "C" {
 /**
  * A face of the 3D cube
  */
-typedef struct Face Face;
+struct rbc_face;
 
 
 
@@ -29,7 +29,7 @@ typedef struct Face Face;
  *
  * @return Color - the color of the face
  */
-RUBIKS_API Color rubiks_face_color(Face const * self);
+RUBIKS_API Color rubiks_face_color(struct rbc_face const * self);
 
 
 /**
@@ -39,7 +39,7 @@ RUBIKS_API Color rubiks_face_color(Face const * self);
  *
  * @return Color - the color of the cell
  */
-RUBIKS_API Color rubiks_face_top_left_cell(Face const * self);
+RUBIKS_API Color rubiks_face_top_left_cell(struct rbc_face const * self);
 
 
 /**
@@ -49,7 +49,7 @@ RUBIKS_API Color rubiks_face_top_left_cell(Face const * self);
  *
  * @return Color - the color of the cell
  */
-RUBIKS_API Color rubiks_face_top_center_cell(Face const * self);
+RUBIKS_API Color rubiks_face_top_center_cell(struct rbc_face const * self);
 
 
 /**
@@ -59,7 +59,7 @@ RUBIKS_API Color rubiks_face_top_center_cell(Face const * self);
  *
  * @return Color - the color of the cell
  */
-RUBIKS_API Color rubiks_face_top_right_cell(Face const * self);
+RUBIKS_API Color rubiks_face_top_right_cell(struct rbc_face const * self);
 
 
 /**
@@ -69,7 +69,7 @@ RUBIKS_API Color rubiks_face_top_right_cell(Face const * self);
  *
  * @return Color - the color of the cell
  */
-RUBIKS_API Color rubiks_face_equator_left_cell(Face const * self);
+RUBIKS_API Color rubiks_face_equator_left_cell(struct rbc_face const * self);
 
 
 /**
@@ -79,7 +79,7 @@ RUBIKS_API Color rubiks_face_equator_left_cell(Face const * self);
  *
  * @return Color - the color of the cell
  */
-RUBIKS_API Color rubiks_face_equator_center_cell(Face const * self);
+RUBIKS_API Color rubiks_face_equator_center_cell(struct rbc_face const * self);
 
 
 /**
@@ -89,7 +89,7 @@ RUBIKS_API Color rubiks_face_equator_center_cell(Face const * self);
  *
  * @return Color - the color of the cell
  */
-RUBIKS_API Color rubiks_face_equator_right_cell(Face const * self);
+RUBIKS_API Color rubiks_face_equator_right_cell(struct rbc_face const * self);
 
 
 /**
@@ -99,7 +99,7 @@ RUBIKS_API Color rubiks_face_equator_right_cell(Face const * self);
  *
  * @return Color - the color of the cell
  */
-RUBIKS_API Color rubiks_face_bottom_left_cell(Face const * self);
+RUBIKS_API Color rubiks_face_bottom_left_cell(struct rbc_face const * self);
 
 
 /**
@@ -109,7 +109,7 @@ RUBIKS_API Color rubiks_face_bottom_left_cell(Face const * self);
  *
  * @return Color - the color of the cell
  */
-RUBIKS_API Color rubiks_face_bottom_center_cell(Face const * self);
+RUBIKS_API Color rubiks_face_bottom_center_cell(struct rbc_face const * self);
 
 
 /**
@@ -119,7 +119,7 @@ RUBIKS_API Color rubiks_face_bottom_center_cell(Face const * self);
  *
  * @return Color - the color of the cell
  */
-RUBIKS_API Color rubiks_face_bottom_right_cell(Face const * self);
+RUBIKS_API Color rubiks_face_bottom_right_cell(struct rbc_face const * self);
 
 
 
@@ -155,9 +155,9 @@ typedef enum
  *
  * @param color - the color of the face to create
  *
- * @return Face * - the created face
+ * @return struct rbc_face * - the created face
  */
-Face * create_face(Color color);
+struct rbc_face * create_face(Color color);
 
 
 /**
@@ -165,7 +165,7 @@ Face * create_face(Color color);
  *
  * @param this - the face to delete
  */
-void delete_face(Face ** this);
+void delete_face(struct rbc_face ** this);
 
 
 /**
@@ -173,7 +173,7 @@ void delete_face(Face ** this);
  *
  * @param this - the face to rotate
  */
-void rotate_face_clockwise(Face * this);
+void rotate_face_clockwise(struct rbc_face * this);
 
 
 /**
@@ -181,7 +181,7 @@ void rotate_face_clockwise(Face * this);
  *
  * @param this - the face to rotate
  */
-void rotate_face_anticlockwise(Face * this);
+void rotate_face_anticlockwise(struct rbc_face * this);
 
 
 /**
@@ -193,7 +193,7 @@ void rotate_face_anticlockwise(Face * this);
  *
  * @param row - the row to read
  */
-void copy_face_row(Face const * this, Color buffer[FACE_SIZE], Row row);
+void copy_face_row(struct rbc_face const * this, Color buffer[FACE_SIZE], Row row);
 
 
 /**
@@ -205,7 +205,7 @@ void copy_face_row(Face const * this, Color buffer[FACE_SIZE], Row row);
  *
  * @param row - the row where to write the cells
  */
-void set_face_row(Face * this, Color const cells[FACE_SIZE], Row row);
+void set_face_row(struct rbc_face * this, Color const cells[FACE_SIZE], Row row);
 
 
 /**
@@ -217,7 +217,7 @@ void set_face_row(Face * this, Color const cells[FACE_SIZE], Row row);
  *
  * @param column - the column to read
  */
-void copy_face_column(Face const * this, Color buffer[FACE_SIZE], Column column);
+void copy_face_column(struct rbc_face const * this, Color buffer[FACE_SIZE], Column column);
 
 
 /**
@@ -229,7 +229,7 @@ void copy_face_column(Face const * this, Color buffer[FACE_SIZE], Column column)
  *
  * @param column - the column where to write the cells
  */
-void set_face_column(Face * face, Color const cells[FACE_SIZE], Column column);
+void set_face_column(struct rbc_face * face, Color const cells[FACE_SIZE], Column column);
 
 
 

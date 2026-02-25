@@ -70,7 +70,7 @@ void (* scramblings[])(struct rbc_cube *) =
 /* Display labels */
 char const colors[] = { 'R', 'B', 'O', 'Y', 'G', 'W' };
 
-static void print_face(Face const * face)
+static void print_face(struct rbc_face const * face)
 {
 	printf("          | %c %c %c |\n",
 		colors[rubiks_face_top_left_cell(face)],
@@ -88,9 +88,9 @@ static void print_face(Face const * face)
 
 static void print_cube(struct rbc_cube const * cube)
 {
-	Face * left = rubiks_cube_left_face(cube);
-	Face * front = rubiks_cube_front_face(cube);
-	Face * right = rubiks_cube_right_face(cube);
+	struct rbc_face * left = rubiks_cube_left_face(cube);
+	struct rbc_face * front = rubiks_cube_front_face(cube);
+	struct rbc_face * right = rubiks_cube_right_face(cube);
 	printf("   +------+--------+-----+\n");
 	printf("    %c %c %c | %c %c %c | %c %c %c\n",
 		colors[rubiks_face_top_left_cell(left)], colors[rubiks_face_top_center_cell(left)], colors[rubiks_face_top_right_cell(left)],
@@ -106,15 +106,15 @@ static void print_cube(struct rbc_cube const * cube)
 		colors[rubiks_face_bottom_left_cell(right)], colors[rubiks_face_bottom_center_cell(right)], colors[rubiks_face_bottom_right_cell(right)]);
 	printf("   +------+--------+-----+\n");
 
-	Face * bottom = rubiks_cube_bottom_face(cube);
+	struct rbc_face * bottom = rubiks_cube_bottom_face(cube);
 	print_face(bottom);
 	printf("          +-------+\n");
 
-	Face * back = rubiks_cube_back_face(cube);
+	struct rbc_face * back = rubiks_cube_back_face(cube);
 	print_face(back);
 	printf("          +-------+\n");
 
-	Face * top = rubiks_cube_top_face(cube);
+	struct rbc_face * top = rubiks_cube_top_face(cube);
 	print_face(top);
 	printf("          +-------+\n");
 }
