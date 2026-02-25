@@ -1,6 +1,6 @@
 
-#ifndef RUBIKS_CORE_TESTS_UTILS_HEADER
-#define RUBIKS_CORE_TESTS_UTILS_HEADER
+#ifndef LIB_RUBIKS_CORE_TESTS_UTILS_HEADER
+#define LIB_RUBIKS_CORE_TESTS_UTILS_HEADER
 
 #include "../../include/Cube.h"
 
@@ -28,4 +28,4 @@ void reverse_span(Color buffer[FACE_SIZE]);
 
 
 
-#endif /* RUBIKS_CORE_TESTS_UTILS_HEADER */
+#endif /* LIB_RUBIKS_CORE_TESTS_UTILS_HEADER */
