@@ -149,7 +149,7 @@ void rotate_cube(struct rbc_cube * this, Rotation rotation)
  *
  * @param buffer - the buffer where to write the span
  */
-static void get_span(struct rbc_cube const * this, Span span, Color buffer[FACE_SIZE])
+static void get_span(struct rbc_cube const * this, Span span, enum rbc_color buffer[FACE_SIZE])
 {
 	int is_row = (span.column == (Column) -1);
 	if (is_row)
@@ -168,7 +168,7 @@ static void get_span(struct rbc_cube const * this, Span span, Color buffer[FACE_
  *
  * @param content - the content of the span to write
  */
-static void set_span(struct rbc_cube * this, Span span, Color const content[FACE_SIZE])
+static void set_span(struct rbc_cube * this, Span span, enum rbc_color const content[FACE_SIZE])
 {
 	int is_row = (span.column == (Column) -1);
 	if (is_row)
@@ -217,7 +217,7 @@ static int must_reverse_span(
  */
 static void move_span(struct rbc_cube * this, Span from, Span to)
 {
-	Color span[FACE_SIZE];
+	enum rbc_color span[FACE_SIZE];
 	get_span(this, from, span);
 	set_span(this, to, span);
 }
@@ -228,9 +228,9 @@ static void move_span(struct rbc_cube * this, Span from, Span to)
  *
  * @param span - the span to reverse
  */
-static void reverse_span(Color span[FACE_SIZE])
+static void reverse_span(enum rbc_color span[FACE_SIZE])
 {
-	Color swap = span[0];
+	enum rbc_color swap = span[0];
 	span[0] = span[2];
 	span[2] = swap;
 }
@@ -247,7 +247,7 @@ static void reverse_span(Color span[FACE_SIZE])
  */
 static void move_reversed_span(struct rbc_cube * this, Span from, Span to)
 {
-	Color span_content[FACE_SIZE];
+	enum rbc_color span_content[FACE_SIZE];
 	get_span(this, from, span_content);
 	reverse_span(span_content);
 	set_span(this, to, span_content);
@@ -277,7 +277,7 @@ void rotate_slice(
 
 	Span source_span, destination_span;
 
-	Color span_backup[FACE_SIZE];
+	enum rbc_color span_backup[FACE_SIZE];
 	get_span(this, slice[3], span_backup);
 
 	for (span_index = 3; span_index > 0; span_index--)

@@ -97,7 +97,7 @@ struct rbc_cube * create_scrambled_cube(void)
 }
 
 
-void top_row(struct rbc_face const * face, Color buffer[FACE_SIZE])
+void top_row(struct rbc_face const * face, enum rbc_color buffer[FACE_SIZE])
 {
 	buffer[0] = rubiks_face_top_left_cell(face);
 	buffer[1] = rubiks_face_top_center_cell(face);
@@ -105,7 +105,7 @@ void top_row(struct rbc_face const * face, Color buffer[FACE_SIZE])
 }
 
 
-void equator_row(struct rbc_face const * face, Color buffer[FACE_SIZE])
+void equator_row(struct rbc_face const * face, enum rbc_color buffer[FACE_SIZE])
 {
 	buffer[0] = rubiks_face_equator_left_cell(face);
 	buffer[1] = rubiks_face_equator_center_cell(face);
@@ -113,7 +113,7 @@ void equator_row(struct rbc_face const * face, Color buffer[FACE_SIZE])
 }
 
 
-void bottom_row(struct rbc_face const * face, Color buffer[FACE_SIZE])
+void bottom_row(struct rbc_face const * face, enum rbc_color buffer[FACE_SIZE])
 {
 	buffer[0] = rubiks_face_bottom_left_cell(face);
 	buffer[1] = rubiks_face_bottom_center_cell(face);
@@ -121,7 +121,7 @@ void bottom_row(struct rbc_face const * face, Color buffer[FACE_SIZE])
 }
 
 
-void left_column(struct rbc_face const * face, Color buffer[FACE_SIZE])
+void left_column(struct rbc_face const * face, enum rbc_color buffer[FACE_SIZE])
 {
 	buffer[0] = rubiks_face_top_left_cell(face);
 	buffer[1] = rubiks_face_equator_left_cell(face);
@@ -129,7 +129,7 @@ void left_column(struct rbc_face const * face, Color buffer[FACE_SIZE])
 }
 
 
-void middle_column(struct rbc_face const * face, Color buffer[FACE_SIZE])
+void middle_column(struct rbc_face const * face, enum rbc_color buffer[FACE_SIZE])
 {
 	buffer[0] = rubiks_face_top_center_cell(face);
 	buffer[1] = rubiks_face_equator_center_cell(face);
@@ -137,7 +137,7 @@ void middle_column(struct rbc_face const * face, Color buffer[FACE_SIZE])
 }
 
 
-void right_column(struct rbc_face const * face, Color buffer[FACE_SIZE])
+void right_column(struct rbc_face const * face, enum rbc_color buffer[FACE_SIZE])
 {
 	buffer[0] = rubiks_face_top_right_cell(face);
 	buffer[1] = rubiks_face_equator_right_cell(face);
@@ -145,7 +145,7 @@ void right_column(struct rbc_face const * face, Color buffer[FACE_SIZE])
 }
 
 
-void read_face(struct rbc_face const * face, Color buffer[FACE_SIZE][FACE_SIZE])
+void read_face(struct rbc_face const * face, enum rbc_color buffer[FACE_SIZE][FACE_SIZE])
 {
 	top_row(face, buffer[0]);
 	equator_row(face, buffer[1]);
@@ -153,9 +153,9 @@ void read_face(struct rbc_face const * face, Color buffer[FACE_SIZE][FACE_SIZE])
 }
 
 
-void reverse_span(Color buffer[FACE_SIZE])
+void reverse_span(enum rbc_color buffer[FACE_SIZE])
 {
-	Color swap = buffer[0];
+	enum rbc_color swap = buffer[0];
 	buffer[0] = buffer[2];
 	buffer[2] = swap;
 }

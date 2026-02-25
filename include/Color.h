@@ -8,7 +8,7 @@
 /**
  * Official colors
  */
-typedef enum
+enum rbc_color
 {
 	BLUE,
 	GREEN,
@@ -16,7 +16,7 @@ typedef enum
 	RED,
 	WHITE,
 	YELLOW
-} Color;
+};
 
 
 

@@ -35,25 +35,25 @@
 		/* given */ \
 		struct rbc_cube * cube = create_scrambled_cube(); \
 		struct rbc_face * face = get_face(cube); \
-		Color before_rotation[FACE_SIZE][FACE_SIZE]; \
+		enum rbc_color before_rotation[FACE_SIZE][FACE_SIZE]; \
 		read_face(face, before_rotation); \
 		\
 		/* when */ \
 		apply_rotation(cube); \
 		\
 		/* then */ \
-		Color expected_after_rotation[FACE_SIZE][FACE_SIZE] = \
+		enum rbc_color expected_after_rotation[FACE_SIZE][FACE_SIZE] = \
 		{ \
 			{ before_rotation[2][0], before_rotation[1][0], before_rotation[0][0] }, \
 			{ before_rotation[2][1], before_rotation[1][1], before_rotation[0][1] }, \
 			{ before_rotation[2][2], before_rotation[1][2], before_rotation[0][2] } \
 		}; \
-		Color actual_after_rotation[FACE_SIZE][FACE_SIZE]; \
+		enum rbc_color actual_after_rotation[FACE_SIZE][FACE_SIZE]; \
 		read_face(face, actual_after_rotation); \
 		cr_assert_arr_eq( \
 			expected_after_rotation, \
 			actual_after_rotation, \
-			FACE_SIZE * FACE_SIZE * sizeof(Color), \
+			FACE_SIZE * FACE_SIZE * sizeof(enum rbc_color), \
 			"%s clockwise\n" \
 			"          [%c,%c,%c]          [%c,%c,%c]\n" \
 			"expected: [%c,%c,%c], actual: [%c,%c,%c]\n" \
@@ -102,25 +102,25 @@
 		/* given */ \
 		struct rbc_cube * cube = create_scrambled_cube(); \
 		struct rbc_face * face = get_face(cube); \
-		Color before_rotation[FACE_SIZE][FACE_SIZE]; \
+		enum rbc_color before_rotation[FACE_SIZE][FACE_SIZE]; \
 		read_face(face, before_rotation); \
 		\
 		/* when */ \
 		apply_rotation(cube); \
 		\
 		/* then */ \
-		Color expected_after_rotation[FACE_SIZE][FACE_SIZE] = \
+		enum rbc_color expected_after_rotation[FACE_SIZE][FACE_SIZE] = \
 		{ \
 			{ before_rotation[0][2], before_rotation[1][2], before_rotation[2][2] }, \
 			{ before_rotation[0][1], before_rotation[1][1], before_rotation[2][1] }, \
 			{ before_rotation[0][0], before_rotation[1][0], before_rotation[2][0] } \
 		}; \
-		Color actual_after_rotation[FACE_SIZE][FACE_SIZE]; \
+		enum rbc_color actual_after_rotation[FACE_SIZE][FACE_SIZE]; \
 		read_face(face, actual_after_rotation); \
 		cr_assert_arr_eq( \
 			expected_after_rotation, \
 			actual_after_rotation, \
-			FACE_SIZE * FACE_SIZE * sizeof(Color), \
+			FACE_SIZE * FACE_SIZE * sizeof(enum rbc_color), \
 			"%s anticlockwise\n" \
 			"          [%c,%c,%c]          [%c,%c,%c]\n" \
 			"expected: [%c,%c,%c], actual: [%c,%c,%c]\n" \
@@ -168,7 +168,7 @@
  * 	function pointer taking the cube and returning the face where the span is
  * 	before applying the rotation
  *
- * @param read_source_span - void (* read_source_span)(struct rbc_face const *, Color[FACE_SIZE]) -
+ * @param read_source_span - void (* read_source_span)(struct rbc_face const *, enum rbc_color[FACE_SIZE]) -
  * 	function pointer taking the face where the span is before applying the
  * 	rotation, and the buffer to write the span content in, and returning nothing
  *
@@ -180,7 +180,7 @@
  * 	function pointer taking the cube and returning the face where the span
  * 	should be after applying the rotation
  *
- * @param read_destination_span - void (* read_destination_span)(struct rbc_face const *, Color[FACE_SIZE]) -
+ * @param read_destination_span - void (* read_destination_span)(struct rbc_face const *, enum rbc_color[FACE_SIZE]) -
  * 	function pointer taking the face where the span is after applying the
  * 	rotation, and the buffer to write the span content in, and returning nothing
  *
@@ -198,7 +198,7 @@
 		/* given */ \
 		struct rbc_cube * cube = rubiks_cube_create(); \
 		struct rbc_face * source_face = get_source_face(cube); \
-		Color source_span[FACE_SIZE]; \
+		enum rbc_color source_span[FACE_SIZE]; \
 		read_source_span(source_face, source_span); \
 		\
 		/* when */ \
@@ -206,12 +206,12 @@
 		\
 		/* then */ \
 		struct rbc_face * destination_face = get_destination_face(cube); \
-		Color destination_span[FACE_SIZE]; \
+		enum rbc_color destination_span[FACE_SIZE]; \
 		read_destination_span(destination_face, destination_span); \
 		cr_assert_arr_eq( \
 			source_span, \
 			destination_span, \
-			FACE_SIZE * sizeof(Color), \
+			FACE_SIZE * sizeof(enum rbc_color), \
 			"%s, expected %s span on dest but got %s span", \
 			failure_message, \
 			COLORS_NAME[source_span[0]], \
@@ -227,7 +227,7 @@
  * 	function pointer taking the cube and returning the face where the span is
  * 	before applying the rotation
  *
- * @param read_source_span - void (* read_source_span)(struct rbc_face const *, Color[FACE_SIZE]) -
+ * @param read_source_span - void (* read_source_span)(struct rbc_face const *, enum rbc_color[FACE_SIZE]) -
  * 	function pointer taking the face where the span is before applying the
  * 	rotation, and the buffer to write the span content in, and returning nothing
  *
@@ -239,7 +239,7 @@
  * 	function pointer taking the cube and returning the face where the span
  * 	should be after applying the rotation
  *
- * @param read_destination_span - void (* read_destination_span)(struct rbc_face const *, Color[FACE_SIZE]) -
+ * @param read_destination_span - void (* read_destination_span)(struct rbc_face const *, enum rbc_color[FACE_SIZE]) -
  * 	function pointer taking the face where the span is after applying the
  * 	rotation, and the buffer to write the span content in, and returning nothing
  *
@@ -257,7 +257,7 @@
 		/* given */ \
 		struct rbc_cube * cube = create_scrambled_cube(); \
 		struct rbc_face * source_face = get_source_face(cube); \
-		Color source_span[FACE_SIZE]; \
+		enum rbc_color source_span[FACE_SIZE]; \
 		read_source_span(source_face, source_span); \
 		\
 		/* when */ \
@@ -265,12 +265,12 @@
 		\
 		/* then */ \
 		struct rbc_face * destination_face = get_destination_face(cube); \
-		Color destination_span[FACE_SIZE]; \
+		enum rbc_color destination_span[FACE_SIZE]; \
 		read_destination_span(destination_face, destination_span); \
 		cr_assert_arr_eq( \
 			source_span, \
 			destination_span, \
-			FACE_SIZE * sizeof(Color), \
+			FACE_SIZE * sizeof(enum rbc_color), \
 			"%s, expected dest=[%c,%c,%c] but got dest=[%c,%c,%c]", \
 			failure_message, \
 			COLORS_LABEL[source_span[0]], \
@@ -290,7 +290,7 @@
  * 	function pointer taking the cube and returning the face where the span is
  * 	before applying the rotation
  *
- * @param read_source_span - void (* read_source_span)(struct rbc_face const *, Color[FACE_SIZE]) -
+ * @param read_source_span - void (* read_source_span)(struct rbc_face const *, enum rbc_color[FACE_SIZE]) -
  * 	function pointer taking the face where the span is before applying the
  * 	rotation, and the buffer to write the span content in, and returning nothing
  *
@@ -302,7 +302,7 @@
  * 	function pointer taking the cube and returning the face where the span
  * 	should be after applying the rotation
  *
- * @param read_destination_span - void (* read_destination_span)(struct rbc_face const *, Color[FACE_SIZE]) -
+ * @param read_destination_span - void (* read_destination_span)(struct rbc_face const *, enum rbc_color[FACE_SIZE]) -
  * 	function pointer taking the face where the span is after applying the
  * 	rotation, and the buffer to write the span content in, and returning nothing
  *
@@ -320,7 +320,7 @@
 		/* given */ \
 		struct rbc_cube * cube = create_scrambled_cube(); \
 		struct rbc_face * source_face = get_source_face(cube); \
-		Color source_span[FACE_SIZE]; \
+		enum rbc_color source_span[FACE_SIZE]; \
 		read_source_span(source_face, source_span); \
 		reverse_span(source_span); \
 		\
@@ -329,12 +329,12 @@
 		\
 		/* then */ \
 		struct rbc_face * destination_face = get_destination_face(cube); \
-		Color destination_span[FACE_SIZE]; \
+		enum rbc_color destination_span[FACE_SIZE]; \
 		read_destination_span(destination_face, destination_span); \
 		cr_assert_arr_eq( \
 			source_span, \
 			destination_span, \
-			FACE_SIZE * sizeof(Color), \
+			FACE_SIZE * sizeof(enum rbc_color), \
 			"%s, expected dest=[%c,%c,%c] but got dest=[%c,%c,%c]", \
 			failure_message, \
 			COLORS_LABEL[source_span[0]], \
