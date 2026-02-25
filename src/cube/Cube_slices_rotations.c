@@ -1,8 +1,8 @@
 
-#include <stdlib.h>
-
 #include "../face/Face.h"
 #include "Cube.h"
+
+#include <stdlib.h>
 
 /**
  * Some functions rely on how we unfold the 3D cube, switching to another

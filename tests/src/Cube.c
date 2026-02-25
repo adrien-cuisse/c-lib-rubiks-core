@@ -1,7 +1,7 @@
 
-#include <criterion/criterion.h>
-
 #include "../../include/Cube.h"
+
+#include <criterion/criterion.h>
 
 
 
