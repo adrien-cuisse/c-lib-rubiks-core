@@ -7,7 +7,7 @@ extern "C" {
 #endif
 
 #include "../shared/attributes/attributes.h"
-#include "../color/Color.h"
+#include "../color/color.h"
 
 #define FACE_SIZE 3
 

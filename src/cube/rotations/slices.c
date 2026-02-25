@@ -1,6 +1,6 @@
 
-#include "../face/Face.h"
-#include "Cube.h"
+#include "../../face/face.h"
+#include "../cube.h"
 
 #include <stdlib.h>
 
