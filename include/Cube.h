@@ -123,7 +123,7 @@ struct rbc_face * rbc_cube_back_face(struct rbc_cube const * self);
 /**
  * Rotates the whole cube to the left (like U but all slices)
  *
- * Offical notation: y
+ * Official notation: y
  *
  * @param self - the cube to rotate
  */
@@ -133,7 +133,7 @@ void rbc_rotate_cube_left(struct rbc_cube * self);
 /**
  * Rotates the whole cube to the right (like U' but all slices)
  *
- * Offical notation: y'
+ * Official notation: y'
  *
  * @param self - the cube to rotate
  */
@@ -143,7 +143,7 @@ void rbc_rotate_cube_right(struct rbc_cube * self);
 /**
  * Rotates the whole cube up (like R but all slices)
  *
- * Offical notation: x
+ * Official notation: x
  *
  * @param self - the cube to rotate
  */
@@ -153,7 +153,7 @@ void rbc_rotate_cube_up(struct rbc_cube * self);
 /**
  * Rotates the whole cube down (like R' but all slices)
  *
- * Offical notation: x'
+ * Official notation: x'
  *
  * @param self - the cube to rotate
  */
@@ -163,7 +163,7 @@ void rbc_rotate_cube_down(struct rbc_cube * self);
 /**
  * Rotates the whole cube clockwise (like F but all slices)
  *
- * Offical notation: z
+ * Official notation: z
  *
  * @param self - the cube to rotate
  */
@@ -173,7 +173,7 @@ void rbc_rotate_cube_clockwise(struct rbc_cube * self);
 /**
  * Rotates the whole cube anticlockwise (like F' but all slices)
  *
- * Offical notation: z'
+ * Official notation: z'
  *
  * @param self - the cube to rotate
  */
