@@ -1,6 +1,6 @@
 
-#ifndef RUBIKS_CORE_CUBE_HEADER
-#define RUBIKS_CORE_CUBE_HEADER
+#ifndef LIB_RUBIKS_CORE_CUBE_HEADER
+#define LIB_RUBIKS_CORE_CUBE_HEADER
 
 #ifdef __cplusplus
 extern "C" {
@@ -546,4 +546,4 @@ void rbc_rotate_cube_back_slices_anticlockwise(struct rbc_cube * self);
 }
 #endif
 
-#endif /* RUBIKS_CORE_CUBE_HEADER */
+#endif /* LIB_RUBIKS_CORE_CUBE_HEADER */

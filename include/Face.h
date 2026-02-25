@@ -1,6 +1,6 @@
 
-#ifndef RUBIKS_CORE_FACE_HEADER
-#define RUBIKS_CORE_FACE_HEADER
+#ifndef LIB_RUBIKS_CORE_FACE_HEADER
+#define LIB_RUBIKS_CORE_FACE_HEADER
 
 #ifdef __cplusplus
 extern "C" {
@@ -127,4 +127,4 @@ enum rbc_color rbc_face_bottom_right_cell(struct rbc_face const * self);
 }
 #endif
 
-#endif /* RUBIKS_CORE_FACE_HEADER */
+#endif /* LIB_RUBIKS_CORE_FACE_HEADER */
