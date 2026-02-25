@@ -47,24 +47,24 @@ LD_LIBRARY_PATH=lib/ ./[your program]
 /* Array of function pointers, every possible move */
 void (* scramblings[])(struct rbc_cube *) =
 {
-	rubiks_cube_rotate_top_slice_left,
-	rubiks_cube_rotate_top_slice_right,
-	rubiks_cube_rotate_equator_slice_left,
-	rubiks_cube_rotate_equator_slice_right,
-	rubiks_cube_rotate_bottom_slice_left,
-	rubiks_cube_rotate_bottom_slice_right,
-	rubiks_cube_rotate_left_slice_up,
-	rubiks_cube_rotate_left_slice_down,
-	rubiks_cube_rotate_middle_slice_up,
-	rubiks_cube_rotate_middle_slice_down,
-	rubiks_cube_rotate_right_slice_up,
-	rubiks_cube_rotate_right_slice_down,
-	rubiks_cube_rotate_front_slice_clockwise,
-	rubiks_cube_rotate_front_slice_anticlockwise,
-	rubiks_cube_rotate_standing_slice_clockwise,
-	rubiks_cube_rotate_standing_slice_anticlockwise,
-	rubiks_cube_rotate_back_slice_clockwise,
-	rubiks_cube_rotate_back_slice_anticlockwise,
+	rbc_cube_rotate_top_slice_left,
+	rbc_cube_rotate_top_slice_right,
+	rbc_cube_rotate_equator_slice_left,
+	rbc_cube_rotate_equator_slice_right,
+	rbc_cube_rotate_bottom_slice_left,
+	rbc_cube_rotate_bottom_slice_right,
+	rbc_cube_rotate_left_slice_up,
+	rbc_cube_rotate_left_slice_down,
+	rbc_cube_rotate_middle_slice_up,
+	rbc_cube_rotate_middle_slice_down,
+	rbc_cube_rotate_right_slice_up,
+	rbc_cube_rotate_right_slice_down,
+	rbc_cube_rotate_front_slice_clockwise,
+	rbc_cube_rotate_front_slice_anticlockwise,
+	rbc_cube_rotate_standing_slice_clockwise,
+	rbc_cube_rotate_standing_slice_anticlockwise,
+	rbc_cube_rotate_back_slice_clockwise,
+	rbc_cube_rotate_back_slice_anticlockwise,
 };
 
 /* Display labels */
@@ -73,48 +73,48 @@ char const colors[] = { 'R', 'B', 'O', 'Y', 'G', 'W' };
 static void print_face(struct rbc_face const * face)
 {
 	printf("          | %c %c %c |\n",
-		colors[rubiks_face_top_left_cell(face)],
-		colors[rubiks_face_top_center_cell(face)],
-		colors[rubiks_face_top_right_cell(face)]);
+		colors[rbc_face_top_left_cell(face)],
+		colors[rbc_face_top_center_cell(face)],
+		colors[rbc_face_top_right_cell(face)]);
 	printf("          | %c %c %c |\n",
-		colors[rubiks_face_equator_left_cell(face)],
-		colors[rubiks_face_color(face)],
-		colors[rubiks_face_equator_right_cell(face)]);
+		colors[rbc_face_equator_left_cell(face)],
+		colors[rbc_face_color(face)],
+		colors[rbc_face_equator_right_cell(face)]);
 	printf("          | %c %c %c |\n",
-		colors[rubiks_face_bottom_left_cell(face)],
-		colors[rubiks_face_bottom_center_cell(face)],
-		colors[rubiks_face_bottom_right_cell(face)]);
+		colors[rbc_face_bottom_left_cell(face)],
+		colors[rbc_face_bottom_center_cell(face)],
+		colors[rbc_face_bottom_right_cell(face)]);
 }
 
 static void print_cube(struct rbc_cube const * cube)
 {
-	struct rbc_face * left = rubiks_cube_left_face(cube);
-	struct rbc_face * front = rubiks_cube_front_face(cube);
-	struct rbc_face * right = rubiks_cube_right_face(cube);
+	struct rbc_face * left = rbc_cube_left_face(cube);
+	struct rbc_face * front = rbc_cube_front_face(cube);
+	struct rbc_face * right = rbc_cube_right_face(cube);
 	printf("   +------+--------+-----+\n");
 	printf("    %c %c %c | %c %c %c | %c %c %c\n",
-		colors[rubiks_face_top_left_cell(left)], colors[rubiks_face_top_center_cell(left)], colors[rubiks_face_top_right_cell(left)],
-		colors[rubiks_face_top_left_cell(front)], colors[rubiks_face_top_center_cell(front)], colors[rubiks_face_top_right_cell(front)],
-		colors[rubiks_face_top_left_cell(right)], colors[rubiks_face_top_center_cell(right)], colors[rubiks_face_top_right_cell(right)]);
+		colors[rbc_face_top_left_cell(left)], colors[rbc_face_top_center_cell(left)], colors[rbc_face_top_right_cell(left)],
+		colors[rbc_face_top_left_cell(front)], colors[rbc_face_top_center_cell(front)], colors[rbc_face_top_right_cell(front)],
+		colors[rbc_face_top_left_cell(right)], colors[rbc_face_top_center_cell(right)], colors[rbc_face_top_right_cell(right)]);
 	printf("    %c %c %c | %c %c %c | %c %c %c\n",
-		colors[rubiks_face_equator_left_cell(left)], colors[rubiks_face_color(left)], colors[rubiks_face_equator_right_cell(left)],
-		colors[rubiks_face_equator_left_cell(front)], colors[rubiks_face_color(front)], colors[rubiks_face_equator_right_cell(front)],
-		colors[rubiks_face_equator_left_cell(right)], colors[rubiks_face_color(right)], colors[rubiks_face_equator_right_cell(right)]);
+		colors[rbc_face_equator_left_cell(left)], colors[rbc_face_color(left)], colors[rbc_face_equator_right_cell(left)],
+		colors[rbc_face_equator_left_cell(front)], colors[rbc_face_color(front)], colors[rbc_face_equator_right_cell(front)],
+		colors[rbc_face_equator_left_cell(right)], colors[rbc_face_color(right)], colors[rbc_face_equator_right_cell(right)]);
 	printf("    %c %c %c | %c %c %c | %c %c %c\n",
-		colors[rubiks_face_bottom_left_cell(left)], colors[rubiks_face_bottom_center_cell(left)], colors[rubiks_face_bottom_right_cell(left)],
-		colors[rubiks_face_bottom_left_cell(front)], colors[rubiks_face_bottom_center_cell(front)], colors[rubiks_face_bottom_right_cell(front)],
-		colors[rubiks_face_bottom_left_cell(right)], colors[rubiks_face_bottom_center_cell(right)], colors[rubiks_face_bottom_right_cell(right)]);
+		colors[rbc_face_bottom_left_cell(left)], colors[rbc_face_bottom_center_cell(left)], colors[rbc_face_bottom_right_cell(left)],
+		colors[rbc_face_bottom_left_cell(front)], colors[rbc_face_bottom_center_cell(front)], colors[rbc_face_bottom_right_cell(front)],
+		colors[rbc_face_bottom_left_cell(right)], colors[rbc_face_bottom_center_cell(right)], colors[rbc_face_bottom_right_cell(right)]);
 	printf("   +------+--------+-----+\n");
 
-	struct rbc_face * bottom = rubiks_cube_bottom_face(cube);
+	struct rbc_face * bottom = rbc_cube_bottom_face(cube);
 	print_face(bottom);
 	printf("          +-------+\n");
 
-	struct rbc_face * back = rubiks_cube_back_face(cube);
+	struct rbc_face * back = rbc_cube_back_face(cube);
 	print_face(back);
 	printf("          +-------+\n");
 
-	struct rbc_face * top = rubiks_cube_top_face(cube);
+	struct rbc_face * top = rbc_cube_top_face(cube);
 	print_face(top);
 	printf("          +-------+\n");
 }
@@ -123,7 +123,7 @@ void * create_scrambled_cube(size_t scramble_length)
 {
 	int function_index;
 
-	struct rbc_cube * cube = rubiks_cube_create();
+	struct rbc_cube * cube = rbc_create_cube();
 
 	while (scramble_length--)
 	{
@@ -143,7 +143,7 @@ int main(void)
 
 	cube = create_scrambled_cube(42);
 	print_cube(cube);
-	rubiks_cube_delete(& cube);
+	rbc_delete_cube(& cube);
 
 	return EXIT_SUCCESS;
 }

@@ -28,7 +28,7 @@ struct rbc_face;
  *
  * @return enum rbc_color - the color of the face
  */
-enum rbc_color rubiks_face_color(struct rbc_face const * self);
+enum rbc_color rbc_face_color(struct rbc_face const * self);
 
 
 /**
@@ -38,7 +38,7 @@ enum rbc_color rubiks_face_color(struct rbc_face const * self);
  *
  * @return enum rbc_color - the color of the cell
  */
-enum rbc_color rubiks_face_top_left_cell(struct rbc_face const * self);
+enum rbc_color rbc_face_top_left_cell(struct rbc_face const * self);
 
 
 /**
@@ -48,7 +48,7 @@ enum rbc_color rubiks_face_top_left_cell(struct rbc_face const * self);
  *
  * @return enum rbc_color - the color of the cell
  */
-enum rbc_color rubiks_face_top_center_cell(struct rbc_face const * self);
+enum rbc_color rbc_face_top_center_cell(struct rbc_face const * self);
 
 
 /**
@@ -58,7 +58,7 @@ enum rbc_color rubiks_face_top_center_cell(struct rbc_face const * self);
  *
  * @return enum rbc_color - the color of the cell
  */
-enum rbc_color rubiks_face_top_right_cell(struct rbc_face const * self);
+enum rbc_color rbc_face_top_right_cell(struct rbc_face const * self);
 
 
 /**
@@ -68,7 +68,7 @@ enum rbc_color rubiks_face_top_right_cell(struct rbc_face const * self);
  *
  * @return enum rbc_color - the color of the cell
  */
-enum rbc_color rubiks_face_equator_left_cell(struct rbc_face const * self);
+enum rbc_color rbc_face_equator_left_cell(struct rbc_face const * self);
 
 
 /**
@@ -78,7 +78,7 @@ enum rbc_color rubiks_face_equator_left_cell(struct rbc_face const * self);
  *
  * @return enum rbc_color - the color of the cell
  */
-enum rbc_color rubiks_face_equator_center_cell(struct rbc_face const * self);
+enum rbc_color rbc_face_equator_center_cell(struct rbc_face const * self);
 
 
 /**
@@ -88,7 +88,7 @@ enum rbc_color rubiks_face_equator_center_cell(struct rbc_face const * self);
  *
  * @return enum rbc_color - the color of the cell
  */
-enum rbc_color rubiks_face_equator_right_cell(struct rbc_face const * self);
+enum rbc_color rbc_face_equator_right_cell(struct rbc_face const * self);
 
 
 /**
@@ -98,7 +98,7 @@ enum rbc_color rubiks_face_equator_right_cell(struct rbc_face const * self);
  *
  * @return enum rbc_color - the color of the cell
  */
-enum rbc_color rubiks_face_bottom_left_cell(struct rbc_face const * self);
+enum rbc_color rbc_face_bottom_left_cell(struct rbc_face const * self);
 
 
 /**
@@ -108,7 +108,7 @@ enum rbc_color rubiks_face_bottom_left_cell(struct rbc_face const * self);
  *
  * @return enum rbc_color - the color of the cell
  */
-enum rbc_color rubiks_face_bottom_center_cell(struct rbc_face const * self);
+enum rbc_color rbc_face_bottom_center_cell(struct rbc_face const * self);
 
 
 /**
@@ -118,7 +118,7 @@ enum rbc_color rubiks_face_bottom_center_cell(struct rbc_face const * self);
  *
  * @return enum rbc_color - the color of the cell
  */
-enum rbc_color rubiks_face_bottom_right_cell(struct rbc_face const * self);
+enum rbc_color rbc_face_bottom_right_cell(struct rbc_face const * self);
 
 
 

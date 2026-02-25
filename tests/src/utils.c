@@ -6,60 +6,60 @@
 
 struct rbc_cube * create_scrambled_cube(void)
 {
-	struct rbc_cube * cube = rubiks_cube_create();
+	struct rbc_cube * cube = rbc_create_cube();
 
 	// official terminology:
 	// D2 F2 R2 D2 L2 U F2 U' F' U F2 U' R2 B' F R' D2 F' D' L
 	//
 	// D2
-	rubiks_cube_rotate_bottom_slice_right(cube);
-	rubiks_cube_rotate_bottom_slice_right(cube);
+	rbc_rotate_cube_bottom_slice_right(cube);
+	rbc_rotate_cube_bottom_slice_right(cube);
 	// F2
-	rubiks_cube_rotate_front_slice_clockwise(cube);
-	rubiks_cube_rotate_front_slice_clockwise(cube);
+	rbc_rotate_cube_front_slice_clockwise(cube);
+	rbc_rotate_cube_front_slice_clockwise(cube);
 	// R2
-	rubiks_cube_rotate_right_slice_up(cube);
-	rubiks_cube_rotate_right_slice_up(cube);
+	rbc_rotate_cube_right_slice_up(cube);
+	rbc_rotate_cube_right_slice_up(cube);
 	// D2
-	rubiks_cube_rotate_bottom_slice_right(cube);
-	rubiks_cube_rotate_bottom_slice_right(cube);
+	rbc_rotate_cube_bottom_slice_right(cube);
+	rbc_rotate_cube_bottom_slice_right(cube);
 	// L2
-	rubiks_cube_rotate_left_slice_down(cube);
-	rubiks_cube_rotate_left_slice_down(cube);
+	rbc_rotate_cube_left_slice_down(cube);
+	rbc_rotate_cube_left_slice_down(cube);
 	// U
-	rubiks_cube_rotate_top_slice_left(cube);
+	rbc_rotate_cube_top_slice_left(cube);
 	// F2
-	rubiks_cube_rotate_front_slice_clockwise(cube);
-	rubiks_cube_rotate_front_slice_clockwise(cube);
+	rbc_rotate_cube_front_slice_clockwise(cube);
+	rbc_rotate_cube_front_slice_clockwise(cube);
 	// U'
-	rubiks_cube_rotate_top_slice_right(cube);
+	rbc_rotate_cube_top_slice_right(cube);
 	// F'
-	rubiks_cube_rotate_front_slice_anticlockwise(cube);
+	rbc_rotate_cube_front_slice_anticlockwise(cube);
 	// U
-	rubiks_cube_rotate_top_slice_left(cube);
+	rbc_rotate_cube_top_slice_left(cube);
 	// F2
-	rubiks_cube_rotate_front_slice_clockwise(cube);
-	rubiks_cube_rotate_front_slice_clockwise(cube);
+	rbc_rotate_cube_front_slice_clockwise(cube);
+	rbc_rotate_cube_front_slice_clockwise(cube);
 	// U'
-	rubiks_cube_rotate_top_slice_right(cube);
+	rbc_rotate_cube_top_slice_right(cube);
 	// R2
-	rubiks_cube_rotate_right_slice_up(cube);
-	rubiks_cube_rotate_right_slice_up(cube);
+	rbc_rotate_cube_right_slice_up(cube);
+	rbc_rotate_cube_right_slice_up(cube);
 	// B'
-	rubiks_cube_rotate_back_slice_clockwise(cube);
+	rbc_rotate_cube_back_slice_clockwise(cube);
 	// F
-	rubiks_cube_rotate_front_slice_clockwise(cube);
+	rbc_rotate_cube_front_slice_clockwise(cube);
 	// R'
-	rubiks_cube_rotate_right_slice_down(cube);
+	rbc_rotate_cube_right_slice_down(cube);
 	// D2
-	rubiks_cube_rotate_bottom_slice_right(cube);
-	rubiks_cube_rotate_bottom_slice_right(cube);
+	rbc_rotate_cube_bottom_slice_right(cube);
+	rbc_rotate_cube_bottom_slice_right(cube);
 	// F'
-	rubiks_cube_rotate_front_slice_anticlockwise(cube);
+	rbc_rotate_cube_front_slice_anticlockwise(cube);
 	// D'
-	rubiks_cube_rotate_bottom_slice_left(cube);
+	rbc_rotate_cube_bottom_slice_left(cube);
 	// L
-	rubiks_cube_rotate_left_slice_down(cube);
+	rbc_rotate_cube_left_slice_down(cube);
 
 	//	+-------+-------+-------+
 	//	| G W Y | R Y W | R W B |
@@ -99,49 +99,49 @@ struct rbc_cube * create_scrambled_cube(void)
 
 void top_row(struct rbc_face const * face, enum rbc_color buffer[FACE_SIZE])
 {
-	buffer[0] = rubiks_face_top_left_cell(face);
-	buffer[1] = rubiks_face_top_center_cell(face);
-	buffer[2] = rubiks_face_top_right_cell(face);
+	buffer[0] = rbc_face_top_left_cell(face);
+	buffer[1] = rbc_face_top_center_cell(face);
+	buffer[2] = rbc_face_top_right_cell(face);
 }
 
 
 void equator_row(struct rbc_face const * face, enum rbc_color buffer[FACE_SIZE])
 {
-	buffer[0] = rubiks_face_equator_left_cell(face);
-	buffer[1] = rubiks_face_equator_center_cell(face);
-	buffer[2] = rubiks_face_equator_right_cell(face);
+	buffer[0] = rbc_face_equator_left_cell(face);
+	buffer[1] = rbc_face_equator_center_cell(face);
+	buffer[2] = rbc_face_equator_right_cell(face);
 }
 
 
 void bottom_row(struct rbc_face const * face, enum rbc_color buffer[FACE_SIZE])
 {
-	buffer[0] = rubiks_face_bottom_left_cell(face);
-	buffer[1] = rubiks_face_bottom_center_cell(face);
-	buffer[2] = rubiks_face_bottom_right_cell(face);
+	buffer[0] = rbc_face_bottom_left_cell(face);
+	buffer[1] = rbc_face_bottom_center_cell(face);
+	buffer[2] = rbc_face_bottom_right_cell(face);
 }
 
 
 void left_column(struct rbc_face const * face, enum rbc_color buffer[FACE_SIZE])
 {
-	buffer[0] = rubiks_face_top_left_cell(face);
-	buffer[1] = rubiks_face_equator_left_cell(face);
-	buffer[2] = rubiks_face_bottom_left_cell(face);
+	buffer[0] = rbc_face_top_left_cell(face);
+	buffer[1] = rbc_face_equator_left_cell(face);
+	buffer[2] = rbc_face_bottom_left_cell(face);
 }
 
 
 void middle_column(struct rbc_face const * face, enum rbc_color buffer[FACE_SIZE])
 {
-	buffer[0] = rubiks_face_top_center_cell(face);
-	buffer[1] = rubiks_face_equator_center_cell(face);
-	buffer[2] = rubiks_face_bottom_center_cell(face);
+	buffer[0] = rbc_face_top_center_cell(face);
+	buffer[1] = rbc_face_equator_center_cell(face);
+	buffer[2] = rbc_face_bottom_center_cell(face);
 }
 
 
 void right_column(struct rbc_face const * face, enum rbc_color buffer[FACE_SIZE])
 {
-	buffer[0] = rubiks_face_top_right_cell(face);
-	buffer[1] = rubiks_face_equator_right_cell(face);
-	buffer[2] = rubiks_face_bottom_right_cell(face);
+	buffer[0] = rbc_face_top_right_cell(face);
+	buffer[1] = rbc_face_equator_right_cell(face);
+	buffer[2] = rbc_face_bottom_right_cell(face);
 }
 
 

@@ -196,7 +196,7 @@
 		failure_message) \
 	do { \
 		/* given */ \
-		struct rbc_cube * cube = rubiks_cube_create(); \
+		struct rbc_cube * cube = rbc_create_cube(); \
 		struct rbc_face * source_face = get_source_face(cube); \
 		enum rbc_color source_span[FACE_SIZE]; \
 		read_source_span(source_face, source_span); \

@@ -41,14 +41,14 @@ static void create_and_position_faces(struct rbc_cube * this)
 	{
 		if (this->faces[face_index] == NULL)
 		{
-			rubiks_cube_delete(& this);
+			rbc_delete_cube(& this);
 			return;
 		}
 	}
 }
 
 
-struct rbc_cube * rubiks_cube_create(void)
+struct rbc_cube * rbc_create_cube(void)
 {
 	struct rbc_cube * this = calloc(1, sizeof(* this));
 	if (this != NULL)
@@ -58,7 +58,7 @@ struct rbc_cube * rubiks_cube_create(void)
 }
 
 
-void rubiks_cube_delete(struct rbc_cube ** this)
+void rbc_delete_cube(struct rbc_cube ** this)
 {
 	FacePosition position;
 
@@ -91,37 +91,37 @@ static struct rbc_face * get_face(struct rbc_cube const * this, FacePosition pos
 }
 
 
-struct rbc_face * rubiks_cube_left_face(struct rbc_cube const * this)
+struct rbc_face * rbc_cube_left_face(struct rbc_cube const * this)
 {
 	return get_face(this, LEFT_FACE);
 }
 
 
-struct rbc_face * rubiks_cube_front_face(struct rbc_cube const * this)
+struct rbc_face * rbc_cube_front_face(struct rbc_cube const * this)
 {
 	return get_face(this, FRONT_FACE);
 }
 
 
-struct rbc_face * rubiks_cube_right_face(struct rbc_cube const * this)
+struct rbc_face * rbc_cube_right_face(struct rbc_cube const * this)
 {
 	return get_face(this, RIGHT_FACE);
 }
 
 
-struct rbc_face * rubiks_cube_top_face(struct rbc_cube const * this)
+struct rbc_face * rbc_cube_top_face(struct rbc_cube const * this)
 {
 	return get_face(this, TOP_FACE);
 }
 
 
-struct rbc_face * rubiks_cube_bottom_face(struct rbc_cube const * this)
+struct rbc_face * rbc_cube_bottom_face(struct rbc_cube const * this)
 {
 	return get_face(this, BOTTOM_FACE);
 }
 
 
-struct rbc_face * rubiks_cube_back_face(struct rbc_cube const * this)
+struct rbc_face * rbc_cube_back_face(struct rbc_cube const * this)
 {
 	return get_face(this, BACK_FACE);
 }

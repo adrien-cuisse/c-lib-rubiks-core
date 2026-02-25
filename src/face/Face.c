@@ -21,10 +21,10 @@ struct rbc_face
 
 
 
-enum rbc_color rubiks_face_color(struct rbc_face const * this)
+enum rbc_color rbc_face_color(struct rbc_face const * this)
 {
 	/* center cells are fixed */
-	return rubiks_face_equator_center_cell(this);
+	return rbc_face_equator_center_cell(this);
 }
 
 
@@ -45,55 +45,55 @@ static enum rbc_color cell(struct rbc_face const * this, Row row, Column column)
 }
 
 
-enum rbc_color rubiks_face_top_left_cell(struct rbc_face const * this)
+enum rbc_color rbc_face_top_left_cell(struct rbc_face const * this)
 {
 	return cell(this, TOP_ROW, LEFT_COLUMN);
 }
 
 
-enum rbc_color rubiks_face_top_center_cell(struct rbc_face const * this)
+enum rbc_color rbc_face_top_center_cell(struct rbc_face const * this)
 {
 	return cell(this, TOP_ROW, MIDDLE_COLUMN);
 }
 
 
-enum rbc_color rubiks_face_top_right_cell(struct rbc_face const * this)
+enum rbc_color rbc_face_top_right_cell(struct rbc_face const * this)
 {
 	return cell(this, TOP_ROW, RIGHT_COLUMN);
 }
 
 
-enum rbc_color rubiks_face_equator_left_cell(struct rbc_face const * this)
+enum rbc_color rbc_face_equator_left_cell(struct rbc_face const * this)
 {
 	return cell(this, EQUATOR_ROW, LEFT_COLUMN);
 }
 
 
-enum rbc_color rubiks_face_equator_center_cell(struct rbc_face const * this)
+enum rbc_color rbc_face_equator_center_cell(struct rbc_face const * this)
 {
 	return cell(this, EQUATOR_ROW, MIDDLE_COLUMN);
 }
 
 
-enum rbc_color rubiks_face_equator_right_cell(struct rbc_face const * this)
+enum rbc_color rbc_face_equator_right_cell(struct rbc_face const * this)
 {
 	return cell(this, EQUATOR_ROW, RIGHT_COLUMN);
 }
 
 
-enum rbc_color rubiks_face_bottom_left_cell(struct rbc_face const * this)
+enum rbc_color rbc_face_bottom_left_cell(struct rbc_face const * this)
 {
 	return cell(this, BOTTOM_ROW, LEFT_COLUMN);
 }
 
 
-enum rbc_color rubiks_face_bottom_center_cell(struct rbc_face const * this)
+enum rbc_color rbc_face_bottom_center_cell(struct rbc_face const * this)
 {
 	return cell(this, BOTTOM_ROW, MIDDLE_COLUMN);
 }
 
 
-enum rbc_color rubiks_face_bottom_right_cell(struct rbc_face const * this)
+enum rbc_color rbc_face_bottom_right_cell(struct rbc_face const * this)
 {
 	return cell(this, BOTTOM_ROW, RIGHT_COLUMN);
 }
