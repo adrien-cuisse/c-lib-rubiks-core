@@ -149,7 +149,8 @@ int main(void)
 }
 ```
 ```bash
-gcc example.c -o example -Llib/ -lrubiks-core && LD_LIBRARY_PATH=lib/ ./example
+gcc example.c -o example -Llib/ -lrubiks-core
+LD_LIBRARY_PATH=lib/ ./example
 ```
 
 
