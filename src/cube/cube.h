@@ -548,12 +548,12 @@ RUBIKS_API void rbc_rotate_cube_back_slices_anticlockwise(struct rbc_cube * self
  */
 enum rbc_face_location
 {
-	LEFT_FACE,
-	FRONT_FACE,
-	RIGHT_FACE,
-	BOTTOM_FACE,
-	BACK_FACE,
-	TOP_FACE
+	RBC_LEFT_FACE,
+	RBC_FRONT_FACE,
+	RBC_RIGHT_FACE,
+	RBC_BOTTOM_FACE,
+	RBC_BACK_FACE,
+	RBC_TOP_FACE
 };
 
 
@@ -571,8 +571,8 @@ struct rbc_faces_cycle
  */
 enum rbc_span_type
 {
-	ROW,
-	COLUMN
+	RBC_ROW,
+	RBC_COLUMN
 };
 
 

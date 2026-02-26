@@ -7,7 +7,7 @@
 
 void rbc_rotate_cube_left(struct rbc_cube * this)
 {
-	struct rbc_faces_cycle rotation = {{ FRONT_FACE, LEFT_FACE, BACK_FACE, RIGHT_FACE }};
+	struct rbc_faces_cycle rotation = {{ RBC_FRONT_FACE, RBC_LEFT_FACE, RBC_BACK_FACE, RBC_RIGHT_FACE }};
 
 	rotate_face_clockwise(rbc_cube_bottom_face(this));
 	rotate_face_anticlockwise(rbc_cube_top_face(this));
@@ -18,7 +18,7 @@ void rbc_rotate_cube_left(struct rbc_cube * this)
 
 void rbc_rotate_cube_right(struct rbc_cube * this)
 {
-	struct rbc_faces_cycle rotation = {{ FRONT_FACE, RIGHT_FACE, BACK_FACE, LEFT_FACE }};
+	struct rbc_faces_cycle rotation = {{ RBC_FRONT_FACE, RBC_RIGHT_FACE, RBC_BACK_FACE, RBC_LEFT_FACE }};
 
 	rotate_face_anticlockwise(rbc_cube_bottom_face(this));
 	rotate_face_clockwise(rbc_cube_top_face(this));
@@ -29,7 +29,7 @@ void rbc_rotate_cube_right(struct rbc_cube * this)
 
 void rbc_rotate_cube_up(struct rbc_cube * this)
 {
-	struct rbc_faces_cycle rotation = {{ FRONT_FACE, TOP_FACE, BACK_FACE, BOTTOM_FACE }};
+	struct rbc_faces_cycle rotation = {{ RBC_FRONT_FACE, RBC_TOP_FACE, RBC_BACK_FACE, RBC_BOTTOM_FACE }};
 
 	rotate_face_anticlockwise(rbc_cube_left_face(this));
 	rotate_face_clockwise(rbc_cube_right_face(this));
@@ -40,7 +40,7 @@ void rbc_rotate_cube_up(struct rbc_cube * this)
 
 void rbc_rotate_cube_down(struct rbc_cube * this)
 {
-	struct rbc_faces_cycle rotation = {{ FRONT_FACE, BOTTOM_FACE, BACK_FACE, TOP_FACE }};
+	struct rbc_faces_cycle rotation = {{ RBC_FRONT_FACE, RBC_BOTTOM_FACE, RBC_BACK_FACE, RBC_TOP_FACE }};
 
 	rotate_face_clockwise(rbc_cube_left_face(this));
 	rotate_face_anticlockwise(rbc_cube_right_face(this));
@@ -51,7 +51,7 @@ void rbc_rotate_cube_down(struct rbc_cube * this)
 
 void rbc_rotate_cube_clockwise(struct rbc_cube * this)
 {
-	struct rbc_faces_cycle rotation = {{ TOP_FACE, RIGHT_FACE, BOTTOM_FACE, LEFT_FACE }};
+	struct rbc_faces_cycle rotation = {{ RBC_TOP_FACE, RBC_RIGHT_FACE, RBC_BOTTOM_FACE, RBC_LEFT_FACE }};
 
 	rotate_face_clockwise(rbc_cube_front_face(this));
 	rotate_face_anticlockwise(rbc_cube_back_face(this));
@@ -62,7 +62,7 @@ void rbc_rotate_cube_clockwise(struct rbc_cube * this)
 
 void rbc_rotate_cube_anticlockwise(struct rbc_cube * this)
 {
-	struct rbc_faces_cycle rotation = {{ TOP_FACE, LEFT_FACE, BOTTOM_FACE, RIGHT_FACE }};
+	struct rbc_faces_cycle rotation = {{ RBC_TOP_FACE, RBC_LEFT_FACE, RBC_BOTTOM_FACE, RBC_RIGHT_FACE }};
 
 	rotate_face_anticlockwise(rbc_cube_front_face(this));
 	rotate_face_clockwise(rbc_cube_back_face(this));

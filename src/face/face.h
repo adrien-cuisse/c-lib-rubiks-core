@@ -126,13 +126,13 @@ RUBIKS_API enum rbc_color rbc_face_bottom_right_cell(struct rbc_face const * sel
 
 enum rbc_span_location
 {
-	TOP_ROW = 0,
-	EQUATOR_ROW = 1,
-	BOTTOM_ROW = 2,
+	RBC_TOP_ROW = 0,
+	RBC_EQUATOR_ROW = 1,
+	RBC_BOTTOM_ROW = 2,
 
-	LEFT_COLUMN = 0,
-	MIDDLE_COLUMN = 1,
-	RIGHT_COLUMN = 2
+	RBC_LEFT_COLUMN = 0,
+	RBC_MIDDLE_COLUMN = 1,
+	RBC_RIGHT_COLUMN = 2
 };
 
 

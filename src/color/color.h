@@ -10,12 +10,12 @@
  */
 enum rbc_color
 {
-	BLUE,
-	GREEN,
-	ORANGE,
-	RED,
-	WHITE,
-	YELLOW
+	RBC_BLUE,
+	RBC_GREEN,
+	RBC_ORANGE,
+	RBC_RED,
+	RBC_WHITE,
+	RBC_YELLOW
 };
 
 

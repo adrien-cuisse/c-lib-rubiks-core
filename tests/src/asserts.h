@@ -152,12 +152,12 @@
  */
 #define COLORS_NAME \
 	(char const * []) { \
-		[BLUE] = "BLUE", \
-		[GREEN] = "GREEN", \
-		[ORANGE] = "ORANGE", \
-		[RED] = "RED", \
-		[WHITE] = "WHITE", \
-		[YELLOW] = "YELLOW", \
+		[RBC_BLUE] = "BLUE", \
+		[RBC_GREEN] = "GREEN", \
+		[RBC_ORANGE] = "ORANGE", \
+		[RBC_RED] = "RED", \
+		[RBC_WHITE] = "WHITE", \
+		[RBC_YELLOW] = "YELLOW", \
 	}
 
 

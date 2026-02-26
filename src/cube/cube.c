@@ -30,12 +30,12 @@ static void create_and_position_faces(struct rbc_cube * this)
 {
 	int face_index;
 
-	this->faces[LEFT_FACE] = create_face(RED);
-	this->faces[FRONT_FACE] = create_face(BLUE);
-	this->faces[RIGHT_FACE] = create_face(ORANGE);
-	this->faces[TOP_FACE] = create_face(WHITE);
-	this->faces[BOTTOM_FACE] = create_face(YELLOW);
-	this->faces[BACK_FACE] = create_face(GREEN);
+	this->faces[RBC_LEFT_FACE] = create_face(RBC_RED);
+	this->faces[RBC_FRONT_FACE] = create_face(RBC_BLUE);
+	this->faces[RBC_RIGHT_FACE] = create_face(RBC_ORANGE);
+	this->faces[RBC_TOP_FACE] = create_face(RBC_WHITE);
+	this->faces[RBC_BOTTOM_FACE] = create_face(RBC_YELLOW);
+	this->faces[RBC_BACK_FACE] = create_face(RBC_GREEN);
 
 	for (face_index = 0; face_index < 6; face_index++)
 	{
@@ -93,37 +93,37 @@ static struct rbc_face * get_face(struct rbc_cube const * this, enum rbc_face_lo
 
 struct rbc_face * rbc_cube_left_face(struct rbc_cube const * this)
 {
-	return get_face(this, LEFT_FACE);
+	return get_face(this, RBC_LEFT_FACE);
 }
 
 
 struct rbc_face * rbc_cube_front_face(struct rbc_cube const * this)
 {
-	return get_face(this, FRONT_FACE);
+	return get_face(this, RBC_FRONT_FACE);
 }
 
 
 struct rbc_face * rbc_cube_right_face(struct rbc_cube const * this)
 {
-	return get_face(this, RIGHT_FACE);
+	return get_face(this, RBC_RIGHT_FACE);
 }
 
 
 struct rbc_face * rbc_cube_top_face(struct rbc_cube const * this)
 {
-	return get_face(this, TOP_FACE);
+	return get_face(this, RBC_TOP_FACE);
 }
 
 
 struct rbc_face * rbc_cube_bottom_face(struct rbc_cube const * this)
 {
-	return get_face(this, BOTTOM_FACE);
+	return get_face(this, RBC_BOTTOM_FACE);
 }
 
 
 struct rbc_face * rbc_cube_back_face(struct rbc_cube const * this)
 {
-	return get_face(this, BACK_FACE);
+	return get_face(this, RBC_BACK_FACE);
 }
 
 
@@ -151,7 +151,7 @@ void rotate_cube(struct rbc_cube * this, struct rbc_faces_cycle const * rotation
  */
 static void get_span(struct rbc_cube const * this, struct rbc_span span, enum rbc_color buffer[FACE_SIZE])
 {
-	if (span.type == ROW)
+	if (span.type == RBC_ROW)
 		copy_face_row(this->faces[span.face_location], buffer, span.location);
 	else
 		copy_face_column(this->faces[span.face_location], buffer, span.location);
@@ -169,7 +169,7 @@ static void get_span(struct rbc_cube const * this, struct rbc_span span, enum rb
  */
 static void set_span(struct rbc_cube * this, struct rbc_span span, enum rbc_color const content[FACE_SIZE])
 {
-	if (span.type == ROW)
+	if (span.type == RBC_ROW)
 		set_face_row(this->faces[span.face_location], content, span.location);
 	else
 		set_face_column(this->faces[span.face_location], content, span.location);
