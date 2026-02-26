@@ -151,11 +151,10 @@ void rotate_cube(struct rbc_cube * this, struct rbc_faces_cycle const * rotation
  */
 static void get_span(struct rbc_cube const * this, struct rbc_span span, enum rbc_color buffer[FACE_SIZE])
 {
-	int is_row = (span.column == (enum rbc_column) -1);
-	if (is_row)
-		copy_face_row(this->faces[span.face_location], buffer, span.row);
+	if (span.type == ROW)
+		copy_face_row(this->faces[span.face_location], buffer, span.location);
 	else
-		copy_face_column(this->faces[span.face_location], buffer, span.column);
+		copy_face_column(this->faces[span.face_location], buffer, span.location);
 }
 
 
@@ -170,11 +169,10 @@ static void get_span(struct rbc_cube const * this, struct rbc_span span, enum rb
  */
 static void set_span(struct rbc_cube * this, struct rbc_span span, enum rbc_color const content[FACE_SIZE])
 {
-	int is_row = (span.column == (enum rbc_column) -1);
-	if (is_row)
-		set_face_row(this->faces[span.face_location], content, span.row);
+	if (span.type == ROW)
+		set_face_row(this->faces[span.face_location], content, span.location);
 	else
-		set_face_column(this->faces[span.face_location], content, span.column);
+		set_face_column(this->faces[span.face_location], content, span.location);
 }
 
 

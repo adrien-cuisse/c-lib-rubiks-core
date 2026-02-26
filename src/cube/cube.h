@@ -567,23 +567,25 @@ struct rbc_faces_cycle
 
 
 /**
+ * Whether the span is a row or a column
+ */
+enum rbc_span_type
+{
+	ROW,
+	COLUMN
+};
+
+
+/**
  * Coords of a 2D span, a row or a column on a face
- *
- * One coord must be set to -1, i
  */
 struct rbc_span
 {
 	enum rbc_face_location face_location;
 
-	/**
-	 * -1 if the span is a column
-	 */
-	enum rbc_row row;
+	enum rbc_span_location location;
 
-	/**
-	 * -1 if the span is a row
-	 */
-	enum rbc_column column;
+	enum rbc_span_type type;
 };
 
 
