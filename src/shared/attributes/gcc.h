@@ -3,7 +3,7 @@
 #define LIB_RUBIKS_CORE_INTERNAL_GCC_ATTRIBUTES_HEADER
 
 
-#define RUBIKS_API __attribute__((visibility("default")))
+#define RBC_API __attribute__((visibility("default")))
 
 
 #endif /* LIB_RUBIKS_CORE_INTERNAL_GCC_ATTRIBUTES_HEADER */

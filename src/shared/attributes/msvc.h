@@ -3,7 +3,7 @@
 #define LIB_RUBIKS_CORE_INTERNAL_MSVC_ATTRIBUTES_HEADER
 
 
-#define RUBIKS_API __declspec(dllexport)
+#define RBC_API __declspec(dllexport)
 
 
 #endif /* LIB_RUBIKS_CORE_INTERNAL_MSVC_ATTRIBUTES_HEADER */

@@ -3,7 +3,7 @@
 #define LIB_RUBIKS_CORE_INTERNAL_MINGW_ATTRIBUTES_HEADER
 
 
-#error "RUBIKS_API attribute not implemented for MinGW"
+#error "RBC_API attribute not implemented for MinGW"
 
 
 #endif /* LIB_RUBIKS_CORE_INTERNAL_MINGW_ATTRIBUTES_HEADER */
