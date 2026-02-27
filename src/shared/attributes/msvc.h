@@ -3,7 +3,7 @@
 #define LIB_RUBIKS_CORE_INTERNAL_MSVC_ATTRIBUTES_HEADER
 
 
-#error "RUBIKS_API attribute not implemented for MSVC"
+#define RUBIKS_API __declspec(dllexport)
 
 
 #endif /* LIB_RUBIKS_CORE_INTERNAL_MSVC_ATTRIBUTES_HEADER */
