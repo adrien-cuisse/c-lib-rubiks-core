@@ -6,4 +6,4 @@
 #error "RUBIKS_API attribute not implemented for MinGW"
 
 
-#endif /* LIB_RUBIKS_CORE_MINGW_ATTRIBUTES_HEADER */
+#endif /* LIB_RUBIKS_CORE_INTERNAL_MINGW_ATTRIBUTES_HEADER */
