@@ -77,6 +77,69 @@ void rbc_delete_cube(struct rbc_cube ** this)
 
 
 /**
+ * Checks if the given color is valid
+ *
+ * @param color - the color to check
+ *
+ * @return - 1 if, and only if, color is not in the rbc_color enum
+ */
+static int color_is_invalid(enum rbc_color color)
+{
+	return (color != RBC_BLUE)
+		&& (color != RBC_GREEN)
+		&& (color != RBC_ORANGE)
+		&& (color != RBC_RED)
+		&& (color != RBC_WHITE)
+		&& (color != RBC_YELLOW);
+}
+
+
+/**
+ * Returns the color opposing the given one, in standard disposition
+ * If an invalid color is given, RBC_WHITE is returned
+ *
+ * @param color - the color to get the opposite one from
+ *
+ * @return - the color of the face opposing the given one
+ */
+static enum rbc_color standard_opposite_color(enum rbc_color color)
+{
+	switch (color)
+	{
+		case RBC_BLUE: return RBC_GREEN;
+		case RBC_WHITE: return RBC_YELLOW;
+		case RBC_RED: return RBC_ORANGE;
+		case RBC_GREEN: return RBC_BLUE;
+		case RBC_ORANGE: return RBC_RED;
+		default: return RBC_WHITE;
+	}
+}
+
+
+void rbc_orientate_cube(struct rbc_cube * cube, enum rbc_color front_face_color, enum rbc_color top_face_color)
+{
+	if (front_face_color == top_face_color)
+		return;
+	if (color_is_invalid(front_face_color) || color_is_invalid(top_face_color))
+		return;
+	if (standard_opposite_color(front_face_color) == top_face_color)
+		return;
+
+	if (rbc_face_color(rbc_cube_left_face(cube)) == front_face_color)
+		rbc_rotate_cube_right(cube);
+
+	if (rbc_face_color(rbc_cube_right_face(cube)) == front_face_color)
+		rbc_rotate_cube_left(cube);
+
+	while (rbc_face_color(rbc_cube_front_face(cube)) != front_face_color)
+		rbc_rotate_cube_up(cube);
+
+	while (rbc_face_color(rbc_cube_top_face(cube)) != top_face_color)
+		rbc_rotate_cube_clockwise(cube);
+}
+
+
+/**
  * Returns a face of the cube
  *
  * @param this - the cube to get a face from

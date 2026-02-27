@@ -50,6 +50,19 @@ RUBIKS_API void rbc_delete_cube(struct rbc_cube ** self);
 
 
 /**
+ * Rotates the cube to have given front face color and top face color
+ * If invalid colors are supplied or if colors are opposite, nothing is done
+ *
+ * @param cube - the cube to orientate
+ *
+ * @param front_face_color - the color of the face to put on front
+ *
+ * @param top_face_color - the color of the face to put on top
+ */
+RUBIKS_API void rbc_orientate_cube(struct rbc_cube * cube, enum rbc_color front_face_color, enum rbc_color top_face_color);
+
+
+/**
  * Returns the left face of the cube
  *
  * The caller is NOT in charge of the memory
