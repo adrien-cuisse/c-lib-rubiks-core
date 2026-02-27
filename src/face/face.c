@@ -21,17 +21,17 @@ struct rbc_face
 
 
 
-enum rbc_color rbc_face_color(struct rbc_face const * this)
+enum rbc_color rbc_face_color(struct rbc_face const * self)
 {
 	/* center cells are fixed */
-	return rbc_face_equator_center_cell(this);
+	return rbc_face_equator_center_cell(self);
 }
 
 
 /**
  * Returns the color of a cell
  *
- * @param this - the face to get a the cell from
+ * @param self - the face to get a the cell from
  *
  * @param row - the row where the cell is
  *
@@ -39,63 +39,63 @@ enum rbc_color rbc_face_color(struct rbc_face const * this)
  *
  * @return enum rbc_color - the color of the requested cell
  */
-static enum rbc_color cell(struct rbc_face const * this, enum rbc_span_location row, enum rbc_span_location column)
+static enum rbc_color cell(struct rbc_face const * self, enum rbc_span_location row, enum rbc_span_location column)
 {
-	return this->cells[row][column];
+	return self->cells[row][column];
 }
 
 
-enum rbc_color rbc_face_top_left_cell(struct rbc_face const * this)
+enum rbc_color rbc_face_top_left_cell(struct rbc_face const * self)
 {
-	return cell(this, RBC_TOP_ROW, RBC_LEFT_COLUMN);
+	return cell(self, RBC_TOP_ROW, RBC_LEFT_COLUMN);
 }
 
 
-enum rbc_color rbc_face_top_center_cell(struct rbc_face const * this)
+enum rbc_color rbc_face_top_center_cell(struct rbc_face const * self)
 {
-	return cell(this, RBC_TOP_ROW, RBC_MIDDLE_COLUMN);
+	return cell(self, RBC_TOP_ROW, RBC_MIDDLE_COLUMN);
 }
 
 
-enum rbc_color rbc_face_top_right_cell(struct rbc_face const * this)
+enum rbc_color rbc_face_top_right_cell(struct rbc_face const * self)
 {
-	return cell(this, RBC_TOP_ROW, RBC_RIGHT_COLUMN);
+	return cell(self, RBC_TOP_ROW, RBC_RIGHT_COLUMN);
 }
 
 
-enum rbc_color rbc_face_equator_left_cell(struct rbc_face const * this)
+enum rbc_color rbc_face_equator_left_cell(struct rbc_face const * self)
 {
-	return cell(this, RBC_EQUATOR_ROW, RBC_LEFT_COLUMN);
+	return cell(self, RBC_EQUATOR_ROW, RBC_LEFT_COLUMN);
 }
 
 
-enum rbc_color rbc_face_equator_center_cell(struct rbc_face const * this)
+enum rbc_color rbc_face_equator_center_cell(struct rbc_face const * self)
 {
-	return cell(this, RBC_EQUATOR_ROW, RBC_MIDDLE_COLUMN);
+	return cell(self, RBC_EQUATOR_ROW, RBC_MIDDLE_COLUMN);
 }
 
 
-enum rbc_color rbc_face_equator_right_cell(struct rbc_face const * this)
+enum rbc_color rbc_face_equator_right_cell(struct rbc_face const * self)
 {
-	return cell(this, RBC_EQUATOR_ROW, RBC_RIGHT_COLUMN);
+	return cell(self, RBC_EQUATOR_ROW, RBC_RIGHT_COLUMN);
 }
 
 
-enum rbc_color rbc_face_bottom_left_cell(struct rbc_face const * this)
+enum rbc_color rbc_face_bottom_left_cell(struct rbc_face const * self)
 {
-	return cell(this, RBC_BOTTOM_ROW, RBC_LEFT_COLUMN);
+	return cell(self, RBC_BOTTOM_ROW, RBC_LEFT_COLUMN);
 }
 
 
-enum rbc_color rbc_face_bottom_center_cell(struct rbc_face const * this)
+enum rbc_color rbc_face_bottom_center_cell(struct rbc_face const * self)
 {
-	return cell(this, RBC_BOTTOM_ROW, RBC_MIDDLE_COLUMN);
+	return cell(self, RBC_BOTTOM_ROW, RBC_MIDDLE_COLUMN);
 }
 
 
-enum rbc_color rbc_face_bottom_right_cell(struct rbc_face const * this)
+enum rbc_color rbc_face_bottom_right_cell(struct rbc_face const * self)
 {
-	return cell(this, RBC_BOTTOM_ROW, RBC_RIGHT_COLUMN);
+	return cell(self, RBC_BOTTOM_ROW, RBC_RIGHT_COLUMN);
 }
 
 
@@ -104,13 +104,13 @@ enum rbc_color rbc_face_bottom_right_cell(struct rbc_face const * this)
 /**
  * Paints a row
  *
- * @param this - the face containing the row to paint
+ * @param self - the face containing the row to paint
  *
  * @param color - the color to apply
  *
  * @param row - the row to paint
  */
-static void paint_row(struct rbc_face * this, enum rbc_color color, enum rbc_span_location row)
+static void paint_row(struct rbc_face * self, enum rbc_color color, enum rbc_span_location row)
 {
 	int column_index;
 	enum rbc_color cells[FACE_SIZE];
@@ -118,49 +118,49 @@ static void paint_row(struct rbc_face * this, enum rbc_color color, enum rbc_spa
 	for (column_index = RBC_LEFT_COLUMN; column_index <= RBC_RIGHT_COLUMN; column_index++)
 		cells[column_index] = color;
 
-	set_face_row(this, cells, row);
+	set_face_row(self, cells, row);
 }
 
 
 /**
  * Paints the face
  *
- * @param this - the face to paint
+ * @param self - the face to paint
  *
  * @param color - the color to apply
  */
-static void paint(struct rbc_face * this, enum rbc_color color)
+static void paint(struct rbc_face * self, enum rbc_color color)
 {
 	enum rbc_span_location row;
 	for (row = RBC_TOP_ROW; row <= RBC_BOTTOM_ROW; row++)
-		paint_row(this, color, row);
+		paint_row(self, color, row);
 }
 
 
 struct rbc_face * create_face(enum rbc_color color)
 {
-	struct rbc_face * this = calloc(1, sizeof(* this));
-	if (this != NULL)
-		paint(this, color);
+	struct rbc_face * self = calloc(1, sizeof(* self));
+	if (self != NULL)
+		paint(self, color);
 
-	return this;
+	return self;
 }
 
 
-void delete_face(struct rbc_face ** this)
+void delete_face(struct rbc_face ** self)
 {
-	if ((this == NULL) || (* this == NULL))
+	if ((self == NULL) || (* self == NULL))
 		return;
 
-	free(* this);
-	* this = NULL;
+	free(* self);
+	* self = NULL;
 }
 
 
-void copy_face_row(struct rbc_face const * this, enum rbc_color buffer[FACE_SIZE], enum rbc_span_location row)
+void copy_face_row(struct rbc_face const * face, enum rbc_color buffer[FACE_SIZE], enum rbc_span_location row)
 {
-	size_t row_size_in_bytes = FACE_SIZE * sizeof(this->cells[row][0]);
-	memcpy(buffer, this->cells[row], row_size_in_bytes);
+	size_t row_size_in_bytes = FACE_SIZE * sizeof(face->cells[row][0]);
+	memcpy(buffer, face->cells[row], row_size_in_bytes);
 }
 
 
@@ -171,11 +171,11 @@ void set_face_row(struct rbc_face * face, enum rbc_color const cells[FACE_SIZE],
 }
 
 
-void copy_face_column(struct rbc_face const * this, enum rbc_color buffer[FACE_SIZE], enum rbc_span_location column)
+void copy_face_column(struct rbc_face const * face, enum rbc_color buffer[FACE_SIZE], enum rbc_span_location column)
 {
 	enum rbc_span_location row;
 	for (row = RBC_TOP_ROW; row <= RBC_BOTTOM_ROW; row++)
-		buffer[row] = this->cells[row][column];
+		buffer[row] = face->cells[row][column];
 }
 
 
@@ -187,33 +187,33 @@ void set_face_column(struct rbc_face * face, enum rbc_color const cells[FACE_SIZ
 }
 
 
-void rotate_face_clockwise(struct rbc_face * this)
+void rotate_face_clockwise(struct rbc_face * self)
 {
 	enum rbc_color new_right_column[FACE_SIZE];
 	enum rbc_color new_middle_column[FACE_SIZE];
 	enum rbc_color new_left_column[FACE_SIZE];
 
-	copy_face_row(this, new_right_column, RBC_TOP_ROW);
-	copy_face_row(this, new_middle_column, RBC_EQUATOR_ROW);
-	copy_face_row(this, new_left_column, RBC_BOTTOM_ROW);
+	copy_face_row(self, new_right_column, RBC_TOP_ROW);
+	copy_face_row(self, new_middle_column, RBC_EQUATOR_ROW);
+	copy_face_row(self, new_left_column, RBC_BOTTOM_ROW);
 
-	set_face_column(this, new_right_column, RBC_RIGHT_COLUMN);
-	set_face_column(this, new_middle_column, RBC_MIDDLE_COLUMN);
-	set_face_column(this, new_left_column, RBC_LEFT_COLUMN);
+	set_face_column(self, new_right_column, RBC_RIGHT_COLUMN);
+	set_face_column(self, new_middle_column, RBC_MIDDLE_COLUMN);
+	set_face_column(self, new_left_column, RBC_LEFT_COLUMN);
 }
 
 
-void rotate_face_anticlockwise(struct rbc_face * this)
+void rotate_face_anticlockwise(struct rbc_face * self)
 {
 	enum rbc_color new_top_row[FACE_SIZE];
 	enum rbc_color new_equator_row[FACE_SIZE];
 	enum rbc_color new_bottom_row[FACE_SIZE];
 
-	copy_face_column(this, new_top_row, RBC_RIGHT_COLUMN);
-	copy_face_column(this, new_equator_row, RBC_MIDDLE_COLUMN);
-	copy_face_column(this, new_bottom_row, RBC_LEFT_COLUMN);
+	copy_face_column(self, new_top_row, RBC_RIGHT_COLUMN);
+	copy_face_column(self, new_equator_row, RBC_MIDDLE_COLUMN);
+	copy_face_column(self, new_bottom_row, RBC_LEFT_COLUMN);
 
-	set_face_row(this, new_top_row, RBC_TOP_ROW);
-	set_face_row(this, new_equator_row, RBC_EQUATOR_ROW);
-	set_face_row(this, new_bottom_row, RBC_BOTTOM_ROW);
+	set_face_row(self, new_top_row, RBC_TOP_ROW);
+	set_face_row(self, new_equator_row, RBC_EQUATOR_ROW);
+	set_face_row(self, new_bottom_row, RBC_BOTTOM_ROW);
 }

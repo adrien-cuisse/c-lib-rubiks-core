@@ -24,24 +24,24 @@ struct rbc_cube
 /**
  * Allocates faces and stores them in the cube
  *
- * @param this - the cube to store faces in
+ * @param self - the cube to store faces in
  */
-static void create_and_position_faces(struct rbc_cube * this)
+static void create_and_position_faces(struct rbc_cube * self)
 {
 	int face_index;
 
-	this->faces[RBC_LEFT_FACE] = create_face(RBC_RED);
-	this->faces[RBC_FRONT_FACE] = create_face(RBC_BLUE);
-	this->faces[RBC_RIGHT_FACE] = create_face(RBC_ORANGE);
-	this->faces[RBC_TOP_FACE] = create_face(RBC_WHITE);
-	this->faces[RBC_BOTTOM_FACE] = create_face(RBC_YELLOW);
-	this->faces[RBC_BACK_FACE] = create_face(RBC_GREEN);
+	self->faces[RBC_LEFT_FACE] = create_face(RBC_RED);
+	self->faces[RBC_FRONT_FACE] = create_face(RBC_BLUE);
+	self->faces[RBC_RIGHT_FACE] = create_face(RBC_ORANGE);
+	self->faces[RBC_TOP_FACE] = create_face(RBC_WHITE);
+	self->faces[RBC_BOTTOM_FACE] = create_face(RBC_YELLOW);
+	self->faces[RBC_BACK_FACE] = create_face(RBC_GREEN);
 
 	for (face_index = 0; face_index < 6; face_index++)
 	{
-		if (this->faces[face_index] == NULL)
+		if (self->faces[face_index] == NULL)
 		{
-			rbc_delete_cube(& this);
+			rbc_delete_cube(& self);
 			return;
 		}
 	}
@@ -50,29 +50,29 @@ static void create_and_position_faces(struct rbc_cube * this)
 
 struct rbc_cube * rbc_create_cube(void)
 {
-	struct rbc_cube * this = calloc(1, sizeof(* this));
-	if (this != NULL)
-		create_and_position_faces(this);
+	struct rbc_cube * self = calloc(1, sizeof(* self));
+	if (self != NULL)
+		create_and_position_faces(self);
 
-	return this;
+	return self;
 }
 
 
-void rbc_delete_cube(struct rbc_cube ** this)
+void rbc_delete_cube(struct rbc_cube ** self)
 {
 	enum rbc_face_location position;
 
-	if ((this == NULL) || (* this == NULL))
+	if ((self == NULL) || (* self == NULL))
 		return;
 
 	for (position = 0; position < 6; position++)
 	{
-		delete_face(& (* this)->faces[position]);
-		(* this)->faces[position] = NULL;
+		delete_face(& (* self)->faces[position]);
+		(* self)->faces[position] = NULL;
 	}
 
-	free(* this);
-	* this = NULL;
+	free(* self);
+	* self = NULL;
 }
 
 
@@ -142,100 +142,100 @@ void rbc_orientate_cube(struct rbc_cube * cube, enum rbc_color front_face_color,
 /**
  * Returns a face of the cube
  *
- * @param this - the cube to get a face from
+ * @param self - the cube to get a face from
  *
  * @param position - the face to get
  *
  * @return struct rbc_face * - the requested face
  */
-static struct rbc_face * get_face(struct rbc_cube const * this, enum rbc_face_location position)
+static struct rbc_face * get_face(struct rbc_cube const * self, enum rbc_face_location position)
 {
-	return this->faces[position];
+	return self->faces[position];
 }
 
 
-struct rbc_face * rbc_cube_left_face(struct rbc_cube const * this)
+struct rbc_face * rbc_cube_left_face(struct rbc_cube const * self)
 {
-	return get_face(this, RBC_LEFT_FACE);
+	return get_face(self, RBC_LEFT_FACE);
 }
 
 
-struct rbc_face * rbc_cube_front_face(struct rbc_cube const * this)
+struct rbc_face * rbc_cube_front_face(struct rbc_cube const * self)
 {
-	return get_face(this, RBC_FRONT_FACE);
+	return get_face(self, RBC_FRONT_FACE);
 }
 
 
-struct rbc_face * rbc_cube_right_face(struct rbc_cube const * this)
+struct rbc_face * rbc_cube_right_face(struct rbc_cube const * self)
 {
-	return get_face(this, RBC_RIGHT_FACE);
+	return get_face(self, RBC_RIGHT_FACE);
 }
 
 
-struct rbc_face * rbc_cube_top_face(struct rbc_cube const * this)
+struct rbc_face * rbc_cube_top_face(struct rbc_cube const * self)
 {
-	return get_face(this, RBC_TOP_FACE);
+	return get_face(self, RBC_TOP_FACE);
 }
 
 
-struct rbc_face * rbc_cube_bottom_face(struct rbc_cube const * this)
+struct rbc_face * rbc_cube_bottom_face(struct rbc_cube const * self)
 {
-	return get_face(this, RBC_BOTTOM_FACE);
+	return get_face(self, RBC_BOTTOM_FACE);
 }
 
 
-struct rbc_face * rbc_cube_back_face(struct rbc_cube const * this)
+struct rbc_face * rbc_cube_back_face(struct rbc_cube const * self)
 {
-	return get_face(this, RBC_BACK_FACE);
+	return get_face(self, RBC_BACK_FACE);
 }
 
 
 
 
-void rotate_cube(struct rbc_cube * this, struct rbc_faces_cycle const * rotation)
+void rotate_cube(struct rbc_cube * self, struct rbc_faces_cycle const * rotation)
 {
-	struct rbc_face * backup = this->faces[rotation->faces_location[3]];
+	struct rbc_face * backup = self->faces[rotation->faces_location[3]];
 
-	this->faces[rotation->faces_location[3]] = this->faces[rotation->faces_location[2]];
-	this->faces[rotation->faces_location[2]] = this->faces[rotation->faces_location[1]];
-	this->faces[rotation->faces_location[1]] = this->faces[rotation->faces_location[0]];
-	this->faces[rotation->faces_location[0]] = backup;
+	self->faces[rotation->faces_location[3]] = self->faces[rotation->faces_location[2]];
+	self->faces[rotation->faces_location[2]] = self->faces[rotation->faces_location[1]];
+	self->faces[rotation->faces_location[1]] = self->faces[rotation->faces_location[0]];
+	self->faces[rotation->faces_location[0]] = backup;
 }
 
 
 /**
  * Reads a span on the cube
  *
- * @param this - the cube to get a span from
+ * @param self - the cube to get a span from
  *
  * @param span - the coords of the span to read
  *
  * @param buffer - the buffer where to write the span
  */
-static void get_span(struct rbc_cube const * this, struct rbc_span span, enum rbc_color buffer[FACE_SIZE])
+static void get_span(struct rbc_cube const * self, struct rbc_span span, enum rbc_color buffer[FACE_SIZE])
 {
 	if (span.type == RBC_ROW)
-		copy_face_row(this->faces[span.face_location], buffer, span.location);
+		copy_face_row(self->faces[span.face_location], buffer, span.location);
 	else
-		copy_face_column(this->faces[span.face_location], buffer, span.location);
+		copy_face_column(self->faces[span.face_location], buffer, span.location);
 }
 
 
 /**
  * Writes a span on the cube
  *
- * @param this - the cube to write a span to
+ * @param self - the cube to write a span to
  *
  * @param span - the coords of the span to write
  *
  * @param content - the content of the span to write
  */
-static void set_span(struct rbc_cube * this, struct rbc_span span, enum rbc_color const content[FACE_SIZE])
+static void set_span(struct rbc_cube * self, struct rbc_span span, enum rbc_color const content[FACE_SIZE])
 {
 	if (span.type == RBC_ROW)
-		set_face_row(this->faces[span.face_location], content, span.location);
+		set_face_row(self->faces[span.face_location], content, span.location);
 	else
-		set_face_column(this->faces[span.face_location], content, span.location);
+		set_face_column(self->faces[span.face_location], content, span.location);
 }
 
 
@@ -270,17 +270,17 @@ static int must_reverse_span(
 /**
  * Copies a span and pastes it on another location
  *
- * @param this - the cube to read/write spans from
+ * @param self - the cube to read/write spans from
  *
  * @param from - the span to copy
  *
  * @param to - where to write the copied span
  */
-static void move_span(struct rbc_cube * this, struct rbc_span from, struct rbc_span to)
+static void move_span(struct rbc_cube * self, struct rbc_span from, struct rbc_span to)
 {
 	enum rbc_color span[FACE_SIZE];
-	get_span(this, from, span);
-	set_span(this, to, span);
+	get_span(self, from, span);
+	set_span(self, to, span);
 }
 
 
@@ -300,25 +300,25 @@ static void reverse_span(enum rbc_color span[FACE_SIZE])
 /**
  * Copies, reverses and pastes a span
  *
- * @param this - the cube to read/write spans from
+ * @param self - the cube to read/write spans from
  *
  * @param from - the span to copy
  *
  * @param to - where to write the copied span
  */
-static void move_reversed_span(struct rbc_cube * this, struct rbc_span from, struct rbc_span to)
+static void move_reversed_span(struct rbc_cube * self, struct rbc_span from, struct rbc_span to)
 {
 	enum rbc_color span_content[FACE_SIZE];
-	get_span(this, from, span_content);
+	get_span(self, from, span_content);
 	reverse_span(span_content);
-	set_span(this, to, span_content);
+	set_span(self, to, span_content);
 }
 
 
 /**
  * Applies a slice rotation on the cube
  *
- * @param this - the cube containing the slice to rotate
+ * @param self - the cube containing the slice to rotate
  *
  * @param slice - the slice to rotate
  *
@@ -329,7 +329,7 @@ static void move_reversed_span(struct rbc_cube * this, struct rbc_span from, str
  * 	(ie., the number of spans to reverse in the slice)
  */
 void rotate_slice(
-	struct rbc_cube * this,
+	struct rbc_cube * self,
 	struct rbc_slice const * slice,
 	enum rbc_face_location const reversing_spans_face[],
 	int reversing_count)
@@ -339,7 +339,7 @@ void rotate_slice(
 	struct rbc_span source_span, destination_span;
 
 	enum rbc_color span_backup[FACE_SIZE];
-	get_span(this, slice->spans[3], span_backup);
+	get_span(self, slice->spans[3], span_backup);
 
 	for (span_index = 3; span_index > 0; span_index--)
 	{
@@ -347,9 +347,9 @@ void rotate_slice(
 		destination_span = slice->spans[span_index];
 
 		if (must_reverse_span(source_span, reversing_spans_face, reversing_count))
-			move_reversed_span(this, source_span, destination_span);
+			move_reversed_span(self, source_span, destination_span);
 		else
-			move_span(this, source_span, destination_span);
+			move_span(self, source_span, destination_span);
 	}
 
 	source_span = slice->spans[3];
@@ -357,5 +357,5 @@ void rotate_slice(
 		reverse_span(span_backup);
 
 	destination_span = slice->spans[0];
-	set_span(this, destination_span, span_backup);
+	set_span(self, destination_span, span_backup);
 }

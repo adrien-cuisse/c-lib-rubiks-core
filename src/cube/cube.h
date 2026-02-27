@@ -616,17 +616,17 @@ struct rbc_slice
 /**
  * Applies a rotation on the cube, faces are simply moved on the 2D pattern
  *
- * @param this - the cube to rotate
+ * @param self - the cube to rotate
  *
  * @param rotation - the rotation to apply
  */
-void rotate_cube(struct rbc_cube * this, struct rbc_faces_cycle const * rotation);
+void rotate_cube(struct rbc_cube * self, struct rbc_faces_cycle const * rotation);
 
 
 /**
  * Applies a slice rotation on the cube
  *
- * @param this - the cube containing the slice to rotate
+ * @param self - the cube containing the slice to rotate
  *
  * @param slice - the slice to rotate
  *
@@ -637,7 +637,7 @@ void rotate_cube(struct rbc_cube * this, struct rbc_faces_cycle const * rotation
  * 	(ie., the number of spans to reverse in the slice)
  */
 void rotate_slice(
-	struct rbc_cube * this,
+	struct rbc_cube * self,
 	struct rbc_slice const * slice,
 	enum rbc_face_location const reversing_spans_face[],
 	int reversing_count);
