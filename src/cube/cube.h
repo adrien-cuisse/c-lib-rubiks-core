@@ -620,7 +620,7 @@ struct rbc_slice
  *
  * @param rotation - the rotation to apply
  */
-void rotate_cube(struct rbc_cube * self, struct rbc_faces_cycle const * rotation);
+void rbc_rotate_cube(struct rbc_cube * self, struct rbc_faces_cycle const * rotation);
 
 
 /**
@@ -636,7 +636,7 @@ void rotate_cube(struct rbc_cube * self, struct rbc_faces_cycle const * rotation
  * @param reversing_count - the number of faces in [reversing_spans_face]
  * 	(ie., the number of spans to reverse in the slice)
  */
-void rotate_slice(
+void rbc_rotate_slice(
 	struct rbc_cube * self,
 	struct rbc_slice const * slice,
 	enum rbc_face_location const reversing_spans_face[],

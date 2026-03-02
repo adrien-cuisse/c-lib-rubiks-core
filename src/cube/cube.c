@@ -26,16 +26,16 @@ struct rbc_cube
  *
  * @param self - the cube to store faces in
  */
-static void create_and_position_faces(struct rbc_cube * self)
+static void rbc_create_and_position_faces(struct rbc_cube * self)
 {
 	int face_index;
 
-	self->faces[RBC_LEFT_FACE] = create_face(RBC_RED);
-	self->faces[RBC_FRONT_FACE] = create_face(RBC_BLUE);
-	self->faces[RBC_RIGHT_FACE] = create_face(RBC_ORANGE);
-	self->faces[RBC_TOP_FACE] = create_face(RBC_WHITE);
-	self->faces[RBC_BOTTOM_FACE] = create_face(RBC_YELLOW);
-	self->faces[RBC_BACK_FACE] = create_face(RBC_GREEN);
+	self->faces[RBC_LEFT_FACE] = rbc_create_face(RBC_RED);
+	self->faces[RBC_FRONT_FACE] = rbc_create_face(RBC_BLUE);
+	self->faces[RBC_RIGHT_FACE] = rbc_create_face(RBC_ORANGE);
+	self->faces[RBC_TOP_FACE] = rbc_create_face(RBC_WHITE);
+	self->faces[RBC_BOTTOM_FACE] = rbc_create_face(RBC_YELLOW);
+	self->faces[RBC_BACK_FACE] = rbc_create_face(RBC_GREEN);
 
 	for (face_index = 0; face_index < 6; face_index++)
 	{
@@ -52,7 +52,7 @@ struct rbc_cube * rbc_create_cube(void)
 {
 	struct rbc_cube * self = calloc(1, sizeof(* self));
 	if (self != NULL)
-		create_and_position_faces(self);
+		rbc_create_and_position_faces(self);
 
 	return self;
 }
@@ -67,7 +67,7 @@ void rbc_delete_cube(struct rbc_cube ** self)
 
 	for (position = 0; position < 6; position++)
 	{
-		delete_face(& (* self)->faces[position]);
+		rbc_delete_face(& (* self)->faces[position]);
 		(* self)->faces[position] = NULL;
 	}
 
@@ -83,7 +83,7 @@ void rbc_delete_cube(struct rbc_cube ** self)
  *
  * @return - 1 if, and only if, color is not in the rbc_color enum
  */
-static int color_is_invalid(enum rbc_color color)
+static int rbc_color_is_invalid(enum rbc_color color)
 {
 	return (color != RBC_BLUE)
 		&& (color != RBC_GREEN)
@@ -102,7 +102,7 @@ static int color_is_invalid(enum rbc_color color)
  *
  * @return - the color of the face opposing the given one
  */
-static enum rbc_color standard_opposite_color(enum rbc_color color)
+static enum rbc_color rbc_standard_opposite_color(enum rbc_color color)
 {
 	switch (color)
 	{
@@ -120,9 +120,9 @@ void rbc_orientate_cube(struct rbc_cube * cube, enum rbc_color front_face_color,
 {
 	if (front_face_color == top_face_color)
 		return;
-	if (color_is_invalid(front_face_color) || color_is_invalid(top_face_color))
+	if (rbc_color_is_invalid(front_face_color) || rbc_color_is_invalid(top_face_color))
 		return;
-	if (standard_opposite_color(front_face_color) == top_face_color)
+	if (rbc_standard_opposite_color(front_face_color) == top_face_color)
 		return;
 
 	if (rbc_face_color(rbc_cube_left_face(cube)) == front_face_color)
@@ -148,7 +148,7 @@ void rbc_orientate_cube(struct rbc_cube * cube, enum rbc_color front_face_color,
  *
  * @return struct rbc_face * - the requested face
  */
-static struct rbc_face * get_face(struct rbc_cube const * self, enum rbc_face_location position)
+static struct rbc_face * rbc_get_face(struct rbc_cube const * self, enum rbc_face_location position)
 {
 	return self->faces[position];
 }
@@ -156,43 +156,43 @@ static struct rbc_face * get_face(struct rbc_cube const * self, enum rbc_face_lo
 
 struct rbc_face * rbc_cube_left_face(struct rbc_cube const * self)
 {
-	return get_face(self, RBC_LEFT_FACE);
+	return rbc_get_face(self, RBC_LEFT_FACE);
 }
 
 
 struct rbc_face * rbc_cube_front_face(struct rbc_cube const * self)
 {
-	return get_face(self, RBC_FRONT_FACE);
+	return rbc_get_face(self, RBC_FRONT_FACE);
 }
 
 
 struct rbc_face * rbc_cube_right_face(struct rbc_cube const * self)
 {
-	return get_face(self, RBC_RIGHT_FACE);
+	return rbc_get_face(self, RBC_RIGHT_FACE);
 }
 
 
 struct rbc_face * rbc_cube_top_face(struct rbc_cube const * self)
 {
-	return get_face(self, RBC_TOP_FACE);
+	return rbc_get_face(self, RBC_TOP_FACE);
 }
 
 
 struct rbc_face * rbc_cube_bottom_face(struct rbc_cube const * self)
 {
-	return get_face(self, RBC_BOTTOM_FACE);
+	return rbc_get_face(self, RBC_BOTTOM_FACE);
 }
 
 
 struct rbc_face * rbc_cube_back_face(struct rbc_cube const * self)
 {
-	return get_face(self, RBC_BACK_FACE);
+	return rbc_get_face(self, RBC_BACK_FACE);
 }
 
 
 
 
-void rotate_cube(struct rbc_cube * self, struct rbc_faces_cycle const * rotation)
+void rbc_rotate_cube(struct rbc_cube * self, struct rbc_faces_cycle const * rotation)
 {
 	struct rbc_face * backup = self->faces[rotation->faces_location[3]];
 
@@ -212,12 +212,12 @@ void rotate_cube(struct rbc_cube * self, struct rbc_faces_cycle const * rotation
  *
  * @param buffer - the buffer where to write the span
  */
-static void get_span(struct rbc_cube const * self, struct rbc_span span, enum rbc_color buffer[FACE_SIZE])
+static void rbc_get_span(struct rbc_cube const * self, struct rbc_span span, enum rbc_color buffer[FACE_SIZE])
 {
 	if (span.type == RBC_ROW)
-		copy_face_row(self->faces[span.face_location], buffer, span.location);
+		rbc_copy_face_row(self->faces[span.face_location], buffer, span.location);
 	else
-		copy_face_column(self->faces[span.face_location], buffer, span.location);
+		rbc_copy_face_column(self->faces[span.face_location], buffer, span.location);
 }
 
 
@@ -230,12 +230,12 @@ static void get_span(struct rbc_cube const * self, struct rbc_span span, enum rb
  *
  * @param content - the content of the span to write
  */
-static void set_span(struct rbc_cube * self, struct rbc_span span, enum rbc_color const content[FACE_SIZE])
+static void rbc_set_span(struct rbc_cube * self, struct rbc_span span, enum rbc_color const content[FACE_SIZE])
 {
 	if (span.type == RBC_ROW)
-		set_face_row(self->faces[span.face_location], content, span.location);
+		rbc_set_face_row(self->faces[span.face_location], content, span.location);
 	else
-		set_face_column(self->faces[span.face_location], content, span.location);
+		rbc_set_face_column(self->faces[span.face_location], content, span.location);
 }
 
 
@@ -250,7 +250,7 @@ static void set_span(struct rbc_cube * self, struct rbc_span span, enum rbc_colo
  *
  * @return int - 1 if span's face is in [reversing_faces], 0 otherwise
  */
-static int must_reverse_span(
+static int rbc_must_reverse_span(
 	struct rbc_span span,
 	enum rbc_face_location const reversing_faces[],
 	int faces_count)
@@ -276,11 +276,11 @@ static int must_reverse_span(
  *
  * @param to - where to write the copied span
  */
-static void move_span(struct rbc_cube * self, struct rbc_span from, struct rbc_span to)
+static void rbc_move_span(struct rbc_cube * self, struct rbc_span from, struct rbc_span to)
 {
 	enum rbc_color span[FACE_SIZE];
-	get_span(self, from, span);
-	set_span(self, to, span);
+	rbc_get_span(self, from, span);
+	rbc_set_span(self, to, span);
 }
 
 
@@ -289,7 +289,7 @@ static void move_span(struct rbc_cube * self, struct rbc_span from, struct rbc_s
  *
  * @param span - the span to reverse
  */
-static void reverse_span(enum rbc_color span[FACE_SIZE])
+static void rbc_reverse_span(enum rbc_color span[FACE_SIZE])
 {
 	enum rbc_color swap = span[0];
 	span[0] = span[2];
@@ -306,12 +306,12 @@ static void reverse_span(enum rbc_color span[FACE_SIZE])
  *
  * @param to - where to write the copied span
  */
-static void move_reversed_span(struct rbc_cube * self, struct rbc_span from, struct rbc_span to)
+static void rbc_move_reversed_span(struct rbc_cube * self, struct rbc_span from, struct rbc_span to)
 {
 	enum rbc_color span_content[FACE_SIZE];
-	get_span(self, from, span_content);
-	reverse_span(span_content);
-	set_span(self, to, span_content);
+	rbc_get_span(self, from, span_content);
+	rbc_reverse_span(span_content);
+	rbc_set_span(self, to, span_content);
 }
 
 
@@ -328,7 +328,7 @@ static void move_reversed_span(struct rbc_cube * self, struct rbc_span from, str
  * @param reversing_count - the number of faces in [reversing_spans_face]
  * 	(ie., the number of spans to reverse in the slice)
  */
-void rotate_slice(
+void rbc_rotate_slice(
 	struct rbc_cube * self,
 	struct rbc_slice const * slice,
 	enum rbc_face_location const reversing_spans_face[],
@@ -339,23 +339,23 @@ void rotate_slice(
 	struct rbc_span source_span, destination_span;
 
 	enum rbc_color span_backup[FACE_SIZE];
-	get_span(self, slice->spans[3], span_backup);
+	rbc_get_span(self, slice->spans[3], span_backup);
 
 	for (span_index = 3; span_index > 0; span_index--)
 	{
 		source_span = slice->spans[span_index - 1];
 		destination_span = slice->spans[span_index];
 
-		if (must_reverse_span(source_span, reversing_spans_face, reversing_count))
-			move_reversed_span(self, source_span, destination_span);
+		if (rbc_must_reverse_span(source_span, reversing_spans_face, reversing_count))
+			rbc_move_reversed_span(self, source_span, destination_span);
 		else
-			move_span(self, source_span, destination_span);
+			rbc_move_span(self, source_span, destination_span);
 	}
 
 	source_span = slice->spans[3];
-	if (must_reverse_span(source_span, reversing_spans_face, reversing_count))
-		reverse_span(span_backup);
+	if (rbc_must_reverse_span(source_span, reversing_spans_face, reversing_count))
+		rbc_reverse_span(span_backup);
 
 	destination_span = slice->spans[0];
-	set_span(self, destination_span, span_backup);
+	rbc_set_span(self, destination_span, span_backup);
 }

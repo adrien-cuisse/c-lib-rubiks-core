@@ -23,10 +23,10 @@
  *
  * @param slice - the slice to rotate
  */
-PATTERN_DEPENDANT static void rotate_slice_left(struct rbc_cube * self, struct rbc_slice const * slice)
+PATTERN_DEPENDANT static void rbc_rotate_slice_left(struct rbc_cube * self, struct rbc_slice const * slice)
 {
 	enum rbc_face_location reversing_spans_face[2] = { RBC_LEFT_FACE, RBC_BACK_FACE };
-	rotate_slice(self, slice, reversing_spans_face, 2);
+	rbc_rotate_slice(self, slice, reversing_spans_face, 2);
 }
 
 
@@ -37,10 +37,10 @@ PATTERN_DEPENDANT static void rotate_slice_left(struct rbc_cube * self, struct r
  *
  * @param slice - the slice to rotate
  */
-PATTERN_DEPENDANT static void rotate_slice_right(struct rbc_cube * self, struct rbc_slice const * slice)
+PATTERN_DEPENDANT static void rbc_rotate_slice_right(struct rbc_cube * self, struct rbc_slice const * slice)
 {
 	enum rbc_face_location reversing_spans_face[2] = { RBC_RIGHT_FACE, RBC_BACK_FACE };
-	rotate_slice(self, slice, reversing_spans_face, 2);
+	rbc_rotate_slice(self, slice, reversing_spans_face, 2);
 }
 
 
@@ -53,8 +53,8 @@ void rbc_rotate_cube_top_slice_left(struct rbc_cube * self)
 		{ RBC_BACK_FACE, RBC_BOTTOM_ROW, RBC_ROW },
 		{ RBC_RIGHT_FACE, RBC_TOP_ROW, RBC_ROW }
 	}};
-	rotate_slice_left(self, & slice);
-	rotate_face_clockwise(rbc_cube_top_face(self));
+	rbc_rotate_slice_left(self, & slice);
+	rbc_rotate_face_clockwise(rbc_cube_top_face(self));
 }
 
 
@@ -67,8 +67,8 @@ void rbc_rotate_cube_top_slice_right(struct rbc_cube * self)
 		{ RBC_BACK_FACE, RBC_BOTTOM_ROW, RBC_ROW },
 		{ RBC_LEFT_FACE, RBC_TOP_ROW, RBC_ROW }
 	}};
-	rotate_slice_right(self, & slice);
-	rotate_face_anticlockwise(rbc_cube_top_face(self));
+	rbc_rotate_slice_right(self, & slice);
+	rbc_rotate_face_anticlockwise(rbc_cube_top_face(self));
 }
 
 
@@ -81,7 +81,7 @@ void rbc_rotate_cube_equator_slice_left(struct rbc_cube * self)
 		{ RBC_BACK_FACE, RBC_EQUATOR_ROW, RBC_ROW },
 		{ RBC_RIGHT_FACE, RBC_EQUATOR_ROW, RBC_ROW }
 	}};
-	rotate_slice_left(self, & slice);
+	rbc_rotate_slice_left(self, & slice);
 }
 
 
@@ -94,7 +94,7 @@ void rbc_rotate_cube_equator_slice_right(struct rbc_cube * self)
 		{ RBC_BACK_FACE, RBC_EQUATOR_ROW, RBC_ROW },
 		{ RBC_LEFT_FACE, RBC_EQUATOR_ROW, RBC_ROW }
 	}};
-	rotate_slice_right(self, & slice);
+	rbc_rotate_slice_right(self, & slice);
 }
 
 
@@ -107,8 +107,8 @@ void rbc_rotate_cube_bottom_slice_left(struct rbc_cube * self)
 		{ RBC_BACK_FACE, RBC_TOP_ROW, RBC_ROW },
 		{ RBC_RIGHT_FACE, RBC_BOTTOM_ROW, RBC_ROW }
 	}};
-	rotate_slice_left(self, & slice);
-	rotate_face_anticlockwise(rbc_cube_bottom_face(self));
+	rbc_rotate_slice_left(self, & slice);
+	rbc_rotate_face_anticlockwise(rbc_cube_bottom_face(self));
 }
 
 
@@ -121,8 +121,8 @@ void rbc_rotate_cube_bottom_slice_right(struct rbc_cube * self)
 		{ RBC_BACK_FACE, RBC_TOP_ROW, RBC_ROW },
 		{ RBC_LEFT_FACE, RBC_BOTTOM_ROW, RBC_ROW }
 	}};
-	rotate_slice_right(self, & slice);
-	rotate_face_clockwise(rbc_cube_bottom_face(self));
+	rbc_rotate_slice_right(self, & slice);
+	rbc_rotate_face_clockwise(rbc_cube_bottom_face(self));
 }
 
 
@@ -135,7 +135,7 @@ void rbc_rotate_cube_bottom_slice_right(struct rbc_cube * self)
  *
  * @param rotation - the rotation to apply
  */
-static void rotate_vertical_slice(struct rbc_cube * self, enum rbc_span_location column, struct rbc_faces_cycle const * rotation)
+static void rbc_rotate_vertical_slice(struct rbc_cube * self, enum rbc_span_location column, struct rbc_faces_cycle const * rotation)
 {
 	int span_index;
 	struct rbc_slice slice;
@@ -147,7 +147,7 @@ static void rotate_vertical_slice(struct rbc_cube * self, enum rbc_span_location
 		slice.spans[span_index].type = RBC_COLUMN;
 	}
 
-	rotate_slice(self, & slice, NULL, 0);
+	rbc_rotate_slice(self, & slice, NULL, 0);
 }
 
 
@@ -158,10 +158,10 @@ static void rotate_vertical_slice(struct rbc_cube * self, enum rbc_span_location
  *
  * @param column - the column of the slice to rotate
  */
-PATTERN_DEPENDANT static void rotate_slice_up(struct rbc_cube * self, enum rbc_span_location column)
+PATTERN_DEPENDANT static void rbc_rotate_slice_up(struct rbc_cube * self, enum rbc_span_location column)
 {
 	struct rbc_faces_cycle rotation = {{ RBC_FRONT_FACE, RBC_TOP_FACE, RBC_BACK_FACE, RBC_BOTTOM_FACE }};
-	rotate_vertical_slice(self, column, & rotation);
+	rbc_rotate_vertical_slice(self, column, & rotation);
 }
 
 
@@ -172,50 +172,50 @@ PATTERN_DEPENDANT static void rotate_slice_up(struct rbc_cube * self, enum rbc_s
  *
  * @param column - the column of the slice to rotate
  */
-PATTERN_DEPENDANT static void rotate_slice_down(struct rbc_cube * self, enum rbc_span_location column)
+PATTERN_DEPENDANT static void rbc_rotate_slice_down(struct rbc_cube * self, enum rbc_span_location column)
 {
 	struct rbc_faces_cycle rotation = {{ RBC_FRONT_FACE, RBC_BOTTOM_FACE, RBC_BACK_FACE, RBC_TOP_FACE }};
-	rotate_vertical_slice(self, column, & rotation);
+	rbc_rotate_vertical_slice(self, column, & rotation);
 }
 
 
 void rbc_rotate_cube_left_slice_up(struct rbc_cube * self)
 {
-	rotate_slice_up(self, RBC_LEFT_COLUMN);
-	rotate_face_anticlockwise(rbc_cube_left_face(self));
+	rbc_rotate_slice_up(self, RBC_LEFT_COLUMN);
+	rbc_rotate_face_anticlockwise(rbc_cube_left_face(self));
 }
 
 
 void rbc_rotate_cube_left_slice_down(struct rbc_cube * self)
 {
-	rotate_slice_down(self, RBC_LEFT_COLUMN);
-	rotate_face_clockwise(rbc_cube_left_face(self));
+	rbc_rotate_slice_down(self, RBC_LEFT_COLUMN);
+	rbc_rotate_face_clockwise(rbc_cube_left_face(self));
 }
 
 
 void rbc_rotate_cube_middle_slice_up(struct rbc_cube * self)
 {
-	rotate_slice_up(self, RBC_MIDDLE_COLUMN);
+	rbc_rotate_slice_up(self, RBC_MIDDLE_COLUMN);
 }
 
 
 void rbc_rotate_cube_middle_slice_down(struct rbc_cube * self)
 {
-	rotate_slice_down(self, RBC_MIDDLE_COLUMN);
+	rbc_rotate_slice_down(self, RBC_MIDDLE_COLUMN);
 }
 
 
 void rbc_rotate_cube_right_slice_up(struct rbc_cube * self)
 {
-	rotate_slice_up(self, RBC_RIGHT_COLUMN);
-	rotate_face_clockwise(rbc_cube_right_face(self));
+	rbc_rotate_slice_up(self, RBC_RIGHT_COLUMN);
+	rbc_rotate_face_clockwise(rbc_cube_right_face(self));
 }
 
 
 void rbc_rotate_cube_right_slice_down(struct rbc_cube * self)
 {
-	rotate_slice_down(self, RBC_RIGHT_COLUMN);
-	rotate_face_anticlockwise(rbc_cube_right_face(self));
+	rbc_rotate_slice_down(self, RBC_RIGHT_COLUMN);
+	rbc_rotate_face_anticlockwise(rbc_cube_right_face(self));
 }
 
 
@@ -226,10 +226,10 @@ void rbc_rotate_cube_right_slice_down(struct rbc_cube * self)
  *
  * @param slice - the slice to rotate
  */
-PATTERN_DEPENDANT static void rotate_slice_clockwise(struct rbc_cube * self, struct rbc_slice const * slice)
+PATTERN_DEPENDANT static void rbc_rotate_slice_clockwise(struct rbc_cube * self, struct rbc_slice const * slice)
 {
 	enum rbc_face_location reversing_spans_face[2] = { RBC_RIGHT_FACE, RBC_LEFT_FACE };
-	rotate_slice(self, slice, reversing_spans_face, 2);
+	rbc_rotate_slice(self, slice, reversing_spans_face, 2);
 }
 
 
@@ -242,8 +242,8 @@ void rbc_rotate_cube_front_slice_clockwise(struct rbc_cube * self)
 		{ RBC_BOTTOM_FACE, RBC_TOP_ROW, RBC_ROW },
 		{ RBC_LEFT_FACE, RBC_RIGHT_COLUMN, RBC_COLUMN }
 	}};
-	rotate_slice_clockwise(self, & slice);
-	rotate_face_clockwise(rbc_cube_front_face(self));
+	rbc_rotate_slice_clockwise(self, & slice);
+	rbc_rotate_face_clockwise(rbc_cube_front_face(self));
 }
 
 
@@ -254,10 +254,10 @@ void rbc_rotate_cube_front_slice_clockwise(struct rbc_cube * self)
  *
  * @param slice - the slice to rotate
  */
-PATTERN_DEPENDANT static void rotate_slice_anticlockwise(struct rbc_cube * self, struct rbc_slice const * slice)
+PATTERN_DEPENDANT static void rbc_rotate_slice_anticlockwise(struct rbc_cube * self, struct rbc_slice const * slice)
 {
 	enum rbc_face_location reversing_spans_face[2] = { RBC_TOP_FACE, RBC_BOTTOM_FACE };
-	rotate_slice(self, slice, reversing_spans_face, 2);
+	rbc_rotate_slice(self, slice, reversing_spans_face, 2);
 }
 
 
@@ -270,8 +270,8 @@ void rbc_rotate_cube_front_slice_anticlockwise(struct rbc_cube * self)
 		{ RBC_BOTTOM_FACE, RBC_TOP_ROW, RBC_ROW },
 		{ RBC_RIGHT_FACE, RBC_LEFT_COLUMN, RBC_COLUMN }
 	}};
-	rotate_slice_anticlockwise(self, & slice);
-	rotate_face_anticlockwise(rbc_cube_front_face(self));
+	rbc_rotate_slice_anticlockwise(self, & slice);
+	rbc_rotate_face_anticlockwise(rbc_cube_front_face(self));
 }
 
 
@@ -284,7 +284,7 @@ void rbc_rotate_cube_standing_slice_clockwise(struct rbc_cube * self)
 		{ RBC_BOTTOM_FACE, RBC_EQUATOR_ROW, RBC_ROW },
 		{ RBC_LEFT_FACE, RBC_MIDDLE_COLUMN, RBC_COLUMN }
 	}};
-	rotate_slice_clockwise(self, & slice);
+	rbc_rotate_slice_clockwise(self, & slice);
 }
 
 
@@ -297,7 +297,7 @@ void rbc_rotate_cube_standing_slice_anticlockwise(struct rbc_cube * self)
 		{ RBC_BOTTOM_FACE, RBC_EQUATOR_ROW, RBC_ROW },
 		{ RBC_RIGHT_FACE, RBC_MIDDLE_COLUMN, RBC_COLUMN }
 	}};
-	rotate_slice_anticlockwise(self, & slice);
+	rbc_rotate_slice_anticlockwise(self, & slice);
 }
 
 
@@ -310,8 +310,8 @@ void rbc_rotate_cube_back_slice_clockwise(struct rbc_cube * self)
 		{ RBC_BOTTOM_FACE, RBC_BOTTOM_ROW, RBC_ROW },
 		{ RBC_LEFT_FACE, RBC_LEFT_COLUMN, RBC_COLUMN }
 	}};
-	rotate_slice_clockwise(self, & slice);
-	rotate_face_anticlockwise(rbc_cube_back_face(self));
+	rbc_rotate_slice_clockwise(self, & slice);
+	rbc_rotate_face_anticlockwise(rbc_cube_back_face(self));
 }
 
 
@@ -324,8 +324,8 @@ void rbc_rotate_cube_back_slice_anticlockwise(struct rbc_cube * self)
 		{ RBC_BOTTOM_FACE, RBC_BOTTOM_ROW, RBC_ROW },
 		{ RBC_RIGHT_FACE, RBC_RIGHT_COLUMN, RBC_COLUMN }
 	}};
-	rotate_slice_anticlockwise(self, & slice);
-	rotate_face_clockwise(rbc_cube_back_face(self));
+	rbc_rotate_slice_anticlockwise(self, & slice);
+	rbc_rotate_face_clockwise(rbc_cube_back_face(self));
 }
 
 

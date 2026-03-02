@@ -147,7 +147,7 @@ enum rbc_span_location
  *
  * @return struct rbc_face * - the created face
  */
-struct rbc_face * create_face(enum rbc_color color);
+struct rbc_face * rbc_create_face(enum rbc_color color);
 
 
 /**
@@ -155,7 +155,7 @@ struct rbc_face * create_face(enum rbc_color color);
  *
  * @param self - the face to delete
  */
-void delete_face(struct rbc_face ** self);
+void rbc_delete_face(struct rbc_face ** self);
 
 
 /**
@@ -163,7 +163,7 @@ void delete_face(struct rbc_face ** self);
  *
  * @param self - the face to rotate
  */
-void rotate_face_clockwise(struct rbc_face * self);
+void rbc_rotate_face_clockwise(struct rbc_face * self);
 
 
 /**
@@ -171,7 +171,7 @@ void rotate_face_clockwise(struct rbc_face * self);
  *
  * @param self - the face to rotate
  */
-void rotate_face_anticlockwise(struct rbc_face * self);
+void rbc_rotate_face_anticlockwise(struct rbc_face * self);
 
 
 /**
@@ -183,7 +183,7 @@ void rotate_face_anticlockwise(struct rbc_face * self);
  *
  * @param row - the row to read
  */
-void copy_face_row(struct rbc_face const * self, enum rbc_color buffer[FACE_SIZE], enum rbc_span_location row);
+void rbc_copy_face_row(struct rbc_face const * self, enum rbc_color buffer[FACE_SIZE], enum rbc_span_location row);
 
 
 /**
@@ -195,7 +195,7 @@ void copy_face_row(struct rbc_face const * self, enum rbc_color buffer[FACE_SIZE
  *
  * @param row - the row where to write the cells
  */
-void set_face_row(struct rbc_face * self, enum rbc_color const cells[FACE_SIZE], enum rbc_span_location row);
+void rbc_set_face_row(struct rbc_face * self, enum rbc_color const cells[FACE_SIZE], enum rbc_span_location row);
 
 
 /**
@@ -207,7 +207,7 @@ void set_face_row(struct rbc_face * self, enum rbc_color const cells[FACE_SIZE],
  *
  * @param column - the column to read
  */
-void copy_face_column(struct rbc_face const * self, enum rbc_color buffer[FACE_SIZE], enum rbc_span_location column);
+void rbc_copy_face_column(struct rbc_face const * self, enum rbc_color buffer[FACE_SIZE], enum rbc_span_location column);
 
 
 /**
@@ -219,7 +219,7 @@ void copy_face_column(struct rbc_face const * self, enum rbc_color buffer[FACE_S
  *
  * @param column - the column where to write the cells
  */
-void set_face_column(struct rbc_face * self, enum rbc_color const cells[FACE_SIZE], enum rbc_span_location column);
+void rbc_set_face_column(struct rbc_face * self, enum rbc_color const cells[FACE_SIZE], enum rbc_span_location column);
 
 
 
