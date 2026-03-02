@@ -6,75 +6,59 @@
 
 
 
-Test(Cube, isInitializedWithBlueFaceInFront)
+Test(Cube, blue_opposes_green)
 {
 	// given
 	struct rbc_cube * cube = rbc_create_cube();
+
 	// when
-	struct rbc_face * front_face = rbc_cube_front_face(cube);
+	rbc_orientate_cube(cube, RBC_BLUE, RBC_WHITE);
+
 	// then
-	enum rbc_color front_face_color = rbc_face_color(front_face);
-	cr_assert_eq(front_face_color, RBC_BLUE, "front face is not blue");
-}
-
-
-Test(Cube, isInitializedWithRedFaceOnTheLeft)
-{
-	// given
-	struct rbc_cube * cube = rbc_create_cube();
-	// when
-	struct rbc_face * left_face = rbc_cube_left_face(cube);
-	// then
-	enum rbc_color left_face_color = rbc_face_color(left_face);
-	cr_assert_eq(left_face_color, RBC_RED, "left face is not red");
-}
-
-
-Test(Cube, isInitializedWithOrangeFaceOnTheRight)
-{
-	// given
-	struct rbc_cube * cube = rbc_create_cube();
-	// when
-	struct rbc_face * right_face = rbc_cube_right_face(cube);
-	// then
-	enum rbc_color right_face_color = rbc_face_color(right_face);
-	cr_assert_eq(right_face_color, RBC_ORANGE, "right face is not orange");
-}
-
-
-Test(Cube, isInitializedWithWhiteFaceOnTop)
-{
-	// given
-	struct rbc_cube * cube = rbc_create_cube();
-	// when
-	struct rbc_face * top_face = rbc_cube_top_face(cube);
-	// then
-	enum rbc_color top_face_color = rbc_face_color(top_face);
-	cr_assert_eq(top_face_color, RBC_WHITE, "top face is not white");
-}
-
-
-Test(Cube, isInitializedWithYellowFaceAtBottom)
-{
-	// given
-	struct rbc_cube * cube = rbc_create_cube();
-	// when
-	struct rbc_face * bottom_face = rbc_cube_bottom_face(cube);
-	// then
-	enum rbc_color bottom_face_color = rbc_face_color(bottom_face);
-	cr_assert_eq(bottom_face_color, RBC_YELLOW, "bottom face is not yellow");
-}
-
-
-Test(Cube, isInitializedWithGreenFaceOnTheBack)
-{
-	// given
-	struct rbc_cube * cube = rbc_create_cube();
-	// when
 	struct rbc_face * back_face = rbc_cube_back_face(cube);
+	cr_assert_eq(RBC_GREEN, rbc_face_color(back_face));
+}
+
+
+Test(Cube, white_opposes_yellow)
+{
+	// given
+	struct rbc_cube * cube = rbc_create_cube();
+
+	// when
+	rbc_orientate_cube(cube, RBC_WHITE, RBC_BLUE);
+
 	// then
-	enum rbc_color back_face_color = rbc_face_color(back_face);
-	cr_assert_eq(back_face_color, RBC_GREEN, "back face is not green");
+	struct rbc_face * back_face = rbc_cube_back_face(cube);
+	cr_assert_eq(RBC_YELLOW, rbc_face_color(back_face));
+}
+
+
+Test(Cube, red_opposes_orange)
+{
+	// given
+	struct rbc_cube * cube = rbc_create_cube();
+
+	// when
+	rbc_orientate_cube(cube, RBC_RED, RBC_BLUE);
+
+	// then
+	struct rbc_face * back_face = rbc_cube_back_face(cube);
+	cr_assert_eq(RBC_ORANGE, rbc_face_color(back_face));
+}
+
+
+Test(Cube, blueWhiteRed_clockwiseAroundCorner)
+{
+	// given
+	struct rbc_cube * cube = rbc_create_cube();
+
+	// when
+	rbc_orientate_cube(cube, RBC_BLUE, RBC_WHITE);
+
+	// then
+	struct rbc_face * left_face = rbc_cube_left_face(cube);
+	cr_assert_eq(RBC_RED, rbc_face_color(left_face));
 }
 
 
