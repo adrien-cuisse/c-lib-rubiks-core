@@ -215,6 +215,16 @@ void rbc_rotate_cube_top_slice_right(struct rbc_cube * self);
 
 
 /**
+ * Rotates the (horizontal) top slice twice
+ *
+ * Official notation: U2
+ *
+ * @param self - the cube to rotate the slice from
+ */
+void rbc_rotate_cube_top_slice_twice(struct rbc_cube * self);
+
+
+/**
  * Rotates the (horizontal) equator slice to the left
  *
  * Official notation: E
@@ -232,6 +242,16 @@ void rbc_rotate_cube_equator_slice_left(struct rbc_cube * self);
  * @param self - the cube to rotate the slice from
  */
 void rbc_rotate_cube_equator_slice_right(struct rbc_cube * self);
+
+
+/**
+ * Rotates the (horizontal) equator slice twice
+ *
+ * Official notation: E2
+ *
+ * @param self - the cube to rotate the slice from
+ */
+void rbc_rotate_cube_equator_slice_twice(struct rbc_cube * self);
 
 
 /**
@@ -255,6 +275,16 @@ void rbc_rotate_cube_bottom_slice_right(struct rbc_cube * self);
 
 
 /**
+ * Rotates the (horizontal) bottom slice twice
+ *
+ * Official notation: D2
+ *
+ * @param self - the cube to rotate the slice from
+ */
+void rbc_rotate_cube_bottom_slice_twice(struct rbc_cube * self);
+
+
+/**
  * Rotates the (vertical) left slice up
  *
  * Official notation: L'
@@ -272,6 +302,16 @@ void rbc_rotate_cube_left_slice_up(struct rbc_cube * self);
  * @param self - the cube to rotate the slice from
  */
 void rbc_rotate_cube_left_slice_down(struct rbc_cube * self);
+
+
+/**
+ * Rotates the (vertical) left slice twice
+ *
+ * Official notation: L2
+ *
+ * @param self - the cube to rotate the slice from
+ */
+void rbc_rotate_cube_left_slice_twice(struct rbc_cube * self);
 
 
 /**
@@ -295,6 +335,16 @@ void rbc_rotate_cube_middle_slice_down(struct rbc_cube * self);
 
 
 /**
+ * Rotates the (vertical) middle slice twice
+ *
+ * Official notation: M2
+ *
+ * @param self - the cube to rotate the slice from
+ */
+void rbc_rotate_cube_middle_slice_twice(struct rbc_cube * self);
+
+
+/**
  * Rotates the (vertical) right slice up
  *
  * Official notation: R
@@ -312,6 +362,16 @@ void rbc_rotate_cube_right_slice_up(struct rbc_cube * self);
  * @param self - the cube to rotate the slice from
  */
 void rbc_rotate_cube_right_slice_down(struct rbc_cube * self);
+
+
+/**
+ * Rotates the (vertical) right slice twice
+ *
+ * Official notation: R2
+ *
+ * @param self - the cube to rotate the slice from
+ */
+void rbc_rotate_cube_right_slice_twice(struct rbc_cube * self);
 
 
 /**
@@ -335,6 +395,16 @@ void rbc_rotate_cube_front_slice_anticlockwise(struct rbc_cube * self);
 
 
 /**
+ * Rotates the (parallel) front slice twice
+ *
+ * Official notation: F2
+ *
+ * @param self - the cube to rotate the slice from
+ */
+void rbc_rotate_cube_front_slice_twice(struct rbc_cube * self);
+
+
+/**
  * Rotates the (parallel) standing slice clockwise
  *
  * Official notation: S
@@ -352,6 +422,16 @@ void rbc_rotate_cube_standing_slice_clockwise(struct rbc_cube * self);
  * @param self - the cube to rotate the slice from
  */
 void rbc_rotate_cube_standing_slice_anticlockwise(struct rbc_cube * self);
+
+
+/**
+ * Rotates the (parallel) standing slice twice
+ *
+ * Official notation: S2
+ *
+ * @param self - the cube to rotate the slice from
+ */
+void rbc_rotate_cube_standing_slice_twice(struct rbc_cube * self);
 
 
 /**
@@ -375,6 +455,16 @@ void rbc_rotate_cube_back_slice_anticlockwise(struct rbc_cube * self);
 
 
 /**
+ * Rotates the (parallel) back slice twice
+ *
+ * Official notation: B2
+ *
+ * @param self - the cube to rotate the slice from
+ */
+void rbc_rotate_cube_back_slice_twice(struct rbc_cube * self);
+
+
+/**
  * Rotates the (horizontal) top slices to the left (top and equator)
  *
  * Official notation: u
@@ -392,6 +482,16 @@ void rbc_rotate_cube_top_slices_left(struct rbc_cube * self);
  * @param self - the cube to rotate the slices from
  */
 void rbc_rotate_cube_top_slices_right(struct rbc_cube * self);
+
+
+/**
+ * Rotates the (horizontal) top slices twice (top and equator)
+ *
+ * Official notation: u2
+ *
+ * @param self - the cube to rotate the slices from
+ */
+void rbc_rotate_cube_top_slices_twice(struct rbc_cube * self);
 
 
 /**
@@ -415,6 +515,16 @@ void rbc_rotate_cube_outer_slices_right(struct rbc_cube * self);
 
 
 /**
+ * Rotates the horizontal slices twice, except the equator one
+ *
+ * Official notation: e2
+ *
+ * @param self - the cube to rotate the slices from
+ */
+void rbc_rotate_cube_horizontal_outer_slices_twice(struct rbc_cube * self);
+
+
+/**
  * Rotates the (horizontal) bottom slices to the left (equator and bottom)
  *
  * Official notation: d'
@@ -432,6 +542,16 @@ void rbc_rotate_cube_bottom_slices_left(struct rbc_cube * self);
  * @param self - the cube to rotate the slices from
  */
 void rbc_rotate_cube_bottom_slices_right(struct rbc_cube * self);
+
+
+/**
+ * Rotates the (horizontal) bottom slices twice (equator and bottom)
+ *
+ * Official notation: d2
+ *
+ * @param self - the cube to rotate the slices from
+ */
+void rbc_rotate_cube_bottom_slices_twice(struct rbc_cube * self);
 
 
 /**
@@ -455,6 +575,16 @@ void rbc_rotate_cube_left_slices_down(struct rbc_cube * self);
 
 
 /**
+ * Rotates the (vertical) left slices twice (left and middle)
+ *
+ * Official notation: l2
+ *
+ * @param self - the cube to rotate the slices from
+ */
+void rbc_rotate_cube_left_slices_twice(struct rbc_cube * self);
+
+
+/**
  * Rotates the vertical slices up, except the middle one
  *
  * Official notation: m'
@@ -472,6 +602,16 @@ void rbc_rotate_cube_outer_slices_up(struct rbc_cube * self);
  * @param self - the cube to rotate the slices from
  */
 void rbc_rotate_cube_outer_slices_down(struct rbc_cube * self);
+
+
+/**
+ * Rotates the vertical slices twice, except the middle one
+ *
+ * Official notation: m2
+ *
+ * @param self - the cube to rotate the slices from
+ */
+void rbc_rotate_cube_vertical_outer_slices_twice(struct rbc_cube * self);
 
 
 /**
@@ -495,6 +635,16 @@ void rbc_rotate_cube_right_slices_down(struct rbc_cube * self);
 
 
 /**
+ * Rotates the (vertical) right slices twice (middle and right)
+ *
+ * Official notation: r2
+ *
+ * @param self - the cube to rotate the slices from
+ */
+void rbc_rotate_cube_right_slices_twice(struct rbc_cube * self);
+
+
+/**
  * Rotates the (parallel) front slices clockwise (front and standing)
  *
  * Official notation: f
@@ -512,6 +662,16 @@ void rbc_rotate_cube_front_slices_clockwise(struct rbc_cube * self);
  * @param self - the cube to rotate the slices from
  */
 void rbc_rotate_cube_front_slices_anticlockwise(struct rbc_cube * self);
+
+
+/**
+ * Rotates the (parallel) front slices twice (front and standing)
+ *
+ * Official notation: f2
+ *
+ * @param self - the cube to rotate the slices from
+ */
+void rbc_rotate_cube_front_slices_twice(struct rbc_cube * self);
 
 
 /**
@@ -535,6 +695,16 @@ void rbc_rotate_cube_outer_slices_anticlockwise(struct rbc_cube * self);
 
 
 /**
+ * Rotates the parallel slices twice, except the standing one
+ *
+ * Official notation: s2
+ *
+ * @param self - the cube to rotate the slices from
+ */
+void rbc_rotate_cube_parallel_outer_slices_twice(struct rbc_cube * self);
+
+
+/**
  * Rotates the (parallel) back slices clockwise (standing and back)
  *
  * Official notation: b'
@@ -552,6 +722,16 @@ void rbc_rotate_cube_back_slices_clockwise(struct rbc_cube * self);
  * @param self - the cube to rotate the slices from
  */
 void rbc_rotate_cube_back_slices_anticlockwise(struct rbc_cube * self);
+
+
+/**
+ * Rotates the (parallel) back slices twice (standing and back)
+ *
+ * Official notation: b2
+ *
+ * @param self - the cube to rotate the slices from
+ */
+void rbc_rotate_cube_back_slices_twice(struct rbc_cube * self);
 
 
 

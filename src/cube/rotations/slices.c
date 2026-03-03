@@ -453,3 +453,129 @@ void rbc_rotate_cube_back_slices_anticlockwise(struct rbc_cube * self)
 	rbc_rotate_cube_standing_slice_anticlockwise(self);
 	rbc_rotate_cube_back_slice_anticlockwise(self);
 }
+
+
+void rbc_rotate_cube_top_slice_twice(struct rbc_cube * self)
+{
+	rbc_rotate_cube_top_slice_left(self);
+	rbc_rotate_cube_top_slice_left(self);
+}
+
+
+void rbc_rotate_cube_equator_slice_twice(struct rbc_cube * self)
+{
+	rbc_rotate_cube_equator_slice_left(self);
+	rbc_rotate_cube_equator_slice_left(self);
+}
+
+
+void rbc_rotate_cube_bottom_slice_twice(struct rbc_cube * self)
+{
+	rbc_rotate_cube_bottom_slice_left(self);
+	rbc_rotate_cube_bottom_slice_left(self);
+}
+
+
+void rbc_rotate_cube_left_slice_twice(struct rbc_cube * self)
+{
+	rbc_rotate_cube_left_slice_down(self);
+	rbc_rotate_cube_left_slice_down(self);
+}
+
+
+void rbc_rotate_cube_middle_slice_twice(struct rbc_cube * self)
+{
+	rbc_rotate_cube_middle_slice_up(self);
+	rbc_rotate_cube_middle_slice_up(self);
+}
+
+
+void rbc_rotate_cube_right_slice_twice(struct rbc_cube * self)
+{
+	rbc_rotate_cube_right_slice_up(self);
+	rbc_rotate_cube_right_slice_up(self);
+}
+
+
+void rbc_rotate_cube_front_slice_twice(struct rbc_cube * self)
+{
+	rbc_rotate_cube_front_slice_clockwise(self);
+	rbc_rotate_cube_front_slice_clockwise(self);
+}
+
+
+void rbc_rotate_cube_standing_slice_twice(struct rbc_cube * self)
+{
+	rbc_rotate_cube_standing_slice_clockwise(self);
+	rbc_rotate_cube_standing_slice_clockwise(self);
+}
+
+
+void rbc_rotate_cube_back_slice_twice(struct rbc_cube * self)
+{
+	rbc_rotate_cube_back_slice_clockwise(self);
+	rbc_rotate_cube_back_slice_clockwise(self);
+}
+
+
+void rbc_rotate_cube_top_slices_twice(struct rbc_cube * self)
+{
+	rbc_rotate_cube_top_slices_left(self);
+	rbc_rotate_cube_top_slices_left(self);
+}
+
+
+void rbc_rotate_cube_horizontal_outer_slices_twice(struct rbc_cube * self)
+{
+	rbc_rotate_cube_outer_slices_left(self);
+	rbc_rotate_cube_outer_slices_left(self);
+}
+
+
+void rbc_rotate_cube_bottom_slices_twice(struct rbc_cube * self)
+{
+	rbc_rotate_cube_bottom_slices_left(self);
+	rbc_rotate_cube_bottom_slices_left(self);
+}
+
+
+void rbc_rotate_cube_left_slices_twice(struct rbc_cube * self)
+{
+	rbc_rotate_cube_left_slices_up(self);
+	rbc_rotate_cube_left_slices_up(self);
+}
+
+
+void rbc_rotate_cube_vertical_outer_slices_twice(struct rbc_cube * self)
+{
+	rbc_rotate_cube_outer_slices_up(self);
+	rbc_rotate_cube_outer_slices_up(self);
+}
+
+
+void rbc_rotate_cube_right_slices_twice(struct rbc_cube * self)
+{
+	rbc_rotate_cube_right_slices_up(self);
+	rbc_rotate_cube_right_slices_up(self);
+}
+
+
+void rbc_rotate_cube_front_slices_twice(struct rbc_cube * self)
+{
+	rbc_rotate_cube_front_slices_clockwise(self);
+	rbc_rotate_cube_front_slices_clockwise(self);
+}
+
+
+void rbc_rotate_cube_parallel_outer_slices_twice(struct rbc_cube * self)
+{
+	rbc_rotate_cube_outer_slices_clockwise(self);
+	rbc_rotate_cube_outer_slices_clockwise(self);
+}
+
+
+void rbc_rotate_cube_back_slices_twice(struct rbc_cube * self)
+{
+	rbc_rotate_cube_back_slices_clockwise(self);
+	rbc_rotate_cube_back_slices_clockwise(self);
+}
