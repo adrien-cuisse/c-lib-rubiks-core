@@ -137,7 +137,7 @@ RBC_API struct rbc_face * rbc_cube_back_face(struct rbc_cube const * self);
 /**
  * Rotates the whole cube to the left (like U but all slices)
  *
- * Official notation: y
+ * Singmaster notation: y
  *
  * @param self - the cube to rotate
  */
@@ -147,7 +147,7 @@ RBC_API void rbc_rotate_cube_left(struct rbc_cube * self);
 /**
  * Rotates the whole cube to the right (like U' but all slices)
  *
- * Official notation: y'
+ * Singmaster notation: y'
  *
  * @param self - the cube to rotate
  */
@@ -157,7 +157,7 @@ RBC_API void rbc_rotate_cube_right(struct rbc_cube * self);
 /**
  * Rotates the whole cube up (like R but all slices)
  *
- * Official notation: x
+ * Singmaster notation: x
  *
  * @param self - the cube to rotate
  */
@@ -167,7 +167,7 @@ RBC_API void rbc_rotate_cube_up(struct rbc_cube * self);
 /**
  * Rotates the whole cube down (like R' but all slices)
  *
- * Official notation: x'
+ * Singmaster notation: x'
  *
  * @param self - the cube to rotate
  */
@@ -177,7 +177,7 @@ RBC_API void rbc_rotate_cube_down(struct rbc_cube * self);
 /**
  * Rotates the whole cube clockwise (like F but all slices)
  *
- * Official notation: z
+ * Singmaster notation: z
  *
  * @param self - the cube to rotate
  */
@@ -187,7 +187,7 @@ RBC_API void rbc_rotate_cube_clockwise(struct rbc_cube * self);
 /**
  * Rotates the whole cube anticlockwise (like F' but all slices)
  *
- * Official notation: z'
+ * Singmaster notation: z'
  *
  * @param self - the cube to rotate
  */
@@ -197,7 +197,7 @@ RBC_API void rbc_rotate_cube_anticlockwise(struct rbc_cube * self);
 /**
  * Rotates the (horizontal) top slice to the left
  *
- * Official notation: U
+ * Singmaster notation: U
  *
  * @param self - the cube to rotate the slice from
  */
@@ -207,7 +207,7 @@ RBC_API void rbc_rotate_cube_top_slice_left(struct rbc_cube * self);
 /**
  * Rotates the (horizontal) top slice to the right
  *
- * Official notation: U'
+ * Singmaster notation: U'
  *
  * @param self - the cube to rotate the slice from
  */
@@ -217,7 +217,7 @@ RBC_API void rbc_rotate_cube_top_slice_right(struct rbc_cube * self);
 /**
  * Rotates the (horizontal) top slice twice
  *
- * Official notation: U2
+ * Singmaster notation: U2
  *
  * @param self - the cube to rotate the slice from
  */
@@ -227,7 +227,7 @@ RBC_API void rbc_rotate_cube_top_slice_twice(struct rbc_cube * self);
 /**
  * Rotates the (horizontal) equator slice to the left
  *
- * Official notation: E
+ * Singmaster notation: E
  *
  * @param self - the cube to rotate the slice from
  */
@@ -237,7 +237,7 @@ RBC_API void rbc_rotate_cube_equator_slice_left(struct rbc_cube * self);
 /**
  * Rotates the (horizontal) equator slice to the right
  *
- * Official notation: E'
+ * Singmaster notation: E'
  *
  * @param self - the cube to rotate the slice from
  */
@@ -247,7 +247,7 @@ RBC_API void rbc_rotate_cube_equator_slice_right(struct rbc_cube * self);
 /**
  * Rotates the (horizontal) equator slice twice
  *
- * Official notation: E2
+ * Singmaster notation: E2
  *
  * @param self - the cube to rotate the slice from
  */
@@ -257,7 +257,7 @@ RBC_API void rbc_rotate_cube_equator_slice_twice(struct rbc_cube * self);
 /**
  * Rotates the (horizontal) bottom slice to the left
  *
- * Official notation: D'
+ * Singmaster notation: D'
  *
  * @param self - the cube to rotate the slice from
  */
@@ -267,7 +267,7 @@ RBC_API void rbc_rotate_cube_bottom_slice_left(struct rbc_cube * self);
 /**
  * Rotates the (horizontal) bottom slice to the right
  *
- * Official notation: D
+ * Singmaster notation: D
  *
  * @param self - the cube to rotate the slice from
  */
@@ -277,7 +277,7 @@ RBC_API void rbc_rotate_cube_bottom_slice_right(struct rbc_cube * self);
 /**
  * Rotates the (horizontal) bottom slice twice
  *
- * Official notation: D2
+ * Singmaster notation: D2
  *
  * @param self - the cube to rotate the slice from
  */
@@ -287,7 +287,7 @@ RBC_API void rbc_rotate_cube_bottom_slice_twice(struct rbc_cube * self);
 /**
  * Rotates the (vertical) left slice up
  *
- * Official notation: L'
+ * Singmaster notation: L'
  *
  * @param self - the cube to rotate the slice from
  */
@@ -297,7 +297,7 @@ RBC_API void rbc_rotate_cube_left_slice_up(struct rbc_cube * self);
 /**
  * Rotates the (vertical) left slice down
  *
- * Official notation: L
+ * Singmaster notation: L
  *
  * @param self - the cube to rotate the slice from
  */
@@ -307,7 +307,7 @@ RBC_API void rbc_rotate_cube_left_slice_down(struct rbc_cube * self);
 /**
  * Rotates the (vertical) left slice twice
  *
- * Official notation: L2
+ * Singmaster notation: L2
  *
  * @param self - the cube to rotate the slice from
  */
@@ -317,7 +317,7 @@ RBC_API void rbc_rotate_cube_left_slice_twice(struct rbc_cube * self);
 /**
  * Rotates the (vertical) middle slice up
  *
- * Official notation: M'
+ * Singmaster notation: M'
  *
  * @param self - the cube to rotate the slice from
  */
@@ -327,7 +327,7 @@ RBC_API void rbc_rotate_cube_middle_slice_up(struct rbc_cube * self);
 /**
  * Rotates the (vertical) middle slice down
  *
- * Official notation: M
+ * Singmaster notation: M
  *
  * @param self - the cube to rotate the slice from
  */
@@ -337,7 +337,7 @@ RBC_API void rbc_rotate_cube_middle_slice_down(struct rbc_cube * self);
 /**
  * Rotates the (vertical) middle slice twice
  *
- * Official notation: M2
+ * Singmaster notation: M2
  *
  * @param self - the cube to rotate the slice from
  */
@@ -347,7 +347,7 @@ RBC_API void rbc_rotate_cube_middle_slice_twice(struct rbc_cube * self);
 /**
  * Rotates the (vertical) right slice up
  *
- * Official notation: R
+ * Singmaster notation: R
  *
  * @param self - the cube to rotate the slice from
  */
@@ -357,7 +357,7 @@ RBC_API void rbc_rotate_cube_right_slice_up(struct rbc_cube * self);
 /**
  * Rotates the (vertical) right slice down
  *
- * Official notation: R'
+ * Singmaster notation: R'
  *
  * @param self - the cube to rotate the slice from
  */
@@ -367,7 +367,7 @@ RBC_API void rbc_rotate_cube_right_slice_down(struct rbc_cube * self);
 /**
  * Rotates the (vertical) right slice twice
  *
- * Official notation: R2
+ * Singmaster notation: R2
  *
  * @param self - the cube to rotate the slice from
  */
@@ -377,7 +377,7 @@ RBC_API void rbc_rotate_cube_right_slice_twice(struct rbc_cube * self);
 /**
  * Rotates the (parallel) front slice clockwise
  *
- * Official notation: F
+ * Singmaster notation: F
  *
  * @param self - the cube to rotate the slice from
  */
@@ -387,7 +387,7 @@ RBC_API void rbc_rotate_cube_front_slice_clockwise(struct rbc_cube * self);
 /**
  * Rotates the (parallel) front slice anticlockwise
  *
- * Official notation: F'
+ * Singmaster notation: F'
  *
  * @param self - the cube to rotate the slice from
  */
@@ -397,7 +397,7 @@ RBC_API void rbc_rotate_cube_front_slice_anticlockwise(struct rbc_cube * self);
 /**
  * Rotates the (parallel) front slice twice
  *
- * Official notation: F2
+ * Singmaster notation: F2
  *
  * @param self - the cube to rotate the slice from
  */
@@ -407,7 +407,7 @@ RBC_API void rbc_rotate_cube_front_slice_twice(struct rbc_cube * self);
 /**
  * Rotates the (parallel) standing slice clockwise
  *
- * Official notation: S
+ * Singmaster notation: S
  *
  * @param self - the cube to rotate the slice from
  */
@@ -417,7 +417,7 @@ RBC_API void rbc_rotate_cube_standing_slice_clockwise(struct rbc_cube * self);
 /**
  * Rotates the (parallel) standing slice anticlockwise
  *
- * Official notation: S'
+ * Singmaster notation: S'
  *
  * @param self - the cube to rotate the slice from
  */
@@ -427,7 +427,7 @@ RBC_API void rbc_rotate_cube_standing_slice_anticlockwise(struct rbc_cube * self
 /**
  * Rotates the (parallel) standing slice twice
  *
- * Official notation: S2
+ * Singmaster notation: S2
  *
  * @param self - the cube to rotate the slice from
  */
@@ -437,7 +437,7 @@ RBC_API void rbc_rotate_cube_standing_slice_twice(struct rbc_cube * self);
 /**
  * Rotates the (parallel) back slice clockwise
  *
- * Official notation: B'
+ * Singmaster notation: B'
  *
  * @param self - the cube to rotate the slice from
  */
@@ -447,7 +447,7 @@ RBC_API void rbc_rotate_cube_back_slice_clockwise(struct rbc_cube * self);
 /**
  * Rotates the (parallel) back slice anticlockwise
  *
- * Official notation: B
+ * Singmaster notation: B
  *
  * @param self - the cube to rotate the slice from
  */
@@ -457,7 +457,7 @@ RBC_API void rbc_rotate_cube_back_slice_anticlockwise(struct rbc_cube * self);
 /**
  * Rotates the (parallel) back slice twice
  *
- * Official notation: B2
+ * Singmaster notation: B2
  *
  * @param self - the cube to rotate the slice from
  */
@@ -467,7 +467,7 @@ RBC_API void rbc_rotate_cube_back_slice_twice(struct rbc_cube * self);
 /**
  * Rotates the (horizontal) top slices to the left (top and equator)
  *
- * Official notation: u
+ * Singmaster notation: u
  *
  * @param self - the cube to rotate the slices from
  */
@@ -477,7 +477,7 @@ RBC_API void rbc_rotate_cube_top_slices_left(struct rbc_cube * self);
 /**
  * Rotates the (horizontal) top slices to the right (top and equator)
  *
- * Official notation: u'
+ * Singmaster notation: u'
  *
  * @param self - the cube to rotate the slices from
  */
@@ -487,7 +487,7 @@ RBC_API void rbc_rotate_cube_top_slices_right(struct rbc_cube * self);
 /**
  * Rotates the (horizontal) top slices twice (top and equator)
  *
- * Official notation: u2
+ * Singmaster notation: u2
  *
  * @param self - the cube to rotate the slices from
  */
@@ -497,7 +497,7 @@ RBC_API void rbc_rotate_cube_top_slices_twice(struct rbc_cube * self);
 /**
  * Rotates the horizontal slices to the left, except the equator one
  *
- * Official notation: e
+ * Singmaster notation: e
  *
  * @param self - the cube to rotate the slices from
  */
@@ -507,7 +507,7 @@ RBC_API void rbc_rotate_cube_outer_slices_left(struct rbc_cube * self);
 /**
  * Rotates the horizontal slices to the right, except the equator one
  *
- * Official notation: e'
+ * Singmaster notation: e'
  *
  * @param self - the cube to rotate the slices from
  */
@@ -517,7 +517,7 @@ RBC_API void rbc_rotate_cube_outer_slices_right(struct rbc_cube * self);
 /**
  * Rotates the horizontal slices twice, except the equator one
  *
- * Official notation: e2
+ * Singmaster notation: e2
  *
  * @param self - the cube to rotate the slices from
  */
@@ -527,7 +527,7 @@ RBC_API void rbc_rotate_cube_horizontal_outer_slices_twice(struct rbc_cube * sel
 /**
  * Rotates the (horizontal) bottom slices to the left (equator and bottom)
  *
- * Official notation: d'
+ * Singmaster notation: d'
  *
  * @param self - the cube to rotate the slices from
  */
@@ -537,7 +537,7 @@ RBC_API void rbc_rotate_cube_bottom_slices_left(struct rbc_cube * self);
 /**
  * Rotates the (horizontal) bottom slices to the right (equator and bottom)
  *
- * Official notation: d
+ * Singmaster notation: d
  *
  * @param self - the cube to rotate the slices from
  */
@@ -547,7 +547,7 @@ RBC_API void rbc_rotate_cube_bottom_slices_right(struct rbc_cube * self);
 /**
  * Rotates the (horizontal) bottom slices twice (equator and bottom)
  *
- * Official notation: d2
+ * Singmaster notation: d2
  *
  * @param self - the cube to rotate the slices from
  */
@@ -557,7 +557,7 @@ RBC_API void rbc_rotate_cube_bottom_slices_twice(struct rbc_cube * self);
 /**
  * Rotates the (vertical) left slices up (left and middle)
  *
- * Official notation: l'
+ * Singmaster notation: l'
  *
  * @param self - the cube to rotate the slices from
  */
@@ -567,7 +567,7 @@ RBC_API void rbc_rotate_cube_left_slices_up(struct rbc_cube * self);
 /**
  * Rotates the (vertical) left slices down (left and middle)
  *
- * Official notation: l
+ * Singmaster notation: l
  *
  * @param self - the cube to rotate the slices from
  */
@@ -577,7 +577,7 @@ RBC_API void rbc_rotate_cube_left_slices_down(struct rbc_cube * self);
 /**
  * Rotates the (vertical) left slices twice (left and middle)
  *
- * Official notation: l2
+ * Singmaster notation: l2
  *
  * @param self - the cube to rotate the slices from
  */
@@ -587,7 +587,7 @@ RBC_API void rbc_rotate_cube_left_slices_twice(struct rbc_cube * self);
 /**
  * Rotates the vertical slices up, except the middle one
  *
- * Official notation: m'
+ * Singmaster notation: m'
  *
  * @param self - the cube to rotate the slices from
  */
@@ -597,7 +597,7 @@ RBC_API void rbc_rotate_cube_outer_slices_up(struct rbc_cube * self);
 /**
  * Rotates the vertical slices down, except the middle one
  *
- * Official notation: m
+ * Singmaster notation: m
  *
  * @param self - the cube to rotate the slices from
  */
@@ -607,7 +607,7 @@ RBC_API void rbc_rotate_cube_outer_slices_down(struct rbc_cube * self);
 /**
  * Rotates the vertical slices twice, except the middle one
  *
- * Official notation: m2
+ * Singmaster notation: m2
  *
  * @param self - the cube to rotate the slices from
  */
@@ -617,7 +617,7 @@ RBC_API void rbc_rotate_cube_vertical_outer_slices_twice(struct rbc_cube * self)
 /**
  * Rotates the (vertical) right slices up (middle and right)
  *
- * Official notation: r
+ * Singmaster notation: r
  *
  * @param self - the cube to rotate the slices from
  */
@@ -627,7 +627,7 @@ RBC_API void rbc_rotate_cube_right_slices_up(struct rbc_cube * self);
 /**
  * Rotates the (vertical) right slices down (middle and right)
  *
- * Official notation: r'
+ * Singmaster notation: r'
  *
  * @param self - the cube to rotate the slices from
  */
@@ -637,7 +637,7 @@ RBC_API void rbc_rotate_cube_right_slices_down(struct rbc_cube * self);
 /**
  * Rotates the (vertical) right slices twice (middle and right)
  *
- * Official notation: r2
+ * Singmaster notation: r2
  *
  * @param self - the cube to rotate the slices from
  */
@@ -647,7 +647,7 @@ RBC_API void rbc_rotate_cube_right_slices_twice(struct rbc_cube * self);
 /**
  * Rotates the (parallel) front slices clockwise (front and standing)
  *
- * Official notation: f
+ * Singmaster notation: f
  *
  * @param self - the cube to rotate the slices from
  */
@@ -657,7 +657,7 @@ RBC_API void rbc_rotate_cube_front_slices_clockwise(struct rbc_cube * self);
 /**
  * Rotates the (parallel) front slices anticlockwise (front and standing)
  *
- * Official notation: f'
+ * Singmaster notation: f'
  *
  * @param self - the cube to rotate the slices from
  */
@@ -667,7 +667,7 @@ RBC_API void rbc_rotate_cube_front_slices_anticlockwise(struct rbc_cube * self);
 /**
  * Rotates the (parallel) front slices twice (front and standing)
  *
- * Official notation: f2
+ * Singmaster notation: f2
  *
  * @param self - the cube to rotate the slices from
  */
@@ -677,7 +677,7 @@ RBC_API void rbc_rotate_cube_front_slices_twice(struct rbc_cube * self);
 /**
  * Rotates the parallel slices clockwise, except the standing one
  *
- * Official notation: s
+ * Singmaster notation: s
  *
  * @param self - the cube to rotate the slices from
  */
@@ -687,7 +687,7 @@ RBC_API void rbc_rotate_cube_outer_slices_clockwise(struct rbc_cube * self);
 /**
  * Rotates the parallel slices anticlockwise, except the standing one
  *
- * Official notation: s'
+ * Singmaster notation: s'
  *
  * @param self - the cube to rotate the slices from
  */
@@ -697,7 +697,7 @@ RBC_API void rbc_rotate_cube_outer_slices_anticlockwise(struct rbc_cube * self);
 /**
  * Rotates the parallel slices twice, except the standing one
  *
- * Official notation: s2
+ * Singmaster notation: s2
  *
  * @param self - the cube to rotate the slices from
  */
@@ -707,7 +707,7 @@ RBC_API void rbc_rotate_cube_parallel_outer_slices_twice(struct rbc_cube * self)
 /**
  * Rotates the (parallel) back slices clockwise (standing and back)
  *
- * Official notation: b'
+ * Singmaster notation: b'
  *
  * @param self - the cube to rotate the slices from
  */
@@ -717,7 +717,7 @@ RBC_API void rbc_rotate_cube_back_slices_clockwise(struct rbc_cube * self);
 /**
  * Rotates the (parallel) back slices anticlockwise (standing and back)
  *
- * Official notation: b
+ * Singmaster notation: b
  *
  * @param self - the cube to rotate the slices from
  */
@@ -727,7 +727,7 @@ RBC_API void rbc_rotate_cube_back_slices_anticlockwise(struct rbc_cube * self);
 /**
  * Rotates the (parallel) back slices twice (standing and back)
  *
- * Official notation: b2
+ * Singmaster notation: b2
  *
  * @param self - the cube to rotate the slices from
  */
